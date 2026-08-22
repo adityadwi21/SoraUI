@@ -1,0 +1,95 @@
+{
+  "timestamp": "2026-08-22T08:25:50.316Z",
+  "environment": {
+    "node": "v22.15.0",
+    "os": "Windows_NT 10.0.19045 x64"
+  },
+  "packagesTargeted": [
+    "@soraui/core@0.1.0-rc.1",
+    "@soraui/hooks@0.1.0-rc.1",
+    "@soraui/react@0.1.0-rc.1",
+    "@soraui/cli@0.1.0-rc.1",
+    "@soraui/mcp@0.1.0-rc.1"
+  ],
+  "milestoneDefinitions": {
+    "T0": "Blank project creation (Vite + React + TypeScript)",
+    "T1": "Package installation from public npm registry",
+    "T2": "First component render (<Button /> + styles.css)",
+    "T3": "Multi-component realistic composition (ThemeProvider, ThemeScope, Card, Input, Dialog, DataTable)",
+    "T4": "Strict TypeScript compilation, Vite production bundle, and Playwright browser smoke test"
+  },
+  "packageManagerBenchmarks": [
+    {
+      "pm": "npm",
+      "t0_projectCreationMs": 674,
+      "t1_installationMs": 4646,
+      "t2_firstComponentMs": 1260,
+      "t3_realisticCompositionMs": 1303,
+      "t4_productionBuildAndSmokeMs": 3320,
+      "totalJourneyDurationMs": 11204,
+      "manualStepCount": 4,
+      "internalKnowledgeRequired": false,
+      "warningsOrErrors": [],
+      "status": "PASS"
+    },
+    {
+      "pm": "pnpm",
+      "t0_projectCreationMs": 356,
+      "t1_installationMs": 3198,
+      "t2_firstComponentMs": 795,
+      "t3_realisticCompositionMs": 839,
+      "t4_productionBuildAndSmokeMs": 2334,
+      "totalJourneyDurationMs": 7523,
+      "manualStepCount": 4,
+      "internalKnowledgeRequired": false,
+      "warningsOrErrors": [],
+      "status": "PASS"
+    },
+    {
+      "pm": "yarn",
+      "t0_projectCreationMs": 157,
+      "t1_installationMs": 4759,
+      "t2_firstComponentMs": 1046,
+      "t3_realisticCompositionMs": 867,
+      "t4_productionBuildAndSmokeMs": 2272,
+      "totalJourneyDurationMs": 9101,
+      "manualStepCount": 4,
+      "internalKnowledgeRequired": false,
+      "warningsOrErrors": [],
+      "status": "PASS"
+    },
+    {
+      "pm": "bun",
+      "t0_projectCreationMs": 112,
+      "t1_installationMs": 387,
+      "t2_firstComponentMs": 131,
+      "t3_realisticCompositionMs": 131,
+      "t4_productionBuildAndSmokeMs": 1836,
+      "totalJourneyDurationMs": 2597,
+      "manualStepCount": 4,
+      "internalKnowledgeRequired": false,
+      "warningsOrErrors": [],
+      "status": "PASS"
+    }
+  ],
+  "cliBenchmark": {
+    "method": "CLI Generator (npx @soraui/cli)",
+    "componentsAdded": [
+      "button",
+      "card",
+      "dialog"
+    ],
+    "blocksAdded": [
+      "login-form"
+    ],
+    "durationMs": 3896,
+    "status": "PASS"
+  },
+  "adoptionMetrics": {
+    "zeroMonorepoLeakageVerified": true,
+    "internalKnowledgeRequired": false,
+    "manualBabelOrWebpackPluginsRequired": 0,
+    "averageTotalOnboardingTimeSeconds": "7.61",
+    "overallStatus": "PASS"
+  }
+}

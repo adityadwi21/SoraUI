@@ -7,7 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0-rc.1] - 2026-08-22
 
+### Phase 14D: Real Developer Adoption Benchmark (T0 ➔ T4) — COMPLETED
+- **Deterministic Out-of-the-Box Onboarding Suite**:
+  - Automated developer adoption benchmark (`scripts/test-developer-adoption-benchmark.mjs` / `pnpm test:adoption-benchmark`) simulating end-to-end onboarding from blank project to production runtime in isolated OS temporary directories.
+  - Measured milestones across 4 package managers (`npm`, `pnpm`, `yarn`, `bun`) and the official CLI:
+    - **T0 (Project Init)**: Clean Vite + React + TS project created in 0.1s - 0.7s.
+    - **T1 (Registry Installation)**: `@soraui/react@0.1.0-rc.1`, `@soraui/core@rc`, `@soraui/hooks@rc` installed directly from `registry.npmjs.org` in 0.4s - 4.8s.
+    - **T2 (First Primitive)**: `<Button />` + zero-runtime CSS import compiled & typechecked in 0.1s - 1.3s.
+    - **T3 (Realistic UI)**: `<ThemeProvider />`, `<ThemeScope />`, `Card`, `Input`, `Dialog`, `DataTable` multi-component composition typechecked with zero errors in 0.1s - 1.3s.
+    - **T4 (Production Build & Browser Smoke)**: Bundled via Vite and validated via Playwright headless browser with **0 console errors, 0 page errors, 0 unhandled rejections** in 1.8s - 3.3s.
+  - Overall Total Onboarding Time: **npm (11.2s)**, **pnpm (7.5s)**, **yarn (9.1s)**, **bun (2.6s)**, **CLI (3.9s)**.
+  - Emitted machine-readable benchmark report: `artifacts/release/adoption-benchmark-report.json`.
+
 ### Phase 14C: Real AI Coding Agent & MCP Live Protocol Validation — COMPLETED
+
 - **Live MCP stdio Protocol & 11 Tool Verification**:
   - Live stdio validation runner (`scripts/test-ai-agent-mcp-validation.mjs` / `pnpm test:ai-agent-mcp`) connecting directly to the public `@soraui/mcp@0.1.0-rc.1` npm package (`npx -y @soraui/mcp@0.1.0-rc.1`) using the official Model Context Protocol (MCP) Client SDK.
   - Successfully verified all 11 MCP tools: `soraui_get_context`, `soraui_search`, `soraui_list`, `soraui_inspect_component`, `soraui_inspect_block`, `soraui_inspect_template`, `soraui_inspect_theme`, `soraui_compose_recipe`, `soraui_get_install_commands`, `soraui_resolve_dependencies`, `soraui_validate_composition`.

@@ -378,10 +378,12 @@ Dokumen ini memecah Phase 0–8 (context doc section 21) menjadi milestone dan t
 | **Phase 10** | **Documentation Platform & Developer Experience** | ✅ **Done** | **100%** |
 | **Phase 10.5**| **Release Candidate 1 (RC1) & Public API Hardening** | ✅ **Done** | **100%** |
 | **Phase 11** | **AI / MCP Integration (AI-Native SoraUI Interface)** | ✅ **Done** | **100%** |
+| **Phase 12** | **Quality, Accessibility & Performance Hardening** | ✅ **Done** | **100%** |
 | **Phase 13** | **Public Developer Experience, Consumer Validation & Release Readiness** | ✅ **Done** | **100%** |
-| **Phase 14** | **Public Release & Ecosystem Validation** | 🔄 **In Progress** | **60% (14A, 14B, 14C Done)** |
+| **Phase 14** | **Public Release & Ecosystem Validation** | 🔄 **In Progress** | **80% (14A, 14B, 14C, 14D Done)** |
 
-**SoraUI v0.1.0-rc.1 is publicly published to npm, verified across 4 package managers, and live-tested with stdio MCP tools.**
+**SoraUI v0.1.0-rc.1 is publicly published to npm, verified across 4 package managers, live-tested with MCP tools, and benchmarked for developer onboarding.**
+
 
 
 

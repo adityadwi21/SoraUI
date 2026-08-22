@@ -24,8 +24,10 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,css,md,json}\"",
     "verify:rc": "node scripts/verify-release-candidate.mjs",
     "test:pm-matrix": "node scripts/test-package-managers-matrix.mjs",
-    "test:ai-agent-mcp": "node scripts/test-ai-agent-mcp-validation.mjs"
+    "test:ai-agent-mcp": "node scripts/test-ai-agent-mcp-validation.mjs",
+    "test:adoption-benchmark": "node scripts/test-developer-adoption-benchmark.mjs"
   },
+
 
 
 
