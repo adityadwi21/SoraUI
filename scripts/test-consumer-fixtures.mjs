@@ -30,9 +30,10 @@ const PACKAGES = [
   { name: '@soraui/core', dir: path.join(ROOT_DIR, 'packages/core') },
   { name: '@soraui/hooks', dir: path.join(ROOT_DIR, 'packages/hooks') },
   { name: '@soraui/react', dir: path.join(ROOT_DIR, 'packages/react') },
-  { name: 'soraui', dir: path.join(ROOT_DIR, 'packages/cli') },
+  { name: '@soraui/cli', dir: path.join(ROOT_DIR, 'packages/cli') },
   { name: '@soraui/mcp', dir: path.join(ROOT_DIR, 'packages/mcp') },
 ];
+
 
 const FIXTURES = [
   {

@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-22T07:11:21.126Z",
+  "timestamp": "2026-08-22T07:42:24.268Z",
   "version": "0.1.0-rc.1",
   "status": "PASS",
-  "totalDurationSeconds": 82.02,
+  "totalDurationSeconds": 59.03,
   "source": {
     "isGitRepo": true,
-    "commit": "f7131e60cd6f2a9f002efa490f399cfebb476ee5",
+    "commit": "4b0034927212fd33cf3876205baaee3ad9ee59e4",
     "branch": "master",
-    "workingTree": "DIRTY (10 modified files)",
+    "workingTree": "DIRTY (6 modified files)",
     "reproducibilityStatus": "PENDING_CLEAN_COMMIT",
     "artifactIntegrity": "ATTESTED"
   },
@@ -19,7 +19,7 @@
       "@soraui/core": "8f7970999ccaaea3992f155ce14dcb0a75f2de8f851ed0b396b9a25a56585405",
       "@soraui/hooks": "4094d8ce7180180c7e6adda4aaa04cf4cbc8e22493aed41810e1d29e71243ef1",
       "@soraui/react": "d8c2b77f2720f129b392ade3e663ad81f1ad92c000da05dd79bfdbfaca80c4bf",
-      "soraui": "e53b72ffec533c7fd2bf68817edd4779c8c89d4225815ff0099c2a6351355b32",
+      "@soraui/cli": "165abbe8744918152ef4c254cbc90bdbe2785862c0dedfe2954ae178a8a30f55",
       "@soraui/mcp": "fa1649dcdfe39bc7704a12be0112e94cce5808cc84d35d74e1ea823ec158ab4c"
     }
   },
@@ -48,49 +48,49 @@
       "id": "build",
       "title": "Monorepo Build",
       "status": "PASS",
-      "durationMs": 9897
+      "durationMs": 1293
     },
     {
       "id": "typecheck",
       "title": "Monorepo Typecheck",
       "status": "PASS",
-      "durationMs": 5869
+      "durationMs": 1634
     },
     {
       "id": "tests",
       "title": "Unit, Contract & A11y Tests",
       "status": "PASS",
-      "durationMs": 17276
+      "durationMs": 1800
     },
     {
       "id": "leakage",
       "title": "Package Tarball & Zero Leakage Audit",
       "status": "PASS",
-      "durationMs": 2884
+      "durationMs": 2701
     },
     {
       "id": "tarballs",
       "title": "Isolated External Tarball Installation",
       "status": "PASS",
-      "durationMs": 5757
+      "durationMs": 5938
     },
     {
       "id": "consumers",
       "title": "Consumer Validation Fixtures (Next.js, Vite, AI)",
       "status": "PASS",
-      "durationMs": 40157
+      "durationMs": 45489
     },
     {
       "id": "mcp-smoke",
       "title": "Live stdio MCP Server Verification",
       "status": "PASS",
-      "durationMs": 177
+      "durationMs": 170
     },
     {
       "id": "budgets",
       "title": "Bundle Budgets & Release Artifacts",
       "status": "PASS",
-      "durationMs": 0
+      "durationMs": 1
     }
   ]
 }

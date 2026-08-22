@@ -226,8 +226,9 @@ async function run() {
     '@soraui/core': sha256File(path.join(ROOT_DIR, 'packages/core/package.json')),
     '@soraui/hooks': sha256File(path.join(ROOT_DIR, 'packages/hooks/package.json')),
     '@soraui/react': sha256File(path.join(ROOT_DIR, 'packages/react/package.json')),
-    'soraui': sha256File(path.join(ROOT_DIR, 'packages/cli/package.json')),
+    '@soraui/cli': sha256File(path.join(ROOT_DIR, 'packages/cli/package.json')),
     '@soraui/mcp': sha256File(path.join(ROOT_DIR, 'packages/mcp/package.json')),
+
   };
 
   // Generate machine-readable rc-report.json

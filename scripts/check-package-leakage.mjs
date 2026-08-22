@@ -22,9 +22,10 @@ const PACKAGES = [
   { name: '@soraui/core', dir: path.join(ROOT_DIR, 'packages/core'), tgzPrefix: 'soraui-core-' },
   { name: '@soraui/hooks', dir: path.join(ROOT_DIR, 'packages/hooks'), tgzPrefix: 'soraui-hooks-' },
   { name: '@soraui/react', dir: path.join(ROOT_DIR, 'packages/react'), tgzPrefix: 'soraui-react-' },
-  { name: 'soraui', dir: path.join(ROOT_DIR, 'packages/cli'), tgzPrefix: 'soraui-' },
+  { name: '@soraui/cli', dir: path.join(ROOT_DIR, 'packages/cli'), tgzPrefix: 'soraui-cli-' },
   { name: '@soraui/mcp', dir: path.join(ROOT_DIR, 'packages/mcp'), tgzPrefix: 'soraui-mcp-' },
 ];
+
 
 const LEAKAGE_PATTERNS = [
   { regex: /workspace:[*^~0-9]/g, name: 'workspace: protocol reference' },

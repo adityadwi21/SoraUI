@@ -21,7 +21,7 @@ const PACKAGES = [
   { name: '@soraui/core', dir: path.join(ROOT_DIR, 'packages/core') },
   { name: '@soraui/hooks', dir: path.join(ROOT_DIR, 'packages/hooks') },
   { name: '@soraui/react', dir: path.join(ROOT_DIR, 'packages/react') },
-  { name: 'soraui', dir: path.join(ROOT_DIR, 'packages/cli') },
+  { name: '@soraui/cli', dir: path.join(ROOT_DIR, 'packages/cli') },
   { name: '@soraui/mcp', dir: path.join(ROOT_DIR, 'packages/mcp') },
 ];
 
@@ -55,8 +55,9 @@ function run() {
             '@soraui/core': `file:${tarballPaths['@soraui/core']}`,
             '@soraui/hooks': `file:${tarballPaths['@soraui/hooks']}`,
             '@soraui/react': `file:${tarballPaths['@soraui/react']}`,
-            'soraui': `file:${tarballPaths['soraui']}`,
+            '@soraui/cli': `file:${tarballPaths['@soraui/cli']}`,
             '@soraui/mcp': `file:${tarballPaths['@soraui/mcp']}`,
+
             'react': '^18.3.1',
             'react-dom': '^18.3.1',
           },

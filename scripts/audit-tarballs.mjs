@@ -13,7 +13,8 @@ const packages = [
   { name: '@soraui/core', dir: 'packages/core', allowCss: false },
   { name: '@soraui/hooks', dir: 'packages/hooks', allowCss: false },
   { name: '@soraui/react', dir: 'packages/react', allowCss: true },
-  { name: 'soraui', dir: 'packages/cli', allowCss: false },
+  { name: '@soraui/cli', dir: 'packages/cli', allowCss: false },
+
   { name: '@soraui/mcp', dir: 'packages/mcp', allowCss: false },
 ];
 
