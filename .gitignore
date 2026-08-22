@@ -1,38 +1,59 @@
-﻿# Dependencies
+# Dependencies
 node_modules/
 .pnpm-store/
 
-# Build outputs
+# Build & Bundler Outputs
 dist/
 build/
 .next/
 out/
 .turbo/
 
-# Test coverage
+# Testing & Coverage Outputs
 coverage/
+playwright-report/
+test-results/
+blob-report/
 
-# Environment
+# Generated Verification & Release Artifacts
+artifacts/
+*.report.json
+*.bundle-size.json
+
+# Environment & Credentials
 .env
-.env.local
-.env.production
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
 
-# OS
+# Operating System Files
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Editor
-.vscode/settings.json
+# Editor & IDE Cache
+.vscode/*
+!.vscode/extensions.json
 .idea/
 *.swp
+*.swo
+.history/
+.agents/
 
-# Logs
+# Logs & Diagnostics
 *.log
 npm-debug.log*
 pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # TypeScript
 *.tsbuildinfo
 
-# Bundle size reports (generated, not committed)
-*.bundle-size.json
+# Temporary Files & Archives
+*.tgz
+*.tar.gz
+tmp/
+temp/

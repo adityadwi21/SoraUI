@@ -1,4 +1,4 @@
-﻿# Security Policy
+# Security Policy
 
 ## Reporting a Vulnerability
 
@@ -21,5 +21,5 @@ We aim to acknowledge security reports within 72 hours and provide a fix within 
 
 ## Dependency Security
 
-SoraUI runs 
-pm audit and pnpm audit as part of its CI pipeline. We aim to keep all dependencies up-to-date and free of known vulnerabilities.
+SoraUI runs `pnpm audit` as part of its CI pipeline. We aim to keep all dependencies up-to-date and free of known vulnerabilities.
+

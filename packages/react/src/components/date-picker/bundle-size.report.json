@@ -1,9 +1,0 @@
-{
-  "component": "date-picker",
-  "minifiedBytes": 6024,
-  "minifiedKB": 5.88,
-  "gzippedBytes": 2402,
-  "gzippedKB": 2.35,
-  "budgetKB": 10,
-  "passed": true
-}

@@ -1,4 +1,4 @@
-﻿# Contributing to SoraUI
+# Contributing to SoraUI
 
 Thank you for your interest in contributing to SoraUI! This guide explains how to set up the project and contribute effectively.
 
@@ -26,12 +26,12 @@ Before contributing, please understand our core principles:
 
 ### Install
 
-`ash
+```bash
 git clone https://github.com/soraui/soraui.git
 cd soraui
 pnpm install
 pnpm build
-`
+```
 
 ---
 
@@ -39,19 +39,19 @@ pnpm build
 
 Each component must have these 4 files minimum:
 
-`
+```text
 packages/react/src/components/{name}/
 ├── {name}.tsx           # Implementation
 ├── {name}.module.css    # Styles (CSS Modules, no hardcoded colors)
 ├── {name}.types.ts      # TypeScript types
 └── {name}.test.tsx      # Unit + accessibility tests
-`
+```
 
 ### Component Rules
 
-1. No hardcoded hex colors — use ar(--ui-*) CSS variables only
+1. No hardcoded hex colors — use `var(--ui-*)` CSS variables only
 2. No JS for behavior that CSS can handle
-3. Must pass: TypeScript check, ESLint, Vitest, a11y tests
+3. Must pass: TypeScript check, Vitest, a11y tests
 4. Must be within performance budget (see ARCHITECTURE.md)
 5. Must support keyboard navigation, ARIA, and focus management
 
@@ -59,12 +59,11 @@ packages/react/src/components/{name}/
 
 ## Testing
 
-`ash
+```bash
 pnpm test           # All unit tests
-pnpm test:a11y      # Accessibility tests
 pnpm typecheck      # TypeScript check
-pnpm lint           # ESLint
-`
+pnpm test:visual    # Playwright browser visual tests
+```
 
 ---
 
