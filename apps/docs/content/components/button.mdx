@@ -1,0 +1,21 @@
+# Button
+
+Interactive button with multiple variants, sizes, and states.
+
+## Import
+```tsx
+import { Button } from '@soraui/react';
+```
+
+## Usage
+```tsx
+<Button variant="primary" size="md">Click me</Button>
+<Button variant="outline" size="sm">Cancel</Button>
+<Button variant="destructive" loading>Deleting...</Button>
+```
+
+## Props
+- `variant`: `'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link'` (default: `'primary'`)
+- `size`: `'sm' | 'md' | 'lg' | 'icon'` (default: `'md'`)
+- `loading`: `boolean` (default: `false`)
+- `disabled`: `boolean` (default: `false`)

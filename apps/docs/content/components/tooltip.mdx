@@ -1,0 +1,39 @@
+---
+title: Tooltip
+description: A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.
+---
+
+# Tooltip
+
+A floating hint displayed on hover or keyboard focus.
+
+## Installation
+
+```bash
+npx soraui add tooltip
+```
+
+## Usage
+
+```tsx
+import { Tooltip, TooltipTrigger, TooltipContent, Button } from '@soraui/react';
+
+export default function Example() {
+  return (
+    <Tooltip delay={150}>
+      <TooltipTrigger asChild>
+        <Button variant="outline">Hover or Focus</Button>
+      </TooltipTrigger>
+      <TooltipContent placement="top">
+        Helpful tooltip message
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+```
+
+## Accessibility
+
+- Applies `role="tooltip"` to the content.
+- Automatically connects `aria-describedby` on the trigger to the tooltip ID when visible.
+- Closes on `Escape` key press.

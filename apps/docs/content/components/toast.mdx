@@ -1,0 +1,48 @@
+---
+title: Toast
+description: A succinct message that is displayed temporarily.
+---
+
+# Toast
+
+Temporary notification system.
+
+## Installation
+
+```bash
+npx soraui add toast
+```
+
+## Usage
+
+Wrap your application with `ToastProvider` and invoke toasts using the `useToast` hook:
+
+```tsx
+import { ToastProvider, useToast, Button } from '@soraui/react';
+
+function App() {
+  return (
+    <ToastProvider>
+      <Page />
+    </ToastProvider>
+  );
+}
+
+function Page() {
+  const { toast } = useToast();
+
+  return (
+    <Button
+      onClick={() =>
+        toast({
+          title: 'Event scheduled',
+          description: 'Friday, February 10, 2026 at 5:57 PM',
+          variant: 'success',
+        })
+      }
+    >
+      Schedule event
+    </Button>
+  );
+}
+```

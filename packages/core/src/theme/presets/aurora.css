@@ -1,0 +1,37 @@
+/**
+ * SoraUI Theme — Aurora
+ * Mode: dark
+ * Description: Deep emerald night with vibrant teal aurora glows.
+ */
+[data-theme='aurora'] {
+  --ui-background: #022c22;
+  --ui-foreground: #f0fdf4;
+  --ui-card: #064e3b;
+  --ui-card-foreground: #f0fdf4;
+  --ui-popover: #064e3b;
+  --ui-popover-foreground: #f0fdf4;
+  --ui-primary: #14b8a6;
+  --ui-primary-foreground: #022c22;
+  --ui-secondary: #064e3b;
+  --ui-secondary-foreground: #ccfbf1;
+  --ui-muted: #064e3b;
+  --ui-muted-foreground: #5eead4;
+  --ui-accent: #0f766e;
+  --ui-accent-foreground: #ffffff;
+  --ui-destructive: #dc2626;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #ffffff;
+  --ui-border: #14b8a6;
+  --ui-input: #14b8a6;
+
+  --ui-ring: #14b8a6;
+  --ui-radius: 0.5rem;
+
+  --ui-button-radius: var(--ui-radius);
+  --ui-input-radius: var(--ui-radius);
+  --ui-card-radius: var(--ui-radius);
+}

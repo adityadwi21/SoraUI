@@ -1,0 +1,9 @@
+{
+  "name": "typography",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "SoraUI typography component. Level 1 - minimal runtime, accessible, CSS variables based.",
+  "files": [{ "path": "components/ui/typography.tsx", "type": "registry:ui" }],
+  "dependencies": [],
+  "installation": { "cli": "npx soraui add typography", "npm": "import { Typography } from '@soraui/react'" }
+}

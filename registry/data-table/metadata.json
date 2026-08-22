@@ -1,0 +1,20 @@
+{
+  "name": "data-table",
+  "type": "registry:ui",
+  "level": 3,
+  "description": "Accessible, lightweight data table with sorting, search filtering, pagination, and row selection.",
+  "props": {
+    "data": { "type": "T[]", "required": true },
+    "columns": { "type": "DataTableColumn<T>[]", "required": true },
+    "pageSize": { "type": "number", "default": 10 },
+    "searchable": { "type": "boolean", "default": true },
+    "selectable": { "type": "boolean", "default": false }
+  },
+  "accessibility": {
+    "keyboard": ["Column headers clickable/activatable", "Pagination controls keyboard accessible", "Checkboxes accessible"],
+    "aria": ["aria-sort=\"ascending|descending|none\" on column headers", "role=\"table\"", "<caption> supported"]
+  },
+  "files": [{ "path": "components/ui/data-table.tsx", "type": "registry:ui" }],
+  "dependencies": [],
+  "installation": { "cli": "npx soraui add data-table", "npm": "import { DataTable } from '@soraui/react'" }
+}

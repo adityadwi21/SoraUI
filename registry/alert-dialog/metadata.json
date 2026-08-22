@@ -1,0 +1,1 @@
+{"name":"alert-dialog","type":"registry:ui","level":2,"description":"A modal dialog that interrupts the user with important content and expects a response.","files":[{"path":"components/ui/alert-dialog.tsx","type":"registry:ui"}],"dependencies":["@soraui/hooks"]}

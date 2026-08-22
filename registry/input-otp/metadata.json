@@ -1,0 +1,1 @@
+{"name":"input-otp","type":"registry:ui","level":2,"description":"A one-time password component with digit auto-advance and clipboard support.","files":[{"path":"components/ui/input-otp.tsx","type":"registry:ui"}],"dependencies":[]}

@@ -1,0 +1,20 @@
+{
+  "name": "dropdown",
+  "type": "registry:ui",
+  "level": 2,
+  "description": "Displays a contextual menu to the user—such as a set of actions or functions—triggered by a button.",
+  "props": {
+    "open": { "type": "boolean" },
+    "defaultOpen": { "type": "boolean", "default": false },
+    "placement": { "type": "Placement", "default": "bottom-start" },
+    "offset": { "type": "number", "default": 6 }
+  },
+  "accessibility": {
+    "keyboard": ["ArrowDown/ArrowUp to cycle items", "Home/End to jump to edges", "Enter/Space to select", "Escape to dismiss"],
+    "aria": ["role=\"menu\"", "role=\"menuitem\"", "aria-haspopup=\"menu\"", "aria-expanded on trigger"],
+    "focus": "Roving focus within menu items, returns focus to trigger upon close"
+  },
+  "files": [{ "path": "components/ui/dropdown.tsx", "type": "registry:ui" }],
+  "dependencies": ["@soraui/hooks"],
+  "installation": { "cli": "npx soraui add dropdown", "npm": "import { Dropdown, DropdownTrigger, DropdownContent, DropdownItem, DropdownSeparator, DropdownLabel } from '@soraui/react'" }
+}

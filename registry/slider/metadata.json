@@ -1,0 +1,1 @@
+{"name":"slider","type":"registry:ui","level":2,"description":"An input where the user selects a value from within a given range.","files":[{"path":"components/ui/slider.tsx","type":"registry:ui"}],"dependencies":[]}

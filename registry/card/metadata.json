@@ -1,0 +1,12 @@
+{
+  "name": "card",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "Composable container component. Sub-components: CardHeader, CardTitle, CardDescription, CardContent, CardFooter.",
+  "props": {
+    "elevated": { "type": "boolean", "default": false }
+  },
+  "files": [{ "path": "components/ui/card.tsx", "type": "registry:ui" }],
+  "dependencies": [],
+  "installation": { "cli": "npx soraui add card", "npm": "import { Card, CardHeader, CardTitle, CardContent } from '@soraui/react'" }
+}

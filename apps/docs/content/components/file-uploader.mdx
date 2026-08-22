@@ -1,0 +1,36 @@
+---
+title: FileUploader
+description: Accessible drag-and-drop file upload zone with client-side validation and file queue management.
+---
+
+# FileUploader
+
+Drag-and-drop file uploader with size, MIME type validation, and queue preview.
+
+> **Note on Scope**: SoraUI FileUploader handles file selection, drag-and-drop interaction, size/MIME validation, and local file queue metadata. It intentionally leaves network upload transport (e.g. S3 multipart, Axios/fetch, progress webhooks) to your application layer for maximum flexibility.
+
+## Installation
+
+```bash
+npx soraui add file-uploader
+```
+
+## Usage
+
+```tsx
+import { FileUploader } from '@soraui/react';
+import { useState } from 'react';
+
+export default function Example() {
+  const [files, setFiles] = useState<File[]>([]);
+
+  return (
+    <FileUploader
+      multiple
+      maxSize={5 * 1024 * 1024} // 5 MB
+      accept="image/*,.pdf"
+      onFilesChange={(newFiles) => setFiles(newFiles)}
+    />
+  );
+}
+```

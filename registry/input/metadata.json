@@ -1,0 +1,9 @@
+{
+  "name": "input",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "SoraUI input component. Level 1 - minimal runtime, accessible, CSS variables based.",
+  "files": [{ "path": "components/ui/input.tsx", "type": "registry:ui" }],
+  "dependencies": [],
+  "installation": { "cli": "npx soraui add input", "npm": "import { Input } from '@soraui/react'" }
+}

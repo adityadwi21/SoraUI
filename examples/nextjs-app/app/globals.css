@@ -1,0 +1,15 @@
+@import '@soraui/core/theme/presets/sky.css';
+@import '@soraui/core/theme/presets/midnight.css';
+@import '@soraui/react/styles.css';
+
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}

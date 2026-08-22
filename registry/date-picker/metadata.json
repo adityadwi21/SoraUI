@@ -1,0 +1,20 @@
+{
+  "name": "date-picker",
+  "type": "registry:ui",
+  "level": 3,
+  "description": "A date picker component combining a trigger input and a calendar popup overlay.",
+  "props": {
+    "value": { "type": "Date" },
+    "defaultValue": { "type": "Date" },
+    "placeholder": { "type": "string", "default": "Select date..." },
+    "disabled": { "type": "boolean", "default": false }
+  },
+  "accessibility": {
+    "keyboard": ["Enter/Space on trigger opens popover", "Full keyboard navigation in calendar grid", "Escape to dismiss"],
+    "aria": ["aria-haspopup=\"dialog\"", "aria-expanded on trigger"],
+    "focus": "Focus trap in popover, restores focus to trigger on close"
+  },
+  "files": [{ "path": "components/ui/date-picker.tsx", "type": "registry:ui" }],
+  "dependencies": ["@soraui/hooks"],
+  "installation": { "cli": "npx soraui add date-picker", "npm": "import { DatePicker } from '@soraui/react'" }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "label",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "SoraUI label component. Level 1 - minimal runtime, accessible, CSS variables based.",
+  "files": [{ "path": "components/ui/label.tsx", "type": "registry:ui" }],
+  "dependencies": [],
+  "installation": { "cli": "npx soraui add label", "npm": "import { Label } from '@soraui/react'" }
+}

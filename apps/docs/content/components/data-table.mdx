@@ -1,0 +1,36 @@
+---
+title: DataTable
+description: Accessible, lightweight data table with column sorting, search filtering, and pagination.
+---
+
+# DataTable
+
+Lightweight data table with zero external dependencies.
+
+## Installation
+
+```bash
+npx soraui add data-table
+```
+
+## Usage
+
+```tsx
+import { DataTable } from '@soraui/react';
+
+const data = [
+  { id: 1, name: 'Alice', email: 'alice@example.com', role: 'Admin' },
+  { id: 2, name: 'Bob', email: 'bob@example.com', role: 'User' },
+];
+
+const columns = [
+  { header: 'ID', accessorKey: 'id', sortable: true },
+  { header: 'Name', accessorKey: 'name', sortable: true },
+  { header: 'Email', accessorKey: 'email' },
+  { header: 'Role', accessorKey: 'role' },
+];
+
+export default function Example() {
+  return <DataTable data={data} columns={columns} selectable pageSize={5} />;
+}
+```

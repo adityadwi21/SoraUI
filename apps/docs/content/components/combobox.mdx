@@ -1,0 +1,49 @@
+---
+title: Combobox
+description: Accessible autocomplete input and searchable command palette with real-time filtering.
+---
+
+# Combobox
+
+Autocomplete input combining an editable text field with a floating popup listbox.
+
+## When to use Select vs. Combobox
+
+| Component | Use When |
+|---|---|
+| **Select** | Choosing from a small, fixed list of options (< 15 items) without typing |
+| **Combobox** | Searching and filtering through larger option lists with keyboard autocomplete |
+| **Input** | Freeform text entry without predefined suggestions |
+
+## Installation
+
+```bash
+npx soraui add combobox
+```
+
+## Usage
+
+```tsx
+import { Combobox } from '@soraui/react';
+import { useState } from 'react';
+
+const frameworks = [
+  { value: 'next', label: 'Next.js' },
+  { value: 'svelte', label: 'SvelteKit' },
+  { value: 'remix', label: 'Remix' },
+  { value: 'astro', label: 'Astro' },
+];
+
+export default function Example() {
+  const [val, setVal] = useState('');
+
+  return (
+    <Combobox
+      options={frameworks}
+      value={val}
+      onValueChange={setVal}
+      placeholder="Select framework..."
+    />
+  );
+}
+```

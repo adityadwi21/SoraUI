@@ -1,0 +1,26 @@
+/**
+ * SoraUI — Label Component Styles
+ * Level 1: Pure CSS, zero JS
+ */
+
+.label {
+  display: inline-block;
+  font-family: var(--sora-font-sans, system-ui, sans-serif);
+  font-size: var(--sora-text-sm, 0.875rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--ui-foreground);
+  cursor: default;
+}
+
+.label.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.required-indicator {
+  color: #dc2626;
+  margin-inline-start: 0.25rem;
+  font-weight: 400;
+  aria-hidden: true;
+}

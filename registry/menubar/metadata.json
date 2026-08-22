@@ -1,0 +1,1 @@
+{"name":"menubar","type":"registry:ui","level":2,"description":"A desktop-grade horizontal menu bar with nested dropdown menus.","files":[{"path":"components/ui/menubar.tsx","type":"registry:ui"}],"dependencies":["@soraui/hooks"]}

@@ -1,0 +1,45 @@
+---
+title: Dropdown
+description: Displays a contextual menu to the user, triggered by a button.
+---
+
+# Dropdown
+
+Contextual action menu with keyboard roving navigation.
+
+## Installation
+
+```bash
+npx soraui add dropdown
+```
+
+## Usage
+
+```tsx
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownContent,
+  DropdownItem,
+  DropdownSeparator,
+  DropdownLabel,
+  Button,
+} from '@soraui/react';
+
+export default function Example() {
+  return (
+    <Dropdown>
+      <DropdownTrigger asChild>
+        <Button variant="outline">Options</Button>
+      </DropdownTrigger>
+      <DropdownContent>
+        <DropdownLabel>My Account</DropdownLabel>
+        <DropdownItem onClick={() => console.log('Profile')}>Profile</DropdownItem>
+        <DropdownItem onClick={() => console.log('Billing')}>Billing</DropdownItem>
+        <DropdownSeparator />
+        <DropdownItem destructive onClick={() => console.log('Log out')}>Log out</DropdownItem>
+      </DropdownContent>
+    </Dropdown>
+  );
+}
+```

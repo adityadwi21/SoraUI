@@ -1,0 +1,39 @@
+/**
+ * SoraUI Theme — Horizon
+ * Mode: light
+ * Description: Warm sunset orange tones on a bright cream background.
+ */
+[data-theme='horizon'] {
+  --ui-background: #fffbf5;
+  --ui-foreground: #431407;
+  --ui-card: #ffffff;
+  --ui-card-foreground: #431407;
+  --ui-popover: #ffffff;
+  --ui-popover-foreground: #431407;
+  --ui-primary: #c2410c;
+  --ui-primary-foreground: #ffffff;
+
+  --ui-secondary: #fed7aa;
+  --ui-secondary-foreground: #7c2d12;
+  --ui-muted: #fff7ed;
+  --ui-muted-foreground: #9a3412;
+
+  --ui-accent: #ffedd5;
+  --ui-accent-foreground: #c2410c;
+  --ui-destructive: #dc2626;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #ffffff;
+  --ui-border: #9a3412;
+  --ui-input: #9a3412;
+  --ui-ring: #c2410c;
+
+  --ui-radius: 0.5rem;
+
+  --ui-button-radius: var(--ui-radius);
+  --ui-input-radius: var(--ui-radius);
+  --ui-card-radius: var(--ui-radius);
+}

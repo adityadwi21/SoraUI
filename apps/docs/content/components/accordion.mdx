@@ -1,0 +1,35 @@
+---
+title: Accordion
+description: A vertically stacked set of interactive headings that each reveal a section of content.
+---
+
+# Accordion
+
+Collapsible content panels.
+
+## Installation
+
+```bash
+npx soraui add accordion
+```
+
+## Usage
+
+```tsx
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@soraui/react';
+
+export default function Example() {
+  return (
+    <Accordion type="single" collapsible defaultValue="item-1">
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Is it accessible?</AccordionTrigger>
+        <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-2">
+        <AccordionTrigger>Is it styled?</AccordionTrigger>
+        <AccordionContent>Yes. It comes with default styles powered by CSS variables.</AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+```

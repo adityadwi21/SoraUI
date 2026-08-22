@@ -1,0 +1,124 @@
+/**
+ * SoraUI — Primitive CSS Tokens (Layer 1)
+ *
+ * Raw color scale. NOT used directly by components.
+ * Components reference Layer 2 semantic tokens only (--ui-*).
+ */
+
+:root {
+  /* Sky blue scale */
+  --sora-sky-50: #f0f9ff;
+  --sora-sky-100: #e0f2fe;
+  --sora-sky-200: #bae6fd;
+  --sora-sky-300: #7dd3fc;
+  --sora-sky-400: #38bdf8;
+  --sora-sky-500: #0ea5e9;
+  --sora-sky-600: #0284c7;
+  --sora-sky-700: #0369a1;
+  --sora-sky-800: #075985;
+  --sora-sky-900: #0c4a6e;
+
+  /* Indigo scale */
+  --sora-indigo-50: #eef2ff;
+  --sora-indigo-100: #e0e7ff;
+  --sora-indigo-200: #c7d2fe;
+  --sora-indigo-300: #a5b4fc;
+  --sora-indigo-400: #818cf8;
+  --sora-indigo-500: #6366f1;
+  --sora-indigo-600: #4f46e5;
+  --sora-indigo-700: #4338ca;
+  --sora-indigo-800: #3730a3;
+  --sora-indigo-900: #312e81;
+
+  /* Violet scale */
+  --sora-violet-400: #a78bfa;
+  --sora-violet-500: #8b5cf6;
+  --sora-violet-600: #7c3aed;
+  --sora-violet-800: #5b21b6;
+  --sora-violet-900: #4c1d95;
+
+  /* Teal / Aurora scale */
+  --sora-teal-300: #5eead4;
+  --sora-teal-400: #2dd4bf;
+  --sora-teal-500: #14b8a6;
+  --sora-teal-600: #0d9488;
+  --sora-teal-900: #134e4a;
+  --sora-teal-950: #0a1f1c;
+
+  /* Amber / Starlight scale */
+  --sora-amber-200: #fde68a;
+  --sora-amber-300: #fcd34d;
+  --sora-amber-400: #fbbf24;
+  --sora-amber-500: #f59e0b;
+
+  /* Orange / Horizon scale */
+  --sora-orange-100: #fed7aa;
+  --sora-orange-200: #fdba74;
+  --sora-orange-300: #fb923c;
+  --sora-orange-400: #f97316;
+  --sora-orange-800: #7c2d12;
+  --sora-orange-900: #431407;
+
+  /* Fuchsia / Nebula */
+  --sora-fuchsia-300: #f0abfc;
+  --sora-fuchsia-400: #e879f9;
+  --sora-fuchsia-500: #d946ef;
+  --sora-fuchsia-600: #c026d3;
+  --sora-fuchsia-900: #701a75;
+
+  /* Yellow / Eclipse */
+  --sora-yellow-300: #fde047;
+  --sora-yellow-400: #facc15;
+
+  /* Zinc neutrals */
+  --sora-zinc-50: #fafafa;
+  --sora-zinc-100: #f4f4f5;
+  --sora-zinc-200: #e4e4e7;
+  --sora-zinc-300: #d4d4d8;
+  --sora-zinc-400: #a1a1aa;
+  --sora-zinc-500: #71717a;
+  --sora-zinc-600: #52525b;
+  --sora-zinc-700: #3f3f46;
+  --sora-zinc-800: #27272a;
+  --sora-zinc-900: #18181b;
+  --sora-zinc-950: #09090b;
+
+  /* Absolute */
+  --sora-white: #ffffff;
+  --sora-black: #000000;
+
+  /* Spacing scale */
+  --sora-space-1: 0.25rem;
+  --sora-space-2: 0.5rem;
+  --sora-space-3: 0.75rem;
+  --sora-space-4: 1rem;
+  --sora-space-5: 1.25rem;
+  --sora-space-6: 1.5rem;
+  --sora-space-8: 2rem;
+  --sora-space-10: 2.5rem;
+  --sora-space-12: 3rem;
+  --sora-space-16: 4rem;
+
+  /* Radius scale */
+  --sora-radius-none: 0;
+  --sora-radius-sm: 0.25rem;
+  --sora-radius-md: 0.375rem;
+  --sora-radius-lg: 0.75rem;
+  --sora-radius-xl: 1rem;
+  --sora-radius-2xl: 1.5rem;
+  --sora-radius-full: 9999px;
+
+  /* Typography */
+  --sora-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --sora-font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+
+  /* Font sizes */
+  --sora-text-xs: 0.75rem;
+  --sora-text-sm: 0.875rem;
+  --sora-text-base: 1rem;
+  --sora-text-lg: 1.125rem;
+  --sora-text-xl: 1.25rem;
+  --sora-text-2xl: 1.5rem;
+  --sora-text-3xl: 1.875rem;
+  --sora-text-4xl: 2.25rem;
+}

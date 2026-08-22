@@ -1,0 +1,37 @@
+/**
+ * SoraUI Theme — Cloud
+ * Mode: light
+ * Description: Soft neutral gray with subtle slate undertones.
+ */
+[data-theme='cloud'] {
+  --ui-background: #fafafa;
+  --ui-foreground: #18181b;
+  --ui-card: #ffffff;
+  --ui-card-foreground: #18181b;
+  --ui-popover: #ffffff;
+  --ui-popover-foreground: #18181b;
+  --ui-primary: #18181b;
+  --ui-primary-foreground: #fafafa;
+  --ui-secondary: #f4f4f5;
+  --ui-secondary-foreground: #27272a;
+  --ui-muted: #f4f4f5;
+  --ui-muted-foreground: #71717a;
+  --ui-accent: #f4f4f5;
+  --ui-accent-foreground: #18181b;
+  --ui-destructive: #dc2626;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #ffffff;
+  --ui-border: #71717a;
+  --ui-input: #71717a;
+
+  --ui-ring: #18181b;
+  --ui-radius: 0.5rem;
+
+  --ui-button-radius: var(--ui-radius);
+  --ui-input-radius: var(--ui-radius);
+  --ui-card-radius: var(--ui-radius);
+}

@@ -1,0 +1,39 @@
+════════════════════════════════════════════════════════════════════════
+                    SoraUI RELEASE CANDIDATE (RC1) PASSPORT             
+════════════════════════════════════════════════════════════════════════
+
+RC STATUS:             ❌ BLOCKED / FAIL
+VERSION:               v0.1.0-rc.1
+TIMESTAMP:             2026-08-22T06:58:08.450Z
+DURATION:              33.38s
+
+────────────────────────────────────────────────────────────────────────
+SOURCE & PROVENANCE STATE
+────────────────────────────────────────────────────────────────────────
+• Git Commit:          untracked-working-tree
+• Git Branch:          unknown
+• Working Tree State:  UNTRACKED (Not inside git repository root)
+• Registry SHA256:     991f779062808d7e2f6ab430...
+• Artifact Integrity:  ✅ ATTESTED (Manifest & Registry Hashes Normalized)
+• Source Provenance:   ⚠️ PENDING_CLEAN_COMMIT
+
+────────────────────────────────────────────────────────────────────────
+PIPELINE VERIFICATION MATRIX
+────────────────────────────────────────────────────────────────────────
+✅ PASS Monorepo Build                                       (0.5s)
+✅ PASS Monorepo Typecheck                                   (0.5s)
+✅ PASS Unit, Contract & A11y Tests                          (0.5s)
+✅ PASS Package Tarball & Zero Leakage Audit                 (2.8s)
+✅ PASS Isolated External Tarball Installation               (6.5s)
+❌ FAIL Consumer Validation Fixtures (Next.js, Vite, AI)     (22.6s)
+
+────────────────────────────────────────────────────────────────────────
+INVARIANT ATTESTATIONS
+────────────────────────────────────────────────────────────────────────
+• Publishable Tarballs:              5/5 Verified (@soraui/core, hooks, react, cli, mcp)
+• Monorepo Leakage References:       0 (Zero workspace:/file:/relative leaks)
+• External Consumer Apps:            3/3 (Next.js, Vite, AI-app) Passed
+• Browser Runtime Safety:            0 console errors, 0 page errors, 0 unhandled rejections
+• Model Context Protocol (MCP):      11 Tools Verified via Live stdio
+• Canonical Registry Parity:         100% (Drift = 0)
+════════════════════════════════════════════════════════════════════════

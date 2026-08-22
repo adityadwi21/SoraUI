@@ -1,0 +1,20 @@
+{
+  "name": "accordion",
+  "type": "registry:ui",
+  "level": 2,
+  "description": "A vertically stacked set of interactive headings that each reveal a section of content.",
+  "props": {
+    "type": { "type": "string", "options": ["single", "multiple"] },
+    "collapsible": { "type": "boolean", "default": false },
+    "value": { "type": "string | string[]" },
+    "defaultValue": { "type": "string | string[]" }
+  },
+  "accessibility": {
+    "keyboard": ["Space or Enter to toggle expansion", "Tab to move through triggers"],
+    "aria": ["aria-expanded", "aria-controls", "role=\"region\"", "aria-labelledby"],
+    "focus": "Standard keyboard focus ring on trigger"
+  },
+  "files": [{ "path": "components/ui/accordion.tsx", "type": "registry:ui" }],
+  "dependencies": [],
+  "installation": { "cli": "npx soraui add accordion", "npm": "import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@soraui/react'" }
+}

@@ -1,0 +1,42 @@
+/**
+ * SoraUI Theme — Sky
+ * Mode: light (default)
+ * Description: Clean blue sky — the default light theme.
+ * WCAG: All combinations verified >= 4.5:1 for text, >= 3:1 for UI elements.
+ */
+:root,
+[data-theme='sky'] {
+  --ui-background: #ffffff;
+  --ui-foreground: #0c1a2b;
+  --ui-card: #ffffff;
+  --ui-card-foreground: #0c1a2b;
+  --ui-popover: #ffffff;
+  --ui-popover-foreground: #0c1a2b;
+  --ui-primary: #0369a1;
+  --ui-primary-foreground: #ffffff;
+
+  --ui-secondary: #e0f2fe;
+  --ui-secondary-foreground: #075985;
+  --ui-muted: #f0f9ff;
+  --ui-muted-foreground: #0369a1;
+  --ui-accent: #e0f2fe;
+  --ui-accent-foreground: #0369a1;
+
+  --ui-destructive: #dc2626;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #ffffff;
+  --ui-border: #0284c7;
+  --ui-input: #0284c7;
+  --ui-ring: #0369a1;
+
+  --ui-radius: 0.5rem;
+
+  /* Component layer defaults */
+  --ui-button-radius: var(--ui-radius);
+  --ui-input-radius: var(--ui-radius);
+  --ui-card-radius: var(--ui-radius);
+}

@@ -1,0 +1,15 @@
+.base {
+  font-family: var(--sora-font-sans, system-ui, sans-serif);
+  color: var(--ui-foreground);
+  margin: 0;
+}
+.h1 { font-size: var(--sora-text-4xl, 2.25rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+.h2 { font-size: var(--sora-text-3xl, 1.875rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.015em; }
+.h3 { font-size: var(--sora-text-2xl, 1.5rem); font-weight: 600; line-height: 1.3; }
+.h4 { font-size: var(--sora-text-xl, 1.25rem); font-weight: 600; line-height: 1.35; }
+.body { font-size: var(--sora-text-base, 1rem); font-weight: 400; line-height: 1.6; }
+.body-sm { font-size: var(--sora-text-sm, 0.875rem); font-weight: 400; line-height: 1.6; }
+.caption { font-size: var(--sora-text-xs, 0.75rem); font-weight: 400; line-height: 1.4; }
+.lead { font-size: var(--sora-text-lg, 1.125rem); font-weight: 400; line-height: 1.6; color: var(--ui-muted-foreground); }
+.muted { font-size: var(--sora-text-sm, 0.875rem); color: var(--ui-muted-foreground); line-height: 1.5; }
+.code { font-family: var(--sora-font-mono, monospace); font-size: 0.875em; background-color: var(--ui-muted); padding: 0.15em 0.35em; border-radius: 0.25em; color: var(--ui-foreground); }

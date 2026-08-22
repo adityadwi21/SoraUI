@@ -1,0 +1,32 @@
+---
+title: DatePicker
+description: A date picker component with an input trigger and popup calendar.
+---
+
+# DatePicker
+
+Accessible date picker combining an interactive trigger with a calendar popup.
+
+## Installation
+
+```bash
+npx soraui add date-picker
+```
+
+## Usage
+
+```tsx
+import { DatePicker } from '@soraui/react';
+import { useState } from 'react';
+
+export default function Example() {
+  const [date, setDate] = useState<Date | null>(new Date());
+
+  return (
+    <DatePicker
+      value={date}
+      onValueChange={(d) => setDate(d)}
+    />
+  );
+}
+```

@@ -1,0 +1,1 @@
+{"name":"hover-card","type":"registry:ui","level":2,"description":"For sighted users to preview content available behind a link.","files":[{"path":"components/ui/hover-card.tsx","type":"registry:ui"}],"dependencies":["@soraui/hooks"]}

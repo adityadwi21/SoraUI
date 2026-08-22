@@ -1,0 +1,85 @@
+{
+  "timestamp": "2026-08-22T06:58:08.450Z",
+  "version": "0.1.0-rc.1",
+  "status": "FAIL",
+  "totalDurationSeconds": 33.38,
+  "source": {
+    "isGitRepo": false,
+    "commit": "untracked-working-tree",
+    "branch": "unknown",
+    "workingTree": "UNTRACKED (Not inside git repository root)",
+    "reproducibilityStatus": "PENDING_CLEAN_COMMIT",
+    "artifactIntegrity": "ATTESTED"
+  },
+  "reproducibility": {
+    "artifactIntegrity": "ATTESTED",
+    "sourceCommitStatus": "PENDING_CLEAN_COMMIT",
+    "canonicalRegistrySha256": "991f779062808d7e2f6ab430858372a9d96642e984a29fe240f1ac5bd5b86ada",
+    "packageManifestHashes": {
+      "@soraui/core": "503690bef487a4b1cf31404f86f2cf66d2fb3aa5be32a5ab07070ddd12bd2ac4",
+      "@soraui/hooks": "54662502b2dca0fe485cd18653a20f35d292a5b4335415128d196902f7572278",
+      "@soraui/react": "c6b5b78d5ad515fa7f03c98c650c42279e32ed8c00037fcb2c31ab0836a064a2",
+      "soraui": "43c0c6a975f241485826e9d398dc7034d95d561411c3f7c900cbd98b41f479c2",
+      "@soraui/mcp": "8a39d912eb1e72e2242d9501fec6c276289354df85a822be8b1be060c9834877"
+    }
+  },
+  "packages": [
+    "@soraui/core",
+    "@soraui/hooks",
+    "@soraui/react",
+    "soraui",
+    "@soraui/mcp"
+  ],
+  "consumerFixtures": [
+    "examples/nextjs-app",
+    "examples/vite-react-app",
+    "examples/ai-generated-app"
+  ],
+  "invariants": {
+    "zeroMonorepoLeakage": true,
+    "perPackageManifestContract": true,
+    "isolatedTarballInstall": true,
+    "browserRuntimeErrorsCount": 0,
+    "browserPageErrorsCount": 0,
+    "mcpStdioOperational": true
+  },
+  "steps": [
+    {
+      "id": "build",
+      "title": "Monorepo Build",
+      "status": "PASS",
+      "durationMs": 473
+    },
+    {
+      "id": "typecheck",
+      "title": "Monorepo Typecheck",
+      "status": "PASS",
+      "durationMs": 478
+    },
+    {
+      "id": "tests",
+      "title": "Unit, Contract & A11y Tests",
+      "status": "PASS",
+      "durationMs": 517
+    },
+    {
+      "id": "leakage",
+      "title": "Package Tarball & Zero Leakage Audit",
+      "status": "PASS",
+      "durationMs": 2844
+    },
+    {
+      "id": "tarballs",
+      "title": "Isolated External Tarball Installation",
+      "status": "PASS",
+      "durationMs": 6492
+    },
+    {
+      "id": "consumers",
+      "title": "Consumer Validation Fixtures (Next.js, Vite, AI)",
+      "status": "FAIL",
+      "error": "Command failed: node scripts/test-consumer-fixtures.mjs",
+      "durationMs": 22576
+    }
+  ]
+}

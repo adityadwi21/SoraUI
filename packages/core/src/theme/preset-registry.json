@@ -1,0 +1,60 @@
+{
+  "themes": [
+    {
+      "id": "sky",
+      "label": "Sky",
+      "mode": "light",
+      "default": true,
+      "description": "Clean blue sky. The default light theme — neutral, high contrast, professional."
+    },
+    {
+      "id": "cloud",
+      "label": "Cloud",
+      "mode": "light",
+      "description": "Soft white and gray cloud tones. Minimal and clean."
+    },
+    {
+      "id": "horizon",
+      "label": "Horizon",
+      "mode": "light",
+      "description": "Warm sunset transition. Orange and amber tones inspired by the horizon."
+    },
+    {
+      "id": "aurora",
+      "label": "Aurora",
+      "mode": "dark",
+      "description": "Vibrant teal and green aurora tones on a deep dark background."
+    },
+    {
+      "id": "twilight",
+      "label": "Twilight",
+      "mode": "dark",
+      "description": "Deep indigo and purple dusk sky. Calm and atmospheric."
+    },
+    {
+      "id": "midnight",
+      "label": "Midnight",
+      "mode": "dark",
+      "default": true,
+      "description": "Clean minimal dark with indigo accents. The default dark theme."
+    },
+    {
+      "id": "nebula",
+      "label": "Nebula",
+      "mode": "dark",
+      "description": "Purple and magenta nebula. Vibrant deep-space tones."
+    },
+    {
+      "id": "eclipse",
+      "label": "Eclipse",
+      "mode": "dark",
+      "description": "High contrast black background with yellow accent. Maximum clarity."
+    },
+    {
+      "id": "starlight",
+      "label": "Starlight",
+      "mode": "dark",
+      "description": "Deep navy with golden starlight accents. Elegant and premium."
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+/**
+ * SoraUI — Input Component Styles
+ * Level 1: Minimal JS runtime (native HTML input)
+ */
+
+.input {
+  display: block;
+  width: 100%;
+  background-color: var(--ui-background);
+  color: var(--ui-foreground);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-input-radius, var(--ui-radius, 0.5rem));
+  font-family: var(--sora-font-sans, system-ui, sans-serif);
+  font-size: var(--sora-text-sm, 0.875rem);
+  line-height: 1.5;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--ui-muted-foreground);
+}
+
+.input:hover:not(:disabled):not(.error) {
+  border-color: var(--ui-ring);
+}
+
+.input:focus-visible:not(.error) {
+  border-color: var(--ui-ring);
+  box-shadow: 0 0 0 2px var(--ui-background), 0 0 0 4px var(--ui-ring);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--ui-muted);
+}
+
+.error {
+  border-color: #dc2626;
+}
+
+.error:focus-visible {
+  box-shadow: 0 0 0 2px var(--ui-background), 0 0 0 4px #dc2626;
+}
+
+/* Sizes */
+.size-sm {
+  height: 2rem;
+  padding-inline: 0.625rem;
+  font-size: var(--sora-text-xs, 0.75rem);
+}
+
+.size-md {
+  height: 2.5rem;
+  padding-inline: 0.75rem;
+}
+
+.size-lg {
+  height: 3rem;
+  padding-inline: 1rem;
+  font-size: var(--sora-text-base, 1rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input {
+    transition: none;
+  }
+}

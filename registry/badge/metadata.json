@@ -1,0 +1,12 @@
+{
+  "name": "badge",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "Status indicator pill. Variants: default, secondary, outline, destructive, success, warning. Zero JS runtime.",
+  "props": {
+    "variant": { "type": "BadgeVariant", "default": "default", "options": ["default", "secondary", "outline", "destructive", "success", "warning"] }
+  },
+  "files": [{ "path": "components/ui/badge.tsx", "type": "registry:ui" }],
+  "dependencies": [],
+  "installation": { "cli": "npx soraui add badge", "npm": "import { Badge } from '@soraui/react'" }
+}

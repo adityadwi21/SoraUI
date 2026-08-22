@@ -1,0 +1,1 @@
+{"name":"switch","type":"registry:ui","level":1,"description":"A control that allows the user to toggle between on and off states.","files":[{"path":"components/ui/switch.tsx","type":"registry:ui"}],"dependencies":[]}

@@ -1,0 +1,52 @@
+{
+  "name": "@soraui/core",
+
+  "version": "0.1.0",
+  "description": "SoraUI core — design tokens, theme engine, and CSS variable system",
+  "license": "MIT",
+  "author": "SoraUI Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soraui/soraui.git"
+  },
+  "keywords": [
+    "soraui",
+    "design-tokens",
+    "theme-engine",
+    "css-variables",
+    "wcag",
+    "themes"
+  ],
+  "type": "module",
+
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./theme/*": "./dist/theme/*",
+    "./tokens": {
+      "types": "./dist/tokens/index.d.ts",
+      "import": "./dist/tokens/index.js",
+      "require": "./dist/tokens/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "sideEffects": ["**/*.css"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}

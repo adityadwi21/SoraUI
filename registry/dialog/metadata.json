@@ -1,0 +1,19 @@
+{
+  "name": "dialog",
+  "type": "registry:ui",
+  "level": 2,
+  "description": "A modal dialog component that interrupts the user with important content and expects a response. Accessible focus trap, Escape dismiss, and background scroll lock.",
+  "props": {
+    "open": { "type": "boolean" },
+    "defaultOpen": { "type": "boolean", "default": false },
+    "closeOnOverlayClick": { "type": "boolean", "default": true }
+  },
+  "accessibility": {
+    "keyboard": ["Escape to dismiss", "Tab cycles focus strictly within dialog", "Returns focus to trigger upon close"],
+    "aria": ["role=\"dialog\"", "aria-modal=\"true\"", "aria-labelledby linked to DialogTitle", "aria-describedby linked to DialogDescription"],
+    "focus": "Focus trap active while modal is open, restores focus upon exit"
+  },
+  "files": [{ "path": "components/ui/dialog.tsx", "type": "registry:ui" }],
+  "dependencies": ["@soraui/hooks"],
+  "installation": { "cli": "npx soraui add dialog", "npm": "import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@soraui/react'" }
+}

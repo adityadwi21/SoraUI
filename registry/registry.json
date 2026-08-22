@@ -1,0 +1,228 @@
+{
+  "$schema": "https://soraui.dev/registry/schema.json",
+  "version": "0.1.0",
+  "registryVersion": "0.1.0",
+  "components": [
+    { "name": "button", "type": "registry:ui", "level": 1, "description": "Interactive button with multiple variants and sizes.", "files": ["components/ui/button.tsx"], "dependencies": [] },
+    { "name": "input", "type": "registry:ui", "level": 1, "description": "Text input field with error state and size variants.", "files": ["components/ui/input.tsx"], "dependencies": [] },
+    { "name": "label", "type": "registry:ui", "level": 1, "description": "Form label with required indicator and disabled state.", "files": ["components/ui/label.tsx"], "dependencies": [] },
+    { "name": "card", "type": "registry:ui", "level": 1, "description": "Composable card container with header, content, and footer.", "files": ["components/ui/card.tsx"], "dependencies": [] },
+    { "name": "badge", "type": "registry:ui", "level": 1, "description": "Status indicator pill badge with multiple variants.", "files": ["components/ui/badge.tsx"], "dependencies": [] },
+    { "name": "textarea", "type": "registry:ui", "level": 1, "description": "Multi-line text input with error state and resize control.", "files": ["components/ui/textarea.tsx"], "dependencies": [] },
+    { "name": "separator", "type": "registry:ui", "level": 1, "description": "Visual divider, horizontal or vertical. Decorative or semantic.", "files": ["components/ui/separator.tsx"], "dependencies": [] },
+    { "name": "skeleton", "type": "registry:ui", "level": 1, "description": "Loading placeholder with shimmer animation. Respects prefers-reduced-motion.", "files": ["components/ui/skeleton.tsx"], "dependencies": [] },
+    { "name": "typography", "type": "registry:ui", "level": 1, "description": "Semantic typography component with heading and body variants.", "files": ["components/ui/typography.tsx"], "dependencies": [] },
+    { "name": "tooltip", "type": "registry:ui", "level": 2, "description": "Floating tooltip with hover/focus triggers, placement, and keyboard support.", "files": ["components/ui/tooltip.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "popover", "type": "registry:ui", "level": 2, "description": "Floating overlay panel anchored to a trigger with click-outside and Escape dismiss.", "files": ["components/ui/popover.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "tabs", "type": "registry:ui", "level": 2, "description": "Tabbed content navigation with roving tabindex and full keyboard navigation.", "files": ["components/ui/tabs.tsx"], "dependencies": [] },
+    { "name": "accordion", "type": "registry:ui", "level": 2, "description": "Collapsible panels with single and multiple selection modes.", "files": ["components/ui/accordion.tsx"], "dependencies": [] },
+    { "name": "dialog", "type": "registry:ui", "level": 2, "description": "Modal dialog with focus trap, backdrop blur, Escape dismiss, and scroll lock.", "files": ["components/ui/dialog.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "dropdown", "type": "registry:ui", "level": 2, "description": "Contextual action menu with keyboard roving navigation and items.", "files": ["components/ui/dropdown.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "select", "type": "registry:ui", "level": 2, "description": "Custom select dropdown with listbox semantics, keyboard search, and groups.", "files": ["components/ui/select.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "toast", "type": "registry:ui", "level": 2, "description": "Temporary notifications with queue management and auto-dismiss.", "files": ["components/ui/toast.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "calendar", "type": "registry:ui", "level": 3, "description": "Monthly calendar with date range limits and keyboard grid navigation.", "files": ["components/ui/calendar.tsx"], "dependencies": [] },
+    { "name": "date-picker", "type": "registry:ui", "level": 3, "description": "Date picker input with calendar popover overlay.", "files": ["components/ui/date-picker.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "combobox", "type": "registry:ui", "level": 3, "description": "Autocomplete search input with real-time filtering and listbox popup.", "files": ["components/ui/combobox.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "file-uploader", "type": "registry:ui", "level": 3, "description": "Drag-and-drop file upload zone with file queue and size validation.", "files": ["components/ui/file-uploader.tsx"], "dependencies": [] },
+    { "name": "data-table", "type": "registry:ui", "level": 3, "description": "Lightweight sortable, filterable, and paginated data table with row selection.", "files": ["components/ui/data-table.tsx"], "dependencies": [] },
+    { "name": "checkbox", "type": "registry:ui", "level": 1, "description": "A control that allows the user to toggle between checked and not checked.", "files": ["components/ui/checkbox.tsx"], "dependencies": [] },
+    { "name": "radio-group", "type": "registry:ui", "level": 2, "description": "A set of checkable buttons where no more than one can be checked at a time.", "files": ["components/ui/radio-group.tsx"], "dependencies": [] },
+    { "name": "switch", "type": "registry:ui", "level": 1, "description": "A control that allows the user to toggle between on and off states.", "files": ["components/ui/switch.tsx"], "dependencies": [] },
+    { "name": "slider", "type": "registry:ui", "level": 2, "description": "An input where the user selects a value from within a given range.", "files": ["components/ui/slider.tsx"], "dependencies": [] },
+    { "name": "input-otp", "type": "registry:ui", "level": 2, "description": "A one-time password component with digit auto-advance and clipboard support.", "files": ["components/ui/input-otp.tsx"], "dependencies": [] },
+    { "name": "number-input", "type": "registry:ui", "level": 1, "description": "A numeric stepper input with bounds and step control.", "files": ["components/ui/number-input.tsx"], "dependencies": [] },
+    { "name": "breadcrumb", "type": "registry:ui", "level": 1, "description": "Displays the path to the current resource using a hierarchy of links.", "files": ["components/ui/breadcrumb.tsx"], "dependencies": [] },
+    { "name": "navigation-menu", "type": "registry:ui", "level": 2, "description": "A collection of links for navigating websites with dropdown content panels.", "files": ["components/ui/navigation-menu.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "menubar", "type": "registry:ui", "level": 2, "description": "A desktop-grade horizontal menu bar with nested dropdown menus.", "files": ["components/ui/menubar.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "pagination", "type": "registry:ui", "level": 1, "description": "Pagination with page navigation, previous/next, and ellipsis.", "files": ["components/ui/pagination.tsx"], "dependencies": [] },
+    { "name": "stepper", "type": "registry:ui", "level": 1, "description": "Sequential progress tracker showing completed, active, and pending steps.", "files": ["components/ui/stepper.tsx"], "dependencies": [] },
+    { "name": "command-palette", "type": "registry:ui", "level": 2, "description": "Fast, composable, unstyled command menu for React.", "files": ["components/ui/command-palette.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "alert-dialog", "type": "registry:ui", "level": 2, "description": "A modal dialog that interrupts the user with important content and expects a response.", "files": ["components/ui/alert-dialog.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "drawer", "type": "registry:ui", "level": 2, "description": "A panel that slides in from the edge of the screen.", "files": ["components/ui/drawer.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "hover-card", "type": "registry:ui", "level": 2, "description": "For sighted users to preview content available behind a link.", "files": ["components/ui/hover-card.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "context-menu", "type": "registry:ui", "level": 2, "description": "Displays a menu located at the pointer when right-clicked.", "files": ["components/ui/context-menu.tsx"], "dependencies": ["@soraui/hooks"] },
+    { "name": "progress", "type": "registry:ui", "level": 1, "description": "Displays an indicator showing the completion progress of a task.", "files": ["components/ui/progress.tsx"], "dependencies": [] },
+    { "name": "avatar", "type": "registry:ui", "level": 1, "description": "An image element with a fallback for representing the user.", "files": ["components/ui/avatar.tsx"], "dependencies": [] },
+    { "name": "collapsible", "type": "registry:ui", "level": 1, "description": "An interactive component which can be expanded or collapsed.", "files": ["components/ui/collapsible.tsx"], "dependencies": [] },
+    { "name": "timeline", "type": "registry:ui", "level": 1, "description": "A vertical chronological list of events.", "files": ["components/ui/timeline.tsx"], "dependencies": [] },
+    { "name": "statistic", "type": "registry:ui", "level": 1, "description": "Display statistics or metrics with trend indicators.", "files": ["components/ui/statistic.tsx"], "dependencies": [] },
+    { "name": "tree-view", "type": "registry:ui", "level": 2, "description": "A hierarchical list of items with expand and collapse interactions.", "files": ["components/ui/tree-view.tsx"], "dependencies": [] }
+  ],
+  "blocks": [
+    {
+      "id": "login-form",
+      "name": "Login Form",
+      "category": "auth",
+      "description": "Accessible login card with validation, remember me, and social provider slots.",
+      "dependencies": ["card", "input", "label", "button", "checkbox", "separator"],
+      "tags": ["auth", "login", "form", "card"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "register-form",
+      "name": "Register Form",
+      "category": "auth",
+      "description": "Sign-up card with password strength meter, terms acceptance, and social logins.",
+      "dependencies": ["card", "input", "label", "button", "checkbox", "separator", "progress"],
+      "tags": ["auth", "register", "signup", "form"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "forgot-password-form",
+      "name": "Forgot Password Form",
+      "category": "auth",
+      "description": "Password reset request card with success notification and back link.",
+      "dependencies": ["card", "input", "label", "button"],
+      "tags": ["auth", "password", "reset", "form"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "otp-verification",
+      "name": "OTP Verification",
+      "category": "auth",
+      "description": "Two-factor authentication PIN code entry card with auto-advance and resend action.",
+      "dependencies": ["card", "input-otp", "button"],
+      "tags": ["auth", "otp", "2fa", "security"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "dashboard-shell",
+      "name": "Dashboard Shell",
+      "category": "dashboard",
+      "description": "Responsive dashboard shell with collapsible sidebar, topbar, and user profile menu.",
+      "dependencies": ["button", "avatar", "dropdown"],
+      "tags": ["dashboard", "shell", "sidebar", "layout"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "metric-grid",
+      "name": "Metric Grid",
+      "category": "dashboard",
+      "description": "Responsive KPI statistic grid with trend direction indicators and comparison periods.",
+      "dependencies": ["card", "statistic"],
+      "tags": ["dashboard", "metrics", "stats", "kpi"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "data-table-block",
+      "name": "Data Table Block",
+      "category": "dashboard",
+      "description": "Interactive data table shell with search filtering, selection, bulk actions, and pagination.",
+      "dependencies": ["card", "input", "button", "data-table", "pagination"],
+      "tags": ["dashboard", "table", "crud", "pagination", "search"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "hero-section",
+      "name": "Hero Section",
+      "category": "marketing",
+      "description": "High-impact token-driven marketing hero section with ambient glow and call-to-action buttons.",
+      "dependencies": ["button", "badge"],
+      "tags": ["marketing", "hero", "landing", "cta"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "feature-grid",
+      "name": "Feature Grid",
+      "category": "marketing",
+      "description": "Responsive multi-column feature showcase grid with icon badges.",
+      "dependencies": ["card", "badge"],
+      "tags": ["marketing", "features", "grid"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "pricing-table",
+      "name": "Pricing Table",
+      "category": "marketing",
+      "description": "Tiered pricing table with monthly/annual switch toggle and feature checklists.",
+      "dependencies": ["card", "button", "badge", "switch"],
+      "tags": ["marketing", "pricing", "plans", "tier"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "faq-section",
+      "name": "FAQ Section",
+      "category": "marketing",
+      "description": "Frequently asked questions accordion block.",
+      "dependencies": ["accordion"],
+      "tags": ["marketing", "faq", "accordion"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "footer-section",
+      "name": "Footer Section",
+      "category": "marketing",
+      "description": "Responsive page footer with brand identity, newsletter subscription, and link columns.",
+      "dependencies": ["input", "button", "separator"],
+      "tags": ["marketing", "footer", "newsletter"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "multi-step-wizard",
+      "name": "Multi-Step Wizard",
+      "category": "forms",
+      "description": "Multi-step form wizard with progress stepper and back/next navigation.",
+      "dependencies": ["card", "stepper", "button"],
+      "tags": ["forms", "wizard", "stepper", "flow"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "settings-form",
+      "name": "Settings Form",
+      "category": "forms",
+      "description": "Tabbed account settings form with switches, avatar upload, and security fields.",
+      "dependencies": ["card", "tabs", "input", "label", "button", "switch", "avatar"],
+      "tags": ["forms", "settings", "profile", "account"],
+      "preview": { "desktop": true, "mobile": true }
+    }
+  ],
+  "templates": [
+    {
+      "id": "login-page",
+      "name": "Login Page Template",
+      "category": "auth",
+      "description": "Full split-screen authentication page layout with brand quote.",
+      "blocks": ["login-form"],
+      "dependencies": ["card", "input", "label", "button", "checkbox", "separator"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "dashboard-page",
+      "name": "Dashboard Page Template",
+      "category": "dashboard",
+      "description": "Full dashboard page composing DashboardShell, MetricGrid, and DataTableBlock.",
+      "blocks": ["dashboard-shell", "metric-grid", "data-table-block"],
+      "dependencies": ["button", "avatar", "dropdown", "card", "statistic", "input", "data-table", "pagination"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "saas-landing-page",
+      "name": "SaaS Landing Page Template",
+      "category": "marketing",
+      "description": "Full marketing landing page composing HeroSection, FeatureGrid, PricingTable, FAQSection, and FooterSection.",
+      "blocks": ["hero-section", "feature-grid", "pricing-table", "faq-section", "footer-section"],
+      "dependencies": ["button", "badge", "card", "switch", "accordion", "input", "separator"],
+      "preview": { "desktop": true, "mobile": true }
+    },
+    {
+      "id": "settings-page",
+      "name": "Settings Page Template",
+      "category": "settings",
+      "description": "Full account and preferences configuration page.",
+      "blocks": ["dashboard-shell", "settings-form"],
+      "dependencies": ["button", "avatar", "dropdown", "card", "tabs", "input", "label", "switch"],
+      "preview": { "desktop": true, "mobile": true }
+    }
+  ],
+  "themes": [
+    { "id": "sky", "label": "Sky", "mode": "light", "default": true },
+    { "id": "cloud", "label": "Cloud", "mode": "light" },
+    { "id": "horizon", "label": "Horizon", "mode": "light" },
+    { "id": "aurora", "label": "Aurora", "mode": "dark" },
+    { "id": "twilight", "label": "Twilight", "mode": "dark" },
+    { "id": "midnight", "label": "Midnight", "mode": "dark", "default": true },
+    { "id": "nebula", "label": "Nebula", "mode": "dark" },
+    { "id": "eclipse", "label": "Eclipse", "mode": "dark" },
+    { "id": "starlight", "label": "Starlight", "mode": "dark" }
+  ]
+}

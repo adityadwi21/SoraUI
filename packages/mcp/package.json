@@ -1,0 +1,63 @@
+{
+  "name": "@soraui/mcp",
+  "version": "0.1.0",
+  "description": "SoraUI Model Context Protocol (MCP) server — Enables AI coding agents to search, inspect, compose, and validate SoraUI components",
+  "license": "MIT",
+  "author": "SoraUI Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soraui/soraui.git"
+  },
+  "keywords": [
+    "soraui",
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "claude",
+    "cursor",
+    "gemini",
+    "copilot"
+  ],
+  "type": "module",
+
+  "bin": {
+    "soraui-mcp": "./dist/server.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+
+  "scripts": {
+    "prebuild": "node -e \"fs.copyFileSync('../../registry/registry.json', 'src/registry/canonical-registry.json')\"",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "pretypecheck": "node -e \"fs.copyFileSync('../../registry/registry.json', 'src/registry/canonical-registry.json')\"",
+    "typecheck": "tsc --noEmit",
+    "pretest": "node -e \"fs.copyFileSync('../../registry/registry.json', 'src/registry/canonical-registry.json')\"",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}

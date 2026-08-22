@@ -1,0 +1,177 @@
+/**
+ * SoraUI — Button Component Styles
+ *
+ * CSS-first approach. All colors via CSS variables (Layer 2/3 tokens).
+ * No hardcoded hex values.
+ * JavaScript is NOT used for any visual behavior.
+ */
+
+.button {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  /* Typography */
+  font-family: var(--sora-font-sans, system-ui, sans-serif);
+  font-size: var(--sora-text-sm, 0.875rem);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+
+  /* Shape */
+  border-radius: var(--ui-button-radius, var(--ui-radius, 0.5rem));
+  border: 1px solid transparent;
+
+  /* Interaction */
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+
+  /* Focus ring — accessible */
+  outline: none;
+}
+
+/* Focus visible ring — keyboard only */
+.button:focus-visible {
+  box-shadow: 0 0 0 2px var(--ui-background, #fff), 0 0 0 4px var(--ui-ring, #0ea5e9);
+}
+
+/* Disabled state */
+.button:disabled,
+.button[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Loading state */
+.button[data-loading='true'] {
+  cursor: wait;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+/* ---- Variants ---- */
+
+.variant-primary {
+  background-color: var(--ui-primary);
+  color: var(--ui-primary-foreground);
+  border-color: var(--ui-primary);
+}
+
+.variant-primary:hover:not(:disabled):not([aria-disabled='true']) {
+  filter: brightness(0.9);
+}
+
+.variant-primary:active:not(:disabled) {
+  filter: brightness(0.8);
+}
+
+.variant-secondary {
+  background-color: var(--ui-secondary);
+  color: var(--ui-secondary-foreground);
+  border-color: var(--ui-secondary);
+}
+
+.variant-secondary:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+.variant-outline {
+  background-color: transparent;
+  color: var(--ui-foreground);
+  border-color: var(--ui-border);
+}
+
+.variant-outline:hover:not(:disabled) {
+  background-color: var(--ui-muted);
+}
+
+.variant-ghost {
+  background-color: transparent;
+  color: var(--ui-foreground);
+  border-color: transparent;
+}
+
+.variant-ghost:hover:not(:disabled) {
+  background-color: var(--ui-muted);
+}
+
+.variant-destructive {
+  background-color: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+.variant-destructive:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.variant-link {
+  background-color: transparent;
+  color: var(--ui-primary);
+  border-color: transparent;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.variant-link:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+/* ---- Sizes ---- */
+
+.size-sm {
+  height: 2rem;
+  padding-inline: 0.75rem;
+  font-size: var(--sora-text-xs, 0.75rem);
+}
+
+.size-md {
+  height: 2.5rem;
+  padding-inline: 1rem;
+}
+
+.size-lg {
+  height: 2.75rem;
+  padding-inline: 1.5rem;
+  font-size: var(--sora-text-base, 1rem);
+}
+
+.size-icon {
+  height: 2.5rem;
+  width: 2.5rem;
+  padding: 0;
+}
+
+/* ---- Spinner ---- */
+
+.spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: sora-spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes sora-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+  .spinner {
+    animation: none;
+    border-top-color: currentColor;
+    opacity: 0.5;
+  }
+}

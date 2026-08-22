@@ -1,0 +1,39 @@
+---
+title: Popover
+description: Displays rich content in a portal, triggered by a button.
+---
+
+# Popover
+
+A rich floating panel triggered on click.
+
+## Installation
+
+```bash
+npx soraui add popover
+```
+
+## Usage
+
+```tsx
+import { Popover, PopoverTrigger, PopoverContent, PopoverClose, Button } from '@soraui/react';
+
+export default function Example() {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline">Open Popover</Button>
+      </PopoverTrigger>
+      <PopoverContent placement="bottom" offset={8}>
+        <div className="p-4">
+          <h4 className="font-medium">Dimensions</h4>
+          <p className="text-sm text-muted">Set the dimensions for the layer.</p>
+          <PopoverClose asChild>
+            <Button size="sm">Done</Button>
+          </PopoverClose>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+```

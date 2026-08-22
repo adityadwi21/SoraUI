@@ -1,0 +1,29 @@
+{
+  "name": "@soraui/icons",
+  "version": "0.1.0",
+  "description": "SoraUI icon set — lightweight SVG icons as React components",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": { "react": ">=18.0.0" },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "react": "^18.3.1",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4"
+  }
+}

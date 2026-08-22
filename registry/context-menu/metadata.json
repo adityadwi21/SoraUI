@@ -1,0 +1,1 @@
+{"name":"context-menu","type":"registry:ui","level":2,"description":"Displays a menu located at the pointer when right-clicked.","files":[{"path":"components/ui/context-menu.tsx","type":"registry:ui"}],"dependencies":["@soraui/hooks"]}

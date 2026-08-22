@@ -1,0 +1,33 @@
+---
+title: Tabs
+description: A set of layered sections of content—known as tab panels—that are displayed one at a time.
+---
+
+# Tabs
+
+Accessible layered tab panels.
+
+## Installation
+
+```bash
+npx soraui add tabs
+```
+
+## Usage
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@soraui/react';
+
+export default function Example() {
+  return (
+    <Tabs defaultValue="account">
+      <TabsList>
+        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="password">Password</TabsTrigger>
+      </TabsList>
+      <TabsContent value="account">Account settings form...</TabsContent>
+      <TabsContent value="password">Change password form...</TabsContent>
+    </Tabs>
+  );
+}
+```

@@ -1,0 +1,9 @@
+{
+  "component": "calendar",
+  "minifiedBytes": 2821,
+  "minifiedKB": 2.75,
+  "gzippedBytes": 1231,
+  "gzippedKB": 1.2,
+  "budgetKB": 10,
+  "passed": true
+}

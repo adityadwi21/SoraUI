@@ -1,0 +1,9 @@
+{
+  "name": "textarea",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "SoraUI textarea component. Level 1 - minimal runtime, accessible, CSS variables based.",
+  "files": [{ "path": "components/ui/textarea.tsx", "type": "registry:ui" }],
+  "dependencies": [],
+  "installation": { "cli": "npx soraui add textarea", "npm": "import { Textarea } from '@soraui/react'" }
+}

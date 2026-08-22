@@ -1,0 +1,1 @@
+{"name":"drawer","type":"registry:ui","level":2,"description":"A panel that slides in from the edge of the screen.","files":[{"path":"components/ui/drawer.tsx","type":"registry:ui"}],"dependencies":["@soraui/hooks"]}

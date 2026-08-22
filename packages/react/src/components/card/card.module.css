@@ -1,0 +1,52 @@
+/**
+ * SoraUI — Card Component Styles
+ * Level 1: Pure CSS, zero JS runtime
+ */
+
+.card {
+  background-color: var(--ui-background);
+  color: var(--ui-foreground);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-card-radius, var(--ui-radius, 0.5rem));
+  overflow: hidden;
+}
+
+.card.elevated {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.5rem;
+  padding-bottom: 0;
+}
+
+.title {
+  font-family: var(--sora-font-sans, system-ui, sans-serif);
+  font-size: var(--sora-text-lg, 1.125rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ui-foreground);
+  margin: 0;
+}
+
+.description {
+  font-size: var(--sora-text-sm, 0.875rem);
+  color: var(--ui-muted-foreground);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.content {
+  padding: 1.5rem;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  padding-top: 0;
+  gap: 0.5rem;
+}

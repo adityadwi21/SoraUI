@@ -1,0 +1,56 @@
+/**
+ * SoraUI — Badge Component Styles
+ * Level 1: Pure CSS, zero JS runtime
+ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--sora-radius-full, 9999px);
+  border: 1px solid transparent;
+  font-family: var(--sora-font-sans, system-ui, sans-serif);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  line-height: 1;
+  padding: 0.25rem 0.625rem;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.variant-default {
+  background-color: var(--ui-primary);
+  color: var(--ui-primary-foreground);
+  border-color: var(--ui-primary);
+}
+
+.variant-secondary {
+  background-color: var(--ui-secondary);
+  color: var(--ui-secondary-foreground);
+  border-color: var(--ui-secondary);
+}
+
+.variant-outline {
+  background-color: transparent;
+  color: var(--ui-foreground);
+  border-color: var(--ui-border);
+}
+
+.variant-destructive {
+  background-color: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+.variant-success {
+  background-color: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+}
+
+.variant-warning {
+  background-color: #d97706;
+  color: #ffffff;
+  border-color: #d97706;
+}

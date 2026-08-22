@@ -1,0 +1,1 @@
+{"name":"number-input","type":"registry:ui","level":1,"description":"A numeric stepper input with bounds and step control.","files":[{"path":"components/ui/number-input.tsx","type":"registry:ui"}],"dependencies":[]}

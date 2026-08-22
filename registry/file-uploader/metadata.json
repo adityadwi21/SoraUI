@@ -1,0 +1,19 @@
+{
+  "name": "file-uploader",
+  "type": "registry:ui",
+  "level": 3,
+  "description": "Drag-and-drop file upload zone with multi-file support, size/type validation, and file list preview.",
+  "props": {
+    "accept": { "type": "string" },
+    "maxSize": { "type": "number" },
+    "multiple": { "type": "boolean", "default": false },
+    "disabled": { "type": "boolean", "default": false }
+  },
+  "accessibility": {
+    "keyboard": ["Enter or Space on dropzone activates file browser", "Remove buttons are fully keyboard focusable"],
+    "aria": ["role=\"button\" on dropzone", "role=\"alert\" for size validation errors", "aria-label for file list and remove actions"]
+  },
+  "files": [{ "path": "components/ui/file-uploader.tsx", "type": "registry:ui" }],
+  "dependencies": [],
+  "installation": { "cli": "npx soraui add file-uploader", "npm": "import { FileUploader } from '@soraui/react'" }
+}

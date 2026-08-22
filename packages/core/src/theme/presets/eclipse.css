@@ -1,0 +1,37 @@
+/**
+ * SoraUI Theme — Eclipse
+ * Mode: dark
+ * Description: Pure high-contrast obsidian black with sharp yellow accents.
+ */
+[data-theme='eclipse'] {
+  --ui-background: #000000;
+  --ui-foreground: #ffffff;
+  --ui-card: #0a0a0a;
+  --ui-card-foreground: #ffffff;
+  --ui-popover: #0a0a0a;
+  --ui-popover-foreground: #ffffff;
+  --ui-primary: #facc15;
+  --ui-primary-foreground: #000000;
+  --ui-secondary: #171717;
+  --ui-secondary-foreground: #ffffff;
+  --ui-muted: #171717;
+  --ui-muted-foreground: #a3a3a3;
+  --ui-accent: #262626;
+  --ui-accent-foreground: #ffffff;
+  --ui-destructive: #dc2626;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #000000;
+  --ui-border: #737373;
+  --ui-input: #737373;
+
+  --ui-ring: #facc15;
+  --ui-radius: 0.5rem;
+
+  --ui-button-radius: var(--ui-radius);
+  --ui-input-radius: var(--ui-radius);
+  --ui-card-radius: var(--ui-radius);
+}

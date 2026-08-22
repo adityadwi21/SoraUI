@@ -1,0 +1,32 @@
+---
+title: Calendar
+description: An accessible date field component that allows users to enter or select a date.
+---
+
+# Calendar
+
+Monthly calendar date picker.
+
+## Installation
+
+```bash
+npx soraui add calendar
+```
+
+## Usage
+
+```tsx
+import { Calendar } from '@soraui/react';
+import { useState } from 'react';
+
+export default function Example() {
+  const [date, setDate] = useState<Date | null>(new Date());
+
+  return (
+    <Calendar
+      value={date}
+      onValueChange={(newDate) => setDate(newDate)}
+    />
+  );
+}
+```
