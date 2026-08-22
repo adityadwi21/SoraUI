@@ -1,7 +1,12 @@
 {
   "name": "@soraui/mcp",
-  "version": "0.1.0",
+  "version": "0.1.0-rc.1",
+  "publishConfig": {
+    "access": "public",
+    "tag": "rc"
+  },
   "description": "SoraUI Model Context Protocol (MCP) server — Enables AI coding agents to search, inspect, compose, and validate SoraUI components",
+
   "license": "MIT",
   "author": "SoraUI Team",
   "repository": {

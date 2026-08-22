@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-22T07:04:23.089Z",
+  "timestamp": "2026-08-22T07:11:21.126Z",
   "version": "0.1.0-rc.1",
   "status": "PASS",
-  "totalDurationSeconds": 90.78,
+  "totalDurationSeconds": 82.02,
   "source": {
     "isGitRepo": true,
-    "commit": "84eace58859925569041f41f754a2829fa9c78a6",
+    "commit": "f7131e60cd6f2a9f002efa490f399cfebb476ee5",
     "branch": "master",
-    "workingTree": "DIRTY (4 modified files)",
+    "workingTree": "DIRTY (10 modified files)",
     "reproducibilityStatus": "PENDING_CLEAN_COMMIT",
     "artifactIntegrity": "ATTESTED"
   },
@@ -16,11 +16,11 @@
     "sourceCommitStatus": "PENDING_CLEAN_COMMIT",
     "canonicalRegistrySha256": "991f779062808d7e2f6ab430858372a9d96642e984a29fe240f1ac5bd5b86ada",
     "packageManifestHashes": {
-      "@soraui/core": "503690bef487a4b1cf31404f86f2cf66d2fb3aa5be32a5ab07070ddd12bd2ac4",
-      "@soraui/hooks": "54662502b2dca0fe485cd18653a20f35d292a5b4335415128d196902f7572278",
-      "@soraui/react": "c6b5b78d5ad515fa7f03c98c650c42279e32ed8c00037fcb2c31ab0836a064a2",
-      "soraui": "43c0c6a975f241485826e9d398dc7034d95d561411c3f7c900cbd98b41f479c2",
-      "@soraui/mcp": "8a39d912eb1e72e2242d9501fec6c276289354df85a822be8b1be060c9834877"
+      "@soraui/core": "8f7970999ccaaea3992f155ce14dcb0a75f2de8f851ed0b396b9a25a56585405",
+      "@soraui/hooks": "4094d8ce7180180c7e6adda4aaa04cf4cbc8e22493aed41810e1d29e71243ef1",
+      "@soraui/react": "d8c2b77f2720f129b392ade3e663ad81f1ad92c000da05dd79bfdbfaca80c4bf",
+      "soraui": "e53b72ffec533c7fd2bf68817edd4779c8c89d4225815ff0099c2a6351355b32",
+      "@soraui/mcp": "fa1649dcdfe39bc7704a12be0112e94cce5808cc84d35d74e1ea823ec158ab4c"
     }
   },
   "packages": [
@@ -48,49 +48,49 @@
       "id": "build",
       "title": "Monorepo Build",
       "status": "PASS",
-      "durationMs": 10669
+      "durationMs": 9897
     },
     {
       "id": "typecheck",
       "title": "Monorepo Typecheck",
       "status": "PASS",
-      "durationMs": 5957
+      "durationMs": 5869
     },
     {
       "id": "tests",
       "title": "Unit, Contract & A11y Tests",
       "status": "PASS",
-      "durationMs": 18703
+      "durationMs": 17276
     },
     {
       "id": "leakage",
       "title": "Package Tarball & Zero Leakage Audit",
       "status": "PASS",
-      "durationMs": 2947
+      "durationMs": 2884
     },
     {
       "id": "tarballs",
       "title": "Isolated External Tarball Installation",
       "status": "PASS",
-      "durationMs": 6171
+      "durationMs": 5757
     },
     {
       "id": "consumers",
       "title": "Consumer Validation Fixtures (Next.js, Vite, AI)",
       "status": "PASS",
-      "durationMs": 46159
+      "durationMs": 40157
     },
     {
       "id": "mcp-smoke",
       "title": "Live stdio MCP Server Verification",
       "status": "PASS",
-      "durationMs": 173
+      "durationMs": 177
     },
     {
       "id": "budgets",
       "title": "Bundle Budgets & Release Artifacts",
       "status": "PASS",
-      "durationMs": 1
+      "durationMs": 0
     }
   ]
 }

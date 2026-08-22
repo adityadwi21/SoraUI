@@ -1,7 +1,12 @@
 {
   "name": "@soraui/hooks",
-  "version": "0.1.0",
+  "version": "0.1.0-rc.1",
+  "publishConfig": {
+    "access": "public",
+    "tag": "rc"
+  },
   "description": "SoraUI reusable React hooks",
+
   "license": "MIT",
   "author": "SoraUI Team",
   "repository": {
