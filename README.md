@@ -40,16 +40,16 @@ SoraUI is an open-source, lightweight UI construction system for modern JavaScri
 
 ```bash
 # Initialize SoraUI in your project
-npx soraui init
+npx @soraui/cli init
 
 # Add primitive components
-npx soraui add button dialog data-table
+npx @soraui/cli add button dialog data-table
 
 # Add production blocks
-npx soraui add block login-form metric-grid
+npx @soraui/cli add block login-form metric-grid
 
 # Add full-page templates
-npx soraui add template dashboard-page
+npx @soraui/cli add template dashboard-page
 ```
 
 ### 2. Via NPM SDK
@@ -60,14 +60,17 @@ npm install @soraui/react @soraui/core @soraui/hooks
 
 ```tsx
 import React from 'react';
-import { ThemeProvider, ThemeScope, Button, Card, LoginForm } from '@soraui/react';
-import '@soraui/react/styles';
+import { ThemeProvider, ThemeScope, Button, Card } from '@soraui/react';
+import '@soraui/react/styles.css';
 
 export default function App() {
   return (
     <ThemeProvider defaultTheme="midnight" defaultMode="dark">
       <main style={{ padding: '2rem' }}>
-        <LoginForm onSubmit={(data) => console.log('Login:', data)} />
+        <Card>
+          <h1>Hello SoraUI!</h1>
+          <Button variant="primary">Click Me</Button>
+        </Card>
       </main>
     </ThemeProvider>
   );
@@ -100,6 +103,18 @@ Tools available to your agent:
 
 ---
 
+## 📦 Published NPM Packages (`v0.1.0-rc.1`)
+
+| Package | Purpose | Version |
+|---|---|---|
+| [`@soraui/core`](https://www.npmjs.com/package/@soraui/core) | Tokens, 24-key Theme Contract, CSS Presets | `0.1.0-rc.1` |
+| [`@soraui/hooks`](https://www.npmjs.com/package/@soraui/hooks) | A11y & interaction primitives (focus trap, escape key) | `0.1.0-rc.1` |
+| [`@soraui/react`](https://www.npmjs.com/package/@soraui/react) | 44 primitives, 14 blocks, 4 templates, ThemeProvider | `0.1.0-rc.1` |
+| [`@soraui/cli`](https://www.npmjs.com/package/@soraui/cli) | CLI code generator & dependency resolver | `0.1.0-rc.1` |
+| [`@soraui/mcp`](https://www.npmjs.com/package/@soraui/mcp) | Official Model Context Protocol stdio server | `0.1.0-rc.1` |
+
+---
+
 ## 📦 Monorepo Architecture
 
 ```text
@@ -112,7 +127,7 @@ soraui/
 │   ├── core/           # Design tokens, 24-key Theme Contract, preset stylesheets
 │   ├── hooks/          # A11y & interaction hooks (focus trap, roving index, escape key)
 │   ├── react/          # 44 primitives, 14 blocks, 4 templates, ThemeProvider, ThemeScope
-│   ├── cli/            # `soraui` CLI for source code distribution & dependency resolution
+│   ├── cli/            # `@soraui/cli` code generator & dependency resolution
 │   ├── icons/          # Minimal SVG icon primitives
 │   └── mcp/            # Model Context Protocol stdio server for AI coding agents
 │
@@ -121,7 +136,7 @@ soraui/
 
 ---
 
-## 🛠️ Development & Pipeline
+## 🛠️ Development & Testing Suites
 
 ```bash
 # Install dependencies
@@ -130,15 +145,22 @@ pnpm install
 # Build all packages & apps
 pnpm build
 
-# Run comprehensive test suites
+# Run unit tests across all packages
 pnpm test
 
 # Run TypeScript typechecks
 pnpm typecheck
 
-# Full Turborepo pipeline verification
-pnpm turbo run build typecheck test
+# Phase 14D: Real Developer Adoption Benchmark (T0 -> T4 across npm, pnpm, yarn, bun)
+pnpm test:adoption-benchmark
+
+# Phase 14B: Multi-Package Manager Matrix (npm, pnpm, yarn, bun)
+pnpm test:pm-matrix
+
+# Phase 14C: Live MCP stdio Protocol & 11 Tool Validation
+pnpm test:ai-agent-mcp
 ```
+
 
 ---
 

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-22T08:25:50.316Z",
+  "timestamp": "2026-08-22T08:35:37.753Z",
   "environment": {
     "node": "v22.15.0",
     "os": "Windows_NT 10.0.19045 x64"
@@ -21,12 +21,12 @@
   "packageManagerBenchmarks": [
     {
       "pm": "npm",
-      "t0_projectCreationMs": 674,
-      "t1_installationMs": 4646,
-      "t2_firstComponentMs": 1260,
-      "t3_realisticCompositionMs": 1303,
-      "t4_productionBuildAndSmokeMs": 3320,
-      "totalJourneyDurationMs": 11204,
+      "t0_projectCreationMs": 632,
+      "t1_installationMs": 9143,
+      "t2_firstComponentMs": 1263,
+      "t3_realisticCompositionMs": 1302,
+      "t4_productionBuildAndSmokeMs": 3390,
+      "totalJourneyDurationMs": 15732,
       "manualStepCount": 4,
       "internalKnowledgeRequired": false,
       "warningsOrErrors": [],
@@ -34,12 +34,12 @@
     },
     {
       "pm": "pnpm",
-      "t0_projectCreationMs": 356,
-      "t1_installationMs": 3198,
-      "t2_firstComponentMs": 795,
-      "t3_realisticCompositionMs": 839,
-      "t4_productionBuildAndSmokeMs": 2334,
-      "totalJourneyDurationMs": 7523,
+      "t0_projectCreationMs": 330,
+      "t1_installationMs": 3477,
+      "t2_firstComponentMs": 1152,
+      "t3_realisticCompositionMs": 968,
+      "t4_productionBuildAndSmokeMs": 3050,
+      "totalJourneyDurationMs": 8979,
       "manualStepCount": 4,
       "internalKnowledgeRequired": false,
       "warningsOrErrors": [],
@@ -47,12 +47,12 @@
     },
     {
       "pm": "yarn",
-      "t0_projectCreationMs": 157,
-      "t1_installationMs": 4759,
-      "t2_firstComponentMs": 1046,
-      "t3_realisticCompositionMs": 867,
-      "t4_productionBuildAndSmokeMs": 2272,
-      "totalJourneyDurationMs": 9101,
+      "t0_projectCreationMs": 163,
+      "t1_installationMs": 4925,
+      "t2_firstComponentMs": 1098,
+      "t3_realisticCompositionMs": 929,
+      "t4_productionBuildAndSmokeMs": 2625,
+      "totalJourneyDurationMs": 9742,
       "manualStepCount": 4,
       "internalKnowledgeRequired": false,
       "warningsOrErrors": [],
@@ -60,12 +60,12 @@
     },
     {
       "pm": "bun",
-      "t0_projectCreationMs": 112,
-      "t1_installationMs": 387,
-      "t2_firstComponentMs": 131,
-      "t3_realisticCompositionMs": 131,
-      "t4_productionBuildAndSmokeMs": 1836,
-      "totalJourneyDurationMs": 2597,
+      "t0_projectCreationMs": 696,
+      "t1_installationMs": 1102,
+      "t2_firstComponentMs": 128,
+      "t3_realisticCompositionMs": 144,
+      "t4_productionBuildAndSmokeMs": 1897,
+      "totalJourneyDurationMs": 3969,
       "manualStepCount": 4,
       "internalKnowledgeRequired": false,
       "warningsOrErrors": [],
@@ -82,14 +82,14 @@
     "blocksAdded": [
       "login-form"
     ],
-    "durationMs": 3896,
+    "durationMs": 4451,
     "status": "PASS"
   },
   "adoptionMetrics": {
     "zeroMonorepoLeakageVerified": true,
     "internalKnowledgeRequired": false,
     "manualBabelOrWebpackPluginsRequired": 0,
-    "averageTotalOnboardingTimeSeconds": "7.61",
+    "averageTotalOnboardingTimeSeconds": "9.61",
     "overallStatus": "PASS"
   }
 }

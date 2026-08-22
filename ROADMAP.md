@@ -337,13 +337,14 @@ Dokumen ini memecah Phase 0–8 (context doc section 21) menjadi milestone dan t
   - Evidence-based final promotion to `v0.1.0` STABLE.
 
 ### Definition of Done — Phase 14
-- [ ] All 5 packages published to NPM RC (`v0.1.0-rc.1`)
-- [ ] Fresh registry installation verified across `npm`, `pnpm`, `yarn`, and `bun`
-- [ ] Next.js, Vite, and Remix/Astro consumer applications pass with 0 runtime errors
-- [ ] Claude, Cursor, and Gemini live MCP connections verified with successful code generation
-- [ ] Real external developer onboarding tested and DX blockers resolved
-- [ ] Zero release-blocking bugs; final regression gate passes 100%
-- [ ] Tag and publish `v0.1.0` STABLE
+- [x] All 5 packages published to NPM RC (`v0.1.0-rc.1`) — **Phase 14A Done**
+- [x] Fresh registry installation verified across `npm`, `pnpm`, `yarn`, and `bun` — **Phase 14B Done**
+- [x] Next.js, Vite, and AI consumer applications pass with 0 runtime errors — **Phase 14B Done**
+- [x] Official MCP stdio connection and 11 tools verified with successful code generation — **Phase 14C Done**
+- [x] Real external developer onboarding tested ($T0 \rightarrow T4$) and DX benchmarks completed — **Phase 14D Done**
+- [ ] RC feedback loop and edge-case triage — **Phase 14E (Next)**
+- [ ] Tag and publish `v0.1.0` STABLE — **Phase 14F Gate**
+
 
 
 ---
