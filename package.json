@@ -22,8 +22,10 @@
     "clean": "turbo run clean",
     "format": "prettier --write \"**/*.{ts,tsx,css,md,json}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,css,md,json}\"",
-    "verify:rc": "node scripts/verify-release-candidate.mjs"
+    "verify:rc": "node scripts/verify-release-candidate.mjs",
+    "test:pm-matrix": "node scripts/test-package-managers-matrix.mjs"
   },
+
 
   "devDependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",

@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0-rc.1] - 2026-08-22
 
+### Phase 14B: Package Manager Compatibility Matrix (npm, pnpm, yarn, bun) — COMPLETED
+- **Live Registry Multi-Package Manager Matrix**:
+  - Automated compatibility test suite (`scripts/test-package-managers-matrix.mjs` / `pnpm test:pm-matrix`) validating all 5 packages installed directly from `registry.npmjs.org` in isolated OS tempdirs.
+  - Successfully verified installation variants (`@0.1.0-rc.1`, `@rc`, default untagged), TypeScript compilation (`tsc --noEmit`), Vite production bundling (`vite build`), Playwright browser runtime smoke testing (0 console/page errors), CLI live execution (`npx @soraui/cli@rc --help`), and MCP package entrypoints.
+  - 100% PASS across all 4 major package managers:
+    - **npm** (v11.6.2): 100% PASS
+    - **pnpm** (v9.7.0): 100% PASS
+    - **yarn** (v1.22.22): 100% PASS
+    - **bun** (v1.4.0): 100% PASS
+  - Emitted machine-readable matrix report: `artifacts/release/pm-matrix-report.json`.
+
 ### Phase 14A: Public NPM RC Publication — COMPLETED & LIVE
+
 - **Public NPM Distribution**:
   - Published all 5 packages to the public npm registry under the `@soraui/*` scope with `rc` dist-tag:
     - `@soraui/core@0.1.0-rc.1` (Design tokens & 9 space theme presets)
