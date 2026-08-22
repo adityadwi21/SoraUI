@@ -13,7 +13,8 @@
   "author": "SoraUI Team",
   "repository": {
     "type": "git",
-    "url": "https://github.com/soraui/soraui.git"
+    "url": "https://github.com/adityadwi21/SoraUI.git",
+    "directory": "packages/cli"
   },
   "keywords": [
     "soraui",

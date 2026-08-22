@@ -27,7 +27,7 @@ Before contributing, please understand our core principles:
 ### Install
 
 ```bash
-git clone https://github.com/soraui/soraui.git
+git clone https://github.com/adityadwi21/SoraUI.git
 cd soraui
 pnpm install
 pnpm build

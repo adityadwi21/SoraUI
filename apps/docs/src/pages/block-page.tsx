@@ -99,7 +99,7 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc }) => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.875rem', color: 'var(--ui-muted-foreground, #71717a)' }}>
         <span>Composed strictly from SoraUI primitives</span>
         <a
-          href={`https://github.com/soraui/soraui/tree/main/packages/react/src/blocks/${doc.category}/${doc.id}.tsx`}
+          href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/blocks/${doc.category}/${doc.id}.tsx`}
           target="_blank"
           rel="noreferrer"
           style={{ color: 'var(--ui-primary, #0ea5e9)', textDecoration: 'none', fontWeight: 500 }}

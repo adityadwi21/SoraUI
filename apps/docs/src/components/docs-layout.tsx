@@ -96,7 +96,7 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({ currentPath, onNavigate,
           </Button>
 
           <a
-            href="https://github.com/soraui/soraui"
+            href="https://github.com/adityadwi21/SoraUI"
             target="_blank"
             rel="noreferrer"
             style={{ color: 'inherit', textDecoration: 'none', fontSize: '1.125rem', marginLeft: '0.25rem' }}

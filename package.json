@@ -5,7 +5,7 @@
   "description": "SoraUI — Open-source lightweight UI construction system for JavaScript and TypeScript applications.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/soraui/soraui"
+    "url": "https://github.com/adityadwi21/SoraUI.git"
   },
   "license": "MIT",
   "scripts": {

@@ -131,7 +131,7 @@ export const ComponentPage: React.FC<ComponentPageProps> = ({ doc }) => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.875rem', color: 'var(--ui-muted-foreground, #71717a)' }}>
         <span>Package: <code>@soraui/react</code></span>
         <a
-          href={`https://github.com/soraui/soraui/tree/main/packages/react/src/components/${doc.id}`}
+          href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/components/${doc.id}`}
           target="_blank"
           rel="noreferrer"
           style={{ color: 'var(--ui-primary, #0ea5e9)', textDecoration: 'none', fontWeight: 500 }}
