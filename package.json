@@ -1,6 +1,6 @@
 {
   "name": "soraui",
-  "version": "0.0.0",
+  "version": "0.1.0-rc.2",
   "private": true,
   "description": "SoraUI — Open-source lightweight UI construction system for JavaScript and TypeScript applications.",
   "repository": {

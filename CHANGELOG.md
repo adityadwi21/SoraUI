@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0-rc.2] - 2026-08-22
+
+### Phase 14E: RC Feedback Triage & Hardening — COMPLETED
+- **Public Repository Metadata Synchronization**:
+  - Updated repository and homepage URLs across all package manifests (`@soraui/core`, `@soraui/hooks`, `@soraui/react`, `@soraui/cli`, `@soraui/mcp`) and docs to `https://github.com/adityadwi21/SoraUI.git`.
+  - Published live to public NPM registry under `--tag rc --access public`.
+- **Ecosystem & Build Verification**:
+  - Verified 100% build success and typecheck across all 5 packages.
+  - Zero breaking changes to public APIs.
+
 ## [0.1.0-rc.1] - 2026-08-22
+
 
 ### Phase 14D: Real Developer Adoption Benchmark (T0 ➔ T4) — COMPLETED
 - **Deterministic Out-of-the-Box Onboarding Suite**:

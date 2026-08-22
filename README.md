@@ -103,15 +103,16 @@ Tools available to your agent:
 
 ---
 
-## 📦 Published NPM Packages (`v0.1.0-rc.1`)
+## 📦 Published NPM Packages (`v0.1.0-rc.2`)
 
 | Package | Purpose | Version |
 |---|---|---|
-| [`@soraui/core`](https://www.npmjs.com/package/@soraui/core) | Tokens, 24-key Theme Contract, CSS Presets | `0.1.0-rc.1` |
-| [`@soraui/hooks`](https://www.npmjs.com/package/@soraui/hooks) | A11y & interaction primitives (focus trap, escape key) | `0.1.0-rc.1` |
-| [`@soraui/react`](https://www.npmjs.com/package/@soraui/react) | 44 primitives, 14 blocks, 4 templates, ThemeProvider | `0.1.0-rc.1` |
-| [`@soraui/cli`](https://www.npmjs.com/package/@soraui/cli) | CLI code generator & dependency resolver | `0.1.0-rc.1` |
-| [`@soraui/mcp`](https://www.npmjs.com/package/@soraui/mcp) | Official Model Context Protocol stdio server | `0.1.0-rc.1` |
+| [`@soraui/core`](https://www.npmjs.com/package/@soraui/core) | Tokens, 24-key Theme Contract, CSS Presets | `0.1.0-rc.2` |
+| [`@soraui/hooks`](https://www.npmjs.com/package/@soraui/hooks) | A11y & interaction primitives (focus trap, escape key) | `0.1.0-rc.2` |
+| [`@soraui/react`](https://www.npmjs.com/package/@soraui/react) | 44 primitives, 14 blocks, 4 templates, ThemeProvider | `0.1.0-rc.2` |
+| [`@soraui/cli`](https://www.npmjs.com/package/@soraui/cli) | CLI code generator & dependency resolver | `0.1.0-rc.2` |
+| [`@soraui/mcp`](https://www.npmjs.com/package/@soraui/mcp) | Official Model Context Protocol stdio server | `0.1.0-rc.2` |
+
 
 ---
 
