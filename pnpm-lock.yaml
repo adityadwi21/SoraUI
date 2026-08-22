@@ -14,6 +14,15 @@ importers:
       '@playwright/test':
         specifier: ^1.62.1
         version: 1.62.1
+      '@soraui/core':
+        specifier: workspace:*
+        version: link:packages/core
+      '@soraui/hooks':
+        specifier: workspace:*
+        version: link:packages/hooks
+      '@soraui/react':
+        specifier: workspace:*
+        version: link:packages/react
       '@types/node':
         specifier: ^20.0.0
         version: 20.19.43

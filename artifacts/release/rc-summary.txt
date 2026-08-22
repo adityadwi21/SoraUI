@@ -2,17 +2,17 @@
                     SoraUI RELEASE CANDIDATE (RC1) PASSPORT             
 ════════════════════════════════════════════════════════════════════════
 
-RC STATUS:             ❌ BLOCKED / FAIL
+RC STATUS:             ✅ APPROVED / PASS
 VERSION:               v0.1.0-rc.1
-TIMESTAMP:             2026-08-22T06:58:08.450Z
-DURATION:              33.38s
+TIMESTAMP:             2026-08-22T07:04:23.089Z
+DURATION:              90.78s
 
 ────────────────────────────────────────────────────────────────────────
 SOURCE & PROVENANCE STATE
 ────────────────────────────────────────────────────────────────────────
-• Git Commit:          untracked-working-tree
-• Git Branch:          unknown
-• Working Tree State:  UNTRACKED (Not inside git repository root)
+• Git Commit:          84eace58859925569041f41f754a2829fa9c78a6
+• Git Branch:          master
+• Working Tree State:  DIRTY (4 modified files)
 • Registry SHA256:     991f779062808d7e2f6ab430...
 • Artifact Integrity:  ✅ ATTESTED (Manifest & Registry Hashes Normalized)
 • Source Provenance:   ⚠️ PENDING_CLEAN_COMMIT
@@ -20,12 +20,14 @@ SOURCE & PROVENANCE STATE
 ────────────────────────────────────────────────────────────────────────
 PIPELINE VERIFICATION MATRIX
 ────────────────────────────────────────────────────────────────────────
-✅ PASS Monorepo Build                                       (0.5s)
-✅ PASS Monorepo Typecheck                                   (0.5s)
-✅ PASS Unit, Contract & A11y Tests                          (0.5s)
-✅ PASS Package Tarball & Zero Leakage Audit                 (2.8s)
-✅ PASS Isolated External Tarball Installation               (6.5s)
-❌ FAIL Consumer Validation Fixtures (Next.js, Vite, AI)     (22.6s)
+✅ PASS Monorepo Build                                       (10.7s)
+✅ PASS Monorepo Typecheck                                   (6.0s)
+✅ PASS Unit, Contract & A11y Tests                          (18.7s)
+✅ PASS Package Tarball & Zero Leakage Audit                 (2.9s)
+✅ PASS Isolated External Tarball Installation               (6.2s)
+✅ PASS Consumer Validation Fixtures (Next.js, Vite, AI)     (46.2s)
+✅ PASS Live stdio MCP Server Verification                   (0.2s)
+✅ PASS Bundle Budgets & Release Artifacts                   (0.0s)
 
 ────────────────────────────────────────────────────────────────────────
 INVARIANT ATTESTATIONS

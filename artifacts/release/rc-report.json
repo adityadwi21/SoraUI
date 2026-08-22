@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-22T06:58:08.450Z",
+  "timestamp": "2026-08-22T07:04:23.089Z",
   "version": "0.1.0-rc.1",
-  "status": "FAIL",
-  "totalDurationSeconds": 33.38,
+  "status": "PASS",
+  "totalDurationSeconds": 90.78,
   "source": {
-    "isGitRepo": false,
-    "commit": "untracked-working-tree",
-    "branch": "unknown",
-    "workingTree": "UNTRACKED (Not inside git repository root)",
+    "isGitRepo": true,
+    "commit": "84eace58859925569041f41f754a2829fa9c78a6",
+    "branch": "master",
+    "workingTree": "DIRTY (4 modified files)",
     "reproducibilityStatus": "PENDING_CLEAN_COMMIT",
     "artifactIntegrity": "ATTESTED"
   },
@@ -48,38 +48,49 @@
       "id": "build",
       "title": "Monorepo Build",
       "status": "PASS",
-      "durationMs": 473
+      "durationMs": 10669
     },
     {
       "id": "typecheck",
       "title": "Monorepo Typecheck",
       "status": "PASS",
-      "durationMs": 478
+      "durationMs": 5957
     },
     {
       "id": "tests",
       "title": "Unit, Contract & A11y Tests",
       "status": "PASS",
-      "durationMs": 517
+      "durationMs": 18703
     },
     {
       "id": "leakage",
       "title": "Package Tarball & Zero Leakage Audit",
       "status": "PASS",
-      "durationMs": 2844
+      "durationMs": 2947
     },
     {
       "id": "tarballs",
       "title": "Isolated External Tarball Installation",
       "status": "PASS",
-      "durationMs": 6492
+      "durationMs": 6171
     },
     {
       "id": "consumers",
       "title": "Consumer Validation Fixtures (Next.js, Vite, AI)",
-      "status": "FAIL",
-      "error": "Command failed: node scripts/test-consumer-fixtures.mjs",
-      "durationMs": 22576
+      "status": "PASS",
+      "durationMs": 46159
+    },
+    {
+      "id": "mcp-smoke",
+      "title": "Live stdio MCP Server Verification",
+      "status": "PASS",
+      "durationMs": 173
+    },
+    {
+      "id": "budgets",
+      "title": "Bundle Budgets & Release Artifacts",
+      "status": "PASS",
+      "durationMs": 1
     }
   ]
 }
