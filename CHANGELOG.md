@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0-rc.1] - 2026-08-22
 
+### Phase 14A: Public NPM RC Publication — COMPLETED & LIVE
+- **Public NPM Distribution**:
+  - Published all 5 packages to the public npm registry under the `@soraui/*` scope with `rc` dist-tag:
+    - `@soraui/core@0.1.0-rc.1` (Design tokens & 9 space theme presets)
+    - `@soraui/hooks@0.1.0-rc.1` (Accessible React primitives & focus/portal hooks)
+    - `@soraui/react@0.1.0-rc.1` (44 accessible UI components, zero-runtime CSS)
+    - `@soraui/cli@0.1.0-rc.1` (Official CLI generator & template installer via `npx @soraui/cli`)
+    - `@soraui/mcp@0.1.0-rc.1` (Model Context Protocol stdio server with 11 tools)
+  - Configured `"publishConfig": { "access": "public", "tag": "rc" }` across all package manifests.
+  - Verified package authenticity, tarball integrity, and zero monorepo leakage on npmjs.com.
+
 ### Phase 13: Public Developer Experience, Consumer Validation & Release Readiness (RC1) — LOCKED
+
 - **13A — Package & Tarball Integrity (Zero Monorepo Leakage)**:
   - Standardized NPM manifest publishing metadata across all 5 publishable packages (`@soraui/core`, `@soraui/hooks`, `@soraui/react`, `soraui`, `@soraui/mcp`).
   - Automated tarball leakage scanner (`scripts/check-package-leakage.mjs`) verifying 0 instances of `workspace:`, `file:`, `../../`, and local path leakage across unpacked `.tgz` archives.

@@ -20,7 +20,14 @@ Each entry follows this structure:
 
 ## Decisions
 
+### 2026-08-22 — Phase 14A: Public NPM Scoped Package Name (`@soraui/cli`)
+**Decision:** Rename the CLI package from unscoped `soraui` to scoped `@soraui/cli` while preserving the executable command `bin: { "soraui": "./dist/index.js" }`.
+**Rationale:** NPM enforces strict typosquatting prevention against similar existing packages (such as legacy `sora-ui`). Scoping the CLI package to `@soraui/cli` guarantees 100% ownership under the `@soraui` scope, ensures consistency with the entire package suite (`@soraui/core`, `@soraui/hooks`, `@soraui/react`, `@soraui/cli`, `@soraui/mcp`), and allows seamless invocation via `npx @soraui/cli` or global installation.
+**Alternatives considered:** Contesting the unscoped name or requesting dispute resolution with npm registry (rejected: caused indefinite release blocking and unnecessary delay).
+**Impact:** 100% consistent package naming, zero publishing blockers, zero impact on the end-user CLI binary interface (`soraui`).
+
 ### 2026-08-22 — Phase 13: Tarball-Driven Isolated Consumer Validation
+
 **Decision:** All external consumer applications (`examples/nextjs-app`, `examples/vite-react-app`, `examples/ai-generated-app`) must be validated against freshly packed `.tgz` archives installed in isolated OS temporary directories outside the monorepo.
 **Rationale:** Testing against monorepo `workspace:*` symlinks allows undetected leakage of internal workspace configurations, path aliases, or missing export mappings. Testing unpacked `.tgz` tarballs in clean projects guarantees that external developers can consume SoraUI out-of-the-box.
 **Alternatives considered:** Testing directly inside monorepo example folders using workspace links (rejected due to false-positive risk).

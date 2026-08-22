@@ -380,9 +380,10 @@ Dokumen ini memecah Phase 0–8 (context doc section 21) menjadi milestone dan t
 | **Phase 11** | **AI / MCP Integration (AI-Native SoraUI Interface)** | ✅ **Done** | **100%** |
 | **Phase 12** | **Quality, Accessibility & Performance Hardening** | ✅ **Done** | **100%** |
 | **Phase 13** | **Public Developer Experience, Consumer Validation & Release Readiness** | ✅ **Done** | **100%** |
-| Phase 14 | Public Release & Ecosystem Validation | 🎯 **Next** | 0% |
+| **Phase 14** | **Public Release & Ecosystem Validation** | 🔄 **In Progress** | **20% (14A Done)** |
 
-**SoraUI v0.1.0-rc.1 has passed all release-candidate verification gates and is locked.**
+**SoraUI v0.1.0-rc.1 is publicly published to npm (`@soraui/core`, `@soraui/hooks`, `@soraui/react`, `@soraui/cli`, `@soraui/mcp`).**
+
 
 
 

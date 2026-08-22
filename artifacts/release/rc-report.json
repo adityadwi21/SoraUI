@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-08-22T07:42:24.268Z",
+  "timestamp": "2026-08-22T07:43:58.744Z",
   "version": "0.1.0-rc.1",
   "status": "PASS",
-  "totalDurationSeconds": 59.03,
+  "totalDurationSeconds": 52.35,
   "source": {
     "isGitRepo": true,
-    "commit": "4b0034927212fd33cf3876205baaee3ad9ee59e4",
+    "commit": "859c7821c4b1be9493683d4f790214237426e2ba",
     "branch": "master",
-    "workingTree": "DIRTY (6 modified files)",
-    "reproducibilityStatus": "PENDING_CLEAN_COMMIT",
+    "workingTree": "CLEAN",
+    "reproducibilityStatus": "ATTESTED",
     "artifactIntegrity": "ATTESTED"
   },
   "reproducibility": {
     "artifactIntegrity": "ATTESTED",
-    "sourceCommitStatus": "PENDING_CLEAN_COMMIT",
+    "sourceCommitStatus": "ATTESTED",
     "canonicalRegistrySha256": "991f779062808d7e2f6ab430858372a9d96642e984a29fe240f1ac5bd5b86ada",
     "packageManifestHashes": {
       "@soraui/core": "8f7970999ccaaea3992f155ce14dcb0a75f2de8f851ed0b396b9a25a56585405",
@@ -48,43 +48,43 @@
       "id": "build",
       "title": "Monorepo Build",
       "status": "PASS",
-      "durationMs": 1293
+      "durationMs": 458
     },
     {
       "id": "typecheck",
       "title": "Monorepo Typecheck",
       "status": "PASS",
-      "durationMs": 1634
+      "durationMs": 506
     },
     {
       "id": "tests",
       "title": "Unit, Contract & A11y Tests",
       "status": "PASS",
-      "durationMs": 1800
+      "durationMs": 464
     },
     {
       "id": "leakage",
       "title": "Package Tarball & Zero Leakage Audit",
       "status": "PASS",
-      "durationMs": 2701
+      "durationMs": 2685
     },
     {
       "id": "tarballs",
       "title": "Isolated External Tarball Installation",
       "status": "PASS",
-      "durationMs": 5938
+      "durationMs": 6564
     },
     {
       "id": "consumers",
       "title": "Consumer Validation Fixtures (Next.js, Vite, AI)",
       "status": "PASS",
-      "durationMs": 45489
+      "durationMs": 41481
     },
     {
       "id": "mcp-smoke",
       "title": "Live stdio MCP Server Verification",
       "status": "PASS",
-      "durationMs": 170
+      "durationMs": 187
     },
     {
       "id": "budgets",
