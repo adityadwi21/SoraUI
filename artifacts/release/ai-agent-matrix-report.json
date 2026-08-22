@@ -1,0 +1,166 @@
+{
+  "timestamp": "2026-08-22T08:18:36.960Z",
+  "environment": {
+    "node": "v22.15.0",
+    "os": "Windows_NT 10.0.19045 x64"
+  },
+  "mcpServer": {
+    "package": "@soraui/mcp@0.1.0-rc.1",
+    "source": "registry.npmjs.org",
+    "command": "npx -y @soraui/mcp@0.1.0-rc.1",
+    "toolsCount": 11,
+    "tools": [
+      "soraui_get_context",
+      "soraui_search",
+      "soraui_list",
+      "soraui_inspect_component",
+      "soraui_inspect_block",
+      "soraui_inspect_template",
+      "soraui_inspect_theme",
+      "soraui_compose_recipe",
+      "soraui_get_install_commands",
+      "soraui_resolve_dependencies",
+      "soraui_validate_composition"
+    ]
+  },
+  "hostAgents": [
+    {
+      "name": "Claude Desktop",
+      "type": "Desktop Application",
+      "configPath": "C:\\Users\\User\\AppData\\Roaming\\Claude\\claude_desktop_config.json",
+      "appPath": "C:\\Users\\User\\AppData\\Local\\Programs\\Claude\\Claude.exe",
+      "installed": false,
+      "status": "NOT AVAILABLE",
+      "reason": "Claude Desktop executable and config directory not found on host machine"
+    },
+    {
+      "name": "Cursor",
+      "type": "AI Code Editor",
+      "configPath": "C:\\Users\\User\\.cursor",
+      "appPath": "C:\\Users\\User\\AppData\\Local\\Programs\\cursor\\Cursor.exe",
+      "installed": false,
+      "status": "NOT AVAILABLE",
+      "reason": "Cursor executable and config directory not found on host machine"
+    },
+    {
+      "name": "Gemini CLI",
+      "type": "Command Line Tool",
+      "configPath": null,
+      "appPath": null,
+      "installed": false,
+      "status": "NOT AVAILABLE",
+      "reason": "gemini CLI binary not found in system PATH"
+    },
+    {
+      "name": "Official MCP Reference Client (Stdio Host)",
+      "type": "MCP Standard Protocol Client",
+      "configPath": "stdio: npx -y @soraui/mcp@0.1.0-rc.1",
+      "appPath": "@modelcontextprotocol/sdk",
+      "installed": true,
+      "status": "LIVE TESTED",
+      "reason": "Executed real stdio connection to public @soraui/mcp@0.1.0-rc.1 from registry.npmjs.org"
+    }
+  ],
+  "matrix": [
+    {
+      "agent": "Claude Desktop",
+      "installed": "❌ NO",
+      "mcpConnected": "⚪ N/A",
+      "toolDiscovery": "⚪ N/A",
+      "toolCalls": "⚪ N/A",
+      "uiComposition": "⚪ N/A",
+      "result": "⚪ NOT AVAILABLE"
+    },
+    {
+      "agent": "Cursor",
+      "installed": "❌ NO",
+      "mcpConnected": "⚪ N/A",
+      "toolDiscovery": "⚪ N/A",
+      "toolCalls": "⚪ N/A",
+      "uiComposition": "⚪ N/A",
+      "result": "⚪ NOT AVAILABLE"
+    },
+    {
+      "agent": "Gemini CLI",
+      "installed": "❌ NO",
+      "mcpConnected": "⚪ N/A",
+      "toolDiscovery": "⚪ N/A",
+      "toolCalls": "⚪ N/A",
+      "uiComposition": "⚪ N/A",
+      "result": "⚪ NOT AVAILABLE"
+    },
+    {
+      "agent": "Official MCP Reference Client (Stdio Host)",
+      "installed": "✅ YES",
+      "mcpConnected": "✅ YES",
+      "toolDiscovery": "✅ 11/11 Tools",
+      "toolCalls": "✅ 6/6 Scenarios",
+      "uiComposition": "✅ VALID",
+      "result": "✅ PASS"
+    }
+  ],
+  "liveMcpValidation": {
+    "mcpPackage": "@soraui/mcp@0.1.0-rc.1",
+    "mcpServerCommand": "npx -y @soraui/mcp@0.1.0-rc.1",
+    "toolsCount": 11,
+    "tools": [
+      "soraui_get_context",
+      "soraui_search",
+      "soraui_list",
+      "soraui_inspect_component",
+      "soraui_inspect_block",
+      "soraui_inspect_template",
+      "soraui_inspect_theme",
+      "soraui_compose_recipe",
+      "soraui_get_install_commands",
+      "soraui_resolve_dependencies",
+      "soraui_validate_composition"
+    ],
+    "scenarios": [
+      {
+        "scenario": 1,
+        "title": "Get Context & Search Registry",
+        "status": "PASS",
+        "version": "0.1.0",
+        "searchResults": 7
+      },
+      {
+        "scenario": 2,
+        "title": "Inspect Button component specification",
+        "status": "PASS",
+        "component": "button"
+      },
+      {
+        "scenario": 3,
+        "title": "Inspect Themes and Midnight Preset",
+        "status": "PASS",
+        "themeId": "midnight"
+      },
+      {
+        "scenario": 4,
+        "title": "Inspect Login Form block & resolve dependencies",
+        "status": "PASS",
+        "blockId": "login-form"
+      },
+      {
+        "scenario": 5,
+        "title": "Compose Recipe & Validate Composition",
+        "status": "PASS",
+        "recipe": "auth_flow",
+        "valid": true
+      },
+      {
+        "scenario": 6,
+        "title": "List items and generate install commands",
+        "status": "PASS",
+        "totalComponents": 44,
+        "command": "npx soraui add button"
+      }
+    ],
+    "overallStatus": "PASS"
+  },
+  "conclusion": {
+    "publicMcpPackageStatus": "VERIFIED & FUNCTIONAL (100% PASS)",
+    "hostAgentStatus": "Claude Desktop, Cursor, and Gemini CLI are not installed on this host environment. The MCP server was live-tested against the public npm package using the official Model Context Protocol Client SDK over stdio with all 11 tools and 6 scenarios passing 100%."
+  }
+}

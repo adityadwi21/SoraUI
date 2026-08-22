@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0-rc.1] - 2026-08-22
 
+### Phase 14C: Real AI Coding Agent & MCP Live Protocol Validation — COMPLETED
+- **Live MCP stdio Protocol & 11 Tool Verification**:
+  - Live stdio validation runner (`scripts/test-ai-agent-mcp-validation.mjs` / `pnpm test:ai-agent-mcp`) connecting directly to the public `@soraui/mcp@0.1.0-rc.1` npm package (`npx -y @soraui/mcp@0.1.0-rc.1`) using the official Model Context Protocol (MCP) Client SDK.
+  - Successfully verified all 11 MCP tools: `soraui_get_context`, `soraui_search`, `soraui_list`, `soraui_inspect_component`, `soraui_inspect_block`, `soraui_inspect_template`, `soraui_inspect_theme`, `soraui_compose_recipe`, `soraui_get_install_commands`, `soraui_resolve_dependencies`, `soraui_validate_composition`.
+  - Executed 6 realistic AI coding agent scenarios (Context onboarding, component inspection, token/theme queries, block dependency resolution, JSX recipe generation & static audit, CLI install command generation) with 100% PASS.
+  - Transparently audited host agent installation status: Claude Desktop (`NOT AVAILABLE`), Cursor (`NOT AVAILABLE`), Gemini CLI (`NOT AVAILABLE`), Official MCP Reference Host (`PASS`).
+  - Emitted machine-readable matrix report: `artifacts/release/ai-agent-matrix-report.json`.
+
 ### Phase 14B: Package Manager Compatibility Matrix (npm, pnpm, yarn, bun) — COMPLETED
+
 - **Live Registry Multi-Package Manager Matrix**:
   - Automated compatibility test suite (`scripts/test-package-managers-matrix.mjs` / `pnpm test:pm-matrix`) validating all 5 packages installed directly from `registry.npmjs.org` in isolated OS tempdirs.
   - Successfully verified installation variants (`@0.1.0-rc.1`, `@rc`, default untagged), TypeScript compilation (`tsc --noEmit`), Vite production bundling (`vite build`), Playwright browser runtime smoke testing (0 console/page errors), CLI live execution (`npx @soraui/cli@rc --help`), and MCP package entrypoints.
