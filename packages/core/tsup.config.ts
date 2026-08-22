@@ -1,7 +1,9 @@
+/// <reference types="node" />
 import { defineConfig } from 'tsup';
 import { copyFile, mkdir, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { existsSync } from 'node:fs';
+
 
 export default defineConfig({
 
