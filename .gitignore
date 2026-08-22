@@ -57,3 +57,7 @@ yarn-error.log*
 *.tar.gz
 tmp/
 temp/
+
+ROADMAP.md
+DECISION_LOG.md
+ARCHITECTURE.md
