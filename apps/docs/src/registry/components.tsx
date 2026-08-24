@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import type { ComponentDoc } from "./types";
 
 // SoraUI Primitives
@@ -150,39 +151,41 @@ const AlertInteractiveDemo: React.FC = () => {
       title: string;
       description: string;
     }>
-  >([
-    {
-      id: 1,
-      type: "default",
-      title: "Heads up!",
-      description:
-        "You can trigger and dismiss alerts dynamically by clicking the buttons above.",
-    },
-  ]);
+  >([]);
 
+  // Dismiss a specific alert
+  const removeAlert = (id: number) => {
+    setAlerts((prev) => prev.filter((a) => a.id !== id));
+  };
+
+  // Add alert and auto-dismiss after 4 seconds (oldest expires first)
   const addAlert = (
     type: "default" | "destructive" | "warning" | "success",
   ) => {
-    const newId = Date.now();
+    const newId = Date.now() + Math.random();
     let title = "Notification";
-    let description = "This is an informative update.";
+    let description = "Informasi sistem terbaru.";
 
     if (type === "destructive") {
       title = "Critical Error";
-      description = "Could not establish connection to the remote server.";
+      description = "Gagal terhubung ke server database.";
     } else if (type === "warning") {
       title = "Storage Limit Warning";
-      description = "Your database storage is at 88% capacity.";
+      description = "Penyimpanan cloud Anda telah mencapai 88%.";
     } else if (type === "success") {
       title = "Deployment Succeeded";
-      description = "Production build v0.1.2 was successfully deployed.";
+      description = "Production build v0.1.1 berhasil dideploy.";
+    } else {
+      title = "Heads up!";
+      description = "Komponen Alert floating muncul di pojok kanan atas.";
     }
 
     setAlerts((prev) => [...prev, { id: newId, type, title, description }]);
-  };
 
-  const removeAlert = (id: number) => {
-    setAlerts((prev) => prev.filter((a) => a.id !== id));
+    // Auto dismiss after 4 seconds for sequential disappearance
+    setTimeout(() => {
+      removeAlert(newId);
+    }, 4000);
   };
 
   return (
@@ -190,7 +193,7 @@ const AlertInteractiveDemo: React.FC = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "1.25rem",
+        gap: "1rem",
         width: "100%",
         maxWidth: "580px",
       }}
@@ -218,124 +221,177 @@ const AlertInteractiveDemo: React.FC = () => {
           size="sm"
           variant="secondary"
           onClick={() => addAlert("warning")}
+          style={{ borderColor: "rgba(234, 179, 8, 0.4)" }}
         >
-          <AlertTriangle size={14} style={{ marginRight: "0.35rem" }} /> Add
-          Warning
+          <AlertTriangle
+            size={14}
+            style={{ marginRight: "0.35rem", color: "#eab308" }}
+          />{" "}
+          Add Warning
         </Button>
         <Button
           size="sm"
           variant="secondary"
           onClick={() => addAlert("success")}
+          style={{ borderColor: "rgba(34, 197, 94, 0.4)" }}
         >
-          <CheckCircle2 size={14} style={{ marginRight: "0.35rem" }} /> Add
-          Success
+          <CheckCircle2
+            size={14}
+            style={{ marginRight: "0.35rem", color: "#22c55e" }}
+          />{" "}
+          Add Success
         </Button>
         {alerts.length > 0 && (
           <Button size="sm" variant="ghost" onClick={() => setAlerts([])}>
-            Clear All
+            Clear All ({alerts.length})
           </Button>
         )}
       </div>
 
       <div
         style={{
+          padding: "1.25rem",
+          borderRadius: "var(--ui-radius, 8px)",
+          border: "1px dashed var(--docs-border, #e2e8f0)",
+          background: "var(--docs-bg-card, rgba(0, 0, 0, 0.02))",
           display: "flex",
           flexDirection: "column",
-          gap: "0.75rem",
-          minHeight: "80px",
+          gap: "0.5rem",
         }}
       >
-        {alerts.length === 0 ? (
-          <div
-            style={{
-              padding: "2rem 1rem",
-              textAlign: "center",
-              border: "1px dashed var(--docs-border)",
-              borderRadius: "0.5rem",
-              color: "var(--docs-fg-muted)",
-              fontSize: "0.875rem",
-            }}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: "0.8125rem",
+            color: "var(--docs-fg)",
+            fontWeight: 600,
+          }}
+        >
+          <span>Floating Top-Right Alert Monitor</span>
+          <Badge
+            variant={alerts.length > 0 ? "default" : "outline"}
+            style={{ fontSize: "0.7rem" }}
           >
-            Semua alert telah di-dismiss. Klik salah satu tombol di atas untuk
-            memunculkan alert!
-          </div>
-        ) : (
-          alerts.map((item) => (
-            <Alert
-              key={item.id}
-              variant={item.type === "destructive" ? "destructive" : "default"}
-              style={
-                item.type === "warning"
-                  ? {
-                      borderColor: "rgba(234, 179, 8, 0.4)",
-                      backgroundColor: "rgba(234, 179, 8, 0.08)",
-                    }
-                  : item.type === "success"
-                    ? {
-                        borderColor: "rgba(34, 197, 94, 0.4)",
-                        backgroundColor: "rgba(34, 197, 94, 0.08)",
-                      }
-                    : undefined
-              }
-            >
-              {item.type === "default" && <Terminal size={16} />}
-              {item.type === "destructive" && <AlertCircle size={16} />}
-              {item.type === "warning" && (
-                <AlertTriangle size={16} style={{ color: "#eab308" }} />
-              )}
-              {item.type === "success" && (
-                <CheckCircle2 size={16} style={{ color: "#22c55e" }} />
-              )}
-
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  gap: "0.75rem",
-                }}
-              >
-                <div>
-                  <AlertTitle
-                    style={
-                      item.type === "warning"
-                        ? { color: "#eab308" }
-                        : item.type === "success"
-                          ? { color: "#22c55e" }
-                          : undefined
-                    }
-                  >
-                    {item.title}
-                  </AlertTitle>
-                  <AlertDescription>{item.description}</AlertDescription>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => removeAlert(item.id)}
-                  title="Dismiss alert"
-                  style={{
-                    background: "transparent",
-                    border: "none",
-                    padding: "0.2rem",
-                    cursor: "pointer",
-                    color: "inherit",
-                    opacity: 0.65,
-                    borderRadius: "0.25rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.65")}
-                >
-                  <X size={14} />
-                </button>
-              </div>
-            </Alert>
-          ))
-        )}
+            {alerts.length} Active {alerts.length === 1 ? "Alert" : "Alerts"}
+          </Badge>
+        </div>
+        <p
+          style={{
+            margin: 0,
+            fontSize: "0.8125rem",
+            color: "var(--docs-fg-muted, #64748b)",
+            lineHeight: 1.5,
+          }}
+        >
+          Klik salah satu tombol di atas untuk memunculkan alert di{" "}
+          <strong>pojok kanan atas layar</strong>. Alert yang paling lama muncul
+          akan otomatis hilang berurutan dalam 4 detik (atau klik tombol{" "}
+          <strong>×</strong> untuk dismiss langsung).
+        </p>
       </div>
+
+      {/* Floating Top-Right Notification Container Portal */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <div
+            className="sora-floating-alert-stack"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {alerts.map((item) => (
+              <div key={item.id} className="sora-floating-alert-item">
+                <Alert
+                  variant={
+                    item.type === "destructive" ? "destructive" : "default"
+                  }
+                  style={{
+                    margin: 0,
+                    ...(item.type === "warning"
+                      ? {
+                          borderColor: "rgba(234, 179, 8, 0.4)",
+                          backgroundColor: "var(--ui-card, #18181b)",
+                        }
+                      : item.type === "success"
+                        ? {
+                            borderColor: "rgba(34, 197, 94, 0.4)",
+                            backgroundColor: "var(--ui-card, #18181b)",
+                          }
+                        : {
+                            backgroundColor: "var(--ui-card, #18181b)",
+                          }),
+                  }}
+                >
+                  {item.type === "default" && <Terminal size={16} />}
+                  {item.type === "destructive" && <AlertCircle size={16} />}
+                  {item.type === "warning" && (
+                    <AlertTriangle size={16} style={{ color: "#eab308" }} />
+                  )}
+                  {item.type === "success" && (
+                    <CheckCircle2 size={16} style={{ color: "#22c55e" }} />
+                  )}
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      gap: "0.75rem",
+                      width: "100%",
+                    }}
+                  >
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <AlertTitle
+                        style={
+                          item.type === "warning"
+                            ? { color: "#eab308" }
+                            : item.type === "success"
+                              ? { color: "#22c55e" }
+                              : undefined
+                        }
+                      >
+                        {item.title}
+                      </AlertTitle>
+                      <AlertDescription style={{ wordBreak: "break-word" }}>
+                        {item.description}
+                      </AlertDescription>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removeAlert(item.id)}
+                      title="Dismiss alert"
+                      aria-label="Close"
+                      style={{
+                        background: "transparent",
+                        border: "none",
+                        padding: "0.2rem",
+                        cursor: "pointer",
+                        color: "inherit",
+                        opacity: 0.7,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: "4px",
+                        lineHeight: 1,
+                        transition: "opacity 0.15s ease",
+                      }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.opacity = "1")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.opacity = "0.7")
+                      }
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                </Alert>
+              </div>
+            ))}
+          </div>,
+          document.body,
+        )}
     </div>
   );
 };
@@ -2869,26 +2925,31 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         title: "Interactive Trigger & Dismiss",
         description:
           "Click the action buttons to trigger new alerts, stack them together, or dismiss them.",
-        code: `function InteractiveAlerts() {
-  const [alerts, setAlerts] = React.useState([
-    { id: 1, type: 'default', title: 'Heads up!', desc: 'You can trigger alerts dynamically.' },
-  ]);
+        code: `function FloatingAlerts() {
+  const [alerts, setAlerts] = React.useState([]);
 
   const addAlert = (type) => {
+    const id = Date.now();
     setAlerts((prev) => [
       ...prev,
-      { id: Date.now(), type, title: 'Notification', desc: 'Dynamically generated alert.' },
+      { id, type, title: 'Notification', desc: 'Alert floating di pojok kanan atas.' },
     ]);
+
+    // Auto dismiss after 4 seconds (oldest disappears first)
+    setTimeout(() => {
+      setAlerts((prev) => prev.filter((a) => a.id !== id));
+    }, 4000);
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-2">
+    <div>
+      <div style={{ display: 'flex', gap: '0.5rem' }}>
         <Button onClick={() => addAlert('default')}>Add Default</Button>
         <Button variant="destructive" onClick={() => addAlert('destructive')}>Add Destructive</Button>
       </div>
 
-      <div className="flex flex-col gap-2">
+      {/* Floating Top-Right Stack */}
+      <div style={{ position: 'fixed', top: '1.25rem', right: '1.25rem', zIndex: 9999, display: 'flex', flexDirection: 'column', gap: '0.5rem', width: 360 }}>
         {alerts.map((a) => (
           <Alert key={a.id} variant={a.type}>
             <Terminal className="h-4 w-4" />
