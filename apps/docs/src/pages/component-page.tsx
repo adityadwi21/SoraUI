@@ -234,27 +234,8 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || "-"}\` | 
         {/* Description */}
         <p className="sora-doc-lead">{doc.description}</p>
 
-        {/* Badges / Links bar */}
+        {/* Links bar */}
         <div className="sora-doc-chips">
-          <Badge
-            variant="secondary"
-            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
-          >
-            Level {doc.level}
-          </Badge>
-          <Badge
-            variant="outline"
-            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
-          >
-            {doc.category}
-          </Badge>
-          <Badge
-            variant={doc.status === "stable" ? "success" : "warning"}
-            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
-          >
-            {doc.status}
-          </Badge>
-
           <a
             href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/components/${doc.id}`}
             target="_blank"
@@ -265,12 +246,6 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || "-"}\` | 
             <span>Source</span>
             <ExternalLink size={11} style={{ opacity: 0.6 }} />
           </a>
-
-          {doc.accessibility?.role && (
-            <span className="sora-doc-badge-neutral">
-              ARIA: <code>{doc.accessibility.role}</code>
-            </span>
-          )}
         </div>
       </div>
 
@@ -497,113 +472,10 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || "-"}\` | 
             </p>
             <div className="sora-tokens-list">
               {doc.themingTokens.map((token) => (
-                <div key={token} className="sora-token-item">
-                  <code>{token}</code>
-                </div>
+                <code key={token} className="sora-token-item">
+                  {token}
+                </code>
               ))}
-            </div>
-          </div>
-        )}
-
-        {/* Accessibility & Keyboard Support */}
-        {doc.accessibility && (
-          <div style={{ marginTop: "2rem" }}>
-            <h3 id="accessibility" className="sora-doc-h3">
-              <span>Accessibility &amp; WAI-ARIA</span>
-              <a
-                href="#accessibility"
-                className="sora-doc-anchor"
-                aria-label="Link to Accessibility section"
-              >
-                #
-              </a>
-            </h3>
-            <div className="sora-a11y-box">
-              {doc.accessibility.role && (
-                <p
-                  style={{
-                    fontSize: "0.875rem",
-                    color: "var(--docs-fg-muted)",
-                    marginBottom: "0.75rem",
-                  }}
-                >
-                  <strong style={{ color: "var(--docs-fg)" }}>
-                    ARIA Role:{" "}
-                  </strong>
-                  <code style={{ fontSize: "0.8125rem" }}>
-                    {doc.accessibility.role}
-                  </code>
-                </p>
-              )}
-
-              {doc.accessibility.aria?.length ? (
-                <div style={{ marginBottom: "0.875rem" }}>
-                  <p
-                    style={{
-                      fontSize: "0.875rem",
-                      fontWeight: 600,
-                      color: "var(--docs-fg)",
-                      marginBottom: "0.375rem",
-                    }}
-                  >
-                    ARIA Attributes:
-                  </p>
-                  <ul
-                    style={{
-                      margin: 0,
-                      paddingLeft: "1.25rem",
-                      fontSize: "0.875rem",
-                      color: "var(--docs-fg-muted)",
-                    }}
-                  >
-                    {doc.accessibility.aria.map((a, i) => (
-                      <li key={i}>
-                        <code
-                          style={{
-                            fontSize: "0.8125rem",
-                            color: "var(--docs-fg)",
-                          }}
-                        >
-                          {a.attribute}
-                        </code>
-                        : {a.usage}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-
-              {doc.accessibility.keyboard?.length ? (
-                <div>
-                  <p
-                    style={{
-                      fontSize: "0.875rem",
-                      fontWeight: 600,
-                      color: "var(--docs-fg)",
-                      marginBottom: "0.375rem",
-                    }}
-                  >
-                    Keyboard Navigation:
-                  </p>
-                  <ul
-                    style={{
-                      margin: 0,
-                      paddingLeft: "1.25rem",
-                      fontSize: "0.875rem",
-                      color: "var(--docs-fg-muted)",
-                    }}
-                  >
-                    {doc.accessibility.keyboard.map((k, i) => (
-                      <li key={i}>
-                        <strong style={{ color: "var(--docs-fg)" }}>
-                          {k.key}
-                        </strong>
-                        : {k.action}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
             </div>
           </div>
         )}

@@ -130,18 +130,6 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({
         <p className="sora-doc-lead">{doc.description}</p>
 
         <div className="sora-doc-chips">
-          <Badge
-            variant="secondary"
-            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
-          >
-            Full Template
-          </Badge>
-          <Badge
-            variant="outline"
-            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
-          >
-            {doc.category}
-          </Badge>
           <a
             href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/templates/${doc.id}-template.tsx`}
             target="_blank"
@@ -150,7 +138,7 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({
           >
             <GitHubIcon size={13} />
             <span>Source Code</span>
-            <ExternalLink size={11} />
+            <ExternalLink size={11} style={{ opacity: 0.6 }} />
           </a>
         </div>
       </div>

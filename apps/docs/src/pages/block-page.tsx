@@ -123,18 +123,6 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
         <p className="sora-doc-lead">{doc.description}</p>
 
         <div className="sora-doc-chips">
-          <Badge
-            variant="secondary"
-            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
-          >
-            Production Block
-          </Badge>
-          <Badge
-            variant="outline"
-            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
-          >
-            {doc.category}
-          </Badge>
           <a
             href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/blocks/${doc.category}/${doc.id}.tsx`}
             target="_blank"
@@ -143,7 +131,7 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
           >
             <GitHubIcon size={13} />
             <span>Source Code</span>
-            <ExternalLink size={11} />
+            <ExternalLink size={11} style={{ opacity: 0.6 }} />
           </a>
         </div>
       </div>

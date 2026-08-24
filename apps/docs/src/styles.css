@@ -1707,17 +1707,30 @@ svg {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 .sora-token-item {
-  padding: 0.25rem 0.5rem;
-  background: var(--docs-bg-muted);
-  border: 1px solid var(--docs-border);
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  background: var(--docs-code-inline-bg);
+  border: 1px solid var(--docs-code-inline-border);
   border-radius: var(--docs-radius-sm);
   font-size: 0.8125rem;
   font-family: var(--docs-font-mono);
-  color: var(--docs-accent);
+  color: var(--docs-code-inline-fg);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.sora-token-item code {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  color: inherit !important;
+  font-size: inherit !important;
 }
 
 /* Accessibility Box */
