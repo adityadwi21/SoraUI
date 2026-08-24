@@ -141,19 +141,19 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || '-'}\` | 
           <h1 className="sora-doc-title">{doc.name}</h1>
 
           {/* Quick Header Actions */}
-          <div className="sora-doc-header-actions">
+          <div className="docs-intro-actions">
             {/* Copy Page Button */}
             <button
               type="button"
-              className={`sora-btn-pill${pageCopied ? ' sora-btn-pill--success' : ''}`}
+              className="docs-intro-copy-btn"
               onClick={handleCopyPage}
               title="Copy full page markdown"
               aria-label="Copy Page Markdown"
             >
               {pageCopied ? (
                 <>
-                  <Check size={13} />
-                  <span>Copied Page</span>
+                  <Check size={13} style={{ color: '#22c55e' }} />
+                  <span>Copied</span>
                 </>
               ) : (
                 <>
@@ -164,29 +164,29 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || '-'}\` | 
             </button>
 
             {/* Quick Prev / Next jump buttons */}
-            <div className="sora-quick-nav">
-              {prevComp && (
-                <button
-                  type="button"
-                  className="sora-quick-nav-btn"
-                  onClick={() => handleNav(`/components/${prevComp.id}`)}
-                  title={`Previous: ${prevComp.name}`}
-                >
-                  <ChevronLeft size={13} />
-                  <span>{prevComp.name}</span>
-                </button>
-              )}
-              {nextComp && (
-                <button
-                  type="button"
-                  className="sora-quick-nav-btn"
-                  onClick={() => handleNav(`/components/${nextComp.id}`)}
-                  title={`Next: ${nextComp.name}`}
-                >
-                  <span>{nextComp.name}</span>
-                  <ChevronRight size={13} />
-                </button>
-              )}
+            <div className="docs-intro-nav-arrows">
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => prevComp && handleNav(`/components/${prevComp.id}`)}
+                disabled={!prevComp}
+                title={prevComp ? `Previous: ${prevComp.name}` : 'No previous component'}
+                aria-label="Previous component"
+                style={!prevComp ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => nextComp && handleNav(`/components/${nextComp.id}`)}
+                disabled={!nextComp}
+                title={nextComp ? `Next: ${nextComp.name}` : 'No next component'}
+                aria-label="Next component"
+                style={!nextComp ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+              >
+                <ChevronRight size={14} />
+              </button>
             </div>
           </div>
         </div>

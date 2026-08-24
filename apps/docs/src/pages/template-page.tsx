@@ -1,20 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import type { TemplateDoc } from '../registry/types';
+import { TEMPLATE_DOCS } from '../registry/templates';
 import { ComponentPreview } from '../components/component-preview';
 import { CodeBlock } from '../components/code-block';
 import { Badge } from '@soraui/react';
+import { Check, Copy, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface TemplatePageProps {
   doc: TemplateDoc;
+  onNavigate?: (path: string) => void;
 }
 
-export const TemplatePage: React.FC<TemplatePageProps> = ({ doc }) => {
+export const TemplatePage: React.FC<TemplatePageProps> = ({ doc, onNavigate }) => {
   const [copied, setCopied] = useState(false);
 
-  const copyCLI = () => {
-    navigator.clipboard.writeText(`npx @soraui/cli add template ${doc.id}`).catch(() => {});
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const { prevTemplate, nextTemplate } = useMemo(() => {
+    const idx = TEMPLATE_DOCS.findIndex((t) => t.id === doc.id);
+    return {
+      prevTemplate: idx > 0 ? TEMPLATE_DOCS[idx - 1] : null,
+      nextTemplate: idx < TEMPLATE_DOCS.length - 1 ? TEMPLATE_DOCS[idx + 1] : null,
+    };
+  }, [doc.id]);
+
+  const handleNav = (path: string) => {
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      window.location.hash = path;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const copyPage = async () => {
+    const text = `# ${doc.name}\n\n${doc.description}\n\n\`\`\`bash\nnpx @soraui/cli add template ${doc.id}\n\`\`\`\n\nhttps://github.com/adityadwi21/SoraUI`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* noop */
+    }
   };
 
   return (
@@ -23,14 +48,51 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({ doc }) => {
       <div className="sora-doc-header">
         <div className="sora-doc-title-row">
           <h1 className="sora-doc-title">{doc.name}</h1>
-          <div className="sora-doc-header-actions">
+          <div className="docs-intro-actions">
             <button
               type="button"
-              className={`sora-btn-pill${copied ? ' sora-btn-pill--success' : ''}`}
-              onClick={copyCLI}
+              className="docs-intro-copy-btn"
+              onClick={copyPage}
+              title="Copy Page Markdown"
+              aria-label="Copy Page Markdown"
             >
-              {copied ? '✓ Copied' : 'Copy CLI'}
+              {copied ? (
+                <>
+                  <Check size={13} style={{ color: '#22c55e' }} />
+                  <span>Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={13} />
+                  <span>Copy Page</span>
+                </>
+              )}
             </button>
+
+            <div className="docs-intro-nav-arrows">
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => prevTemplate && handleNav(`/templates/${prevTemplate.id}`)}
+                disabled={!prevTemplate}
+                title={prevTemplate ? `Previous: ${prevTemplate.name}` : 'No previous template'}
+                aria-label="Previous template"
+                style={!prevTemplate ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => nextTemplate && handleNav(`/templates/${nextTemplate.id}`)}
+                disabled={!nextTemplate}
+                title={nextTemplate ? `Next: ${nextTemplate.name}` : 'No next template'}
+                aria-label="Next template"
+                style={!nextTemplate ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+              >
+                <ChevronRight size={14} />
+              </button>
+            </div>
           </div>
         </div>
 

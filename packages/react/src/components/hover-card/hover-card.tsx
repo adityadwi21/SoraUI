@@ -45,13 +45,21 @@ export const HoverCardTrigger = forwardRef<HTMLSpanElement, HoverCardTriggerProp
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLSpanElement>) => {
     clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => ctx.setOpen(true), ctx.openDelay);
+    if (ctx.openDelay <= 0) {
+      ctx.setOpen(true);
+    } else {
+      timeoutRef.current = setTimeout(() => ctx.setOpen(true), ctx.openDelay);
+    }
     onMouseEnter?.(e);
   };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLSpanElement>) => {
     clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => ctx.setOpen(false), ctx.closeDelay);
+    if (ctx.closeDelay <= 0) {
+      ctx.setOpen(false);
+    } else {
+      timeoutRef.current = setTimeout(() => ctx.setOpen(false), ctx.closeDelay);
+    }
     onMouseLeave?.(e);
   };
 

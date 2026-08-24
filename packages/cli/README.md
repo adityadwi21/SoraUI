@@ -1,42 +1,76 @@
-# soraui
+# @soraui/cli
 
-SoraUI Command Line Interface — Add accessible components and blocks directly into your codebase.
+> Official Command Line Interface for SoraUI: Add accessible components, production blocks, and page templates directly into your codebase.
 
-## Quick Start
+---
 
-Initialize SoraUI in your project:
+## ⚡ Quick Start
 
-```bash
-npx soraui init
-```
-
-Add components:
+### Initialize SoraUI in your project
 
 ```bash
-npx soraui add button
-npx soraui add dialog
-npx soraui add tabs
+# Using npx
+npx @soraui/cli init
+
+# Or using pnpm dlx
+pnpm dlx @soraui/cli init
+
+# Or scaffold a new project with preconfigured template
+pnpm dlx @soraui/cli init -t next
+pnpm dlx @soraui/cli init -t vite
 ```
 
-Add production blocks:
+---
 
+## 🧩 Adding Components & Blocks
+
+### Add UI Primitives
 ```bash
-npx soraui add block login-form
-npx soraui add block dashboard-shell
+npx @soraui/cli add button
+npx @soraui/cli add dialog select card tabs
 ```
 
-List available components:
-
+### Add Production Blocks
 ```bash
-npx soraui list
+npx @soraui/cli add block login-form
+npx @soraui/cli add block metric-grid
+npx @soraui/cli add block dashboard-shell
 ```
 
-Search components:
-
+### Add Full-Page Templates
 ```bash
-npx soraui search modal
+npx @soraui/cli add template dashboard-page
+npx @soraui/cli add template auth-page
 ```
 
-## License
+---
+
+## 🔍 Discovery Commands
+
+### List all available items
+```bash
+npx @soraui/cli list
+```
+
+### Search registry
+```bash
+npx @soraui/cli search auth
+npx @soraui/cli search modal
+```
+
+---
+
+## 🎨 Options & Flags
+
+| Flag | Description |
+|---|---|
+| `-t, --template <name>` | Scaffold a preconfigured template (`next`, `vite`, `start`, `react-router`, `astro`) |
+| `-o, --overwrite` | Overwrite existing files without prompt |
+| `-y, --yes` | Skip confirmation prompts and use default settings |
+| `--path <dir>` | Custom output directory for components |
+
+---
+
+## 📄 License
 
 MIT © 2026 SoraUI Contributors

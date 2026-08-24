@@ -32,7 +32,7 @@ export const PropTable: React.FC<PropTableProps> = ({ props }) => {
                 </code>
               </td>
               <td><code style={{ color: 'var(--docs-fg-muted)' }}>{p.type}</code></td>
-              <td><code>{p.default || '—'}</code></td>
+              <td><code>{p.default || '-'}</code></td>
               <td style={{ color: 'var(--docs-fg-muted)' }}>{p.description}</td>
             </tr>
           ))}

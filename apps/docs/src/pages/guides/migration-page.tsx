@@ -1,13 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CodeBlock } from '../../components/code-block';
 import { Badge } from '@soraui/react';
+import { Check, Copy, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export const MigrationPage: React.FC = () => {
+export interface MigrationPageProps {
+  onNavigate?: (path: string) => void;
+}
+
+export const MigrationPage: React.FC<MigrationPageProps> = ({ onNavigate }) => {
+  const [copied, setCopied] = useState(false);
+
+  const go = (path: string) => {
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      window.location.hash = path;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleCopyPage = async () => {
+    const text = `# Migration Guide\n\nStep-by-step instructions for migrating your codebase from Radix UI, shadcn/ui, or raw CSS to SoraUI.\n\nhttps://github.com/adityadwi21/SoraUI`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* noop */
+    }
+  };
+
   return (
     <div className="docs-page sora-shadcn-page">
       <div className="sora-doc-header">
         <div className="sora-doc-title-row">
           <h1 className="sora-doc-title">Migration Guide</h1>
+          <div className="docs-intro-actions">
+            <button
+              type="button"
+              className="docs-intro-copy-btn"
+              onClick={handleCopyPage}
+              title="Copy Page Markdown"
+              aria-label="Copy Page Markdown"
+            >
+              {copied ? (
+                <>
+                  <Check size={13} style={{ color: '#22c55e' }} />
+                  <span>Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={13} />
+                  <span>Copy Page</span>
+                </>
+              )}
+            </button>
+
+            <div className="docs-intro-nav-arrows">
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => go('/guides/manual')}
+                title="Previous: Manual Setup"
+                aria-label="Previous page"
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => go('/guides/semver')}
+                title="Next: Semantic Versioning"
+                aria-label="Next page"
+              >
+                <ChevronRight size={14} />
+              </button>
+            </div>
+          </div>
         </div>
         <p className="sora-doc-lead">
           Step-by-step instructions for migrating your codebase from Radix UI, shadcn/ui, or raw CSS to SoraUI.

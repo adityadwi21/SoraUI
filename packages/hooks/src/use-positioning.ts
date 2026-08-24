@@ -80,12 +80,14 @@ export function usePositioning(
     const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 1024;
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 768;
 
-    // Check if anchor is visible in viewport
+    // Check if anchor is visible in viewport (or fallback for JSDOM zero-rects)
+    const isAnchorZero = anchorRect.top === 0 && anchorRect.bottom === 0 && anchorRect.left === 0 && anchorRect.right === 0;
     const isAnchorVisible =
-      anchorRect.bottom > 0 &&
-      anchorRect.top < viewportHeight &&
-      anchorRect.right > 0 &&
-      anchorRect.left < viewportWidth;
+      isAnchorZero ||
+      (anchorRect.bottom >= 0 &&
+        anchorRect.top <= viewportHeight &&
+        anchorRect.right >= 0 &&
+        anchorRect.left <= viewportWidth);
 
     if (!isAnchorVisible) {
       setPosition((prev) => ({

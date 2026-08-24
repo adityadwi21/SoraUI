@@ -5,10 +5,11 @@ export interface CodeBlockProps {
   code: string;
   language?: string;
   filename?: string;
+  title?: string;
   style?: React.CSSProperties;
 }
 
-export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, filename, style }) => {
+export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, filename, title, style }) => {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
@@ -24,7 +25,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, filename, 
   return (
     <div className="docs-codeblock" style={style}>
       <div className="docs-codeblock-head">
-        <span className="docs-codeblock-lang">{language || filename || 'code'}</span>
+        <span className="docs-codeblock-lang">{title || filename || language || 'code'}</span>
         <button
           type="button"
           className={`docs-codeblock-copy${copied ? ' ok' : ''}`}

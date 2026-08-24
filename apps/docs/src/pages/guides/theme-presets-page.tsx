@@ -1,8 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Badge } from '@soraui/react';
 import { CodeBlock } from '../../components/code-block';
+import { Check, Copy, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export const ThemePresetsPage: React.FC = () => {
+export interface ThemePresetsPageProps {
+  onNavigate?: (path: string) => void;
+}
+
+export const ThemePresetsPage: React.FC<ThemePresetsPageProps> = ({ onNavigate }) => {
+  const [copied, setCopied] = useState(false);
+
+  const go = (path: string) => {
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      window.location.hash = path;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleCopyPage = async () => {
+    const text = `# Theme Presets\n\nSoraUI includes 9 pre-engineered, accessible color palettes ready for instant use via CSS custom properties.\n\nhttps://github.com/adityadwi21/SoraUI`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* noop */
+    }
+  };
+
   const themes = [
     { name: 'Sky', id: 'sky', primary: '#0ea5e9', bg: '#ffffff', darkBg: '#09090b', desc: 'Modern cyan blue palette (default)' },
     { name: 'Cloud', id: 'cloud', primary: '#64748b', bg: '#ffffff', darkBg: '#0f172a', desc: 'Neutral slate gray minimal palette' },
@@ -20,6 +47,48 @@ export const ThemePresetsPage: React.FC = () => {
       <div className="sora-doc-header">
         <div className="sora-doc-title-row">
           <h1 className="sora-doc-title">Theme Presets</h1>
+          <div className="docs-intro-actions">
+            <button
+              type="button"
+              className="docs-intro-copy-btn"
+              onClick={handleCopyPage}
+              title="Copy Page Markdown"
+              aria-label="Copy Page Markdown"
+            >
+              {copied ? (
+                <>
+                  <Check size={13} style={{ color: '#22c55e' }} />
+                  <span>Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={13} />
+                  <span>Copy Page</span>
+                </>
+              )}
+            </button>
+
+            <div className="docs-intro-nav-arrows">
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => go('/guides/theming')}
+                title="Previous: Theming"
+                aria-label="Previous page"
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => go('/guides/cli-reference')}
+                title="Next: CLI Reference"
+                aria-label="Next page"
+              >
+                <ChevronRight size={14} />
+              </button>
+            </div>
+          </div>
         </div>
         <p className="sora-doc-lead">
           SoraUI includes 9 pre-engineered, accessible color palettes ready for instant use via CSS custom properties.

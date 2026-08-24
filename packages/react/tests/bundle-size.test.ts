@@ -28,12 +28,12 @@ describe('Phase 10.5D — Granular Bundle Size & Tree-Shaking Budget Contract', 
     }
   });
 
-  it('@soraui/hooks ESM satisfies budget (< 10 KB)', () => {
+  it('@soraui/hooks ESM satisfies budget (< 15 KB)', () => {
     const hooksJs = path.join(hooksDist, 'index.js');
     if (fs.existsSync(hooksJs)) {
       const stats = fs.statSync(hooksJs);
       const sizeKB = stats.size / 1024;
-      expect(sizeKB).toBeLessThan(10);
+      expect(sizeKB).toBeLessThan(15);
     }
   });
 

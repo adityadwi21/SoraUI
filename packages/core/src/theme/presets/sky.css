@@ -66,7 +66,7 @@ html[data-docs-theme="dark"]:not([data-theme]) {
   --ui-accent: #1e293b;
   --ui-accent-foreground: #f0f9ff;
 
-  --ui-destructive: #ef4444;
+  --ui-destructive: #dc2626;
   --ui-destructive-foreground: #ffffff;
 
   --ui-success: #10b981;

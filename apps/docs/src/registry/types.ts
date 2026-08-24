@@ -102,5 +102,7 @@ export interface GuideDoc {
   title: string;
   category: 'Getting Started' | 'Theming' | 'CLI & Tooling' | 'Frameworks' | 'Migration' | 'AI & Tooling' | 'Governance';
   description: string;
+  hasDotBadge?: boolean;
+  customPath?: string;
 }
 

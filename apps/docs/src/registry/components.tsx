@@ -898,7 +898,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     name: 'Select',
     category: 'Forms',
     level: 2,
-    description: 'Displays a list of options for the user to pick from—triggered by a button, with full listbox keyboard navigation and option groups.',
+    description: 'Displays a list of options for the user to pick from, triggered by a button, with full listbox keyboard navigation and option groups.',
     dependencies: ['@soraui/hooks'],
     tags: ['select', 'listbox', 'combobox', 'options', 'dropdown'],
     status: 'stable',

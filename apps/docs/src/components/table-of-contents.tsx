@@ -17,8 +17,8 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ currentPath })
   const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {
-    // Scan the page for h2 and h3 elements with IDs
-    const timer = setTimeout(() => {
+    // Scan the page for h2 and h3 elements with IDs smoothly and immediately
+    const scan = () => {
       const mainEl = document.getElementById('main-content');
       if (!mainEl) return;
 
@@ -33,9 +33,10 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ currentPath })
       if (items.length > 0 && items[0]) {
         setActiveId(items[0].id);
       }
-    }, 120);
+    };
 
-    return () => clearTimeout(timer);
+    const raf = requestAnimationFrame(scan);
+    return () => cancelAnimationFrame(raf);
   }, [currentPath]);
 
   useEffect(() => {
@@ -76,10 +77,6 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ currentPath })
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (headings.length === 0) {
-    return null;
-  }
-
   // Derive github edit link
   const getGithubLink = () => {
     if (currentPath.startsWith('/components/')) {
@@ -97,21 +94,27 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ currentPath })
     <aside className="docs-toc" aria-label="Table of contents">
       <div className="docs-toc-inner">
         <div className="docs-toc-title">On This Page</div>
-        <nav className="docs-toc-nav">
-          {headings.map((h) => {
-            const isActive = activeId === h.id;
-            return (
-              <button
-                key={h.id}
-                type="button"
-                className={`docs-toc-link lvl-${h.level}${isActive ? ' active' : ''}`}
-                onClick={() => scrollTo(h.id)}
-              >
-                {h.title}
-              </button>
-            );
-          })}
-        </nav>
+        {headings.length > 0 ? (
+          <nav className="docs-toc-nav">
+            {headings.map((h) => {
+              const isActive = activeId === h.id;
+              return (
+                <button
+                  key={h.id}
+                  type="button"
+                  className={`docs-toc-link lvl-${h.level}${isActive ? ' active' : ''}`}
+                  onClick={() => scrollTo(h.id)}
+                >
+                  {h.title}
+                </button>
+              );
+            })}
+          </nav>
+        ) : (
+          <div style={{ padding: '0 0.5rem', fontSize: '0.75rem', color: 'var(--docs-fg-muted)' }}>
+            Overview
+          </div>
+        )}
 
         <div className="docs-toc-divider" />
 

@@ -1,13 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CodeBlock } from '../../components/code-block';
 import { Badge } from '@soraui/react';
+import { Check, Copy, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export const McpGuidePage: React.FC = () => {
+export interface McpGuidePageProps {
+  onNavigate?: (path: string) => void;
+}
+
+export const McpGuidePage: React.FC<McpGuidePageProps> = ({ onNavigate }) => {
+  const [copied, setCopied] = useState(false);
+
+  const go = (path: string) => {
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      window.location.hash = path;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleCopyPage = async () => {
+    const text = `# Skills & MCP (Model Context Protocol)\n\nConnect Cursor, Claude Desktop, Gemini CLI, or any AI coding assistant directly to SoraUI’s canonical component registry and design system.\n\nhttps://github.com/adityadwi21/SoraUI`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* noop */
+    }
+  };
+
   return (
     <div className="docs-page sora-shadcn-page">
       <div className="sora-doc-header">
         <div className="sora-doc-title-row">
-          <h1 className="sora-doc-title">Model Context Protocol (MCP) Server</h1>
+          <h1 className="sora-doc-title">Skills & MCP</h1>
+          <div className="docs-intro-actions">
+            <button
+              type="button"
+              className="docs-intro-copy-btn"
+              onClick={handleCopyPage}
+              title="Copy Page Markdown"
+              aria-label="Copy Page Markdown"
+            >
+              {copied ? (
+                <>
+                  <Check size={13} style={{ color: '#22c55e' }} />
+                  <span>Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={13} />
+                  <span>Copy Page</span>
+                </>
+              )}
+            </button>
+
+            <div className="docs-intro-nav-arrows">
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => go('/guides/cli-reference')}
+                title="Previous: CLI Reference"
+                aria-label="Previous page"
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => go('/guides/changelog')}
+                title="Next: Changelog"
+                aria-label="Next page"
+              >
+                <ChevronRight size={14} />
+              </button>
+            </div>
+          </div>
         </div>
         <p className="sora-doc-lead">
           Connect Cursor, Claude Desktop, Gemini CLI, or any AI coding assistant directly to SoraUI’s canonical component registry and design system.

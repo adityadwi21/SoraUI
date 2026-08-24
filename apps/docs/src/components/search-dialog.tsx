@@ -66,7 +66,19 @@ export const SearchDialog: React.FC<SearchDialogProps> = ({ open, onClose, onNav
   const all: SearchResultItem[] = useMemo(() => {
     const r: SearchResultItem[] = [];
     GUIDE_DOCS.forEach((g) =>
-      r.push({ id: `g-${g.id}`, title: g.title, category: 'Guide', description: g.description, href: `/guides/${g.id}` })
+      r.push({ id: `g-${g.id}`, title: g.title, category: 'Guide', description: g.description, href: g.customPath || `/guides/${g.id}` })
+    );
+    [
+      { id: 'nextjs', title: 'Next.js Integration', description: 'Next.js App Router and Pages Router setup with SoraUI.', href: '/guides/nextjs' },
+      { id: 'vite', title: 'Vite & SPA Integration', description: 'Fast single-page application setup with Vite and React.', href: '/guides/vite' },
+      { id: 'laravel', title: 'Laravel Integration', description: 'Laravel 11+ Inertia.js React setup with design tokens.', href: '/guides/laravel' },
+      { id: 'react-router', title: 'React Router Integration', description: 'React Router v7 / Remix setup with SSR support.', href: '/guides/react-router' },
+      { id: 'astro', title: 'Astro Integration', description: 'Astro content-first setup with React Island architecture.', href: '/guides/astro' },
+      { id: 'manual', title: 'Manual Installation', description: 'Install SoraUI dependencies and tokens manually.', href: '/guides/manual' },
+      { id: 'migration', title: 'Migration from Radix & shadcn', description: 'Transition existing components and tokens to SoraUI.', href: '/guides/migration' },
+      { id: 'semver', title: 'Semantic Versioning Policy', description: 'Public API stability, release cadence, and deprecation lifecycle.', href: '/guides/semver' },
+    ].forEach((f) =>
+      r.push({ id: `f-${f.id}`, title: f.title, category: 'Framework', description: f.description, href: f.href })
     );
     COMPONENT_DOCS.forEach((c) =>
       r.push({

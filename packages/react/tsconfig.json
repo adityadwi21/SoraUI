@@ -3,7 +3,11 @@
   "compilerOptions": {
     "outDir": "dist",
     "jsx": "react-jsx",
-    "types": ["vitest/globals", "@testing-library/jest-dom/vitest", "node"]
+    "types": ["vitest/globals", "@testing-library/jest-dom/vitest", "node"],
+    "paths": {
+      "@soraui/core": ["../core/src/index.ts"],
+      "@soraui/hooks": ["../hooks/src/index.ts"]
+    }
   },
   "include": ["src", "tests", "vitest.setup.ts"]
 }

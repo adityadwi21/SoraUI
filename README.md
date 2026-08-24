@@ -8,13 +8,13 @@ SoraUI is an open-source, lightweight UI construction system for modern JavaScri
 
 ## 🌌 Features
 
-- **44 Accessible Primitives** — Level 1 zero-runtime CSS components up to Level 3 interactive primitives (WAI-ARIA, keyboard navigation, focus management).
-- **14 Production Blocks & 4 Page Templates** — UI-only compound blocks and layouts for Authentication, Dashboards, Marketing, and Settings.
-- **3-Layer Design Token Engine** — Primitive (`--sora-*`) → Semantic (`--ui-*`) → Component (`--sora-<comp>-*`) with zero hardcoded colors.
-- **9 Space-Themed Presets & ThemeScope** — Pure CSS cascading themes (`Sky`, `Cloud`, `Horizon`, `Aurora`, `Twilight`, `Midnight`, `Nebula`, `Eclipse`, `Starlight`) with isolated `<ThemeScope>` subtrees.
-- **AI-Native MCP Server (`@soraui/mcp`)** — 11 structured JSON-Schema-driven tools, static composition analysis, resources, and prompt templates for Claude Desktop, Cursor, Gemini, and Copilot.
-- **Zero-FOUC & SSR Ready** — Seamless Next.js App/Pages Router and Vite SPA support with server-side init scripts.
-- **Ultra-Lightweight & Tree-Shakeable** — Core < 8 KB, Hooks < 9 KB, Consolidated CSS < 42 KB.
+- **44 Accessible Primitives**: Level 1 zero-runtime CSS components up to Level 3 interactive primitives (WAI-ARIA, keyboard navigation, focus management).
+- **14 Production Blocks & 4 Page Templates**: UI-only compound blocks and layouts for Authentication, Dashboards, Marketing, and Settings.
+- **3-Layer Design Token Engine**: Primitive (`--sora-*`) → Semantic (`--ui-*`) → Component (`--sora-<comp>-*`) with zero hardcoded colors.
+- **9 Space-Themed Presets & ThemeScope**: Pure CSS cascading themes (`Sky`, `Cloud`, `Horizon`, `Aurora`, `Twilight`, `Midnight`, `Nebula`, `Eclipse`, `Starlight`) with isolated `<ThemeScope>` subtrees.
+- **AI-Native MCP Server (`@soraui/mcp`)**: 11 structured JSON-Schema-driven tools, static composition analysis, resources, and prompt templates for Claude Desktop, Cursor, Gemini, and Copilot.
+- **Zero-FOUC & SSR Ready**: Seamless Next.js App/Pages Router, Vite SPA, Laravel Inertia, React Router v7, and Astro support.
+- **Ultra-Lightweight & Tree-Shakeable**: Core < 8 KB, Hooks < 9 KB, Consolidated CSS < 42 KB.
 
 ---
 
@@ -22,12 +22,12 @@ SoraUI is an open-source, lightweight UI construction system for modern JavaScri
 
 | Theme | Mode | Description |
 |---|---|---|
-| **Sky** | Light | Clean blue sky — default light theme |
+| **Sky** | Light | Clean blue sky (default light theme) |
 | **Cloud** | Light | Soft white and neutral cloud tones |
 | **Horizon** | Light | Warm sunset transition colors |
 | **Aurora** | Dark | Vibrant teal and emerald aurora |
 | **Twilight** | Dark | Deep dusk indigo and purple |
-| **Midnight** | Dark | Minimal dark with indigo accents — default dark theme |
+| **Midnight** | Dark | Minimal dark with indigo accents (default dark theme) |
 | **Nebula** | Dark | Purple and magenta deep-space nebula |
 | **Eclipse** | Dark | High-contrast pitch black with golden accent |
 | **Starlight** | Dark | Dark navy with radiant star highlights |
@@ -36,7 +36,7 @@ SoraUI is an open-source, lightweight UI construction system for modern JavaScri
 
 ## 🚀 Getting Started
 
-### 1. Via CLI (Source Distribution — "Own Your UI")
+### 1. Via CLI (Source Distribution: "Own Your UI")
 
 ```bash
 # Initialize SoraUI in your project
@@ -98,23 +98,20 @@ Tools available to your agent:
 - `soraui_get_context`: Rapid ecosystem overview & architectural guidelines.
 - `soraui_search`: Deterministic scoring search across all components, blocks, and templates.
 - `soraui_inspect_component` / `soraui_inspect_block`: Full prop tables, WAI-ARIA roles, and boundary rules.
-- `soraui_compose_recipe`: Deterministic recipe generator (v1.0) for standard full-page flows.
+- `soraui_compose_recipe`: Deterministic recipe generator for standard full-page flows.
 - `soraui_validate_composition`: Static composition analyzer detecting hardcoded colors (`SORA-TOKEN-001`), backend coupling (`SORA-BOUNDARY-001`), and accessibility oversights (`SORA-A11Y-001`).
 
 ---
 
-## 📦 Published NPM Packages (`v0.1.0-rc.2` — Stable `v0.1.0` Pending)
+## 📦 Monorepo Packages
 
 | Package | Purpose | Version |
 |---|---|---|
-| [`@soraui/core`](https://www.npmjs.com/package/@soraui/core) | Tokens, 24-key Theme Contract, CSS Presets | `0.1.0-rc.2` |
-| [`@soraui/hooks`](https://www.npmjs.com/package/@soraui/hooks) | A11y & interaction primitives (focus trap, escape key) | `0.1.0-rc.2` |
-| [`@soraui/react`](https://www.npmjs.com/package/@soraui/react) | 44 primitives, 14 blocks, 4 templates, ThemeProvider | `0.1.0-rc.2` |
-| [`@soraui/cli`](https://www.npmjs.com/package/@soraui/cli) | CLI code generator & dependency resolver | `0.1.0-rc.2` |
-| [`@soraui/mcp`](https://www.npmjs.com/package/@soraui/mcp) | Official Model Context Protocol stdio server | `0.1.0-rc.2` |
-
-> **Phase 14G** (Documentation Platform Redesign & UX Hardening) is currently in progress.  
-> Stable `v0.1.0` promotion (Phase 14F) will follow docs polish completion.
+| [`@soraui/core`](./packages/core) | Tokens, 24-key Theme Contract, CSS Presets | `0.1.0` |
+| [`@soraui/hooks`](./packages/hooks) | A11y & interaction primitives (focus trap, escape key) | `0.1.0` |
+| [`@soraui/react`](./packages/react) | 44 primitives, 14 blocks, 4 templates, ThemeProvider | `0.1.0` |
+| [`@soraui/cli`](./packages/cli) | CLI code generator & dependency resolver | `0.1.0` |
+| [`@soraui/mcp`](./packages/mcp) | Official Model Context Protocol stdio server | `0.1.0` |
 
 ---
 
@@ -130,8 +127,7 @@ soraui/
 │   ├── core/           # Design tokens, 24-key Theme Contract, preset stylesheets
 │   ├── hooks/          # A11y & interaction hooks (focus trap, roving index, escape key)
 │   ├── react/          # 44 primitives, 14 blocks, 4 templates, ThemeProvider, ThemeScope
-│   ├── cli/            # `@soraui/cli` code generator & dependency resolution
-│   ├── icons/          # Minimal SVG icon primitives
+│   ├── cli/            # @soraui/cli code generator & dependency resolution
 │   └── mcp/            # Model Context Protocol stdio server for AI coding agents
 │
 └── registry/           # Single Canonical Source of Truth (registry.json)
@@ -163,7 +159,6 @@ pnpm test:pm-matrix
 # Phase 14C: Live MCP stdio Protocol & 11 Tool Validation
 pnpm test:ai-agent-mcp
 ```
-
 
 ---
 

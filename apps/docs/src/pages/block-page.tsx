@@ -1,21 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import type { BlockDoc } from '../registry/types';
+import { BLOCK_DOCS } from '../registry/blocks';
 import { ComponentPreview } from '../components/component-preview';
 import { PropTable } from '../components/prop-table';
 import { CodeBlock } from '../components/code-block';
 import { Badge } from '@soraui/react';
+import { Check, Copy, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface BlockPageProps {
   doc: BlockDoc;
+  onNavigate?: (path: string) => void;
 }
 
-export const BlockPage: React.FC<BlockPageProps> = ({ doc }) => {
+export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
   const [copied, setCopied] = useState(false);
 
-  const copyCLI = () => {
-    navigator.clipboard.writeText(`npx @soraui/cli add block ${doc.id}`).catch(() => {});
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const { prevBlock, nextBlock } = useMemo(() => {
+    const idx = BLOCK_DOCS.findIndex((b) => b.id === doc.id);
+    return {
+      prevBlock: idx > 0 ? BLOCK_DOCS[idx - 1] : null,
+      nextBlock: idx < BLOCK_DOCS.length - 1 ? BLOCK_DOCS[idx + 1] : null,
+    };
+  }, [doc.id]);
+
+  const handleNav = (path: string) => {
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      window.location.hash = path;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const copyPage = async () => {
+    const text = `# ${doc.name}\n\n${doc.description}\n\n\`\`\`bash\nnpx @soraui/cli add block ${doc.id}\n\`\`\`\n\nhttps://github.com/adityadwi21/SoraUI`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* noop */
+    }
   };
 
   return (
@@ -24,14 +49,51 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc }) => {
       <div className="sora-doc-header">
         <div className="sora-doc-title-row">
           <h1 className="sora-doc-title">{doc.name}</h1>
-          <div className="sora-doc-header-actions">
+          <div className="docs-intro-actions">
             <button
               type="button"
-              className={`sora-btn-pill${copied ? ' sora-btn-pill--success' : ''}`}
-              onClick={copyCLI}
+              className="docs-intro-copy-btn"
+              onClick={copyPage}
+              title="Copy Page Markdown"
+              aria-label="Copy Page Markdown"
             >
-              {copied ? '✓ Copied' : 'Copy CLI'}
+              {copied ? (
+                <>
+                  <Check size={13} style={{ color: '#22c55e' }} />
+                  <span>Copied</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={13} />
+                  <span>Copy Page</span>
+                </>
+              )}
             </button>
+
+            <div className="docs-intro-nav-arrows">
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => prevBlock && handleNav(`/blocks/${prevBlock.id}`)}
+                disabled={!prevBlock}
+                title={prevBlock ? `Previous: ${prevBlock.name}` : 'No previous block'}
+                aria-label="Previous block"
+                style={!prevBlock ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+              >
+                <ChevronLeft size={14} />
+              </button>
+              <button
+                type="button"
+                className="docs-intro-nav-arrow-btn"
+                onClick={() => nextBlock && handleNav(`/blocks/${nextBlock.id}`)}
+                disabled={!nextBlock}
+                title={nextBlock ? `Next: ${nextBlock.name}` : 'No next block'}
+                aria-label="Next block"
+                style={!nextBlock ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+              >
+                <ChevronRight size={14} />
+              </button>
+            </div>
           </div>
         </div>
 

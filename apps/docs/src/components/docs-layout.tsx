@@ -54,18 +54,6 @@ function useDocsTheme() {
 /* ─────────────────────────────────────────────────────
    SVG Icons
 ───────────────────────────────────────────────────── */
-const StarLogo = () => (
-  <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ flexShrink: 0 }}>
-    <defs>
-      <linearGradient id="sl-g" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#0ea5e9" />
-        <stop offset="50%" stopColor="#6366f1" />
-        <stop offset="100%" stopColor="#a855f7" />
-      </linearGradient>
-    </defs>
-    <path d="M16 2 L18.4 13.6 L30 16 L18.4 18.4 L16 30 L13.6 18.4 L2 16 L13.6 13.6 Z" fill="url(#sl-g)" />
-  </svg>
-);
 
 const Npm = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: 14, height: 14 }}>
@@ -89,12 +77,7 @@ const THEMES = [
 ];
 
 /* ─────────────────────────────────────────────────────
-   Component categories
-───────────────────────────────────────────────────── */
-const CATS = ['General', 'Forms', 'Navigation', 'Feedback', 'Overlays', 'Data Display', 'Layout'] as const;
-
-/* ─────────────────────────────────────────────────────
-   SidebarContent — shared between desktop + drawer
+   SidebarContent: shared between desktop + drawer
 ───────────────────────────────────────────────────── */
 const SidebarContent: React.FC<{
   currentPath: string;
@@ -114,7 +97,7 @@ const SidebarContent: React.FC<{
         <div className="docs-sb-label">Getting Started</div>
         <div className="docs-sb-group">
           {GUIDE_DOCS.map((g) => {
-            const href = `/guides/${g.id}`;
+            const href = g.customPath || (g.id === 'components' ? '/components' : `/guides/${g.id}`);
             const active = currentPath === href || (g.id === 'introduction' && isIntro);
             return (
               <button
@@ -124,6 +107,38 @@ const SidebarContent: React.FC<{
                 onClick={() => go(href)}
               >
                 <span>{g.title}</span>
+                {g.hasDotBadge ? (
+                  <span className="docs-sb-dot-blue" aria-hidden />
+                ) : (
+                  <span className="docs-sb-item-dot" aria-hidden />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Frameworks */}
+      <div className="docs-sb-section">
+        <div className="docs-sb-label">Frameworks</div>
+        <div className="docs-sb-group">
+          {[
+            { id: 'nextjs', title: 'Next.js', href: '/guides/nextjs' },
+            { id: 'vite', title: 'Vite', href: '/guides/vite' },
+            { id: 'laravel', title: 'Laravel', href: '/guides/laravel' },
+            { id: 'react-router', title: 'React Router', href: '/guides/react-router' },
+            { id: 'astro', title: 'Astro', href: '/guides/astro' },
+            { id: 'manual', title: 'Manual', href: '/guides/manual' },
+          ].map((f) => {
+            const active = currentPath === f.href;
+            return (
+              <button
+                key={f.id}
+                type="button"
+                className={`docs-sb-item${active ? ' active' : ''}`}
+                onClick={() => go(f.href)}
+              >
+                <span>{f.title}</span>
                 <span className="docs-sb-item-dot" aria-hidden />
               </button>
             );
@@ -137,33 +152,26 @@ const SidebarContent: React.FC<{
           <span>Components</span>
           <span className="docs-sb-chip">{COMPONENT_DOCS.length}</span>
         </div>
-        {CATS.map((cat) => {
-          const comps = COMPONENT_DOCS.filter((c) => c.category === cat);
-          if (!comps.length) return null;
-          return (
-            <div key={cat} className="docs-sb-subgroup">
-              <div className="docs-sb-cat">{cat}</div>
-              <div className="docs-sb-items">
-                {comps.map((c) => {
-                  const href = `/components/${c.id}`;
-                  const active = currentPath === href;
-                  return (
-                    <button
-                      key={c.id}
-                      type="button"
-                      className={`docs-sb-item${active ? ' active' : ''}`}
-                      onClick={() => go(href)}
-                    >
-                      <span>{c.name}</span>
-                      {c.status === 'experimental' && <span className="docs-sb-badge docs-sb-badge--beta">Exp</span>}
-                      <span className="docs-sb-item-dot" aria-hidden />
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+        <div className="docs-sb-group">
+          {[...COMPONENT_DOCS]
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((c) => {
+              const href = `/components/${c.id}`;
+              const active = currentPath === href;
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  className={`docs-sb-item${active ? ' active' : ''}`}
+                  onClick={() => go(href)}
+                >
+                  <span>{c.name}</span>
+                  {c.status === 'experimental' && <span className="docs-sb-badge docs-sb-badge--beta">Exp</span>}
+                  <span className="docs-sb-item-dot" aria-hidden />
+                </button>
+              );
+            })}
+        </div>
       </div>
 
       {/* Blocks */}
@@ -260,7 +268,8 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({ currentPath, onNavigate,
     return () => document.removeEventListener('keydown', h);
   }, []);
 
-  const isGuide = currentPath === '/' || currentPath === '' || currentPath.startsWith('/guides');
+  const isHome = currentPath === '/' || currentPath === '';
+  const isGuide = currentPath.startsWith('/guides');
   const isComp = currentPath.startsWith('/components');
   const isBlock = currentPath.startsWith('/blocks');
   const isTemplate = currentPath.startsWith('/templates');
@@ -287,8 +296,11 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({ currentPath, onNavigate,
 
             {/* Logo */}
             <button type="button" className="docs-logo" onClick={() => onNavigate('/')} aria-label="SoraUI home">
-              <StarLogo />
-              <span className="docs-logo-text">SoraUI</span>
+              <img
+                src={mode === 'dark' ? '/Logo-full-removebg.png' : '/Logo-full-removebg-light.png'}
+                alt="SoraUI"
+                style={{ height: 48, width: 'auto', objectFit: 'contain', display: 'block' }}
+              />
               <span className="docs-logo-chip">v0.1.0</span>
             </button>
           </div>
@@ -296,8 +308,9 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({ currentPath, onNavigate,
           {/* Center nav */}
           <nav className="docs-header-mid docs-top-nav" aria-label="Main nav">
             {([
+              { label: 'Home', active: isHome, path: '/' },
               { label: 'Docs', active: isGuide, path: '/guides/introduction' },
-              { label: 'Components', active: isComp, path: '/components/button' },
+              { label: 'Components', active: isComp, path: '/components' },
               { label: 'Blocks', active: isBlock, path: '/blocks/login-form' },
               { label: 'Templates', active: isTemplate, path: '/templates/dashboard-page' },
               { label: 'Playground', active: isPlay, path: '/playground' },
