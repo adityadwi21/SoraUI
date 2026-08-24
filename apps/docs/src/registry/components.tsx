@@ -161,10 +161,10 @@ const AlertInteractiveDemo: React.FC = () => {
     );
     setTimeout(() => {
       setAlerts((prev) => prev.filter((a) => a.id !== id));
-    }, 280);
+    }, 200);
   };
 
-  // Add alert and auto-dismiss after 3 seconds (FIFO sequence)
+  // Add alert and auto-dismiss after 2 seconds (FIFO sequence)
   const addAlert = (
     type: "default" | "destructive" | "warning" | "success",
   ) => {
@@ -193,10 +193,10 @@ const AlertInteractiveDemo: React.FC = () => {
       { id: newId, type, title, description, isExiting: false },
     ]);
 
-    // Auto dismiss after 3 seconds (3000ms) for sequential disappearance
+    // Auto dismiss after 2 seconds (2000ms) for sequential disappearance
     setTimeout(() => {
       removeAlert(newId);
-    }, 3000);
+    }, 2000);
   };
 
   return (
@@ -298,7 +298,7 @@ const AlertInteractiveDemo: React.FC = () => {
         >
           Click any action button above to trigger a floating alert in the{" "}
           <strong>top-right corner of the screen</strong>. The oldest active
-          alert will automatically dismiss in sequential order after 3 seconds
+          alert will automatically dismiss in sequential order after 2 seconds
           (or click the <strong>×</strong> button to dismiss immediately).
         </p>
       </div>
@@ -2953,7 +2953,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         id: "interactive",
         title: "Interactive Trigger & Dismiss",
         description:
-          "Click the action buttons to trigger floating alerts in the top-right corner with 3-second FIFO auto-dismiss.",
+          "Click the action buttons to trigger floating alerts in the top-right corner with 2-second FIFO auto-dismiss.",
         code: `function FloatingAlerts() {
   const [alerts, setAlerts] = React.useState([]);
 
@@ -2964,10 +2964,10 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       { id, type, title: 'Notification', desc: 'Floating alert triggered in top-right corner.' },
     ]);
 
-    // Auto dismiss after 3 seconds (oldest disappears first)
+    // Auto dismiss after 2 seconds (oldest disappears first)
     setTimeout(() => {
       setAlerts((prev) => prev.filter((a) => a.id !== id));
-    }, 3000);
+    }, 2000);
   };
 
   return (

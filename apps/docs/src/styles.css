@@ -3875,37 +3875,30 @@ pre.docs-codeblock-pre {
   border-color: rgba(239, 68, 68, 0.2);
 }
 
-/* ─── 2026 Floating Top-Right Alert Stack ─── */
-@keyframes soraAlertEnter {
+/* ─── Shadcn-Style Floating Top-Right Alert Stack ─── */
+@keyframes shadcnAlertEnter {
   0% {
-    transform: translate3d(120%, 0, 0) scale(0.92);
+    transform: translate3d(100%, 0, 0) scale(0.95);
     opacity: 0;
-    filter: blur(4px);
-  }
-  70% {
-    transform: translate3d(-4px, 0, 0) scale(1.01);
-    opacity: 1;
-    filter: blur(0);
   }
   100% {
     transform: translate3d(0, 0, 0) scale(1);
     opacity: 1;
-    filter: blur(0);
   }
 }
 
-@keyframes soraAlertExit {
+@keyframes shadcnAlertExit {
   0% {
     transform: translate3d(0, 0, 0) scale(1);
     opacity: 1;
   }
   100% {
-    transform: translate3d(110%, 0, 0) scale(0.92);
+    transform: translate3d(100%, 0, 0) scale(0.95);
     opacity: 0;
   }
 }
 
-@keyframes soraAlertProgress {
+@keyframes shadcnAlertProgress {
   from {
     width: 100%;
   }
@@ -3916,14 +3909,14 @@ pre.docs-codeblock-pre {
 
 .sora-floating-alert-stack {
   position: fixed;
-  top: 1.25rem;
-  right: 1.25rem;
+  top: 1rem;
+  right: 1rem;
   z-index: 99999;
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
-  width: 400px;
-  max-width: calc(100vw - 2.5rem);
+  gap: 0.5rem;
+  width: 360px;
+  max-width: calc(100vw - 2rem);
   pointer-events: none;
 }
 
@@ -3931,30 +3924,31 @@ pre.docs-codeblock-pre {
   position: relative;
   overflow: hidden;
   pointer-events: auto;
-  animation: soraAlertEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: shadcnAlertEnter 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   box-shadow:
-    0 12px 32px -4px rgba(0, 0, 0, 0.28),
-    0 4px 12px -2px rgba(0, 0, 0, 0.15),
-    0 0 0 1px rgba(255, 255, 255, 0.08);
-  border-radius: var(--ui-radius, 10px);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  border-radius: var(--ui-radius, 8px);
   transition:
-    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.2s ease,
-    opacity 0.25s ease;
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.2s ease;
+}
+
+html[data-docs-theme="dark"] .sora-floating-alert-item {
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.5),
+    0 8px 10px -6px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .sora-floating-alert-item:hover {
-  transform: translateY(-2px) scale(1.01);
-  box-shadow:
-    0 16px 40px -4px rgba(0, 0, 0, 0.35),
-    0 6px 16px -2px rgba(0, 0, 0, 0.2),
-    0 0 0 1px rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
 }
 
 .sora-floating-alert-item.is-exiting {
-  animation: soraAlertExit 0.28s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: shadcnAlertExit 0.2s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
 .sora-alert-timer-bar {
@@ -3964,9 +3958,10 @@ pre.docs-codeblock-pre {
   height: 2px;
   width: 100%;
   background: currentColor;
-  opacity: 0.35;
-  animation: soraAlertProgress 3s linear forwards;
+  opacity: 0.3;
+  animation: shadcnAlertProgress 2s linear forwards;
   pointer-events: none;
 }
+
 
 
