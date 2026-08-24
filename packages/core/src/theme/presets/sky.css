@@ -1,7 +1,7 @@
 /**
  * SoraUI Theme — Sky
- * Mode: light (default)
- * Description: Clean blue sky — the default light theme.
+ * Mode: adaptive (light default, dark on data-mode="dark" or data-docs-theme="dark")
+ * Description: Clean blue sky theme.
  * WCAG: All combinations verified >= 4.5:1 for text, >= 3:1 for UI elements.
  */
 :root,
@@ -29,8 +29,8 @@
   --ui-success-foreground: #ffffff;
   --ui-warning: #f59e0b;
   --ui-warning-foreground: #ffffff;
-  --ui-border: #0284c7;
-  --ui-input: #0284c7;
+  --ui-border: #bae6fd;
+  --ui-input: #bae6fd;
   --ui-ring: #0369a1;
 
   --ui-radius: 0.5rem;
@@ -39,4 +39,41 @@
   --ui-button-radius: var(--ui-radius);
   --ui-input-radius: var(--ui-radius);
   --ui-card-radius: var(--ui-radius);
+}
+
+/* ─── Sky Dark Mode ─── */
+html[data-mode="dark"] [data-theme='sky'],
+html[data-docs-theme="dark"] [data-theme='sky'],
+[data-mode="dark"] [data-theme='sky'],
+[data-docs-theme="dark"] [data-theme='sky'],
+[data-theme='sky'][data-mode='dark'],
+[data-theme='sky'][data-docs-theme='dark'],
+html[data-mode="dark"]:not([data-theme]),
+html[data-docs-theme="dark"]:not([data-theme]) {
+  --ui-background: #090d16;
+  --ui-foreground: #f0f9ff;
+  --ui-card: #0f172a;
+  --ui-card-foreground: #f0f9ff;
+  --ui-popover: #0f172a;
+  --ui-popover-foreground: #f0f9ff;
+  --ui-primary: #38bdf8;
+  --ui-primary-foreground: #082f49;
+
+  --ui-secondary: #1e293b;
+  --ui-secondary-foreground: #e0f2fe;
+  --ui-muted: #1e293b;
+  --ui-muted-foreground: #94a3b8;
+  --ui-accent: #1e293b;
+  --ui-accent-foreground: #f0f9ff;
+
+  --ui-destructive: #ef4444;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #ffffff;
+  --ui-border: rgba(56, 189, 248, 0.25);
+  --ui-input: rgba(56, 189, 248, 0.25);
+  --ui-ring: #38bdf8;
 }

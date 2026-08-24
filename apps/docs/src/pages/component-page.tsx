@@ -1,144 +1,483 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import type { ComponentDoc } from '../registry/types';
+import { COMPONENT_DOCS } from '../registry/components';
 import { ComponentPreview } from '../components/component-preview';
 import { PropTable } from '../components/prop-table';
 import { CodeBlock } from '../components/code-block';
-import { Badge, Separator } from '@soraui/react';
+import { getManualComponentCode } from '../registry/manual-source';
+import { Badge } from '@soraui/react';
 
 export interface ComponentPageProps {
   doc: ComponentDoc;
+  onNavigate?: (path: string) => void;
 }
 
-export const ComponentPage: React.FC<ComponentPageProps> = ({ doc }) => {
+type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
+
+function getMinimalUsageSnippet(doc: ComponentDoc): string {
+  switch (doc.id) {
+    case 'label':
+      return `<Label htmlFor="email">Your email address</Label>`;
+    case 'button':
+      return `<Button variant="primary">Button</Button>`;
+    case 'input':
+      return `<Input type="email" placeholder="Email" />`;
+    case 'checkbox':
+      return `<Checkbox id="terms" />`;
+    case 'switch':
+      return `<Switch id="airplane-mode" />`;
+    case 'badge':
+      return `<Badge>Badge</Badge>`;
+    case 'textarea':
+      return `<Textarea placeholder="Type your message here." />`;
+    case 'select':
+      return `<Select>\n  <SelectTrigger>\n    <SelectValue placeholder="Select a fruit" />\n  </SelectTrigger>\n  <SelectContent>\n    <SelectItem value="apple">Apple</SelectItem>\n    <SelectItem value="banana">Banana</SelectItem>\n  </SelectContent>\n</Select>`;
+    case 'card':
+      return `<Card>\n  <CardHeader>\n    <CardTitle>Card Title</CardTitle>\n    <CardDescription>Card Description</CardDescription>\n  </CardHeader>\n  <CardContent>\n    <p>Card Content</p>\n  </CardContent>\n  <CardFooter>\n    <p>Card Footer</p>\n  </CardFooter>\n</Card>`;
+    default:
+      return `<${doc.name} />`;
+  }
+}
+
+import { Check, Copy, ChevronLeft, ChevronRight, ExternalLink, Info, FileCode } from 'lucide-react';
+import { GitHubIcon } from '../components/brand-icons';
+
+export const ComponentPage: React.FC<ComponentPageProps> = ({ doc, onNavigate }) => {
+  const [installTab, setInstallTab] = useState<'cli' | 'manual'>('cli');
+  const [pkgManager, setPkgManager] = useState<PackageManager>('pnpm');
+  const [pageCopied, setPageCopied] = useState(false);
+  const [manualExpanded, setManualExpanded] = useState(false);
+
+  // Find previous and next components in registry
+  const { prevComp, nextComp } = useMemo(() => {
+    const idx = COMPONENT_DOCS.findIndex((c) => c.id === doc.id);
+    return {
+      prevComp: idx > 0 ? COMPONENT_DOCS[idx - 1] : null,
+      nextComp: idx < COMPONENT_DOCS.length - 1 ? COMPONENT_DOCS[idx + 1] : null,
+    };
+  }, [doc.id]);
+
+  const handleNav = (path: string) => {
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      window.location.hash = path;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Generate full markdown for "Copy Page"
+  const handleCopyPage = async () => {
+    const md = `# ${doc.name}
+
+${doc.description}
+
+## Installation
+
+\`\`\`bash
+npx @soraui/cli add ${doc.id}
+\`\`\`
+
+## Usage
+
+\`\`\`tsx
+import { ${doc.name} } from '@soraui/react';
+
+${getMinimalUsageSnippet(doc)}
+\`\`\`
+
+## API Reference
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || '-'}\` | ${p.description} |`).join('\n')}
+`;
+
+    try {
+      await navigator.clipboard.writeText(md);
+      setPageCopied(true);
+      setTimeout(() => setPageCopied(false), 2000);
+    } catch {
+      /* noop */
+    }
+  };
+
+  // CLI Command based on package manager
+  const getCliCommand = (pm: PackageManager) => {
+    switch (pm) {
+      case 'pnpm':
+        return `pnpm dlx @soraui/cli add ${doc.id}`;
+      case 'npm':
+        return `npx @soraui/cli add ${doc.id}`;
+      case 'yarn':
+        return `yarn dlx @soraui/cli add ${doc.id}`;
+      case 'bun':
+        return `bunx @soraui/cli add ${doc.id}`;
+    }
+  };
+
+  // Package install command based on package manager
+  const getPkgInstallCommand = (pm: PackageManager) => {
+    switch (pm) {
+      case 'pnpm':
+        return `pnpm add @soraui/react`;
+      case 'npm':
+        return `npm install @soraui/react`;
+      case 'yarn':
+        return `yarn add @soraui/react`;
+      case 'bun':
+        return `bun add @soraui/react`;
+    }
+  };
+
+  const manualSourceCode = getManualComponentCode(doc.id, doc.name);
+  const minimalUsage = getMinimalUsageSnippet(doc);
+
   return (
-    <div style={{ maxWidth: '840px' }}>
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em' }}>
-            {doc.name}
-          </h1>
-          <Badge variant="secondary">Level {doc.level}</Badge>
-          <Badge variant="outline">{doc.category}</Badge>
-          <Badge variant={doc.status === 'stable' ? 'success' : 'warning'}>{doc.status}</Badge>
+    <div className="docs-page sora-shadcn-page">
+      {/* ─── 1. HEADER ─── */}
+      <div className="sora-doc-header">
+        <div className="sora-doc-title-row">
+          <h1 className="sora-doc-title">{doc.name}</h1>
+
+          {/* Quick Header Actions */}
+          <div className="sora-doc-header-actions">
+            {/* Copy Page Button */}
+            <button
+              type="button"
+              className={`sora-btn-pill${pageCopied ? ' sora-btn-pill--success' : ''}`}
+              onClick={handleCopyPage}
+              title="Copy full page markdown"
+              aria-label="Copy Page Markdown"
+            >
+              {pageCopied ? (
+                <>
+                  <Check size={13} />
+                  <span>Copied Page</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={13} />
+                  <span>Copy Page</span>
+                </>
+              )}
+            </button>
+
+            {/* Quick Prev / Next jump buttons */}
+            <div className="sora-quick-nav">
+              {prevComp && (
+                <button
+                  type="button"
+                  className="sora-quick-nav-btn"
+                  onClick={() => handleNav(`/components/${prevComp.id}`)}
+                  title={`Previous: ${prevComp.name}`}
+                >
+                  <ChevronLeft size={13} />
+                  <span>{prevComp.name}</span>
+                </button>
+              )}
+              {nextComp && (
+                <button
+                  type="button"
+                  className="sora-quick-nav-btn"
+                  onClick={() => handleNav(`/components/${nextComp.id}`)}
+                  title={`Next: ${nextComp.name}`}
+                >
+                  <span>{nextComp.name}</span>
+                  <ChevronRight size={13} />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-        <p style={{ fontSize: '1.125rem', color: 'var(--ui-muted-foreground, #71717a)', lineHeight: 1.6, margin: 0 }}>
-          {doc.description}
-        </p>
+
+        {/* Description */}
+        <p className="sora-doc-lead">{doc.description}</p>
+
+        {/* Badges / Links bar */}
+        <div className="sora-doc-chips">
+          <Badge variant="secondary" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+            Level {doc.level}
+          </Badge>
+          <Badge variant="outline" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+            {doc.category}
+          </Badge>
+          <Badge
+            variant={doc.status === 'stable' ? 'success' : 'warning'}
+            style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}
+          >
+            {doc.status}
+          </Badge>
+
+          <a
+            href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/components/${doc.id}`}
+            target="_blank"
+            rel="noreferrer"
+            className="sora-doc-link-chip"
+          >
+            <GitHubIcon size={13} />
+            <span>Source</span>
+            <ExternalLink size={11} style={{ opacity: 0.6 }} />
+          </a>
+
+          {doc.accessibility?.role && (
+            <span className="sora-doc-badge-neutral">
+              ARIA: <code>{doc.accessibility.role}</code>
+            </span>
+          )}
+        </div>
       </div>
 
-      {/* Main Interactive Preview */}
+      {/* ─── 2. MAIN HERO PREVIEW ─── */}
       {doc.examples[0] && (
-        <section style={{ marginBottom: '2.5rem' }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0 0 0.5rem 0' }}>Preview</h2>
+        <div className="sora-hero-preview-section">
           <ComponentPreview code={doc.examples[0].code}>
             {doc.examples[0].render()}
           </ComponentPreview>
-        </section>
+        </div>
       )}
 
-      {/* Installation */}
-      <section style={{ marginBottom: '2.5rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0 0 0.5rem 0' }}>Installation</h2>
-        <div style={{ display: 'grid', gap: '1rem' }}>
-          <div>
-            <div style={{ fontSize: '0.875rem', fontWeight: 600, marginBottom: '0.25rem', color: 'var(--ui-muted-foreground, #71717a)' }}>
-              1. Via SoraUI CLI (Recommended)
-            </div>
-            <CodeBlock code={`npx soraui add ${doc.id}`} language="bash" filename="Terminal" />
+      {/* Context Alert / Callout */}
+      <div className="sora-doc-callout">
+        <div className="sora-doc-callout-icon">
+          <Info size={16} />
+        </div>
+        <div className="sora-doc-callout-content">
+          {doc.id === 'label' ? (
+            <p>
+              For form fields, use the <code>&lt;Label htmlFor="..."&gt;</code> component paired with form controls like <code>Input</code> or <code>Checkbox</code> for built-in label click-to-focus and screen reader accessibility.
+            </p>
+          ) : (
+            <p>
+              This component is part of SoraUI design system with zero runtime CSS dependencies and full theme customization support.
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* ─── 3. INSTALLATION ─── */}
+      <section className="sora-doc-section">
+        <h2 id="installation" className="sora-doc-h2">
+          <span>Installation</span>
+          <a href="#installation" className="sora-doc-anchor" aria-label="Link to Installation section">#</a>
+        </h2>
+
+        {/* Segmented Tab: CLI / Manual */}
+        <div className="sora-tabs-container">
+          <div className="sora-segmented-tabs" role="tablist">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={installTab === 'cli'}
+              className={`sora-segmented-tab${installTab === 'cli' ? ' active' : ''}`}
+              onClick={() => setInstallTab('cli')}
+            >
+              CLI
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={installTab === 'manual'}
+              className={`sora-segmented-tab${installTab === 'manual' ? ' active' : ''}`}
+              onClick={() => setInstallTab('manual')}
+            >
+              Manual
+            </button>
           </div>
-          <div>
-            <div style={{ fontSize: '0.875rem', fontWeight: 600, marginBottom: '0.25rem', color: 'var(--ui-muted-foreground, #71717a)' }}>
-              2. Via NPM Package
+        </div>
+
+        {/* CLI Tab Content */}
+        {installTab === 'cli' ? (
+          <div className="sora-tab-content">
+            <p className="sora-subtext">Install dependencies:</p>
+
+            {/* Package Manager Selectors */}
+            <div className="sora-pm-tabs">
+              {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((pm) => (
+                <button
+                  key={pm}
+                  type="button"
+                  className={`sora-pm-btn${pkgManager === pm ? ' active' : ''}`}
+                  onClick={() => setPkgManager(pm)}
+                >
+                  {pm}
+                </button>
+              ))}
             </div>
-            <CodeBlock code={`import { ${doc.name} } from '@soraui/react';`} language="typescript" filename="Import" />
+
+            <CodeBlock code={getCliCommand(pkgManager)} language="bash" />
           </div>
+        ) : (
+          /* Manual Tab Content */
+          <div className="sora-tab-content">
+            <div className="sora-step-list">
+              <div className="sora-step-item">
+                <span className="sora-step-num">1</span>
+                <div className="sora-step-body">
+                  <p className="sora-step-text">Install the following dependencies:</p>
+                  <div className="sora-pm-tabs">
+                    {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((pm) => (
+                      <button
+                        key={pm}
+                        type="button"
+                        className={`sora-pm-btn${pkgManager === pm ? ' active' : ''}`}
+                        onClick={() => setPkgManager(pm)}
+                      >
+                        {pm}
+                      </button>
+                    ))}
+                  </div>
+                  <CodeBlock code={getPkgInstallCommand(pkgManager)} language="bash" />
+                </div>
+              </div>
+
+              <div className="sora-step-item">
+                <span className="sora-step-num">2</span>
+                <div className="sora-step-body">
+                  <p className="sora-step-text">Copy and paste the following code into your project:</p>
+
+                  <div className="sora-manual-code-wrapper">
+                    <div className="sora-manual-header">
+                      <div className="sora-file-badge">
+                        <FileCode size={13} />
+                        <span>components/ui/{doc.id}.tsx</span>
+                      </div>
+                      <button
+                        type="button"
+                        className="sora-expand-btn"
+                        onClick={() => setManualExpanded((v) => !v)}
+                      >
+                        {manualExpanded ? 'Collapse' : 'Expand'}
+                      </button>
+                    </div>
+
+                    <div className={`sora-manual-code-container${manualExpanded ? ' expanded' : ' collapsed'}`}>
+                      <CodeBlock code={manualSourceCode} language="typescript" filename={`components/ui/${doc.id}.tsx`} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="sora-step-item">
+                <span className="sora-step-num">3</span>
+                <div className="sora-step-body">
+                  <p className="sora-step-text">Update the import paths to match your project setup.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* ─── 4. USAGE ─── */}
+      <section className="sora-doc-section">
+        <h2 id="usage" className="sora-doc-h2">
+          <span>Usage</span>
+          <a href="#usage" className="sora-doc-anchor" aria-label="Link to Usage section">#</a>
+        </h2>
+
+        <div style={{ display: 'grid', gap: '0.75rem', marginTop: '0.75rem' }}>
+          <CodeBlock code={`import { ${doc.name} } from '@soraui/react';`} language="typescript" />
+          <CodeBlock code={minimalUsage} language="tsx" />
         </div>
       </section>
 
-      {/* Additional Examples / Variants */}
-      {doc.examples.length > 1 && (
-        <section style={{ marginBottom: '2.5rem' }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0 0 1rem 0' }}>Variants & Examples</h2>
-          {doc.examples.slice(1).map((ex) => (
-            <div key={ex.id} style={{ marginBottom: '1.5rem' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 600, margin: '0 0 0.5rem 0' }}>{ex.title}</h3>
-              {ex.description && (
-                <p style={{ fontSize: '0.875rem', color: 'var(--ui-muted-foreground, #71717a)', margin: '0 0 0.5rem 0' }}>
-                  {ex.description}
+      {/* ─── 5. EXAMPLES & VARIATIONS ─── */}
+      {doc.examples.length > 0 && (
+        <section className="sora-doc-section">
+          <div style={{ display: 'grid', gap: '3rem' }}>
+            {doc.examples.map((ex, index) => {
+              const exampleSlug = ex.id || `example-${index}`;
+              return (
+                <div key={ex.id || index} className="sora-example-block">
+                  <h2 id={exampleSlug} className="sora-doc-h2">
+                    <span>{ex.title}</span>
+                    <a href={`#${exampleSlug}`} className="sora-doc-anchor" aria-label={`Link to ${ex.title}`}>#</a>
+                  </h2>
+                  {ex.description && <p className="sora-subtext">{ex.description}</p>}
+                  <ComponentPreview code={ex.code}>{ex.render()}</ComponentPreview>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* ─── 6. API REFERENCE / PROPS ─── */}
+      <section className="sora-doc-section">
+        <h2 id="api-reference" className="sora-doc-h2">
+          <span>API Reference</span>
+          <a href="#api-reference" className="sora-doc-anchor" aria-label="Link to API Reference section">#</a>
+        </h2>
+
+        <PropTable props={doc.props} />
+
+        {/* Theming Tokens */}
+        {doc.themingTokens && doc.themingTokens.length > 0 && (
+          <div style={{ marginTop: '2rem' }}>
+            <h3 id="theming-tokens" className="sora-doc-h3">
+              <span>CSS Variables &amp; Tokens</span>
+              <a href="#theming-tokens" className="sora-doc-anchor" aria-label="Link to CSS Variables section">#</a>
+            </h3>
+            <p className="sora-subtext">The following CSS custom properties control the appearance of this component:</p>
+            <div className="sora-tokens-list">
+              {doc.themingTokens.map((token) => (
+                <div key={token} className="sora-token-item">
+                  <code>{token}</code>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Accessibility & Keyboard Support */}
+        {doc.accessibility && (
+          <div style={{ marginTop: '2rem' }}>
+            <h3 id="accessibility" className="sora-doc-h3">
+              <span>Accessibility &amp; WAI-ARIA</span>
+              <a href="#accessibility" className="sora-doc-anchor" aria-label="Link to Accessibility section">#</a>
+            </h3>
+            <div className="sora-a11y-box">
+              {doc.accessibility.role && (
+                <p style={{ fontSize: '0.875rem', color: 'var(--docs-fg-muted)', marginBottom: '0.75rem' }}>
+                  <strong style={{ color: 'var(--docs-fg)' }}>ARIA Role: </strong>
+                  <code style={{ fontSize: '0.8125rem' }}>{doc.accessibility.role}</code>
                 </p>
               )}
-              <ComponentPreview code={ex.code}>
-                {ex.render()}
-              </ComponentPreview>
+
+              {doc.accessibility.aria?.length ? (
+                <div style={{ marginBottom: '0.875rem' }}>
+                  <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--docs-fg)', marginBottom: '0.375rem' }}>
+                    ARIA Attributes:
+                  </p>
+                  <ul style={{ margin: 0, paddingLeft: '1.25rem', fontSize: '0.875rem', color: 'var(--docs-fg-muted)' }}>
+                    {doc.accessibility.aria.map((a, i) => (
+                      <li key={i}>
+                        <code style={{ fontSize: '0.8125rem', color: 'var(--docs-fg)' }}>{a.attribute}</code>: {a.usage}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+
+              {doc.accessibility.keyboard?.length ? (
+                <div>
+                  <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--docs-fg)', marginBottom: '0.375rem' }}>
+                    Keyboard Navigation:
+                  </p>
+                  <ul style={{ margin: 0, paddingLeft: '1.25rem', fontSize: '0.875rem', color: 'var(--docs-fg-muted)' }}>
+                    {doc.accessibility.keyboard.map((k, i) => (
+                      <li key={i}>
+                        <strong style={{ color: 'var(--docs-fg)' }}>{k.key}</strong>: {k.action}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </div>
-          ))}
-        </section>
-      )}
-
-      {/* Props Reference */}
-      <section style={{ marginBottom: '2.5rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0 0 0.5rem 0' }}>Props Reference</h2>
-        <PropTable props={doc.props} />
+          </div>
+        )}
       </section>
-
-      {/* Accessibility */}
-      {doc.accessibility && (
-        <section style={{ marginBottom: '2.5rem' }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0 0 0.75rem 0' }}>Accessibility & WAI-ARIA</h2>
-          <div style={{ backgroundColor: 'var(--ui-muted, #f4f4f5)', padding: '1rem 1.25rem', borderRadius: 'var(--ui-radius, 0.5rem)', border: '1px solid var(--ui-border, #e4e4e7)' }}>
-            {doc.accessibility.role && (
-              <div style={{ marginBottom: '0.75rem', fontSize: '0.875rem' }}>
-                <span style={{ fontWeight: 600 }}>ARIA Role:</span> <code style={{ backgroundColor: 'var(--ui-background, #fff)', padding: '0.125rem 0.375rem', borderRadius: '4px' }}>{doc.accessibility.role}</code>
-              </div>
-            )}
-            {doc.accessibility.keyboard && doc.accessibility.keyboard.length > 0 && (
-              <div>
-                <div style={{ fontWeight: 600, fontSize: '0.875rem', marginBottom: '0.375rem' }}>Keyboard Navigation:</div>
-                <ul style={{ margin: 0, paddingLeft: '1.25rem', fontSize: '0.875rem', color: 'var(--ui-muted-foreground, #71717a)' }}>
-                  {doc.accessibility.keyboard.map((k, i) => (
-                    <li key={i} style={{ marginBottom: '0.25rem' }}>
-                      <kbd style={{ padding: '0.125rem 0.25rem', backgroundColor: 'var(--ui-background, #fff)', border: '1px solid var(--ui-border, #e4e4e7)', borderRadius: '3px', fontWeight: 600, color: 'var(--ui-foreground, #000)' }}>
-                        {k.key}
-                      </kbd>{' '}
-                      — {k.action}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Theming Tokens */}
-      {doc.themingTokens && doc.themingTokens.length > 0 && (
-        <section style={{ marginBottom: '2.5rem' }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0 0 0.75rem 0' }}>Theming & CSS Tokens</h2>
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-            {doc.themingTokens.map((t) => (
-              <Badge key={t} variant="outline" style={{ fontFamily: 'monospace', fontSize: '0.8125rem' }}>
-                {t}
-              </Badge>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <Separator style={{ margin: '2rem 0' }} />
-
-      {/* Source Link */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.875rem', color: 'var(--ui-muted-foreground, #71717a)' }}>
-        <span>Package: <code>@soraui/react</code></span>
-        <a
-          href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/components/${doc.id}`}
-          target="_blank"
-          rel="noreferrer"
-          style={{ color: 'var(--ui-primary, #0ea5e9)', textDecoration: 'none', fontWeight: 500 }}
-        >
-          View Source on GitHub ↗
-        </a>
-      </div>
     </div>
   );
 };

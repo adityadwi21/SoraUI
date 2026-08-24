@@ -80,7 +80,7 @@ export const App: React.FC = () => {
       const compId = currentPath.replace('/components/', '');
       const doc = getComponentDoc(compId);
       if (doc) {
-        return <ComponentPage doc={doc} />;
+        return <ComponentPage doc={doc} onNavigate={navigate} />;
       }
     }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, type RefObject, type CSSProperties } from 'react';
+import { useEffect, useLayoutEffect, useState, useCallback, type RefObject, type CSSProperties } from 'react';
 
 export type Placement =
   | 'top'
@@ -19,6 +19,7 @@ export interface UsePositioningOptions {
   offset?: number;
   flip?: boolean;
   enabled?: boolean;
+  matchWidth?: boolean;
 }
 
 export interface PositionResult {
@@ -26,33 +27,80 @@ export interface PositionResult {
   actualPlacement: Placement;
 }
 
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
 /**
- * Lightweight, zero-dependency positioning engine.
- * Computes coordinates relative to viewport and flips on collision.
+ * Lightweight, rock-solid positioning engine.
+ * Computes coordinates relative to viewport, flips on collision, and prevents top-left jumping or detached scrolling.
  */
 export function usePositioning(
   anchorRef: RefObject<HTMLElement | null>,
   floatingRef: RefObject<HTMLElement | null>,
   options: UsePositioningOptions = {}
 ): PositionResult {
-  const { placement = 'bottom', offset = 8, flip = true, enabled = true } = options;
+  const { placement = 'bottom-start', offset = 4, flip = true, enabled = true } = options;
 
-  const [position, setPosition] = useState<PositionResult>({
-    style: { position: 'fixed', top: 0, left: 0, opacity: 1 },
-    actualPlacement: placement,
+  const [position, setPosition] = useState<PositionResult>(() => {
+    if (typeof window !== 'undefined' && anchorRef.current) {
+      const rect = anchorRef.current.getBoundingClientRect();
+      return {
+        style: {
+          position: 'fixed',
+          top: `${Math.round(rect.bottom + offset)}px`,
+          left: `${Math.round(rect.left)}px`,
+          zIndex: 9999,
+          visibility: 'visible',
+          opacity: 1,
+          minWidth: `${Math.max(160, Math.round(rect.width))}px`,
+        },
+        actualPlacement: placement,
+      };
+    }
+    return {
+      style: {
+        position: 'fixed',
+        top: '-9999px',
+        left: '-9999px',
+        zIndex: 9999,
+        visibility: 'hidden',
+        opacity: 0,
+      },
+      actualPlacement: placement,
+    };
   });
 
   const updatePosition = useCallback(() => {
-    if (!enabled || !anchorRef.current || !floatingRef.current) return;
+    if (!enabled || !anchorRef.current) return;
     if (typeof window === 'undefined') return;
 
     const anchorRect = anchorRef.current.getBoundingClientRect();
-    const floatingRect = floatingRef.current.getBoundingClientRect();
+    const floatingEl = floatingRef.current;
+    const floatingRect = floatingEl ? floatingEl.getBoundingClientRect() : { width: anchorRect.width, height: 160 };
 
-    const viewportWidth = window.innerWidth || 1024;
-    const viewportHeight = window.innerHeight || 768;
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 1024;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 768;
 
-    let [side, align] = placement.split('-') as [ 'top' | 'bottom' | 'left' | 'right', 'start' | 'end' | undefined ];
+    // Check if anchor is visible in viewport
+    const isAnchorVisible =
+      anchorRect.bottom > 0 &&
+      anchorRect.top < viewportHeight &&
+      anchorRect.right > 0 &&
+      anchorRect.left < viewportWidth;
+
+    if (!isAnchorVisible) {
+      setPosition((prev) => ({
+        ...prev,
+        style: {
+          ...prev.style,
+          visibility: 'hidden',
+          opacity: 0,
+          pointerEvents: 'none',
+        },
+      }));
+      return;
+    }
+
+    let [side, align] = placement.split('-') as ['top' | 'bottom' | 'left' | 'right', 'start' | 'end' | undefined];
     let actualSide = side;
 
     // Viewport collision auto-flip
@@ -93,9 +141,8 @@ export function usePositioning(
       else top = anchorRect.top + (anchorRect.height - floatingRect.height) / 2;
     }
 
-    // Boundary constraint within viewport
+    // Boundary constraint within viewport only when anchor is visible
     left = Math.max(8, Math.min(left, viewportWidth - floatingRect.width - 8));
-    top = Math.max(8, Math.min(top, viewportHeight - floatingRect.height - 8));
 
     const finalPlacement = (align ? `${actualSide}-${align}` : actualSide) as Placement;
 
@@ -104,25 +151,49 @@ export function usePositioning(
         position: 'fixed',
         top: `${Math.round(top)}px`,
         left: `${Math.round(left)}px`,
-        zIndex: 50,
+        zIndex: 9999,
+        visibility: 'visible',
         opacity: 1,
+        pointerEvents: 'auto',
+        minWidth: `${Math.max(160, Math.round(anchorRect.width))}px`,
       },
       actualPlacement: finalPlacement,
     });
   }, [anchorRef, floatingRef, placement, offset, flip, enabled]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!enabled) return;
-    updatePosition();
 
-    window.addEventListener('resize', updatePosition, { passive: true });
-    window.addEventListener('scroll', updatePosition, { passive: true, capture: true });
+    // Run immediately and in the next frame to catch post-mount ref assignment
+    updatePosition();
+    const raf1 = requestAnimationFrame(updatePosition);
+    const raf2 = requestAnimationFrame(() => {
+      requestAnimationFrame(updatePosition);
+    });
+
+    const handleScrollOrResize = () => {
+      updatePosition();
+    };
+
+    window.addEventListener('resize', handleScrollOrResize, { passive: true });
+    window.addEventListener('scroll', handleScrollOrResize, { passive: true, capture: true });
+
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined' && floatingRef.current) {
+      ro = new ResizeObserver(() => {
+        updatePosition();
+      });
+      ro.observe(floatingRef.current);
+    }
 
     return () => {
-      window.removeEventListener('resize', updatePosition);
-      window.removeEventListener('scroll', updatePosition, { capture: true });
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      if (ro) ro.disconnect();
+      window.removeEventListener('resize', handleScrollOrResize);
+      window.removeEventListener('scroll', handleScrollOrResize, { capture: true });
     };
-  }, [enabled, updatePosition]);
+  }, [enabled, updatePosition, floatingRef]);
 
   return position;
 }

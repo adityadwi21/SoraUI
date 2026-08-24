@@ -1,6 +1,6 @@
 /**
  * SoraUI Theme — Cloud
- * Mode: light
+ * Mode: adaptive (light default, dark on data-mode="dark" or data-docs-theme="dark")
  * Description: Soft neutral gray with subtle slate undertones.
  */
 [data-theme='cloud'] {
@@ -25,8 +25,8 @@
   --ui-success-foreground: #ffffff;
   --ui-warning: #f59e0b;
   --ui-warning-foreground: #ffffff;
-  --ui-border: #71717a;
-  --ui-input: #71717a;
+  --ui-border: #e4e4e7;
+  --ui-input: #e4e4e7;
 
   --ui-ring: #18181b;
   --ui-radius: 0.5rem;
@@ -34,4 +34,37 @@
   --ui-button-radius: var(--ui-radius);
   --ui-input-radius: var(--ui-radius);
   --ui-card-radius: var(--ui-radius);
+}
+
+/* ─── Cloud Dark Mode ─── */
+html[data-mode="dark"] [data-theme='cloud'],
+html[data-docs-theme="dark"] [data-theme='cloud'],
+[data-mode="dark"] [data-theme='cloud'],
+[data-docs-theme="dark"] [data-theme='cloud'],
+[data-theme='cloud'][data-mode='dark'],
+[data-theme='cloud'][data-docs-theme='dark'] {
+  --ui-background: #09090b;
+  --ui-foreground: #fafafa;
+  --ui-card: #18181b;
+  --ui-card-foreground: #fafafa;
+  --ui-popover: #18181b;
+  --ui-popover-foreground: #fafafa;
+  --ui-primary: #fafafa;
+  --ui-primary-foreground: #18181b;
+  --ui-secondary: #27272a;
+  --ui-secondary-foreground: #fafafa;
+  --ui-muted: #27272a;
+  --ui-muted-foreground: #a1a1aa;
+  --ui-accent: #27272a;
+  --ui-accent-foreground: #fafafa;
+  --ui-destructive: #ef4444;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #ffffff;
+  --ui-border: rgba(255, 255, 255, 0.12);
+  --ui-input: rgba(255, 255, 255, 0.15);
+  --ui-ring: #d4d4d8;
 }

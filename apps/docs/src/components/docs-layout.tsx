@@ -1,11 +1,227 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Sun, Moon, Menu, X, Search } from 'lucide-react';
+import { GitHubIcon } from './brand-icons';
 import { COMPONENT_DOCS } from '../registry/components';
 import { BLOCK_DOCS } from '../registry/blocks';
 import { TEMPLATE_DOCS } from '../registry/templates';
 import { GUIDE_DOCS } from '../registry/guides';
 import { SearchDialog } from './search-dialog';
-import { Badge, Button } from '@soraui/react';
+import { TableOfContents } from './table-of-contents';
+import { useTheme } from '@soraui/react';
 
+/* ─────────────────────────────────────────────────────
+   Docs-level dark mode hook
+   Completely independent of SoraUI ThemeProvider
+───────────────────────────────────────────────────── */
+function useDocsTheme() {
+  const [mode, setMode] = useState<'light' | 'dark'>(() => {
+    try {
+      const s = localStorage.getItem('docs-theme') as 'light' | 'dark' | null;
+      if (s === 'light' || s === 'dark') return s;
+    } catch {
+      /* noop */
+    }
+    return typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-docs-theme', mode);
+    try {
+      localStorage.setItem('docs-theme', mode);
+    } catch {
+      /* noop */
+    }
+  }, [mode]);
+
+  const toggle = useCallback(() => {
+    setMode((p) => {
+      const next = p === 'dark' ? 'light' : 'dark';
+      if (typeof document !== 'undefined') {
+        document.documentElement.setAttribute('data-docs-theme', next);
+      }
+      try {
+        localStorage.setItem('docs-theme', next);
+      } catch {
+        /* noop */
+      }
+      return next;
+    });
+  }, []);
+
+  return { mode, toggle };
+}
+
+/* ─────────────────────────────────────────────────────
+   SVG Icons
+───────────────────────────────────────────────────── */
+const StarLogo = () => (
+  <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ flexShrink: 0 }}>
+    <defs>
+      <linearGradient id="sl-g" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#0ea5e9" />
+        <stop offset="50%" stopColor="#6366f1" />
+        <stop offset="100%" stopColor="#a855f7" />
+      </linearGradient>
+    </defs>
+    <path d="M16 2 L18.4 13.6 L30 16 L18.4 18.4 L16 30 L13.6 18.4 L2 16 L13.6 13.6 Z" fill="url(#sl-g)" />
+  </svg>
+);
+
+const Npm = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: 14, height: 14 }}>
+    <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z" />
+  </svg>
+);
+
+/* ─────────────────────────────────────────────────────
+   Theme options
+───────────────────────────────────────────────────── */
+const THEMES = [
+  { value: 'sky', label: 'Sky' },
+  { value: 'cloud', label: 'Cloud' },
+  { value: 'aurora', label: 'Aurora' },
+  { value: 'horizon', label: 'Horizon' },
+  { value: 'twilight', label: 'Twilight' },
+  { value: 'midnight', label: 'Midnight' },
+  { value: 'nebula', label: 'Nebula' },
+  { value: 'eclipse', label: 'Eclipse' },
+  { value: 'starlight', label: 'Starlight' },
+];
+
+/* ─────────────────────────────────────────────────────
+   Component categories
+───────────────────────────────────────────────────── */
+const CATS = ['General', 'Forms', 'Navigation', 'Feedback', 'Overlays', 'Data Display', 'Layout'] as const;
+
+/* ─────────────────────────────────────────────────────
+   SidebarContent — shared between desktop + drawer
+───────────────────────────────────────────────────── */
+const SidebarContent: React.FC<{
+  currentPath: string;
+  onNav: (p: string) => void;
+  onClose?: () => void;
+}> = ({ currentPath, onNav, onClose }) => {
+  const go = (p: string) => {
+    onNav(p);
+    onClose?.();
+  };
+  const isIntro = currentPath === '/' || currentPath === '' || currentPath === '/guides/introduction';
+
+  return (
+    <nav className="docs-sidebar-nav" aria-label="Documentation navigation">
+      {/* Getting Started */}
+      <div className="docs-sb-section">
+        <div className="docs-sb-label">Getting Started</div>
+        <div className="docs-sb-group">
+          {GUIDE_DOCS.map((g) => {
+            const href = `/guides/${g.id}`;
+            const active = currentPath === href || (g.id === 'introduction' && isIntro);
+            return (
+              <button
+                key={g.id}
+                type="button"
+                className={`docs-sb-item${active ? ' active' : ''}`}
+                onClick={() => go(href)}
+              >
+                <span>{g.title}</span>
+                <span className="docs-sb-item-dot" aria-hidden />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Components */}
+      <div className="docs-sb-section">
+        <div className="docs-sb-label">
+          <span>Components</span>
+          <span className="docs-sb-chip">{COMPONENT_DOCS.length}</span>
+        </div>
+        {CATS.map((cat) => {
+          const comps = COMPONENT_DOCS.filter((c) => c.category === cat);
+          if (!comps.length) return null;
+          return (
+            <div key={cat} className="docs-sb-subgroup">
+              <div className="docs-sb-cat">{cat}</div>
+              <div className="docs-sb-items">
+                {comps.map((c) => {
+                  const href = `/components/${c.id}`;
+                  const active = currentPath === href;
+                  return (
+                    <button
+                      key={c.id}
+                      type="button"
+                      className={`docs-sb-item${active ? ' active' : ''}`}
+                      onClick={() => go(href)}
+                    >
+                      <span>{c.name}</span>
+                      {c.status === 'experimental' && <span className="docs-sb-badge docs-sb-badge--beta">Exp</span>}
+                      <span className="docs-sb-item-dot" aria-hidden />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Blocks */}
+      <div className="docs-sb-section">
+        <div className="docs-sb-label">
+          <span>Blocks</span>
+          <span className="docs-sb-chip">{BLOCK_DOCS.length}</span>
+        </div>
+        <div className="docs-sb-group">
+          {BLOCK_DOCS.map((b) => {
+            const href = `/blocks/${b.id}`;
+            const active = currentPath === href;
+            return (
+              <button
+                key={b.id}
+                type="button"
+                className={`docs-sb-item${active ? ' active' : ''}`}
+                onClick={() => go(href)}
+              >
+                <span>{b.name}</span>
+                <span className="docs-sb-item-dot" aria-hidden />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Templates */}
+      <div className="docs-sb-section">
+        <div className="docs-sb-label">
+          <span>Templates</span>
+          <span className="docs-sb-chip">{TEMPLATE_DOCS.length}</span>
+        </div>
+        <div className="docs-sb-group">
+          {TEMPLATE_DOCS.map((t) => {
+            const href = `/templates/${t.id}`;
+            const active = currentPath === href;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                className={`docs-sb-item${active ? ' active' : ''}`}
+                onClick={() => go(href)}
+              >
+                <span>{t.name}</span>
+                <span className="docs-sb-item-dot" aria-hidden />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+/* ─────────────────────────────────────────────────────
+   DocsLayout
+───────────────────────────────────────────────────── */
 export interface DocsLayoutProps {
   currentPath: string;
   onNavigate: (path: string) => void;
@@ -14,272 +230,195 @@ export interface DocsLayoutProps {
 
 export const DocsLayout: React.FC<DocsLayoutProps> = ({ currentPath, onNavigate, children }) => {
   const [searchOpen, setSearchOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { mode, toggle } = useDocsTheme();
+  const { theme, setTheme } = useTheme();
 
-  // Group components by category
-  const componentCategories = ['General', 'Forms', 'Navigation', 'Feedback', 'Overlays', 'Data Display', 'Layout'] as const;
+  // Close drawer on route change
+  useEffect(() => {
+    setDrawerOpen(false);
+  }, [currentPath]);
+
+  // Close drawer on resize
+  useEffect(() => {
+    const h = () => {
+      if (window.innerWidth > 768) setDrawerOpen(false);
+    };
+    window.addEventListener('resize', h);
+    return () => window.removeEventListener('resize', h);
+  }, []);
+
+  // Keyboard: Cmd+K
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    document.addEventListener('keydown', h);
+    return () => document.removeEventListener('keydown', h);
+  }, []);
+
+  const isGuide = currentPath === '/' || currentPath === '' || currentPath.startsWith('/guides');
+  const isComp = currentPath.startsWith('/components');
+  const isBlock = currentPath.startsWith('/blocks');
+  const isTemplate = currentPath.startsWith('/templates');
+  const isPlay = currentPath === '/playground';
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--ui-background, #ffffff)', color: 'var(--ui-foreground, #0c1a2b)' }}>
+    <div className="docs-root" data-docs-theme={mode}>
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} onNavigate={onNavigate} />
 
-      {/* Top Header */}
-      <header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 40,
-          width: '100%',
-          borderBottom: '1px solid var(--ui-border, #e4e4e7)',
-          backgroundColor: 'rgba(255, 255, 255, 0.85)',
-          backdropFilter: 'blur(8px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 1.5rem',
-          height: '60px',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            style={{
-              display: 'none',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '1.25rem',
-              color: 'inherit',
-            }}
-            className="docs-mobile-menu-btn"
-          >
-            ☰
-          </button>
-          <div
-            onClick={() => onNavigate('/')}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: 800, fontSize: '1.25rem', color: 'var(--ui-primary, #0ea5e9)' }}
-          >
-            SoraUI
-            <Badge variant="secondary" style={{ fontSize: '0.6875rem' }}>v0.1.0</Badge>
+      {/* ─── HEADER ─── */}
+      <header className="docs-header">
+        <div className="docs-header-inner">
+          <div className="docs-header-left">
+            {/* Hamburger (mobile only) */}
+            <button
+              type="button"
+              className="docs-mobile-btn"
+              onClick={() => setDrawerOpen((v) => !v)}
+              aria-label={drawerOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={drawerOpen}
+            >
+              {drawerOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
+
+            {/* Logo */}
+            <button type="button" className="docs-logo" onClick={() => onNavigate('/')} aria-label="SoraUI home">
+              <StarLogo />
+              <span className="docs-logo-text">SoraUI</span>
+              <span className="docs-logo-chip">v0.1.0</span>
+            </button>
           </div>
-        </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <button
-            onClick={() => setSearchOpen(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '1.5rem',
-              padding: '0.375rem 0.75rem',
-              borderRadius: 'var(--ui-radius, 0.375rem)',
-              border: '1px solid var(--ui-border, #e4e4e7)',
-              backgroundColor: 'var(--ui-muted, #f4f4f5)',
-              color: 'var(--ui-muted-foreground, #71717a)',
-              fontSize: '0.8125rem',
-              cursor: 'pointer',
-            }}
-          >
-            <span>Search docs...</span>
-            <kbd style={{ fontSize: '0.6875rem', backgroundColor: 'var(--ui-background, #ffffff)', padding: '0.125rem 0.25rem', borderRadius: '3px', border: '1px solid var(--ui-border, #e4e4e7)' }}>
-              ⌘K
-            </kbd>
-          </button>
+          {/* Center nav */}
+          <nav className="docs-header-mid docs-top-nav" aria-label="Main nav">
+            {([
+              { label: 'Docs', active: isGuide, path: '/guides/introduction' },
+              { label: 'Components', active: isComp, path: '/components/button' },
+              { label: 'Blocks', active: isBlock, path: '/blocks/login-form' },
+              { label: 'Templates', active: isTemplate, path: '/templates/dashboard-page' },
+              { label: 'Playground', active: isPlay, path: '/playground' },
+            ] as const).map((n) => (
+              <button
+                key={n.label}
+                type="button"
+                className={`docs-nav-link${n.active ? ' active' : ''}`}
+                onClick={() => onNavigate(n.path)}
+              >
+                {n.label}
+              </button>
+            ))}
+          </nav>
 
-          <Button
-            variant={currentPath === '/playground' ? 'primary' : 'outline'}
-            size="sm"
-            onClick={() => onNavigate('/playground')}
-          >
-            🎨 Playground
-          </Button>
+          {/* Right tools */}
+          <div className="docs-header-right">
+            {/* Search */}
+            <button
+              type="button"
+              id="docs-search-trigger"
+              className="docs-search-btn"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Search"
+            >
+              <Search size={14} style={{ flexShrink: 0 }} />
+              <span className="docs-search-btn-text">Search documentation...</span>
+              <kbd className="docs-search-kbd">⌘K</kbd>
+            </button>
 
-          <a
-            href="https://github.com/adityadwi21/SoraUI"
-            target="_blank"
-            rel="noreferrer"
-            style={{ color: 'inherit', textDecoration: 'none', fontSize: '1.125rem', marginLeft: '0.25rem' }}
-            title="GitHub"
-          >
-            GitHub
-          </a>
+            {/* Component theme */}
+            <div className="docs-theme-picker-wrap">
+              <select
+                id="docs-theme-select"
+                className="docs-theme-select"
+                value={theme}
+                onChange={(e) => setTheme(e.target.value)}
+                title="Switch preview theme"
+                aria-label="Preview theme"
+              >
+                {THEMES.map((t) => (
+                  <option key={t.value} value={t.value}>
+                    {t.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Dark mode toggle */}
+            <button
+              type="button"
+              id="docs-dark-toggle"
+              className="docs-icon-btn"
+              onClick={toggle}
+              title={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}
+              aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              {mode === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+
+            {/* GitHub */}
+            <a
+              id="docs-github"
+              href="https://github.com/adityadwi21/SoraUI"
+              target="_blank"
+              rel="noreferrer"
+              className="docs-icon-btn"
+              title="GitHub"
+              aria-label="GitHub"
+            >
+              <GitHubIcon size={15} />
+            </a>
+
+            {/* NPM */}
+            <a
+              id="docs-npm"
+              href="https://www.npmjs.com/package/@soraui/core"
+              target="_blank"
+              rel="noreferrer"
+              className="docs-icon-btn"
+              title="NPM"
+              aria-label="NPM"
+            >
+              <Npm />
+            </a>
+          </div>
         </div>
       </header>
 
-      {/* Main Container */}
-      <div style={{ display: 'flex', flex: 1 }}>
-        {/* Left Sidebar */}
-        <aside
-          style={{
-            width: '260px',
-            borderRight: '1px solid var(--ui-border, #e4e4e7)',
-            padding: '1.5rem 1rem',
-            overflowY: 'auto',
-            height: 'calc(100vh - 60px)',
-            position: 'sticky',
-            top: '60px',
-            flexShrink: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1.5rem',
-          }}
-        >
-          {/* Getting Started */}
-          <div>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--ui-muted-foreground, #71717a)', marginBottom: '0.5rem', paddingLeft: '0.5rem' }}>
-              Getting Started
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.125rem' }}>
-              {GUIDE_DOCS.map((guide) => {
-                const href = `/guides/${guide.id}`;
-                const isActive = currentPath === href;
-                return (
-                  <button
-                    key={guide.id}
-                    onClick={() => onNavigate(href)}
-                    style={{
-                      textAlign: 'left',
-                      padding: '0.375rem 0.5rem',
-                      borderRadius: 'var(--ui-radius, 0.375rem)',
-                      border: 'none',
-                      backgroundColor: isActive ? 'var(--ui-muted, #f4f4f5)' : 'transparent',
-                      color: isActive ? 'var(--ui-primary, #0ea5e9)' : 'inherit',
-                      fontWeight: isActive ? 600 : 400,
-                      fontSize: '0.875rem',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {guide.title}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+      {/* ─── BODY CONTAINER ─── */}
+      <div className="docs-body-wrapper">
+        <div className="docs-body">
+          {/* Desktop sidebar */}
+          <aside className="docs-sidebar" aria-label="Sidebar">
+            <SidebarContent currentPath={currentPath} onNav={onNavigate} />
+          </aside>
 
-          {/* Components Section */}
-          <div>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--ui-muted-foreground, #71717a)', marginBottom: '0.5rem', paddingLeft: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>Components</span>
-              <span style={{ fontSize: '0.6875rem', opacity: 0.8 }}>44</span>
-            </div>
-            {componentCategories.map((cat) => {
-              const comps = COMPONENT_DOCS.filter((c) => c.category === cat);
-              if (comps.length === 0) return null;
+          {/* Mobile overlay */}
+          {drawerOpen && (
+            <div className="docs-overlay" onClick={() => setDrawerOpen(false)} aria-hidden />
+          )}
 
-              return (
-                <div key={cat} style={{ marginBottom: '0.75rem' }}>
-                  <div style={{ fontSize: '0.6875rem', fontWeight: 600, color: 'var(--ui-muted-foreground, #71717a)', padding: '0.25rem 0.5rem' }}>
-                    {cat}
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.125rem' }}>
-                    {comps.map((comp) => {
-                      const href = `/components/${comp.id}`;
-                      const isActive = currentPath === href;
-                      return (
-                        <button
-                          key={comp.id}
-                          onClick={() => onNavigate(href)}
-                          style={{
-                            textAlign: 'left',
-                            padding: '0.3125rem 0.5rem',
-                            borderRadius: 'var(--ui-radius, 0.375rem)',
-                            border: 'none',
-                            backgroundColor: isActive ? 'var(--ui-muted, #f4f4f5)' : 'transparent',
-                            color: isActive ? 'var(--ui-primary, #0ea5e9)' : 'inherit',
-                            fontWeight: isActive ? 600 : 400,
-                            fontSize: '0.8125rem',
-                            cursor: 'pointer',
-                          }}
-                        >
-                          {comp.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          {/* Mobile drawer */}
+          <aside
+            className={`docs-drawer${drawerOpen ? ' open' : ''}`}
+            aria-label="Mobile navigation"
+            aria-hidden={!drawerOpen}
+          >
+            <SidebarContent currentPath={currentPath} onNav={onNavigate} onClose={() => setDrawerOpen(false)} />
+          </aside>
 
-          {/* Blocks Section */}
-          <div>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--ui-muted-foreground, #71717a)', marginBottom: '0.5rem', paddingLeft: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>Blocks</span>
-              <span style={{ fontSize: '0.6875rem', opacity: 0.8 }}>14</span>
+          {/* Center Main content */}
+          <main className="docs-main" id="main-content">
+            <div className="docs-main-container">
+              {children}
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.125rem' }}>
-              {BLOCK_DOCS.map((block) => {
-                const href = `/blocks/${block.id}`;
-                const isActive = currentPath === href;
-                return (
-                  <button
-                    key={block.id}
-                    onClick={() => onNavigate(href)}
-                    style={{
-                      textAlign: 'left',
-                      padding: '0.3125rem 0.5rem',
-                      borderRadius: 'var(--ui-radius, 0.375rem)',
-                      border: 'none',
-                      backgroundColor: isActive ? 'var(--ui-muted, #f4f4f5)' : 'transparent',
-                      color: isActive ? 'var(--ui-primary, #0ea5e9)' : 'inherit',
-                      fontWeight: isActive ? 600 : 400,
-                      fontSize: '0.8125rem',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {block.name}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          </main>
 
-          {/* Templates Section */}
-          <div>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--ui-muted-foreground, #71717a)', marginBottom: '0.5rem', paddingLeft: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>Templates</span>
-              <span style={{ fontSize: '0.6875rem', opacity: 0.8 }}>4</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.125rem' }}>
-              {TEMPLATE_DOCS.map((template) => {
-                const href = `/templates/${template.id}`;
-                const isActive = currentPath === href;
-                return (
-                  <button
-                    key={template.id}
-                    onClick={() => onNavigate(href)}
-                    style={{
-                      textAlign: 'left',
-                      padding: '0.3125rem 0.5rem',
-                      borderRadius: 'var(--ui-radius, 0.375rem)',
-                      border: 'none',
-                      backgroundColor: isActive ? 'var(--ui-muted, #f4f4f5)' : 'transparent',
-                      color: isActive ? 'var(--ui-primary, #0ea5e9)' : 'inherit',
-                      fontWeight: isActive ? 600 : 400,
-                      fontSize: '0.8125rem',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {template.name}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </aside>
-
-        {/* Content Body */}
-        <main
-          style={{
-            flex: 1,
-            padding: '2.5rem 3rem',
-            maxWidth: '1000px',
-            minWidth: 0,
-          }}
-        >
-          {children}
-        </main>
+          {/* Right Table of Contents (On this page) */}
+          <TableOfContents currentPath={currentPath} />
+        </div>
       </div>
     </div>
   );

@@ -6,41 +6,34 @@ export interface PropTableProps {
 }
 
 export const PropTable: React.FC<PropTableProps> = ({ props }) => {
-  if (!props || props.length === 0) {
+  if (!props?.length) {
     return (
-      <p style={{ fontSize: '0.875rem', color: 'var(--ui-muted-foreground, #71717a)', fontStyle: 'italic' }}>
+      <p style={{ fontSize: '0.875rem', color: 'var(--docs-fg-muted)', fontStyle: 'italic' }}>
         No component-specific props. Inherits standard HTML / React attributes.
       </p>
     );
   }
 
   return (
-    <div style={{ overflowX: 'auto', margin: '1rem 0', borderRadius: 'var(--ui-radius, 0.5rem)', border: '1px solid var(--ui-border, #e4e4e7)' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem', textAlign: 'left' }}>
+    <div className="docs-prop-wrap">
+      <table className="docs-prop-table">
         <thead>
-          <tr style={{ backgroundColor: 'var(--ui-muted, #f4f4f5)', borderBottom: '1px solid var(--ui-border, #e4e4e7)' }}>
-            <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>Prop</th>
-            <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>Type</th>
-            <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>Default</th>
-            <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>Description</th>
+          <tr>
+            <th>Prop</th><th>Type</th><th>Default</th><th>Description</th>
           </tr>
         </thead>
         <tbody>
-          {props.map((prop) => (
-            <tr key={prop.name} style={{ borderBottom: '1px solid var(--ui-border, #e4e4e7)' }}>
-              <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace', fontWeight: 600, color: 'var(--ui-primary, #0ea5e9)' }}>
-                {prop.name}
-                {prop.required && <span style={{ color: 'var(--ui-destructive, #ef4444)', marginLeft: '2px' }}>*</span>}
+          {props.map(p => (
+            <tr key={p.name}>
+              <td>
+                <code style={{ color: 'var(--docs-accent)', fontWeight: 600 }}>
+                  {p.name}
+                  {p.required && <span style={{ color: '#f87171', marginLeft: 2 }} title="Required">*</span>}
+                </code>
               </td>
-              <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace', fontSize: '0.8125rem', color: 'var(--ui-muted-foreground, #71717a)' }}>
-                {prop.type}
-              </td>
-              <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace', fontSize: '0.8125rem' }}>
-                {prop.default || '-'}
-              </td>
-              <td style={{ padding: '0.75rem 1rem' }}>
-                {prop.description}
-              </td>
+              <td><code style={{ color: 'var(--docs-fg-muted)' }}>{p.type}</code></td>
+              <td><code>{p.default || '—'}</code></td>
+              <td style={{ color: 'var(--docs-fg-muted)' }}>{p.description}</td>
             </tr>
           ))}
         </tbody>

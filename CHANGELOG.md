@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] — Docs Redesign & UX Hardening (Phase 14G)
+
+### Phase 14G: Documentation Platform Redesign, UX Hardening & Icon Modernization — IN PROGRESS
+
+- **Full Docs UI/UX Overhaul (apps/docs)**:
+  - Complete redesign of `docs-layout.tsx` with a modern 3-column layout (Sidebar + Content + TOC) that is now fully responsive and edge-to-edge (no outer max-width clamp).
+  - Sidebar condensed to `240px` width with compact `13px` typography, tighter gap rhythm, and fluid border-right separator.
+  - Table of Contents (`230px`) pinned sticky to the right edge with active section highlighting via `IntersectionObserver`.
+  - Center content column auto-centered with `max-width: 860px` and `margin: 0 auto` for optimal line length readability, matching shadcn/ui & Radix UI doc conventions.
+
+- **Dark Mode Instant Toggle (0ms Lag Fix)**:
+  - Diagnosed root cause: `body { transition: background-color 280ms }` in `styles.css` caused muddy slow text fade during theme switch.
+  - Removed global 280ms transition; dark mode now toggles with 0ms latency and sharp instant contrast.
+  - `useDocsTheme` hook updated so `document.documentElement.setAttribute('data-docs-theme', next)` fires synchronously in the click callback.
+
+- **Icon System Modernization — `lucide-react` Integration**:
+  - Installed `lucide-react` into `@soraui/docs`.
+  - Created `brand-icons.tsx` with hand-crafted SVG icons for GitHub and NPM brands.
+  - Replaced all emoji/text placeholders with Lucide icons across:
+    - Header navigation (`Sun`, `Moon`, `Menu`, `X`, `Search`)
+    - Table of Contents (`ArrowUp`, `Bug`, `ExternalLink`)
+    - Search Dialog — dynamic per-category icon badges (`BookOpen`, `Box`, `Layers`, `LayoutTemplate`, `Palette`, `ArrowRight`)
+    - Code Block copy buttons (`Copy`, `Check`)
+    - Component pages breadcrumb and navigation (`ChevronLeft`, `ChevronRight`, `Info`, `FileCode`)
+
+- **Select & Dropdown Portal Theme Fix**:
+  - Rebuilt `usePositioning` hook with cascaded animation frame + `ResizeObserver` for accurate first-paint floating coordinates.
+  - Fixed `SelectContent` and `DropdownContent` dark mode — portaled menus now inherit `data-theme` and `data-mode` from trigger context, rendering correct dark backgrounds instead of white flash.
+
+- **Guide Pages Modernized**:
+  - All guide pages (`vite-page`, `nextjs-page`, `migration-page`, `theme-presets-page`, `semver-page`) rewritten using the `sora-shadcn-page` class pattern with anchored headings and coherent typographic hierarchy.
+
+- **Build Status**: `pnpm build` — 8/8 tasks successful. `tsc --noEmit` — 0 errors monorepo-wide.
+
 ## [0.1.0-rc.2] - 2026-08-22
 
 ### Phase 14E: RC Feedback Triage & Hardening — COMPLETED

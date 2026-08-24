@@ -45,6 +45,9 @@ import {
   SelectValue,
   SelectContent,
   SelectItem,
+  SelectGroup,
+  SelectLabel,
+  SelectSeparator,
   Toast,
   Calendar,
   DatePicker,
@@ -222,28 +225,167 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     name: 'Label',
     category: 'Forms',
     level: 1,
-    description: 'Accessible form label with required indicator and disabled state support.',
+    description: 'Renders an accessible label associated with form controls, supporting required asterisks and disabled states.',
     dependencies: [],
-    tags: ['label', 'form', 'text', 'caption'],
+    tags: ['label', 'form', 'text', 'caption', 'field'],
     status: 'stable',
     props: [
-      { name: 'htmlFor', type: 'string', description: 'ID of target form input' },
+      { name: 'htmlFor', type: 'string', description: 'ID of target form input control' },
       { name: 'required', type: 'boolean', default: 'false', description: 'Displays red asterisk indicator' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Dimmings label opacity' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Dims label opacity when control is disabled' },
+      { name: 'className', type: 'string', description: 'Additional CSS class names' },
+      { name: 'children', type: 'React.ReactNode', required: true, description: 'Label text or nested elements' },
     ],
+    accessibility: {
+      role: 'label',
+      aria: [
+        { attribute: 'htmlFor', usage: 'Binds label to form element ID for click-to-focus and screen readers' },
+        { attribute: 'aria-hidden="true"', usage: 'Hides the decorative asterisk indicator from assistive technology' },
+      ],
+      keyboard: [
+        { key: 'Click', action: 'Transfers focus directly to the associated form control' },
+      ],
+    },
+    themingTokens: ['--ui-foreground', '--ui-muted-foreground', '--ui-destructive'],
     examples: [
       {
-        id: 'basic',
-        title: 'Label with Input',
-        code: `<div style={{ display: 'grid', gap: '0.375rem', maxWidth: '320px' }}>
-  <Label htmlFor="demo-email" required>Work Email</Label>
-  <Input id="demo-email" type="email" placeholder="name@company.com" />
+        id: 'with-input',
+        title: 'Label in Field',
+        description: 'Pairing Label with an Input field using htmlFor for seamless click-to-focus.',
+        code: `<div style={{ display: 'grid', gap: '0.375rem', maxWidth: '340px' }}>
+  <Label htmlFor="work-email" required>Work Email</Label>
+  <Input id="work-email" type="email" placeholder="name@company.com" />
 </div>`,
         render: () => (
-          <div style={{ display: 'grid', gap: '0.375rem', maxWidth: '320px' }}>
-            <Label htmlFor="demo-email" required>Work Email</Label>
-            <Input id="demo-email" type="email" placeholder="name@company.com" />
+          <div style={{ display: 'grid', gap: '0.375rem', maxWidth: '340px', width: '100%' }}>
+            <Label htmlFor="work-email" required>Work Email</Label>
+            <Input id="work-email" type="email" placeholder="name@company.com" />
           </div>
+        ),
+      },
+      {
+        id: 'with-checkbox',
+        title: 'With Checkbox',
+        description: 'Associate a Label with a Checkbox control. Clicking the label toggles the checkbox.',
+        code: `<div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+  <Checkbox id="terms" defaultChecked />
+  <Label htmlFor="terms" style={{ cursor: 'pointer' }}>
+    Accept terms and conditions
+  </Label>
+</div>`,
+        render: () => (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+            <Checkbox id="terms" defaultChecked />
+            <Label htmlFor="terms" style={{ cursor: 'pointer', userSelect: 'none' }}>
+              Accept terms and conditions
+            </Label>
+          </div>
+        ),
+      },
+      {
+        id: 'states',
+        title: 'Required & Disabled States',
+        description: 'Demonstrating normal, required asterisk, and disabled label styling.',
+        code: `<div style={{ display: 'grid', gap: '1rem', maxWidth: '340px' }}>
+  <div style={{ display: 'grid', gap: '0.375rem' }}>
+    <Label htmlFor="field-opt">Full Name (Optional)</Label>
+    <Input id="field-opt" placeholder="John Doe" />
+  </div>
+  <div style={{ display: 'grid', gap: '0.375rem' }}>
+    <Label htmlFor="field-req" required>Email Address</Label>
+    <Input id="field-req" placeholder="john@example.com" />
+  </div>
+  <div style={{ display: 'grid', gap: '0.375rem' }}>
+    <Label htmlFor="field-dis" disabled>Organization (Read Only)</Label>
+    <Input id="field-dis" disabled value="Acme Corporation" />
+  </div>
+</div>`,
+        render: () => (
+          <div style={{ display: 'grid', gap: '1rem', maxWidth: '340px', width: '100%' }}>
+            <div style={{ display: 'grid', gap: '0.375rem' }}>
+              <Label htmlFor="field-opt">Full Name (Optional)</Label>
+              <Input id="field-opt" placeholder="John Doe" />
+            </div>
+            <div style={{ display: 'grid', gap: '0.375rem' }}>
+              <Label htmlFor="field-req" required>Email Address</Label>
+              <Input id="field-req" placeholder="john@example.com" />
+            </div>
+            <div style={{ display: 'grid', gap: '0.375rem' }}>
+              <Label htmlFor="field-dis" disabled>Organization (Read Only)</Label>
+              <Input id="field-dis" disabled value="Acme Corporation" />
+            </div>
+          </div>
+        ),
+      },
+      {
+        id: 'payment-card',
+        title: 'Payment Method & Billing Example',
+        description: 'A realistic card form layout demonstrating multiple grouped form controls with accessible labels.',
+        code: `<Card elevated style={{ maxWidth: '420px', width: '100%' }}>
+  <CardHeader>
+    <CardTitle>Payment Method</CardTitle>
+    <CardDescription>All transactions are secure and encrypted.</CardDescription>
+  </CardHeader>
+  <CardContent style={{ display: 'grid', gap: '1rem' }}>
+    <div style={{ display: 'grid', gap: '0.375rem' }}>
+      <Label htmlFor="card-num" required>Card Number</Label>
+      <Input id="card-num" placeholder="1234 5678 9012 3456" />
+    </div>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+      <div style={{ display: 'grid', gap: '0.375rem' }}>
+        <Label htmlFor="card-exp" required>Expires</Label>
+        <Input id="card-exp" placeholder="MM/YY" />
+      </div>
+      <div style={{ display: 'grid', gap: '0.375rem' }}>
+        <Label htmlFor="card-cvc" required>CVC</Label>
+        <Input id="card-cvc" placeholder="123" />
+      </div>
+    </div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.25rem' }}>
+      <Checkbox id="save-card" defaultChecked />
+      <Label htmlFor="save-card" style={{ cursor: 'pointer', fontSize: '0.8125rem' }}>
+        Save card for future billing
+      </Label>
+    </div>
+  </CardContent>
+  <CardFooter style={{ justifyContent: 'flex-end', gap: '0.5rem' }}>
+    <Button variant="outline" size="sm">Cancel</Button>
+    <Button variant="primary" size="sm">Submit Payment</Button>
+  </CardFooter>
+</Card>`,
+        render: () => (
+          <Card elevated style={{ maxWidth: '420px', width: '100%' }}>
+            <CardHeader>
+              <CardTitle>Payment Method</CardTitle>
+              <CardDescription>All transactions are secure and encrypted.</CardDescription>
+            </CardHeader>
+            <CardContent style={{ display: 'grid', gap: '1rem' }}>
+              <div style={{ display: 'grid', gap: '0.375rem' }}>
+                <Label htmlFor="card-num" required>Card Number</Label>
+                <Input id="card-num" placeholder="1234 5678 9012 3456" />
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                <div style={{ display: 'grid', gap: '0.375rem' }}>
+                  <Label htmlFor="card-exp" required>Expires</Label>
+                  <Input id="card-exp" placeholder="MM/YY" />
+                </div>
+                <div style={{ display: 'grid', gap: '0.375rem' }}>
+                  <Label htmlFor="card-cvc" required>CVC</Label>
+                  <Input id="card-cvc" placeholder="123" />
+                </div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.25rem' }}>
+                <Checkbox id="save-card" defaultChecked />
+                <Label htmlFor="save-card" style={{ cursor: 'pointer', fontSize: '0.8125rem', userSelect: 'none' }}>
+                  Save card for future billing
+                </Label>
+              </div>
+            </CardContent>
+            <CardFooter style={{ justifyContent: 'flex-end', gap: '0.5rem' }}>
+              <Button variant="outline" size="sm">Cancel</Button>
+              <Button variant="primary" size="sm">Submit Payment</Button>
+            </CardFooter>
+          </Card>
         ),
       },
     ],
@@ -756,39 +898,209 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     name: 'Select',
     category: 'Forms',
     level: 2,
-    description: 'Custom select dropdown with listbox semantics, keyboard search, and option groups.',
+    description: 'Displays a list of options for the user to pick from—triggered by a button, with full listbox keyboard navigation and option groups.',
     dependencies: ['@soraui/hooks'],
-    tags: ['select', 'listbox', 'combobox', 'options'],
+    tags: ['select', 'listbox', 'combobox', 'options', 'dropdown'],
     status: 'stable',
     props: [
-      { name: 'options', type: 'Array<{ value, label }>', description: 'Available options' },
-      { name: 'placeholder', type: 'string', default: "'Select an option...'", description: 'Placeholder label' },
+      { name: 'defaultValue', type: 'string', description: 'The value of the select when initially rendered' },
+      { name: 'value', type: 'string', description: 'The controlled value of the select' },
+      { name: 'onValueChange', type: '(value: string) => void', description: 'Event handler called when the value changes' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'When true, prevents the user from interacting with the select' },
+      { name: 'name', type: 'string', description: 'The name of the select field submitted with the enclosing form' },
+      { name: 'children', type: 'React.ReactNode', required: true, description: 'Select compound sub-components (SelectTrigger, SelectContent, etc.)' },
     ],
+    accessibility: {
+      role: 'combobox (trigger) / listbox (popup) / option (item)',
+      aria: [
+        { attribute: 'aria-expanded', usage: 'Indicates whether the select popup listbox is currently open' },
+        { attribute: 'aria-haspopup="listbox"', usage: 'Tells assistive technology that clicking the trigger opens a list of selectable items' },
+        { attribute: 'aria-selected', usage: 'Identifies the currently selected option in the listbox' },
+        { attribute: 'aria-controls', usage: 'Links trigger to listbox content container ID' },
+      ],
+      keyboard: [
+        { key: 'Space / Enter', action: 'Opens listbox or selects focused option' },
+        { key: 'Arrow Down / Up', action: 'Cycles focus between selectable options' },
+        { key: 'Home / End', action: 'Jumps directly to the first / last option in the list' },
+        { key: 'Escape', action: 'Closes listbox popup and returns focus to the trigger button' },
+      ],
+    },
+    themingTokens: ['--ui-background', '--ui-foreground', '--ui-popover', '--ui-popover-foreground', '--ui-primary', '--ui-border', '--ui-radius'],
     examples: [
       {
         id: 'basic',
-        title: 'Select Component',
-        code: `<Select defaultValue="sky">
-  <SelectTrigger style={{ maxWidth: '280px' }}>
-    <SelectValue placeholder="Choose a theme..." />
+        title: 'Default Select',
+        description: 'A standard select dropdown with placeholder and checkmark indicators.',
+        code: `<Select defaultValue="apple">
+  <SelectTrigger style={{ maxWidth: '280px', width: '100%' }}>
+    <SelectValue placeholder="Select a fruit..." />
   </SelectTrigger>
   <SelectContent>
-    <SelectItem value="sky">Sky (Light)</SelectItem>
-    <SelectItem value="midnight">Midnight (Dark)</SelectItem>
-    <SelectItem value="aurora">Aurora (Dark)</SelectItem>
+    <SelectItem value="apple">Apple</SelectItem>
+    <SelectItem value="banana">Banana</SelectItem>
+    <SelectItem value="orange">Orange</SelectItem>
+    <SelectItem value="strawberry">Strawberry</SelectItem>
+    <SelectItem value="grape">Grape</SelectItem>
   </SelectContent>
 </Select>`,
         render: () => (
-          <Select defaultValue="sky">
-            <SelectTrigger style={{ maxWidth: '280px' }}>
-              <SelectValue placeholder="Choose a theme..." />
+          <Select defaultValue="apple">
+            <SelectTrigger style={{ maxWidth: '280px', width: '100%' }}>
+              <SelectValue placeholder="Select a fruit..." />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="sky">Sky (Light)</SelectItem>
-              <SelectItem value="midnight">Midnight (Dark)</SelectItem>
-              <SelectItem value="aurora">Aurora (Dark)</SelectItem>
+              <SelectItem value="apple">Apple</SelectItem>
+              <SelectItem value="banana">Banana</SelectItem>
+              <SelectItem value="orange">Orange</SelectItem>
+              <SelectItem value="strawberry">Strawberry</SelectItem>
+              <SelectItem value="grape">Grape</SelectItem>
             </SelectContent>
           </Select>
+        ),
+      },
+      {
+        id: 'with-label',
+        title: 'Select with Form & Label',
+        description: 'Pairing Select with a Label using htmlFor for accessible form composition.',
+        code: `<div style={{ display: 'grid', gap: '0.375rem', maxWidth: '320px', width: '100%' }}>
+  <Label htmlFor="framework-select" required>Primary Framework</Label>
+  <Select defaultValue="react">
+    <SelectTrigger id="framework-select">
+      <SelectValue placeholder="Select framework..." />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="react">React.js</SelectItem>
+      <SelectItem value="nextjs">Next.js App Router</SelectItem>
+      <SelectItem value="vite">Vite SPA</SelectItem>
+      <SelectItem value="remix">Remix</SelectItem>
+    </SelectContent>
+  </Select>
+</div>`,
+        render: () => (
+          <div style={{ display: 'grid', gap: '0.375rem', maxWidth: '320px', width: '100%' }}>
+            <Label htmlFor="framework-select" required>Primary Framework</Label>
+            <Select defaultValue="react">
+              <SelectTrigger id="framework-select">
+                <SelectValue placeholder="Select framework..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="react">React.js</SelectItem>
+                <SelectItem value="nextjs">Next.js App Router</SelectItem>
+                <SelectItem value="vite">Vite SPA</SelectItem>
+                <SelectItem value="remix">Remix</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        ),
+      },
+      {
+        id: 'grouped',
+        title: 'Grouped Options with Separators',
+        description: 'Organize related options into labeled categories with separators.',
+        code: `<Select defaultValue="tokyo">
+  <SelectTrigger style={{ maxWidth: '320px', width: '100%' }}>
+    <SelectValue placeholder="Select a timezone / city..." />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel>North America</SelectLabel>
+      <SelectItem value="newyork">New York (EST)</SelectItem>
+      <SelectItem value="losangeles">Los Angeles (PST)</SelectItem>
+      <SelectItem value="chicago">Chicago (CST)</SelectItem>
+    </SelectGroup>
+    <SelectSeparator />
+    <SelectGroup>
+      <SelectLabel>Europe</SelectLabel>
+      <SelectItem value="london">London (GMT)</SelectItem>
+      <SelectItem value="paris">Paris (CET)</SelectItem>
+      <SelectItem value="berlin">Berlin (CET)</SelectItem>
+    </SelectGroup>
+    <SelectSeparator />
+    <SelectGroup>
+      <SelectLabel>Asia & Pacific</SelectLabel>
+      <SelectItem value="tokyo">Tokyo (JST)</SelectItem>
+      <SelectItem value="singapore">Singapore (SGT)</SelectItem>
+      <SelectItem value="sydney">Sydney (AEST)</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+</Select>`,
+        render: () => (
+          <Select defaultValue="tokyo">
+            <SelectTrigger style={{ maxWidth: '320px', width: '100%' }}>
+              <SelectValue placeholder="Select a timezone / city..." />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>North America</SelectLabel>
+                <SelectItem value="newyork">New York (EST)</SelectItem>
+                <SelectItem value="losangeles">Los Angeles (PST)</SelectItem>
+                <SelectItem value="chicago">Chicago (CST)</SelectItem>
+              </SelectGroup>
+              <SelectSeparator />
+              <SelectGroup>
+                <SelectLabel>Europe</SelectLabel>
+                <SelectItem value="london">London (GMT)</SelectItem>
+                <SelectItem value="paris">Paris (CET)</SelectItem>
+                <SelectItem value="berlin">Berlin (CET)</SelectItem>
+              </SelectGroup>
+              <SelectSeparator />
+              <SelectGroup>
+                <SelectLabel>Asia & Pacific</SelectLabel>
+                <SelectItem value="tokyo">Tokyo (JST)</SelectItem>
+                <SelectItem value="singapore">Singapore (SGT)</SelectItem>
+                <SelectItem value="sydney">Sydney (AEST)</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        ),
+      },
+      {
+        id: 'disabled',
+        title: 'Disabled State & Options',
+        description: 'Demonstrating disabled select component and individual disabled options.',
+        code: `<div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+  <Select disabled>
+    <SelectTrigger style={{ width: '220px' }}>
+      <SelectValue placeholder="Disabled Select" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="1">Option 1</SelectItem>
+    </SelectContent>
+  </Select>
+
+  <Select defaultValue="enabled-1">
+    <SelectTrigger style={{ width: '220px' }}>
+      <SelectValue placeholder="With Disabled Items" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="enabled-1">Available Option</SelectItem>
+      <SelectItem value="disabled-1" disabled>Out of Stock (Disabled)</SelectItem>
+      <SelectItem value="enabled-2">Available Option 2</SelectItem>
+    </SelectContent>
+  </Select>
+</div>`,
+        render: () => (
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <Select disabled>
+              <SelectTrigger style={{ width: '220px' }}>
+                <SelectValue placeholder="Disabled Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1">Option 1</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select defaultValue="enabled-1">
+              <SelectTrigger style={{ width: '220px' }}>
+                <SelectValue placeholder="With Disabled Items" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="enabled-1">Available Option</SelectItem>
+                <SelectItem value="disabled-1" disabled>Out of Stock (Disabled)</SelectItem>
+                <SelectItem value="enabled-2">Available Option 2</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         ),
       },
     ],

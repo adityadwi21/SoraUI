@@ -1,76 +1,61 @@
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardContent, Badge } from '@soraui/react';
+import { CodeBlock } from '../../components/code-block';
+import { Badge } from '@soraui/react';
 
 export const MigrationPage: React.FC = () => {
   return (
-    <div style={{ maxWidth: '840px' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <Badge variant="secondary" style={{ marginBottom: '0.75rem' }}>Migration</Badge>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
-          Migration from Radix & shadcn/ui
-        </h1>
-        <p style={{ fontSize: '1.125rem', color: 'var(--ui-muted-foreground, #71717a)', lineHeight: 1.6, margin: 0 }}>
-          Concept and architectural mapping when transitioning your codebase to SoraUI.
+    <div className="docs-page sora-shadcn-page">
+      <div className="sora-doc-header">
+        <div className="sora-doc-title-row">
+          <h1 className="sora-doc-title">Migration Guide</h1>
+        </div>
+        <p className="sora-doc-lead">
+          Step-by-step instructions for migrating your codebase from Radix UI, shadcn/ui, or raw CSS to SoraUI.
         </p>
+        <div className="sora-doc-chips">
+          <Badge variant="secondary" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+            Guides
+          </Badge>
+          <Badge variant="outline" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+            Migration
+          </Badge>
+        </div>
       </div>
 
-      <section style={{ marginBottom: '2.5rem' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '0 0 1rem 0' }}>Core Differences</h2>
-        <div style={{ display: 'grid', gap: '1rem' }}>
-          <Card>
-            <CardHeader>
-              <CardTitle style={{ fontSize: '1rem' }}>Zero Heavy External Runtime Dependencies</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--ui-muted-foreground, #71717a)', lineHeight: 1.6 }}>
-                Unlike Radix/shadcn which rely on <code>@radix-ui/*</code> npm packages, SoraUI uses internal hand-rolled positioning and focus-trapping hooks (<code>@soraui/hooks</code>) without third-party runtime weight.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle style={{ fontSize: '1rem' }}>Pure CSS Variables vs Tailwind Utility Classes</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--ui-muted-foreground, #71717a)', lineHeight: 1.6 }}>
-                SoraUI relies on native CSS custom properties (<code>--ui-*</code> and <code>--sora-*</code>), making theme switches instantaneous and fully framework-agnostic.
-              </p>
-            </CardContent>
-          </Card>
+      <section className="sora-doc-section">
+        <h2 id="shadcn-migration" className="sora-doc-h2">
+          <span>Migrating from shadcn/ui</span>
+          <a href="#shadcn-migration" className="sora-doc-anchor">#</a>
+        </h2>
+        <p className="sora-subtext">
+          SoraUI follows the exact same component composition patterns and prop ergonomics as shadcn/ui, but eliminates runtime Tailwind dependencies in favor of pure CSS custom properties.
+        </p>
+        <div style={{ padding: '1rem', border: '1px solid var(--docs-border)', borderRadius: 'var(--docs-radius)', background: 'var(--docs-bg-card)' }}>
+          <p style={{ margin: 0, fontSize: '0.875rem', lineHeight: 1.7 }}>
+            <strong>1. Component imports:</strong> Change <code>@/components/ui/button</code> to <code>@soraui/react</code> or use <code>npx @soraui/cli add button</code> to copy component source directly into your codebase.
+          </p>
+          <p style={{ margin: '0.5rem 0 0', fontSize: '0.875rem', lineHeight: 1.7 }}>
+            <strong>2. CSS Variables:</strong> Replace Tailwind HSL variables with standard hex tokens from <code>@soraui/core</code> presets.
+          </p>
         </div>
       </section>
 
-      <section>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '0 0 1rem 0' }}>Component Name Mapping</h2>
-        <div style={{ overflowX: 'auto', borderRadius: 'var(--ui-radius, 0.5rem)', border: '1px solid var(--ui-border, #e4e4e7)' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem', textAlign: 'left' }}>
-            <thead>
-              <tr style={{ backgroundColor: 'var(--ui-muted, #f4f4f5)', borderBottom: '1px solid var(--ui-border, #e4e4e7)' }}>
-                <th style={{ padding: '0.75rem 1rem' }}>Radix / shadcn/ui</th>
-                <th style={{ padding: '0.75rem 1rem' }}>SoraUI Equivalent</th>
-                <th style={{ padding: '0.75rem 1rem' }}>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style={{ borderBottom: '1px solid var(--ui-border, #e4e4e7)' }}>
-                <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace' }}>Dialog</td>
-                <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace', color: 'var(--ui-primary, #0ea5e9)' }}>Dialog</td>
-                <td style={{ padding: '0.75rem 1rem' }}>Built-in focus trap and backdrop blur</td>
-              </tr>
-              <tr style={{ borderBottom: '1px solid var(--ui-border, #e4e4e7)' }}>
-                <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace' }}>DropdownMenu</td>
-                <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace', color: 'var(--ui-primary, #0ea5e9)' }}>Dropdown</td>
-                <td style={{ padding: '0.75rem 1rem' }}>Keyboard roving tabindex navigation</td>
-              </tr>
-              <tr style={{ borderBottom: '1px solid var(--ui-border, #e4e4e7)' }}>
-                <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace' }}>Sheet</td>
-                <td style={{ padding: '0.75rem 1rem', fontFamily: 'monospace', color: 'var(--ui-primary, #0ea5e9)' }}>Drawer</td>
-                <td style={{ padding: '0.75rem 1rem' }}>Slide-in panel with smooth CSS transitions</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <section className="sora-doc-section">
+        <h2 id="radix-migration" className="sora-doc-h2">
+          <span>Migrating from Radix Primitives</span>
+          <a href="#radix-migration" className="sora-doc-anchor">#</a>
+        </h2>
+        <p className="sora-subtext">
+          SoraUI includes all accessible ARIA contracts natively without requiring multiple <code>@radix-ui/react-*</code> packages:
+        </p>
+        <CodeBlock
+          language="tsx"
+          code={`// Before (Radix UI)
+import * as DialogPrimitive from '@radix-ui/react-dialog';
+
+// After (SoraUI)
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from '@soraui/react';`}
+        />
       </section>
     </div>
   );

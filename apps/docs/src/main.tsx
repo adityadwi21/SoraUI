@@ -15,6 +15,7 @@ import '@soraui/core/theme/presets/nebula.css';
 import '@soraui/core/theme/presets/eclipse.css';
 import '@soraui/core/theme/presets/starlight.css';
 import '@soraui/react/styles';
+import './styles.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

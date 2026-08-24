@@ -1,6 +1,6 @@
 /**
  * SoraUI Theme — Midnight
- * Mode: dark (default)
+ * Mode: adaptive (dark default, light on data-mode="light" or data-docs-theme="light")
  * Description: Clean minimal dark. Indigo accents. Default dark theme.
  */
 [data-theme='midnight'] {
@@ -26,8 +26,8 @@
   --ui-success-foreground: #ffffff;
   --ui-warning: #f59e0b;
   --ui-warning-foreground: #ffffff;
-  --ui-border: #71717a;
-  --ui-input: #71717a;
+  --ui-border: #3f3f46;
+  --ui-input: #3f3f46;
   --ui-ring: #818cf8;
 
   --ui-radius: 0.5rem;
@@ -35,4 +35,39 @@
   --ui-button-radius: var(--ui-radius);
   --ui-input-radius: var(--ui-radius);
   --ui-card-radius: var(--ui-radius);
+}
+
+/* ─── Midnight Light Mode ─── */
+html[data-mode="light"] [data-theme='midnight'],
+html[data-docs-theme="light"] [data-theme='midnight'],
+[data-mode="light"] [data-theme='midnight'],
+[data-docs-theme="light"] [data-theme='midnight'],
+[data-theme='midnight'][data-mode='light'],
+[data-theme='midnight'][data-docs-theme='light'] {
+  --ui-background: #ffffff;
+  --ui-foreground: #09090b;
+  --ui-card: #ffffff;
+  --ui-card-foreground: #09090b;
+  --ui-popover: #ffffff;
+  --ui-popover-foreground: #09090b;
+  --ui-primary: #4f46e5;
+  --ui-primary-foreground: #ffffff;
+
+  --ui-secondary: #e0e7ff;
+  --ui-secondary-foreground: #3730a3;
+  --ui-muted: #eef2ff;
+  --ui-muted-foreground: #4338ca;
+  --ui-accent: #e0e7ff;
+  --ui-accent-foreground: #4f46e5;
+
+  --ui-destructive: #dc2626;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #ffffff;
+  --ui-border: #c7d2fe;
+  --ui-input: #c7d2fe;
+  --ui-ring: #4f46e5;
 }

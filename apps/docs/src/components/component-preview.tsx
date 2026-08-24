@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ThemeScope } from '@soraui/react';
-import { PreviewToolbar } from './preview-toolbar';
-import { ViewportMode } from './viewport-switcher';
+import { ViewportSwitcher, ViewportMode } from './viewport-switcher';
+import { ThemeSwitcher } from './theme-switcher';
 import { CodeBlock } from './code-block';
 
 export interface ComponentPreviewProps {
@@ -19,81 +19,51 @@ export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
   align = 'center',
   style,
 }) => {
-  const [theme, setTheme] = useState(defaultTheme);
+  const [previewTheme, setPreviewTheme] = useState(defaultTheme);
   const [viewport, setViewport] = useState<ViewportMode>('desktop');
-  const [activeTab, setActiveTab] = useState<'preview' | 'code'>('preview');
+  const [tab, setTab] = useState<'preview' | 'code'>('preview');
 
-  const getViewportWidth = () => {
-    switch (viewport) {
-      case 'mobile':
-        return '375px';
-      case 'tablet':
-        return '768px';
-      case 'desktop':
-      default:
-        return '100%';
-    }
-  };
+  const vpWidth = viewport === 'mobile' ? '375px' : viewport === 'tablet' ? '768px' : '100%';
 
   return (
-    <div
-      style={{
-        borderRadius: 'var(--ui-radius, 0.5rem)',
-        border: '1px solid var(--ui-border, #e4e4e7)',
-        margin: '1.25rem 0',
-        overflow: 'hidden',
-        ...style,
-      }}
-    >
-      <PreviewToolbar
-        theme={theme}
-        onThemeChange={setTheme}
-        viewport={viewport}
-        onViewportChange={setViewport}
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-      />
-
-      {activeTab === 'preview' ? (
-        <div
-          style={{
-            padding: '2rem 1.5rem',
-            display: 'flex',
-            justifyContent: 'center',
-            backgroundColor: 'var(--ui-background, #ffffff)',
-            minHeight: '180px',
-            overflowX: 'auto',
-          }}
-        >
-          <div
-            style={{
-              width: getViewportWidth(),
-              transition: 'width 0.2s ease',
-              display: 'flex',
-              justifyContent: align === 'center' ? 'center' : 'flex-start',
-              alignItems: 'center',
-            }}
-          >
-            <ThemeScope theme={theme as any}>
-              <div
-                style={{
-                  width: '100%',
-                  padding: '1rem',
-                  borderRadius: 'var(--ui-radius, 0.5rem)',
-                  backgroundColor: 'var(--ui-background, #ffffff)',
-                  color: 'var(--ui-foreground, #0c1a2b)',
-                  border: '1px solid var(--ui-border, transparent)',
-                }}
+    <div className="docs-preview-root" style={style}>
+      {/* Toolbar */}
+      <div className="docs-preview-toolbar">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div className="docs-preview-tabs" role="tablist">
+            {(['preview', 'code'] as const).map(t => (
+              <button
+                key={t} type="button" role="tab"
+                aria-selected={tab === t}
+                className={`docs-preview-tab${tab === t ? ' active' : ''}`}
+                onClick={() => setTab(t)}
               >
-                {children}
-              </div>
+                {t === 'preview' ? 'Preview' : 'Code'}
+              </button>
+            ))}
+          </div>
+          {tab === 'preview' && <ViewportSwitcher value={viewport} onChange={setViewport} />}
+        </div>
+        <ThemeSwitcher value={previewTheme} onChange={setPreviewTheme} />
+      </div>
+
+      {/* Content */}
+      {tab === 'preview' ? (
+        <div className="docs-preview-canvas">
+          <div style={{
+            width: vpWidth,
+            transition: 'width 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+            display: 'flex',
+            justifyContent: align === 'center' ? 'center' : 'flex-start',
+            alignItems: align === 'center' ? 'center' : 'flex-start',
+          }}>
+            <ThemeScope theme={previewTheme as Parameters<typeof ThemeScope>[0]['theme']}>
+              <div style={{ width: '100%' }}>{children}</div>
             </ThemeScope>
           </div>
         </div>
       ) : (
-        <div style={{ padding: '0 1rem' }}>
-          <CodeBlock code={code} />
-        </div>
+        <CodeBlock code={code} />
       )}
     </div>
   );

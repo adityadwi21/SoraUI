@@ -103,7 +103,7 @@ Tools available to your agent:
 
 ---
 
-## 📦 Published NPM Packages (`v0.1.0-rc.2`)
+## 📦 Published NPM Packages (`v0.1.0-rc.2` — Stable `v0.1.0` Pending)
 
 | Package | Purpose | Version |
 |---|---|---|
@@ -113,6 +113,8 @@ Tools available to your agent:
 | [`@soraui/cli`](https://www.npmjs.com/package/@soraui/cli) | CLI code generator & dependency resolver | `0.1.0-rc.2` |
 | [`@soraui/mcp`](https://www.npmjs.com/package/@soraui/mcp) | Official Model Context Protocol stdio server | `0.1.0-rc.2` |
 
+> **Phase 14G** (Documentation Platform Redesign & UX Hardening) is currently in progress.  
+> Stable `v0.1.0` promotion (Phase 14F) will follow docs polish completion.
 
 ---
 

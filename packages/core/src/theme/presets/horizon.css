@@ -1,6 +1,6 @@
 /**
  * SoraUI Theme — Horizon
- * Mode: light
+ * Mode: adaptive (light default, dark on data-mode="dark" or data-docs-theme="dark")
  * Description: Warm sunset orange tones on a bright cream background.
  */
 [data-theme='horizon'] {
@@ -27,8 +27,8 @@
   --ui-success-foreground: #ffffff;
   --ui-warning: #f59e0b;
   --ui-warning-foreground: #ffffff;
-  --ui-border: #9a3412;
-  --ui-input: #9a3412;
+  --ui-border: #fed7aa;
+  --ui-input: #fed7aa;
   --ui-ring: #c2410c;
 
   --ui-radius: 0.5rem;
@@ -36,4 +36,39 @@
   --ui-button-radius: var(--ui-radius);
   --ui-input-radius: var(--ui-radius);
   --ui-card-radius: var(--ui-radius);
+}
+
+/* ─── Horizon Dark Mode ─── */
+html[data-mode="dark"] [data-theme='horizon'],
+html[data-docs-theme="dark"] [data-theme='horizon'],
+[data-mode="dark"] [data-theme='horizon'],
+[data-docs-theme="dark"] [data-theme='horizon'],
+[data-theme='horizon'][data-mode='dark'],
+[data-theme='horizon'][data-docs-theme='dark'] {
+  --ui-background: #1c0d06;
+  --ui-foreground: #fff7ed;
+  --ui-card: #2a140b;
+  --ui-card-foreground: #fff7ed;
+  --ui-popover: #2a140b;
+  --ui-popover-foreground: #fff7ed;
+  --ui-primary: #fb923c;
+  --ui-primary-foreground: #431407;
+
+  --ui-secondary: #3b1c10;
+  --ui-secondary-foreground: #ffedd5;
+  --ui-muted: #3b1c10;
+  --ui-muted-foreground: #fdba74;
+  --ui-accent: #3b1c10;
+  --ui-accent-foreground: #fff7ed;
+
+  --ui-destructive: #ef4444;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #ffffff;
+  --ui-border: rgba(251, 146, 60, 0.25);
+  --ui-input: rgba(251, 146, 60, 0.25);
+  --ui-ring: #fb923c;
 }

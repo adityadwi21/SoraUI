@@ -234,6 +234,12 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
 
     if (!open) return null;
 
+    const scopedTheme = triggerRef.current?.closest('[data-theme]')?.getAttribute('data-theme') || undefined;
+    const scopedMode =
+      triggerRef.current?.closest('[data-mode]')?.getAttribute('data-mode') ||
+      (typeof document !== 'undefined' ? document.documentElement.getAttribute('data-docs-theme') : undefined) ||
+      undefined;
+
     return (
       <Portal>
         <div
@@ -242,7 +248,10 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
           role="listbox"
           tabIndex={-1}
           onKeyDown={handleKeyDown}
-          style={style}
+          data-theme={scopedTheme}
+          data-mode={scopedMode}
+          data-docs-theme={scopedMode}
+          style={{ ...style, ...props.style }}
           className={cx(
             'sora-select__content',
             'sora-select__content--' + actualPlacement,

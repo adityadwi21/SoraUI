@@ -1,43 +1,54 @@
 import React from 'react';
+import { Badge } from '@soraui/react';
 
 export const SemverPage: React.FC = () => {
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', paddingBottom: '4rem' }}>
-      <header style={{ marginBottom: '2.5rem' }}>
-        <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--ui-primary, #0ea5e9)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-          Release Governance
+    <div className="docs-page sora-shadcn-page">
+      <div className="sora-doc-header">
+        <div className="sora-doc-title-row">
+          <h1 className="sora-doc-title">Semantic Versioning Policy</h1>
         </div>
-        <h1 style={{ fontSize: '2.25rem', fontWeight: 800, margin: '0.5rem 0 1rem 0' }}>
-          Semantic Versioning & Deprecation Policy
-        </h1>
-        <p style={{ fontSize: '1.125rem', color: 'var(--ui-muted-foreground)', lineHeight: 1.6 }}>
-          SoraUI follows strict Semantic Versioning (SemVer 2.0) with formal stability and API freeze guarantees.
+        <p className="sora-doc-lead">
+          Our commitment to backward compatibility, predictable release cadence, and safe enterprise upgrades.
         </p>
-      </header>
+        <div className="sora-doc-chips">
+          <Badge variant="secondary" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+            Policy
+          </Badge>
+          <Badge variant="outline" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+            SemVer 2.0.0
+          </Badge>
+        </div>
+      </div>
 
-      <section style={{ marginBottom: '3rem' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem' }}>Release Channels</h2>
-        <ul style={{ lineHeight: 1.8, paddingLeft: '1.5rem' }}>
-          <li><strong>Major (X.0.0):</strong> Breaking public API changes, prop renames, or removal of deprecated components. Minimum 1 minor cycle deprecation warning in console prior to removal.</li>
-          <li><strong>Minor (0.X.0):</strong> New components, blocks, themes, hooks, or backwards-compatible feature additions.</li>
-          <li><strong>Patch (0.0.X):</strong> Bug fixes, accessibility patches, documentation updates, and performance optimizations with 0 API impact.</li>
-        </ul>
-      </section>
-
-      <section style={{ marginBottom: '3rem' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem' }}>Public API Stability Guarantee</h2>
-        <p style={{ lineHeight: 1.7, marginBottom: '1rem' }}>
-          All 44 core components in <code>@soraui/react</code>, the design tokens in <code>@soraui/core</code>, and the registry schema in <code>@soraui/mcp</code> are verified by automated contract regression tests before every release. Any modification to public exports triggers an automated CI gate block.
+      <section className="sora-doc-section">
+        <h2 id="version-format" className="sora-doc-h2">
+          <span>Version Number Format</span>
+          <a href="#version-format" className="sora-doc-anchor">#</a>
+        </h2>
+        <p className="sora-subtext">
+          SoraUI strictly follows Semantic Versioning (<code>MAJOR.MINOR.PATCH</code>):
         </p>
-      </section>
-
-      <section style={{ marginBottom: '3rem' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem' }}>Deprecation Lifecycle</h2>
-        <ol style={{ lineHeight: 1.8, paddingLeft: '1.5rem' }}>
-          <li><strong>Announcement:</strong> Deprecated APIs are marked with JSDoc <code>@deprecated</code> tags with replacement recommendations.</li>
-          <li><strong>Runtime Warning:</strong> In development mode, SoraUI emits non-intrusive console warnings with upgrade hints.</li>
-          <li><strong>Grace Period:</strong> APIs remain operational for at least one minor release cycle before removal in the next major version.</li>
-        </ol>
+        <div style={{ display: 'grid', gap: '0.75rem' }}>
+          <div style={{ padding: '1rem', border: '1px solid var(--docs-border)', borderRadius: 'var(--docs-radius)', background: 'var(--docs-bg-card)' }}>
+            <strong style={{ color: 'var(--docs-fg)' }}>MAJOR (e.g. 1.0.0 → 2.0.0)</strong>
+            <p style={{ margin: '0.25rem 0 0', fontSize: '0.875rem', color: 'var(--docs-fg-muted)' }}>
+              Breaking changes to component APIs, removed props, or fundamental architectural shifts. Includes automated codemods.
+            </p>
+          </div>
+          <div style={{ padding: '1rem', border: '1px solid var(--docs-border)', borderRadius: 'var(--docs-radius)', background: 'var(--docs-bg-card)' }}>
+            <strong style={{ color: 'var(--docs-fg)' }}>MINOR (e.g. 0.1.0 → 0.2.0)</strong>
+            <p style={{ margin: '0.25rem 0 0', fontSize: '0.875rem', color: 'var(--docs-fg-muted)' }}>
+              New components, new props, additive features, and theme presets without breaking existing code.
+            </p>
+          </div>
+          <div style={{ padding: '1rem', border: '1px solid var(--docs-border)', borderRadius: 'var(--docs-radius)', background: 'var(--docs-bg-card)' }}>
+            <strong style={{ color: 'var(--docs-fg)' }}>PATCH (e.g. 0.1.0 → 0.1.1)</strong>
+            <p style={{ margin: '0.25rem 0 0', fontSize: '0.875rem', color: 'var(--docs-fg-muted)' }}>
+              Bug fixes, accessibility improvements, style adjustments, and documentation updates.
+            </p>
+          </div>
+        </div>
       </section>
     </div>
   );

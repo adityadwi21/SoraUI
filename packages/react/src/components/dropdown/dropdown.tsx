@@ -167,6 +167,12 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
 
     if (!open) return null;
 
+    const scopedTheme = triggerRef.current?.closest('[data-theme]')?.getAttribute('data-theme') || undefined;
+    const scopedMode =
+      triggerRef.current?.closest('[data-mode]')?.getAttribute('data-mode') ||
+      (typeof document !== 'undefined' ? document.documentElement.getAttribute('data-docs-theme') : undefined) ||
+      undefined;
+
     return (
       <Portal>
         <div
@@ -176,6 +182,9 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
           aria-orientation="vertical"
           tabIndex={-1}
           onKeyDown={handleKeyDown}
+          data-theme={scopedTheme}
+          data-mode={scopedMode}
+          data-docs-theme={scopedMode}
           style={style}
           className={cx(
             'sora-dropdown__content',
