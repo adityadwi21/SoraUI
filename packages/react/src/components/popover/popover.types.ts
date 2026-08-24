@@ -1,5 +1,5 @@
-import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from 'react';
-import type { Placement } from '@soraui/hooks';
+import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
+import type { Placement } from "@soraui/hooks";
 
 export interface PopoverProps {
   /** Controlled open state */

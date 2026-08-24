@@ -1,16 +1,16 @@
-import { searchRegistry } from '../registry/adapter';
+import { searchRegistry } from "../registry/adapter";
 
 export function handleSearch(params: {
   query: string;
-  kind?: 'all' | 'components' | 'blocks' | 'templates' | 'themes' | undefined;
+  kind?: "all" | "components" | "blocks" | "templates" | "themes" | undefined;
   limit?: number | undefined;
 }) {
-  const { query, kind = 'all', limit = 20 } = params;
-  const results = searchRegistry(query, kind ?? 'all', limit ?? 20);
+  const { query, kind = "all", limit = 20 } = params;
+  const results = searchRegistry(query, kind ?? "all", limit ?? 20);
 
   return {
     query,
-    kind: kind ?? 'all',
+    kind: kind ?? "all",
     totalFound: results.length,
     results,
   };

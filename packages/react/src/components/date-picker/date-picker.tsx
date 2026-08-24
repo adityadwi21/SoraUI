@@ -1,12 +1,19 @@
-import { useState, useCallback, useRef, forwardRef, type KeyboardEvent, type MouseEvent } from 'react';
-import { Calendar as CalendarIcon, X } from 'lucide-react';
-import { Popover, PopoverTrigger, PopoverContent } from '../popover/popover';
-import { Calendar } from '../calendar/calendar';
-import { formatDate as defaultFormatDate } from '../calendar/calendar.utils';
-import type { DatePickerProps } from './date-picker.types';
+import {
+  useState,
+  useCallback,
+  useRef,
+  forwardRef,
+  type KeyboardEvent,
+  type MouseEvent,
+} from "react";
+import { Calendar as CalendarIcon, X } from "lucide-react";
+import { Popover, PopoverTrigger, PopoverContent } from "../popover/popover";
+import { Calendar } from "../calendar/calendar";
+import { formatDate as defaultFormatDate } from "../calendar/calendar.utils";
+import type { DatePickerProps } from "./date-picker.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
@@ -15,7 +22,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       value: controlledValue,
       defaultValue = null,
       onValueChange,
-      placeholder = 'Select date...',
+      placeholder = "Select date...",
       minDate,
       maxDate,
       formatDate: customFormatDate,
@@ -24,9 +31,11 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const [uncontrolledValue, setUncontrolledValue] = useState<Date | null>(defaultValue);
+    const [uncontrolledValue, setUncontrolledValue] = useState<Date | null>(
+      defaultValue,
+    );
     const isControlled = controlledValue !== undefined;
     const selectedDate = isControlled ? controlledValue : uncontrolledValue;
 
@@ -40,7 +49,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         setOpen(false);
         triggerBtnRef.current?.focus();
       },
-      [isControlled, onValueChange]
+      [isControlled, onValueChange],
     );
 
     const handleClear = (e: MouseEvent<HTMLSpanElement>) => {
@@ -51,7 +60,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     };
 
     const handleClearKeyDown = (e: KeyboardEvent<HTMLSpanElement>) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         e.stopPropagation();
         if (!isControlled) setUncontrolledValue(null);
@@ -65,18 +74,22 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       : defaultFormatDate(selectedDate);
 
     return (
-      <div ref={ref} className={cx('sora-date-picker', className)} {...props}>
+      <div ref={ref} className={cx("sora-date-picker", className)} {...props}>
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <button
               ref={triggerBtnRef}
               type="button"
               disabled={disabled}
-              aria-label={formattedValue ? `Selected date: ${formattedValue}` : placeholder}
+              aria-label={
+                formattedValue
+                  ? `Selected date: ${formattedValue}`
+                  : placeholder
+              }
               className={cx(
-                'sora-date-picker__trigger',
-                !formattedValue && 'sora-date-picker__trigger--empty',
-                disabled && 'sora-date-picker__trigger--disabled'
+                "sora-date-picker__trigger",
+                !formattedValue && "sora-date-picker__trigger--empty",
+                disabled && "sora-date-picker__trigger--disabled",
               )}
             >
               <span className="sora-date-picker__value">
@@ -95,11 +108,19 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                     <X size={13} aria-hidden="true" />
                   </span>
                 )}
-                <CalendarIcon size={14} className="sora-date-picker__icon" aria-hidden="true" />
+                <CalendarIcon
+                  size={14}
+                  className="sora-date-picker__icon"
+                  aria-hidden="true"
+                />
               </div>
             </button>
           </PopoverTrigger>
-          <PopoverContent className="sora-date-picker__popover" placement="bottom-start" offset={4}>
+          <PopoverContent
+            className="sora-date-picker__popover"
+            placement="bottom-start"
+            offset={4}
+          >
             <Calendar
               value={selectedDate}
               onValueChange={handleSelect}
@@ -110,6 +131,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         </Popover>
       </div>
     );
-  }
+  },
 );
-DatePicker.displayName = 'DatePicker';
+DatePicker.displayName = "DatePicker";

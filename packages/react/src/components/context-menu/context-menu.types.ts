@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode, MouseEvent } from 'react';
+import type { HTMLAttributes, ReactNode, MouseEvent } from "react";
 
 export interface ContextMenuProps {
   children?: ReactNode | undefined;

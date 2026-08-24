@@ -6,13 +6,18 @@ import {
   forwardRef,
   type KeyboardEvent,
   type ChangeEvent,
-} from 'react';
-import { usePositioning, Portal, useEscapeKey, useClickOutside } from '@soraui/hooks';
-import { Check } from 'lucide-react';
-import type { ComboboxProps, ComboboxOption } from './combobox.types';
+} from "react";
+import {
+  usePositioning,
+  Portal,
+  useEscapeKey,
+  useClickOutside,
+} from "@soraui/hooks";
+import { Check } from "lucide-react";
+import type { ComboboxProps, ComboboxOption } from "./combobox.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
@@ -20,22 +25,22 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     {
       options = [],
       value: controlledValue,
-      defaultValue = '',
+      defaultValue = "",
       onValueChange,
-      placeholder = 'Search...',
-      emptyText = 'No options found.',
+      placeholder = "Search...",
+      emptyText = "No options found.",
       disabled = false,
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
     const isControlled = controlledValue !== undefined;
     const value = isControlled ? controlledValue : uncontrolledValue;
 
     const [open, setOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState("");
     const [highlightedIndex, setHighlightedIndex] = useState(0);
 
     const triggerRef = useRef<HTMLDivElement | null>(null);
@@ -48,11 +53,11 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     const filteredOptions = options.filter(
       (opt) =>
         opt.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        opt.value.toLowerCase().includes(searchQuery.toLowerCase())
+        opt.value.toLowerCase().includes(searchQuery.toLowerCase()),
     );
 
     const { style } = usePositioning(triggerRef, listboxRef, {
-      placement: 'bottom-start',
+      placement: "bottom-start",
       offset: 4,
       enabled: open,
     });
@@ -65,11 +70,11 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
         if (option.disabled) return;
         if (!isControlled) setUncontrolledValue(option.value);
         onValueChange?.(option.value);
-        setSearchQuery('');
+        setSearchQuery("");
         setOpen(false);
         inputRef.current?.focus();
       },
-      [isControlled, onValueChange]
+      [isControlled, onValueChange],
     );
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -79,15 +84,23 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'ArrowDown') {
+      if (e.key === "ArrowDown") {
         e.preventDefault();
         if (!open) setOpen(true);
-        else setHighlightedIndex((prev) => (prev + 1) % (filteredOptions.length || 1));
-      } else if (e.key === 'ArrowUp') {
+        else
+          setHighlightedIndex(
+            (prev) => (prev + 1) % (filteredOptions.length || 1),
+          );
+      } else if (e.key === "ArrowUp") {
         e.preventDefault();
         if (!open) setOpen(true);
-        else setHighlightedIndex((prev) => (prev - 1 + filteredOptions.length) % (filteredOptions.length || 1));
-      } else if (e.key === 'Enter') {
+        else
+          setHighlightedIndex(
+            (prev) =>
+              (prev - 1 + filteredOptions.length) %
+              (filteredOptions.length || 1),
+          );
+      } else if (e.key === "Enter") {
         if (open && filteredOptions[highlightedIndex]) {
           e.preventDefault();
           handleSelectOption(filteredOptions[highlightedIndex]);
@@ -101,14 +114,19 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
         : undefined;
 
     return (
-      <div ref={ref} className={cx('sora-combobox', className)} {...props}>
+      <div ref={ref} className={cx("sora-combobox", className)} {...props}>
         <div
           ref={triggerRef}
-          onClick={() => { if (!disabled) { setOpen(true); inputRef.current?.focus(); } }}
+          onClick={() => {
+            if (!disabled) {
+              setOpen(true);
+              inputRef.current?.focus();
+            }
+          }}
           className={cx(
-            'sora-combobox__trigger',
-            open && 'sora-combobox__trigger--open',
-            disabled && 'sora-combobox__trigger--disabled'
+            "sora-combobox__trigger",
+            open && "sora-combobox__trigger--open",
+            disabled && "sora-combobox__trigger--disabled",
           )}
         >
           <input
@@ -153,19 +171,25 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
                       id={`${listboxId}-opt-${idx}`}
                       role="option"
                       aria-selected={isSelected}
-                      aria-disabled={opt.disabled ? 'true' : undefined}
+                      aria-disabled={opt.disabled ? "true" : undefined}
                       onClick={() => handleSelectOption(opt)}
                       onMouseEnter={() => setHighlightedIndex(idx)}
                       className={cx(
-                        'sora-combobox__item',
-                        isSelected && 'sora-combobox__item--selected',
-                        isHighlighted && 'sora-combobox__item--highlighted',
-                        opt.disabled && 'sora-combobox__item--disabled'
+                        "sora-combobox__item",
+                        isSelected && "sora-combobox__item--selected",
+                        isHighlighted && "sora-combobox__item--highlighted",
+                        opt.disabled && "sora-combobox__item--disabled",
                       )}
                     >
-                      <span className="sora-combobox__item-text">{opt.label}</span>
+                      <span className="sora-combobox__item-text">
+                        {opt.label}
+                      </span>
                       {isSelected && (
-                        <Check size={14} className="sora-combobox__item-check" aria-hidden="true" />
+                        <Check
+                          size={14}
+                          className="sora-combobox__item-check"
+                          aria-hidden="true"
+                        />
                       )}
                     </div>
                   );
@@ -176,6 +200,6 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
         )}
       </div>
     );
-  }
+  },
 );
-Combobox.displayName = 'Combobox';
+Combobox.displayName = "Combobox";

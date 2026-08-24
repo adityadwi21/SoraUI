@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from 'react';
+import { useEffect, type RefObject } from "react";
 
 /**
  * Hook to trigger a callback when a click occurs outside the specified element(s).
@@ -6,10 +6,10 @@ import { useEffect, type RefObject } from 'react';
 export function useClickOutside(
   refs: RefObject<HTMLElement | null> | RefObject<HTMLElement | null>[],
   handler: (event: MouseEvent | TouchEvent) => void,
-  active: boolean = true
+  active: boolean = true,
 ) {
   useEffect(() => {
-    if (!active || typeof document === 'undefined') return;
+    if (!active || typeof document === "undefined") return;
 
     const refList = Array.isArray(refs) ? refs : [refs];
 
@@ -23,7 +23,7 @@ export function useClickOutside(
       }
     };
 
-    document.addEventListener('pointerdown', listener);
-    return () => document.removeEventListener('pointerdown', listener);
+    document.addEventListener("pointerdown", listener);
+    return () => document.removeEventListener("pointerdown", listener);
   }, [refs, handler, active]);
 }

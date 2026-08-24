@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import {
   Dropdown,
   DropdownTrigger,
@@ -8,10 +8,10 @@ import {
   DropdownItem,
   DropdownSeparator,
   DropdownLabel,
-} from './dropdown';
+} from "./dropdown";
 
-describe('Dropdown', () => {
-  it('opens menu on trigger click and activates items', async () => {
+describe("Dropdown", () => {
+  it("opens menu on trigger click and activates items", async () => {
     const user = userEvent.setup();
     const handleSelect = vi.fn();
 
@@ -24,26 +24,26 @@ describe('Dropdown', () => {
           <DropdownSeparator />
           <DropdownItem destructive>Delete</DropdownItem>
         </DropdownContent>
-      </Dropdown>
+      </Dropdown>,
     );
 
-    const trigger = screen.getByRole('button', { name: 'Options' });
-    expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
-    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+    const trigger = screen.getByRole("button", { name: "Options" });
+    expect(trigger).toHaveAttribute("aria-haspopup", "menu");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
 
     await user.click(trigger);
 
-    expect(screen.getByRole('menu')).toBeInTheDocument();
-    expect(screen.getByText('Account')).toBeInTheDocument();
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+    expect(screen.getByText("Account")).toBeInTheDocument();
 
-    const profileItem = screen.getByRole('menuitem', { name: 'Profile' });
+    const profileItem = screen.getByRole("menuitem", { name: "Profile" });
     await user.click(profileItem);
 
     expect(handleSelect).toHaveBeenCalledTimes(1);
-    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
   });
 
-  it('supports keyboard navigation via ArrowDown and ArrowUp', async () => {
+  it("supports keyboard navigation via ArrowDown and ArrowUp", async () => {
     const user = userEvent.setup();
     render(
       <Dropdown defaultOpen>
@@ -53,19 +53,19 @@ describe('Dropdown', () => {
           <DropdownItem>Item 2</DropdownItem>
           <DropdownItem>Item 3</DropdownItem>
         </DropdownContent>
-      </Dropdown>
+      </Dropdown>,
     );
 
-    const menu = screen.getByRole('menu');
+    const menu = screen.getByRole("menu");
     menu.focus();
 
-    await user.keyboard('{ArrowDown}');
-    expect(screen.getByRole('menuitem', { name: 'Item 1' })).toHaveFocus();
+    await user.keyboard("{ArrowDown}");
+    expect(screen.getByRole("menuitem", { name: "Item 1" })).toHaveFocus();
 
-    await user.keyboard('{ArrowDown}');
-    expect(screen.getByRole('menuitem', { name: 'Item 2' })).toHaveFocus();
+    await user.keyboard("{ArrowDown}");
+    expect(screen.getByRole("menuitem", { name: "Item 2" })).toHaveFocus();
 
-    await user.keyboard('{ArrowUp}');
-    expect(screen.getByRole('menuitem', { name: 'Item 1' })).toHaveFocus();
+    await user.keyboard("{ArrowUp}");
+    expect(screen.getByRole("menuitem", { name: "Item 1" })).toHaveFocus();
   });
 });

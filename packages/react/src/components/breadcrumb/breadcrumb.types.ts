@@ -1,4 +1,4 @@
-import type { HTMLAttributes, AnchorHTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, AnchorHTMLAttributes, ReactNode } from "react";
 
 export interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {}
 export interface BreadcrumbListProps extends HTMLAttributes<HTMLOListElement> {}

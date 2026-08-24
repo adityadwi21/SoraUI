@@ -1,1 +1,8 @@
-{"name":"pagination","type":"registry:ui","level":1,"description":"Pagination with page navigation, previous/next, and ellipsis.","files":[{"path":"components/ui/pagination.tsx","type":"registry:ui"}],"dependencies":[]}
+{
+  "name": "pagination",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "Pagination with page navigation, previous/next, and ellipsis.",
+  "files": [{ "path": "components/ui/pagination.tsx", "type": "registry:ui" }],
+  "dependencies": []
+}

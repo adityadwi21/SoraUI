@@ -1,8 +1,8 @@
 /**
  * @vitest-environment node
  */
-import { describe, it, expect } from 'vitest';
-import { renderToString } from 'react-dom/server';
+import { describe, it, expect } from "vitest";
+import { renderToString } from "react-dom/server";
 import {
   Button,
   Input,
@@ -104,10 +104,10 @@ import {
   TreeView,
   ThemeProvider,
   ThemeScope,
-} from './index';
+} from "./index";
 
-describe('Server-Side Rendering (SSR) — Node Environment', () => {
-  it('renders all Level 1 components to HTML string without errors', () => {
+describe("Server-Side Rendering (SSR) — Node Environment", () => {
+  it("renders all Level 1 components to HTML string without errors", () => {
     const html = renderToString(
       <div>
         <Button variant="primary">Submit</Button>
@@ -126,17 +126,17 @@ describe('Server-Side Rendering (SSR) — Node Environment', () => {
         <Separator />
         <Skeleton width={100} height={20} />
         <Typography variant="h1">Header</Typography>
-      </div>
+      </div>,
     );
 
-    expect(html).toContain('sora-button');
-    expect(html).toContain('sora-input');
-    expect(html).toContain('sora-card');
-    expect(html).toContain('sora-badge');
-    expect(html).toContain('sora-skeleton');
+    expect(html).toContain("sora-button");
+    expect(html).toContain("sora-input");
+    expect(html).toContain("sora-card");
+    expect(html).toContain("sora-badge");
+    expect(html).toContain("sora-skeleton");
   });
 
-  it('renders all Level 2 interactive components safely during SSR', () => {
+  it("renders all Level 2 interactive components safely during SSR", () => {
     const html = renderToString(
       <ToastProvider>
         <div>
@@ -195,40 +195,43 @@ describe('Server-Side Rendering (SSR) — Node Environment', () => {
             </SelectContent>
           </Select>
         </div>
-      </ToastProvider>
+      </ToastProvider>,
     );
 
-    expect(html).toContain('sora-tooltip__trigger');
-    expect(html).toContain('sora-popover__trigger');
-    expect(html).toContain('sora-tabs');
-    expect(html).toContain('sora-accordion');
-    expect(html).toContain('sora-dialog__trigger');
-    expect(html).toContain('sora-dropdown__trigger');
-    expect(html).toContain('sora-select__trigger');
+    expect(html).toContain("sora-tooltip__trigger");
+    expect(html).toContain("sora-popover__trigger");
+    expect(html).toContain("sora-tabs");
+    expect(html).toContain("sora-accordion");
+    expect(html).toContain("sora-dialog__trigger");
+    expect(html).toContain("sora-dropdown__trigger");
+    expect(html).toContain("sora-select__trigger");
   });
 
-  it('renders all Level 3 advanced components safely during SSR', () => {
+  it("renders all Level 3 advanced components safely during SSR", () => {
     const html = renderToString(
       <div>
         <Calendar defaultValue={new Date(2026, 7, 1)} />
         <DatePicker defaultValue={new Date(2026, 7, 1)} />
-        <Combobox options={[{ value: '1', label: 'Option 1' }]} />
+        <Combobox options={[{ value: "1", label: "Option 1" }]} />
         <FileUploader />
         <DataTable
-          data={[{ id: 1, name: 'Alice' }]}
-          columns={[{ header: 'ID', accessorKey: 'id' }, { header: 'Name', accessorKey: 'name' }]}
+          data={[{ id: 1, name: "Alice" }]}
+          columns={[
+            { header: "ID", accessorKey: "id" },
+            { header: "Name", accessorKey: "name" },
+          ]}
         />
-      </div>
+      </div>,
     );
 
-    expect(html).toContain('sora-calendar');
-    expect(html).toContain('sora-date-picker');
-    expect(html).toContain('sora-combobox');
-    expect(html).toContain('sora-file-uploader');
-    expect(html).toContain('sora-data-table');
+    expect(html).toContain("sora-calendar");
+    expect(html).toContain("sora-date-picker");
+    expect(html).toContain("sora-combobox");
+    expect(html).toContain("sora-file-uploader");
+    expect(html).toContain("sora-data-table");
   });
 
-  it('renders all Phase 7 expansion components safely during SSR', () => {
+  it("renders all Phase 7 expansion components safely during SSR", () => {
     const html = renderToString(
       <div>
         <Checkbox defaultChecked />
@@ -265,12 +268,16 @@ describe('Server-Side Rendering (SSR) — Node Environment', () => {
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationLink href="/1" isActive>1</PaginationLink>
+              <PaginationLink href="/1" isActive>
+                1
+              </PaginationLink>
             </PaginationItem>
           </PaginationContent>
         </Pagination>
         <Stepper>
-          <StepperItem step={1} completed>Step 1</StepperItem>
+          <StepperItem step={1} completed>
+            Step 1
+          </StepperItem>
         </Stepper>
         <CommandPalette open={false}>
           <CommandItem>Command</CommandItem>
@@ -298,40 +305,40 @@ describe('Server-Side Rendering (SSR) — Node Environment', () => {
           <TimelineItem>Event 1</TimelineItem>
         </Timeline>
         <Statistic title="Revenue" value="$100k" />
-        <TreeView items={[{ id: '1', label: 'Root' }]} />
-      </div>
+        <TreeView items={[{ id: "1", label: "Root" }]} />
+      </div>,
     );
 
-    expect(html).toContain('sora-checkbox');
-    expect(html).toContain('sora-radio-group');
-    expect(html).toContain('sora-switch');
-    expect(html).toContain('sora-slider');
-    expect(html).toContain('sora-input-otp');
-    expect(html).toContain('sora-number-input');
-    expect(html).toContain('sora-breadcrumb');
-    expect(html).toContain('sora-nav-menu');
-    expect(html).toContain('sora-menubar');
-    expect(html).toContain('sora-pagination');
-    expect(html).toContain('sora-stepper');
-    expect(html).toContain('sora-progress');
-    expect(html).toContain('sora-avatar');
-    expect(html).toContain('sora-collapsible');
-    expect(html).toContain('sora-timeline');
-    expect(html).toContain('sora-statistic');
-    expect(html).toContain('sora-tree-view');
+    expect(html).toContain("sora-checkbox");
+    expect(html).toContain("sora-radio-group");
+    expect(html).toContain("sora-switch");
+    expect(html).toContain("sora-slider");
+    expect(html).toContain("sora-input-otp");
+    expect(html).toContain("sora-number-input");
+    expect(html).toContain("sora-breadcrumb");
+    expect(html).toContain("sora-nav-menu");
+    expect(html).toContain("sora-menubar");
+    expect(html).toContain("sora-pagination");
+    expect(html).toContain("sora-stepper");
+    expect(html).toContain("sora-progress");
+    expect(html).toContain("sora-avatar");
+    expect(html).toContain("sora-collapsible");
+    expect(html).toContain("sora-timeline");
+    expect(html).toContain("sora-statistic");
+    expect(html).toContain("sora-tree-view");
   });
 
-  it('renders ThemeProvider and nested ThemeScope safely during SSR', () => {
+  it("renders ThemeProvider and nested ThemeScope safely during SSR", () => {
     const html = renderToString(
       <ThemeProvider defaultTheme="sky" defaultMode="light">
         <ThemeScope theme="midnight">
           <Button>Themed Button</Button>
         </ThemeScope>
-      </ThemeProvider>
+      </ThemeProvider>,
     );
 
     expect(html).toContain('data-theme="midnight"');
-    expect(html).toContain('sora-theme-scope');
-    expect(html).toContain('sora-button');
+    expect(html).toContain("sora-theme-scope");
+    expect(html).toContain("sora-button");
   });
 });

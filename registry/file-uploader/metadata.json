@@ -10,10 +10,22 @@
     "disabled": { "type": "boolean", "default": false }
   },
   "accessibility": {
-    "keyboard": ["Enter or Space on dropzone activates file browser", "Remove buttons are fully keyboard focusable"],
-    "aria": ["role=\"button\" on dropzone", "role=\"alert\" for size validation errors", "aria-label for file list and remove actions"]
+    "keyboard": [
+      "Enter or Space on dropzone activates file browser",
+      "Remove buttons are fully keyboard focusable"
+    ],
+    "aria": [
+      "role=\"button\" on dropzone",
+      "role=\"alert\" for size validation errors",
+      "aria-label for file list and remove actions"
+    ]
   },
-  "files": [{ "path": "components/ui/file-uploader.tsx", "type": "registry:ui" }],
+  "files": [
+    { "path": "components/ui/file-uploader.tsx", "type": "registry:ui" }
+  ],
   "dependencies": [],
-  "installation": { "cli": "npx soraui add file-uploader", "npm": "import { FileUploader } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add file-uploader",
+    "npm": "import { FileUploader } from '@soraui/react'"
+  }
 }

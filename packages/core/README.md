@@ -54,7 +54,7 @@ SoraUI decouples raw color scales from semantic application contracts:
 Prevent Flash of Unstyled Content (FOUC) during SSR hydration in Next.js / Remix / Astro:
 
 ```tsx
-import { getThemeInitScript } from '@soraui/core';
+import { getThemeInitScript } from "@soraui/core";
 
 export default function Document() {
   return (
@@ -62,7 +62,10 @@ export default function Document() {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: getThemeInitScript({ defaultTheme: 'sky', defaultMode: 'system' }),
+            __html: getThemeInitScript({
+              defaultTheme: "sky",
+              defaultMode: "system",
+            }),
           }}
         />
       </head>

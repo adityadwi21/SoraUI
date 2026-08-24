@@ -1,12 +1,12 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 // Categories
-export type BlockCategory = 'auth' | 'dashboard' | 'marketing' | 'forms';
-export type TemplateCategory = 'auth' | 'dashboard' | 'marketing' | 'settings';
+export type BlockCategory = "auth" | "dashboard" | "marketing" | "forms";
+export type TemplateCategory = "auth" | "dashboard" | "marketing" | "settings";
 
 // Metadata Schemas
 export interface BlockMetadata {
-  kind: 'block';
+  kind: "block";
   id: string;
   name: string;
   category: BlockCategory;
@@ -22,7 +22,7 @@ export interface BlockMetadata {
 }
 
 export interface TemplateMetadata {
-  kind: 'template';
+  kind: "template";
   id: string;
   name: string;
   category: TemplateCategory;
@@ -53,7 +53,7 @@ export interface MetricItem {
   value: string | number;
   trend?: {
     value: string | number;
-    direction: 'up' | 'down' | 'neutral';
+    direction: "up" | "down" | "neutral";
   };
   comparison?: string;
   icon?: ReactNode;

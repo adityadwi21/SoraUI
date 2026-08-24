@@ -1,1 +1,8 @@
-{"name":"stepper","type":"registry:ui","level":1,"description":"Sequential progress tracker showing completed, active, and pending steps.","files":[{"path":"components/ui/stepper.tsx","type":"registry:ui"}],"dependencies":[]}
+{
+  "name": "stepper",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "Sequential progress tracker showing completed, active, and pending steps.",
+  "files": [{ "path": "components/ui/stepper.tsx", "type": "registry:ui" }],
+  "dependencies": []
+}

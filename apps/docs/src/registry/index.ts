@@ -1,15 +1,15 @@
-export * from './types';
-export * from './components';
-export * from './blocks';
-export * from './templates';
-export * from './themes';
-export * from './guides';
+export * from "./types";
+export * from "./components";
+export * from "./blocks";
+export * from "./templates";
+export * from "./themes";
+export * from "./guides";
 
-import { COMPONENT_DOCS } from './components';
-import { BLOCK_DOCS } from './blocks';
-import { TEMPLATE_DOCS } from './templates';
-import { THEME_DOCS } from './themes';
-import { GUIDE_DOCS } from './guides';
+import { COMPONENT_DOCS } from "./components";
+import { BLOCK_DOCS } from "./blocks";
+import { TEMPLATE_DOCS } from "./templates";
+import { THEME_DOCS } from "./themes";
+import { GUIDE_DOCS } from "./guides";
 
 export function getComponentDoc(id: string) {
   return COMPONENT_DOCS.find((c) => c.id === id);

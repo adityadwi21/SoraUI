@@ -1,14 +1,14 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ['src/index.ts'],
-  format: ['esm', 'cjs'],
+  entry: ["src/index.ts"],
+  format: ["esm", "cjs"],
   dts: true,
   clean: true,
   sourcemap: true,
   treeshake: true,
   splitting: true,
-  external: ['react', 'react-dom'],
+  external: ["react", "react-dom"],
   minify: false,
   banner: {
     js: "'use client';",

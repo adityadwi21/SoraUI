@@ -5,18 +5,21 @@ import {
   forwardRef,
   type ChangeEvent,
   type KeyboardEvent,
-} from 'react';
-import { Portal, useEscapeKey } from '@soraui/hooks';
-import type { CommandPaletteProps, CommandItemProps } from './command-palette.types';
+} from "react";
+import { Portal, useEscapeKey } from "@soraui/hooks";
+import type {
+  CommandPaletteProps,
+  CommandItemProps,
+} from "./command-palette.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export function CommandPalette({
   open: controlledOpen,
   onOpenChange,
-  placeholder = 'Type a command or search...',
+  placeholder = "Type a command or search...",
   children,
 }: CommandPaletteProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
@@ -33,20 +36,23 @@ export function CommandPalette({
   // Global Cmd+K / Ctrl+K listener
   useEffect(() => {
     const handleGlobalKeyDown = (e: globalThis.KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         setOpen(!isOpen);
       }
     };
-    window.addEventListener('keydown', handleGlobalKeyDown);
-    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
     <Portal>
-      <div className="sora-command-palette__backdrop" onClick={() => setOpen(false)}>
+      <div
+        className="sora-command-palette__backdrop"
+        onClick={() => setOpen(false)}
+      >
         <div
           role="dialog"
           aria-modal="true"
@@ -83,10 +89,14 @@ export const CommandItem = forwardRef<HTMLDivElement, CommandItemProps>(
         role="option"
         aria-disabled={disabled || undefined}
         onClick={handleClick}
-        className={cx('sora-command-palette__item', disabled && 'sora-command-palette__item--disabled', className)}
+        className={cx(
+          "sora-command-palette__item",
+          disabled && "sora-command-palette__item--disabled",
+          className,
+        )}
         {...props}
       />
     );
-  }
+  },
 );
-CommandItem.displayName = 'CommandItem';
+CommandItem.displayName = "CommandItem";

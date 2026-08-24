@@ -1,9 +1,9 @@
-import { forwardRef, useState } from 'react';
-import { ChevronDown, ChevronRight } from 'lucide-react';
-import type { TreeViewProps, TreeItemData } from './tree-view.types';
+import { forwardRef, useState } from "react";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import type { TreeViewProps, TreeItemData } from "./tree-view.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 function TreeItemNode({
@@ -17,17 +17,17 @@ function TreeItemNode({
   const hasChildren = node.children && node.children.length > 0;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'ArrowRight') {
+    if (e.key === "ArrowRight") {
       if (hasChildren && !expanded) {
         e.preventDefault();
         setExpanded(true);
       }
-    } else if (e.key === 'ArrowLeft') {
+    } else if (e.key === "ArrowLeft") {
       if (hasChildren && expanded) {
         e.preventDefault();
         setExpanded(false);
       }
-    } else if (e.key === 'Enter' || e.key === ' ') {
+    } else if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       if (hasChildren) setExpanded(!expanded);
       onSelectNode?.(node);
@@ -50,7 +50,11 @@ function TreeItemNode({
         onKeyDown={handleKeyDown}
       >
         {hasChildren ? (
-          <span className="sora-tree-view__arrow" aria-hidden="true" style={{ display: 'inline-flex', alignItems: 'center' }}>
+          <span
+            className="sora-tree-view__arrow"
+            aria-hidden="true"
+            style={{ display: "inline-flex", alignItems: "center" }}
+          >
             {expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
           </span>
         ) : (
@@ -61,7 +65,11 @@ function TreeItemNode({
       {hasChildren && expanded && (
         <ul role="group" className="sora-tree-view__group">
           {node.children!.map((child) => (
-            <TreeItemNode key={child.id} node={child} onSelectNode={onSelectNode} />
+            <TreeItemNode
+              key={child.id}
+              node={child}
+              onSelectNode={onSelectNode}
+            />
           ))}
         </ul>
       )}
@@ -71,12 +79,17 @@ function TreeItemNode({
 
 export const TreeView = forwardRef<HTMLUListElement, TreeViewProps>(
   ({ items = [], onSelectNode, className, ...props }, ref) => (
-    <ul ref={ref} role="tree" className={cx('sora-tree-view', className)} {...props}>
+    <ul
+      ref={ref}
+      role="tree"
+      className={cx("sora-tree-view", className)}
+      {...props}
+    >
       {items.map((node) => (
         <TreeItemNode key={node.id} node={node} onSelectNode={onSelectNode} />
       ))}
     </ul>
-  )
+  ),
 );
-TreeView.displayName = 'TreeView';
+TreeView.displayName = "TreeView";
 export type { TreeViewProps, TreeItemData };

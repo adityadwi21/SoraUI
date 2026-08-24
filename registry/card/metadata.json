@@ -8,5 +8,8 @@
   },
   "files": [{ "path": "components/ui/card.tsx", "type": "registry:ui" }],
   "dependencies": [],
-  "installation": { "cli": "npx soraui add card", "npm": "import { Card, CardHeader, CardTitle, CardContent } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add card",
+    "npm": "import { Card, CardHeader, CardTitle, CardContent } from '@soraui/react'"
+  }
 }

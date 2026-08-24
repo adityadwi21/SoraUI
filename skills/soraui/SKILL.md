@@ -1,6 +1,6 @@
 ---
 name: soraui
-description: Official SoraUI component construction system skill. Provides AI assistants with deep knowledge of 44 accessible primitives, 24 semantic design tokens, 14 production blocks, 4 page templates, 9 cosmic theme presets, and CLI commands.
+description: Official SoraUI component construction system skill. Provides AI assistants with deep knowledge of 47 accessible primitives, 24 semantic design tokens, 14 production blocks, 4 page templates, 9 cosmic theme presets, and CLI commands.
 ---
 
 # SoraUI Agent Skill
@@ -73,19 +73,24 @@ SoraUI uses 24 universal CSS custom properties:
 - **`starlight`** (Dark): Dark navy with aquatic teal highlights.
 
 To isolate themes in subtrees without re-rendering the app:
+
 ```tsx
-import { ThemeScope } from '@soraui/react';
+import { ThemeScope } from "@soraui/react";
 
 <ThemeScope theme="aurora" mode="dark">
   <aside className="p-4 bg-[var(--ui-background)]">...</aside>
-</ThemeScope>
+</ThemeScope>;
 ```
 
 ---
 
-## 4. Component Catalog (44 Primitives)
+## 4. Component Catalog (47 Primitives)
 
 ### Level 1: CSS-First Primitives
+
+- `Alert`, `AlertTitle`, `AlertDescription` (`variant="default" | "destructive"`, icon support)
+- `AspectRatio` (`ratio={16 / 9}`)
+- `Attachment` (`file`, `onRemove`, `size`, `preview`)
 - `Button` (`variant="primary" | "secondary" | "outline" | "ghost" | "destructive" | "link"`, `size="sm" | "md" | "lg" | "icon"`)
 - `Input` (`size="sm" | "md" | "lg"`, `error?: boolean`)
 - `Label` (`required?: boolean`, `disabled?: boolean`)
@@ -95,6 +100,7 @@ import { ThemeScope } from '@soraui/react';
 - `Checkbox`, `Switch`, `NumberInput`, `Breadcrumb`, `Pagination`, `Stepper`, `Progress`, `Avatar`, `Collapsible`, `Timeline`, `Statistic`
 
 ### Level 2: Interactive Primitives (A11y Hooks)
+
 - `Dialog`, `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogFooter`
 - `Dropdown`, `DropdownTrigger`, `DropdownContent`, `DropdownItem`
 - `Popover`, `PopoverTrigger`, `PopoverContent`
@@ -107,6 +113,7 @@ import { ThemeScope } from '@soraui/react';
 - `Slider`, `InputOTP`, `NavigationMenu`, `Menubar`, `CommandPalette`, `AlertDialog`, `Drawer`, `HoverCard`, `ContextMenu`, `TreeView`
 
 ### Level 3: Advanced Composite Primitives
+
 - `DataTable` (Sorting, pagination, column visibility, row selection)
 - `Combobox` (Searchable filtering dropdown)
 - `DatePicker`, `Calendar`
@@ -117,12 +124,14 @@ import { ThemeScope } from '@soraui/react';
 ## 5. Production Blocks (14) & Full-Page Templates (4)
 
 ### Compound Blocks
+
 - **Authentication**: `LoginFormBlock`, `RegisterFormBlock`, `ForgotPasswordBlock`, `ResetPasswordBlock`, `TwoFactorBlock`
 - **Dashboard**: `DashboardStatCardsBlock`, `AnalyticsChartCardBlock`, `RecentActivityListBlock`, `QuickActionToolbarBlock`
 - **Marketing**: `HeroSectionBlock`, `FeatureGridBlock`, `PricingTableBlock`
 - **Settings**: `UserProfileFormBlock`, `AccountSecurityFormBlock`
 
 ### Full-Page Templates
+
 - `LoginPageTemplate`
 - `DashboardPageTemplate`
 - `SaaSLandingPageTemplate`
@@ -167,6 +176,7 @@ Connect Claude Desktop or Cursor to the SoraUI canonical registry:
 ```
 
 Key MCP Tools:
+
 - `soraui_get_context`: Architecture and token rules.
 - `soraui_search`: Fuzzy search across components, blocks, and templates.
 - `soraui_inspect_component`: TypeScript props, WAI-ARIA roles, and code examples.

@@ -1,4 +1,4 @@
-import type { HTMLAttributes, AnchorHTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, AnchorHTMLAttributes, ReactNode } from "react";
 
 export interface PaginationProps extends HTMLAttributes<HTMLElement> {}
 export interface PaginationContentProps extends HTMLAttributes<HTMLUListElement> {}

@@ -1,5 +1,5 @@
-import { useEffect, useState, type ReactNode, type ReactPortal } from 'react';
-import { createPortal } from 'react-dom';
+import { useEffect, useState, type ReactNode, type ReactPortal } from "react";
+import { createPortal } from "react-dom";
 
 export interface UsePortalOptions {
   container?: HTMLElement | null | undefined;
@@ -16,7 +16,9 @@ export function usePortal(options: UsePortalOptions = {}) {
     setMounted(true);
   }, []);
 
-  const container = options.container ?? (typeof document !== 'undefined' ? document.body : null);
+  const container =
+    options.container ??
+    (typeof document !== "undefined" ? document.body : null);
 
   const renderPortal = (children: ReactNode): ReactPortal | null => {
     if (!mounted || !container) return null;
@@ -26,7 +28,13 @@ export function usePortal(options: UsePortalOptions = {}) {
   return { mounted, container, renderPortal };
 }
 
-export function Portal({ children, container }: { children: ReactNode; container?: HTMLElement | null | undefined }) {
+export function Portal({
+  children,
+  container,
+}: {
+  children: ReactNode;
+  container?: HTMLElement | null | undefined;
+}) {
   const { renderPortal } = usePortal({ container });
   return renderPortal(children);
 }

@@ -3,18 +3,19 @@ export function getScaffoldPagePrompt(params: {
   theme?: string | undefined;
   requirements?: string | undefined;
 }) {
-  const { pageType, theme = 'midnight', requirements = '' } = params;
+  const { pageType, theme = "midnight", requirements = "" } = params;
 
   return {
-    description: 'Scaffold a complete SoraUI page with responsive layout, ThemeProvider, and UI-only blocks.',
+    description:
+      "Scaffold a complete SoraUI page with responsive layout, ThemeProvider, and UI-only blocks.",
     messages: [
       {
-        role: 'user' as const,
+        role: "user" as const,
         content: {
-          type: 'text' as const,
+          type: "text" as const,
           text: `Please generate a complete React page for a "${pageType}" using SoraUI components.
-Apply the "${theme ?? 'midnight'}" theme preset using <ThemeProvider defaultTheme="${theme ?? 'midnight'}">.
-Requirements: ${requirements || 'Ensure responsive layout, accessible navigation, and decoupled callback placeholders.'}
+Apply the "${theme ?? "midnight"}" theme preset using <ThemeProvider defaultTheme="${theme ?? "midnight"}">.
+Requirements: ${requirements || "Ensure responsive layout, accessible navigation, and decoupled callback placeholders."}
 
 Guidelines:
 1. Import components from '@soraui/react' and styles from '@soraui/react/styles'.

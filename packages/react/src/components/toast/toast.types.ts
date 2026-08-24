@@ -1,6 +1,6 @@
-import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from 'react';
+import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
 
-export type ToastVariant = 'default' | 'success' | 'destructive';
+export type ToastVariant = "default" | "success" | "destructive";
 
 export interface ToastData {
   id: string;

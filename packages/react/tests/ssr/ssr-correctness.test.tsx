@@ -10,39 +10,76 @@
  * Note: FOUC prevention is tested separately in tests/browser-compat/fouc-prevention.spec.ts
  * using Playwright (because FOUC verification requires real browser CSS evaluation).
  */
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { hydrateRoot } from 'react-dom/client';
-import { act } from 'react-dom/test-utils';
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { hydrateRoot } from "react-dom/client";
+import { act } from "react-dom/test-utils";
 
 import {
-  Button, Input, Label, Card, CardHeader, CardTitle, CardContent,
-  Badge, Textarea, Separator, Skeleton, Progress, Avatar, AvatarFallback,
-  Checkbox, Switch, NumberInput, Slider,
-  Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage,
-  Pagination, PaginationContent, PaginationItem, PaginationLink,
-  Stepper, StepperItem,
-  Collapsible, CollapsibleTrigger, CollapsibleContent,
-  Timeline, TimelineItem, Statistic,
-  Tabs, TabsList, TabsTrigger, TabsContent,
-  Accordion, AccordionItem, AccordionTrigger, AccordionContent,
-  ThemeProvider, ThemeScope,
-} from '../../src/index';
+  Button,
+  Input,
+  Label,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  Badge,
+  Textarea,
+  Separator,
+  Skeleton,
+  Progress,
+  Avatar,
+  AvatarFallback,
+  Checkbox,
+  Switch,
+  NumberInput,
+  Slider,
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  Stepper,
+  StepperItem,
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+  Timeline,
+  TimelineItem,
+  Statistic,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  ThemeProvider,
+  ThemeScope,
+} from "../../src/index";
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ──────────────────────────────────────────────────────────────────────────────
 
-async function assertNoHydrationMismatch(jsx: React.ReactElement): Promise<void> {
-  const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+async function assertNoHydrationMismatch(
+  jsx: React.ReactElement,
+): Promise<void> {
+  const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
   // Server render
   const html = renderToString(jsx);
 
   // Create real DOM container
-  const container = document.createElement('div');
+  const container = document.createElement("div");
   container.innerHTML = html;
   document.body.appendChild(container);
 
@@ -53,18 +90,18 @@ async function assertNoHydrationMismatch(jsx: React.ReactElement): Promise<void>
 
   // Check for React hydration mismatch messages
   const hydrationErrors = consoleSpy.mock.calls.filter((args) => {
-    const msg = args.join(' ');
+    const msg = args.join(" ");
     return (
-      msg.includes('did not match') ||
-      msg.includes('Hydration') ||
-      msg.includes('hydration') ||
-      msg.includes('server HTML was replaced')
+      msg.includes("did not match") ||
+      msg.includes("Hydration") ||
+      msg.includes("hydration") ||
+      msg.includes("server HTML was replaced")
     );
   });
 
   expect(
     hydrationErrors,
-    `React hydration mismatch detected:\n${hydrationErrors.map((a) => a.join(' ')).join('\n')}`
+    `React hydration mismatch detected:\n${hydrationErrors.map((a) => a.join(" ")).join("\n")}`,
   ).toHaveLength(0);
 
   consoleSpy.mockRestore();
@@ -75,8 +112,8 @@ async function assertNoHydrationMismatch(jsx: React.ReactElement): Promise<void>
 // Test Suite
 // ──────────────────────────────────────────────────────────────────────────────
 
-describe('12E — SSR Correctness: 0 React Hydration Mismatches', () => {
-  it('Level 1 primitives hydrate without mismatch', async () => {
+describe("12E — SSR Correctness: 0 React Hydration Mismatches", () => {
+  it("Level 1 primitives hydrate without mismatch", async () => {
     await assertNoHydrationMismatch(
       <div>
         <Button>Submit</Button>
@@ -87,58 +124,70 @@ describe('12E — SSR Correctness: 0 React Hydration Mismatches', () => {
         <Separator />
         <Skeleton style={{ width: 100, height: 20 }} />
         <Progress value={50} aria-label="Upload" />
-      </div>
+      </div>,
     );
   });
 
-  it('Avatar hydrates without mismatch', async () => {
+  it("Avatar hydrates without mismatch", async () => {
     await assertNoHydrationMismatch(
       <Avatar>
         <AvatarFallback>AB</AvatarFallback>
-      </Avatar>
+      </Avatar>,
     );
   });
 
-  it('Form controls hydrate without mismatch', async () => {
+  it("Form controls hydrate without mismatch", async () => {
     await assertNoHydrationMismatch(
       <div>
         <Checkbox id="c1" />
         <Switch id="s1" />
         <NumberInput id="n1" min={0} max={100} />
         <Slider aria-label="Volume" min={0} max={100} defaultValue={50} />
-      </div>
+      </div>,
     );
   });
 
-  it('Navigation components hydrate without mismatch', async () => {
+  it("Navigation components hydrate without mismatch", async () => {
     await assertNoHydrationMismatch(
       <div>
         <Breadcrumb>
           <BreadcrumbList>
-            <BreadcrumbItem><BreadcrumbLink href="/">Home</BreadcrumbLink></BreadcrumbItem>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem><BreadcrumbPage>Dashboard</BreadcrumbPage></BreadcrumbItem>
+            <BreadcrumbItem>
+              <BreadcrumbPage>Dashboard</BreadcrumbPage>
+            </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
         <Pagination>
           <PaginationContent>
-            <PaginationItem><PaginationLink href="#">1</PaginationLink></PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#">1</PaginationLink>
+            </PaginationItem>
           </PaginationContent>
         </Pagination>
         <Stepper>
-          <StepperItem step={1} completed>Setup</StepperItem>
-          <StepperItem step={2} active>Configure</StepperItem>
+          <StepperItem step={1} completed>
+            Setup
+          </StepperItem>
+          <StepperItem step={2} active>
+            Configure
+          </StepperItem>
         </Stepper>
-      </div>
+      </div>,
     );
   });
 
-  it('Collapsible and Timeline hydrate without mismatch', async () => {
+  it("Collapsible and Timeline hydrate without mismatch", async () => {
     await assertNoHydrationMismatch(
       <div>
         <Collapsible>
           <CollapsibleTrigger>Toggle</CollapsibleTrigger>
-          <CollapsibleContent><p>Content</p></CollapsibleContent>
+          <CollapsibleContent>
+            <p>Content</p>
+          </CollapsibleContent>
         </Collapsible>
         <Timeline>
           <TimelineItem active>
@@ -148,52 +197,64 @@ describe('12E — SSR Correctness: 0 React Hydration Mismatches', () => {
             </div>
           </TimelineItem>
         </Timeline>
-        <Statistic title="Revenue" value="$12,400" trend="up" trendValue="+12%" />
-      </div>
+        <Statistic
+          title="Revenue"
+          value="$12,400"
+          trend="up"
+          trendValue="+12%"
+        />
+      </div>,
     );
   });
 
-
-  it('Tabs component hydrates without mismatch', async () => {
+  it("Tabs component hydrates without mismatch", async () => {
     await assertNoHydrationMismatch(
       <Tabs defaultValue="tab1">
         <TabsList aria-label="Settings">
           <TabsTrigger value="tab1">Account</TabsTrigger>
           <TabsTrigger value="tab2">Security</TabsTrigger>
         </TabsList>
-        <TabsContent value="tab1"><p>Account settings</p></TabsContent>
-        <TabsContent value="tab2"><p>Security settings</p></TabsContent>
-      </Tabs>
+        <TabsContent value="tab1">
+          <p>Account settings</p>
+        </TabsContent>
+        <TabsContent value="tab2">
+          <p>Security settings</p>
+        </TabsContent>
+      </Tabs>,
     );
   });
 
-  it('Accordion component hydrates without mismatch', async () => {
+  it("Accordion component hydrates without mismatch", async () => {
     await assertNoHydrationMismatch(
       <Accordion type="single">
         <AccordionItem value="q1">
           <AccordionTrigger>What is SoraUI?</AccordionTrigger>
           <AccordionContent>A lightweight UI system.</AccordionContent>
         </AccordionItem>
-      </Accordion>
+      </Accordion>,
     );
   });
 
-  it('ThemeProvider and nested ThemeScope hydrate without mismatch', async () => {
+  it("ThemeProvider and nested ThemeScope hydrate without mismatch", async () => {
     await assertNoHydrationMismatch(
       <ThemeProvider defaultTheme="sky" defaultMode="light">
         <ThemeScope theme="midnight">
           <Button>Themed Button</Button>
         </ThemeScope>
-      </ThemeProvider>
+      </ThemeProvider>,
     );
   });
 
-  it('Card composable hydrates without mismatch', async () => {
+  it("Card composable hydrates without mismatch", async () => {
     await assertNoHydrationMismatch(
       <Card>
-        <CardHeader><CardTitle>Card Title</CardTitle></CardHeader>
-        <CardContent><p>Body content</p></CardContent>
-      </Card>
+        <CardHeader>
+          <CardTitle>Card Title</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p>Body content</p>
+        </CardContent>
+      </Card>,
     );
   });
 });

@@ -28,7 +28,12 @@
   /* Interaction */
   cursor: pointer;
   user-select: none;
-  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    opacity 150ms ease;
 
   /* Focus ring — accessible */
   outline: none;
@@ -36,19 +41,21 @@
 
 /* Focus visible ring — keyboard only */
 .button:focus-visible {
-  box-shadow: 0 0 0 2px var(--ui-background, #fff), 0 0 0 4px var(--ui-ring, #0ea5e9);
+  box-shadow:
+    0 0 0 2px var(--ui-background, #fff),
+    0 0 0 4px var(--ui-ring, #0ea5e9);
 }
 
 /* Disabled state */
 .button:disabled,
-.button[aria-disabled='true'] {
+.button[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
 
 /* Loading state */
-.button[data-loading='true'] {
+.button[data-loading="true"] {
   cursor: wait;
   pointer-events: none;
   opacity: 0.75;
@@ -62,7 +69,7 @@
   border-color: var(--ui-primary);
 }
 
-.variant-primary:hover:not(:disabled):not([aria-disabled='true']) {
+.variant-primary:hover:not(:disabled):not([aria-disabled="true"]) {
   filter: brightness(0.9);
 }
 
@@ -161,7 +168,9 @@
 }
 
 @keyframes sora-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Reduced motion support */

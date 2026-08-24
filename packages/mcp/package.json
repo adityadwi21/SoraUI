@@ -6,7 +6,6 @@
     "tag": "latest"
   },
   "description": "SoraUI Model Context Protocol (MCP) server: Enables AI coding agents to search, inspect, compose, and validate SoraUI components",
-
   "license": "MIT",
   "author": "SoraUI Team",
   "repository": {
@@ -25,7 +24,6 @@
     "copilot"
   ],
   "type": "module",
-
   "bin": {
     "soraui-mcp": "./dist/server.js"
   },
@@ -45,7 +43,6 @@
   "files": [
     "dist"
   ],
-
   "scripts": {
     "prebuild": "node -e \"fs.copyFileSync('../../registry/registry.json', 'src/registry/canonical-registry.json')\"",
     "build": "tsup",

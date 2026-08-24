@@ -1,16 +1,16 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuTrigger,
   NavigationMenuContent,
-} from './navigation-menu';
+} from "./navigation-menu";
 
-describe('NavigationMenu Component & A11y', () => {
-  it('opens and closes dropdown panel on click', async () => {
+describe("NavigationMenu Component & A11y", () => {
+  it("opens and closes dropdown panel on click", async () => {
     const user = userEvent.setup();
     render(
       <NavigationMenu>
@@ -22,22 +22,22 @@ describe('NavigationMenu Component & A11y', () => {
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
-      </NavigationMenu>
+      </NavigationMenu>,
     );
 
-    const trigger = screen.getByRole('button', { name: /Products/i });
-    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    const trigger = screen.getByRole("button", { name: /Products/i });
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
 
     await user.click(trigger);
-    expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    expect(screen.getByText('Components')).toBeInTheDocument();
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText("Components")).toBeInTheDocument();
 
     await user.click(trigger);
-    expect(trigger).toHaveAttribute('aria-expanded', 'false');
-    expect(screen.queryByText('Components')).not.toBeInTheDocument();
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByText("Components")).not.toBeInTheDocument();
   });
 
-  it('closes dropdown content on Escape key', async () => {
+  it("closes dropdown content on Escape key", async () => {
     const user = userEvent.setup();
     render(
       <NavigationMenu>
@@ -49,14 +49,14 @@ describe('NavigationMenu Component & A11y', () => {
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
-      </NavigationMenu>
+      </NavigationMenu>,
     );
 
-    const trigger = screen.getByRole('button', { name: /Docs/i });
+    const trigger = screen.getByRole("button", { name: /Docs/i });
     await user.click(trigger);
-    expect(screen.getByText('Guide Content')).toBeInTheDocument();
+    expect(screen.getByText("Guide Content")).toBeInTheDocument();
 
-    await user.keyboard('{Escape}');
-    expect(screen.queryByText('Guide Content')).not.toBeInTheDocument();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByText("Guide Content")).not.toBeInTheDocument();
   });
 });

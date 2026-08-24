@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 
 export interface CollapsibleProps extends HTMLAttributes<HTMLDivElement> {
   open?: boolean | undefined;

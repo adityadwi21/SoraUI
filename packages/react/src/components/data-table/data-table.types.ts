@@ -1,4 +1,4 @@
-import type { ReactNode, HTMLAttributes } from 'react';
+import type { ReactNode, HTMLAttributes } from "react";
 
 export interface DataTableColumn<T> {
   id?: string | undefined;

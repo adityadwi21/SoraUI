@@ -13,7 +13,9 @@
   font-family: var(--sora-font-sans, system-ui, sans-serif);
   font-size: var(--sora-text-sm, 0.875rem);
   line-height: 1.5;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
   outline: none;
 }
 
@@ -27,7 +29,9 @@
 
 .input:focus-visible:not(.error) {
   border-color: var(--ui-ring);
-  box-shadow: 0 0 0 2px var(--ui-background), 0 0 0 4px var(--ui-ring);
+  box-shadow:
+    0 0 0 2px var(--ui-background),
+    0 0 0 4px var(--ui-ring);
 }
 
 .input:disabled {
@@ -41,7 +45,9 @@
 }
 
 .error:focus-visible {
-  box-shadow: 0 0 0 2px var(--ui-background), 0 0 0 4px #dc2626;
+  box-shadow:
+    0 0 0 2px var(--ui-background),
+    0 0 0 4px #dc2626;
 }
 
 /* Sizes */

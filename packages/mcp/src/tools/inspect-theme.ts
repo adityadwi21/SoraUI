@@ -1,38 +1,39 @@
-import { getTheme, listItems } from '../registry/adapter';
+import { getTheme, listItems } from "../registry/adapter";
 
 export function handleInspectTheme(params: { id?: string | undefined } = {}) {
   if (!params.id) {
-    const allThemes = listItems('themes');
+    const allThemes = listItems("themes");
     return {
       totalPresets: allThemes.length,
       availableThemes: allThemes,
       themeContractKeys: [
-        '--ui-background',
-        '--ui-foreground',
-        '--ui-card',
-        '--ui-card-foreground',
-        '--ui-popover',
-        '--ui-popover-foreground',
-        '--ui-primary',
-        '--ui-primary-foreground',
-        '--ui-secondary',
-        '--ui-secondary-foreground',
-        '--ui-muted',
-        '--ui-muted-foreground',
-        '--ui-accent',
-        '--ui-accent-foreground',
-        '--ui-destructive',
-        '--ui-destructive-foreground',
-        '--ui-border',
-        '--ui-input',
-        '--ui-ring',
-        '--ui-radius',
-        '--ui-font-sans',
-        '--ui-font-mono',
-        '--ui-shadow-sm',
-        '--ui-shadow-md',
+        "--ui-background",
+        "--ui-foreground",
+        "--ui-card",
+        "--ui-card-foreground",
+        "--ui-popover",
+        "--ui-popover-foreground",
+        "--ui-primary",
+        "--ui-primary-foreground",
+        "--ui-secondary",
+        "--ui-secondary-foreground",
+        "--ui-muted",
+        "--ui-muted-foreground",
+        "--ui-accent",
+        "--ui-accent-foreground",
+        "--ui-destructive",
+        "--ui-destructive-foreground",
+        "--ui-border",
+        "--ui-input",
+        "--ui-ring",
+        "--ui-radius",
+        "--ui-font-sans",
+        "--ui-font-mono",
+        "--ui-shadow-sm",
+        "--ui-shadow-md",
       ],
-      headInitScriptGuidance: "Inject `getThemeInitScript({ defaultTheme: 'sky', defaultMode: 'system' })` into <head> to prevent FOUC.",
+      headInitScriptGuidance:
+        "Inject `getThemeInitScript({ defaultTheme: 'sky', defaultMode: 'system' })` into <head> to prevent FOUC.",
     };
   }
 

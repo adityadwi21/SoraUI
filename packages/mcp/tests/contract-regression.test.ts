@@ -17,92 +17,97 @@
  * - soraui_compose_recipe produces invalid/incomplete JSX
  * - soraui_search does not return the correct item as top result
  */
-import { describe, it, expect, beforeAll } from 'vitest';
-import { loadCanonicalRegistry, searchRegistry, listItems } from '../src/index';
-import { ALL_COMPONENTS, ALL_BLOCKS, ALL_TEMPLATES } from '../../cli/src/utils/registry';
-import registryJson from '../../../registry/registry.json';
+import { describe, it, expect, beforeAll } from "vitest";
+import { loadCanonicalRegistry, searchRegistry, listItems } from "../src/index";
+import {
+  ALL_COMPONENTS,
+  ALL_BLOCKS,
+  ALL_TEMPLATES,
+} from "../../cli/src/utils/registry";
+import registryJson from "../../../registry/registry.json";
 
 // Import the MCP tool handlers directly for contract testing
-import { handleInspectComponent } from '../src/tools/inspect-component';
-import { handleInspectBlock } from '../src/tools/inspect-block';
-import { handleInspectTemplate } from '../src/tools/inspect-template';
-import { handleInspectTheme } from '../src/tools/inspect-theme';
-import { handleComposeRecipe, RECIPE_KEYS } from '../src/tools/compose-recipe';
+import { handleInspectComponent } from "../src/tools/inspect-component";
+import { handleInspectBlock } from "../src/tools/inspect-block";
+import { handleInspectTemplate } from "../src/tools/inspect-template";
+import { handleInspectTheme } from "../src/tools/inspect-theme";
+import { handleComposeRecipe, RECIPE_KEYS } from "../src/tools/compose-recipe";
 
 // ──────────────────────────────────────────────────────────────────────────────
 // 12I-1: Registry ↔ MCP (Bidirectional)
 // ──────────────────────────────────────────────────────────────────────────────
 
-describe('12I — Contract: Registry ↔ MCP (bidirectional)', () => {
+describe("12I — Contract: Registry ↔ MCP (bidirectional)", () => {
   let registry: ReturnType<typeof loadCanonicalRegistry>;
 
   beforeAll(() => {
     registry = loadCanonicalRegistry();
   });
 
-  it('Every component in registry.json is inspectable via soraui_inspect_component', () => {
+  it("Every component in registry.json is inspectable via soraui_inspect_component", () => {
     for (const comp of registry.components) {
       const result = handleInspectComponent({ name: comp.name });
       expect(
         result,
-        `soraui_inspect_component("${comp.name}") returned null — registry/MCP divergence detected`
+        `soraui_inspect_component("${comp.name}") returned null — registry/MCP divergence detected`,
       ).not.toBeNull();
       expect(
         result?.name?.toLowerCase(),
-        `inspect returned wrong component for "${comp.name}"`
+        `inspect returned wrong component for "${comp.name}"`,
       ).toBe(comp.name.toLowerCase());
     }
   });
 
-  it('Every block in registry.json is inspectable via soraui_inspect_block', () => {
+  it("Every block in registry.json is inspectable via soraui_inspect_block", () => {
     for (const block of registry.blocks) {
       const result = handleInspectBlock({ id: block.id });
       expect(
         result,
-        `soraui_inspect_block("${block.id}") returned null — registry/MCP divergence detected`
+        `soraui_inspect_block("${block.id}") returned null — registry/MCP divergence detected`,
       ).not.toBeNull();
     }
   });
 
-  it('Every template in registry.json is inspectable via soraui_inspect_template', () => {
+  it("Every template in registry.json is inspectable via soraui_inspect_template", () => {
     for (const tpl of registry.templates) {
       const result = handleInspectTemplate({ id: tpl.id });
       expect(
         result,
-        `soraui_inspect_template("${tpl.id}") returned null — registry/MCP divergence detected`
+        `soraui_inspect_template("${tpl.id}") returned null — registry/MCP divergence detected`,
       ).not.toBeNull();
     }
   });
 
-  it('Every theme in registry.json is inspectable via soraui_inspect_theme', () => {
+  it("Every theme in registry.json is inspectable via soraui_inspect_theme", () => {
     for (const theme of registry.themes) {
       const result = handleInspectTheme({ id: theme.id });
       expect(
         result,
-        `soraui_inspect_theme("${theme.id}") returned null — registry/MCP divergence detected`
+        `soraui_inspect_theme("${theme.id}") returned null — registry/MCP divergence detected`,
       ).not.toBeNull();
     }
   });
 
-
-  it('soraui_list components returns exactly 44 entries (no MCP extras or missing)', () => {
-    const listed = listItems('components');
+  it("soraui_list components returns exactly 47 entries (no MCP extras or missing)", () => {
+    const listed = listItems("components");
     expect(listed.length).toBe(registry.components.length);
 
     for (const item of listed) {
-      const inRegistry = registry.components.find((c) => c.name.toLowerCase() === item.name.toLowerCase());
+      const inRegistry = registry.components.find(
+        (c) => c.name.toLowerCase() === item.name.toLowerCase(),
+      );
       expect(
         inRegistry,
-        `MCP listItems returned "${item.name}" not found in canonical registry — orphaned MCP entry`
+        `MCP listItems returned "${item.name}" not found in canonical registry — orphaned MCP entry`,
       ).toBeDefined();
     }
   });
 
-  it('soraui_search returns correct top result for exact matches', () => {
+  it("soraui_search returns correct top result for exact matches", () => {
     const exactTests = [
-      { query: 'button', expectedName: 'button' },
-      { query: 'dialog', expectedName: 'dialog' },
-      { query: 'data-table', expectedName: 'data-table' },
+      { query: "button", expectedName: "button" },
+      { query: "dialog", expectedName: "dialog" },
+      { query: "data-table", expectedName: "data-table" },
     ];
 
     for (const { query, expectedName } of exactTests) {
@@ -110,10 +115,10 @@ describe('12I — Contract: Registry ↔ MCP (bidirectional)', () => {
       expect(results.length).toBeGreaterThan(0);
       expect(
         results[0]!.name.toLowerCase(),
-        `soraui_search("${query}") top result should be "${expectedName}", got "${results[0]!.name}"`
+        `soraui_search("${query}") top result should be "${expectedName}", got "${results[0]!.name}"`,
       ).toBe(expectedName);
       expect(results[0]!.score).toBe(100); // exact match score
-      expect(results[0]!.matchedBy).toBe('exact');
+      expect(results[0]!.matchedBy).toBe("exact");
     }
   });
 });
@@ -122,43 +127,45 @@ describe('12I — Contract: Registry ↔ MCP (bidirectional)', () => {
 // 12I-2: Registry ↔ CLI (Bidirectional)
 // ──────────────────────────────────────────────────────────────────────────────
 
-describe('12I — Contract: Registry ↔ CLI (bidirectional)', () => {
-  it('Every component in canonical registry.json exists in CLI ALL_COMPONENTS', () => {
+describe("12I — Contract: Registry ↔ CLI (bidirectional)", () => {
+  it("Every component in canonical registry.json exists in CLI ALL_COMPONENTS", () => {
     for (const comp of registryJson.components) {
       const cliEntry = ALL_COMPONENTS.find((c) => c.name === comp.name);
       expect(
         cliEntry,
-        `CLI missing component entry for "${comp.name}" — registry/CLI divergence. Add to CLI ALL_COMPONENTS.`
+        `CLI missing component entry for "${comp.name}" — registry/CLI divergence. Add to CLI ALL_COMPONENTS.`,
       ).toBeDefined();
     }
   });
 
-  it('Every CLI component exists in canonical registry.json', () => {
+  it("Every CLI component exists in canonical registry.json", () => {
     for (const cliComp of ALL_COMPONENTS) {
-      const regEntry = registryJson.components.find((c) => c.name === cliComp.name);
+      const regEntry = registryJson.components.find(
+        (c) => c.name === cliComp.name,
+      );
       expect(
         regEntry,
-        `Canonical registry missing entry for CLI component "${cliComp.name}" — orphaned CLI entry.`
+        `Canonical registry missing entry for CLI component "${cliComp.name}" — orphaned CLI entry.`,
       ).toBeDefined();
     }
   });
 
-  it('Every block in canonical registry.json exists in CLI ALL_BLOCKS', () => {
+  it("Every block in canonical registry.json exists in CLI ALL_BLOCKS", () => {
     for (const block of registryJson.blocks) {
       const cliBlock = ALL_BLOCKS.find((b) => b.id === block.id);
       expect(
         cliBlock,
-        `CLI missing block entry for "${block.id}" — registry/CLI divergence.`
+        `CLI missing block entry for "${block.id}" — registry/CLI divergence.`,
       ).toBeDefined();
     }
   });
 
-  it('Every template in canonical registry.json exists in CLI ALL_TEMPLATES', () => {
+  it("Every template in canonical registry.json exists in CLI ALL_TEMPLATES", () => {
     for (const tpl of registryJson.templates) {
       const cliTemplate = ALL_TEMPLATES.find((t) => t.id === tpl.id);
       expect(
         cliTemplate,
-        `CLI missing template entry for "${tpl.id}" — registry/CLI divergence.`
+        `CLI missing template entry for "${tpl.id}" — registry/CLI divergence.`,
       ).toBeDefined();
     }
   });
@@ -168,47 +175,60 @@ describe('12I — Contract: Registry ↔ CLI (bidirectional)', () => {
 // 12I-3: Deterministic Recipe Contract
 // ──────────────────────────────────────────────────────────────────────────────
 
-describe('12I — Contract: soraui_compose_recipe determinism', () => {
+describe("12I — Contract: soraui_compose_recipe determinism", () => {
   for (const recipe of RECIPE_KEYS) {
     it(`compose_recipe("${recipe}") is deterministic and produces valid JSX`, () => {
       const result1 = handleComposeRecipe({ recipe });
       const result2 = handleComposeRecipe({ recipe });
 
       // Must be identical across calls (determinism)
-      expect(result1.recipeVersion).toBe('1.0');
+      expect(result1.recipeVersion).toBe("1.0");
       expect(result1.generatedCode).toBe(result2.generatedCode);
 
       // Must contain a React import and at least one SoraUI component
-      expect(result1.generatedCode).toContain('import React');
+      expect(result1.generatedCode).toContain("import React");
       expect(result1.generatedCode.length).toBeGreaterThan(100);
 
       // Must contain ThemeProvider or ThemeScope wrapper
-      const hasThemeWrapper = result1.generatedCode.includes('ThemeProvider') || result1.generatedCode.includes('ThemeScope');
-      expect(hasThemeWrapper, `${recipe}: recipe must include ThemeProvider or ThemeScope wrapper`).toBe(true);
+      const hasThemeWrapper =
+        result1.generatedCode.includes("ThemeProvider") ||
+        result1.generatedCode.includes("ThemeScope");
+      expect(
+        hasThemeWrapper,
+        `${recipe}: recipe must include ThemeProvider or ThemeScope wrapper`,
+      ).toBe(true);
 
       // Must NOT contain backend/API coupling
-      const forbiddenPatterns = ['fetch(', 'axios.', 'prisma.', 'supabase.', '.query('];
+      const forbiddenPatterns = [
+        "fetch(",
+        "axios.",
+        "prisma.",
+        "supabase.",
+        ".query(",
+      ];
       for (const pattern of forbiddenPatterns) {
-        expect(result1.generatedCode, `${recipe}: recipe must not include backend coupling ("${pattern}")`).not.toContain(pattern);
+        expect(
+          result1.generatedCode,
+          `${recipe}: recipe must not include backend coupling ("${pattern}")`,
+        ).not.toContain(pattern);
       }
     });
   }
 });
 
-
 // ──────────────────────────────────────────────────────────────────────────────
 // 12I-4: Registry count integrity
 // ──────────────────────────────────────────────────────────────────────────────
 
-describe('12I — Contract: Registry count integrity', () => {
-  it('registry.json contains exactly 44 components, 14 blocks, 4 templates, 9 themes', () => {
-    expect(registryJson.components.length).toBe(44);
+describe("12I — Contract: Registry count integrity", () => {
+  it("registry.json contains exactly 47 components, 14 blocks, 4 templates, 9 themes", () => {
+    expect(registryJson.components.length).toBe(47);
     expect(registryJson.blocks.length).toBe(14);
     expect(registryJson.templates.length).toBe(4);
     expect(registryJson.themes.length).toBe(9);
   });
 
-  it('No duplicate IDs within each registry section', () => {
+  it("No duplicate IDs within each registry section", () => {
     const componentNames = registryJson.components.map((c) => c.name);
     expect(new Set(componentNames).size).toBe(componentNames.length);
 

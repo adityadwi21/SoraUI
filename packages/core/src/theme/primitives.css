@@ -109,8 +109,10 @@
   --sora-radius-full: 9999px;
 
   /* Typography */
-  --sora-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --sora-font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  --sora-font-sans:
+    "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --sora-font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
 
   /* Font sizes */
   --sora-text-xs: 0.75rem;

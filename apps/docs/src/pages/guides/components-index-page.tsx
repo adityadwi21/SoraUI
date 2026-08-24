@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { Copy, Check, ChevronLeft, ChevronRight } from 'lucide-react';
-import { COMPONENT_DOCS } from '../../registry/components';
+import React, { useState } from "react";
+import { Copy, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { COMPONENT_DOCS } from "../../registry/components";
 
 export interface ComponentsIndexPageProps {
   onNavigate: (path: string) => void;
 }
 
-export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({ onNavigate }) => {
+export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({
+  onNavigate,
+}) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopyPage = () => {
@@ -18,16 +20,19 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({ onNavi
 
   // Sort components alphabetically
   const sortedComponents = [...COMPONENT_DOCS].sort((a, b) =>
-    a.name.localeCompare(b.name)
+    a.name.localeCompare(b.name),
   );
 
   // Identify new components (e.g. recently added blocks/primitives)
   const newComponents = sortedComponents.filter(
     (c) =>
-      c.id === 'data-table' ||
-      c.id === 'date-picker' ||
-      c.id === 'command-palette' ||
-      c.id === 'file-uploader'
+      c.id === "alert" ||
+      c.id === "aspect-ratio" ||
+      c.id === "attachment" ||
+      c.id === "data-table" ||
+      c.id === "date-picker" ||
+      c.id === "command-palette" ||
+      c.id === "file-uploader",
   );
 
   return (
@@ -45,7 +50,7 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({ onNavi
             >
               {copied ? (
                 <>
-                  <Check size={13} style={{ color: '#22c55e' }} />
+                  <Check size={13} style={{ color: "#22c55e" }} />
                   <span>Copied</span>
                 </>
               ) : (
@@ -60,7 +65,7 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({ onNavi
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => onNavigate('/guides/introduction')}
+                onClick={() => onNavigate("/guides/introduction")}
                 title="Previous: Introduction"
                 aria-label="Previous page"
               >
@@ -69,7 +74,7 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({ onNavi
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => onNavigate('/components/accordion')}
+                onClick={() => onNavigate("/components/accordion")}
                 title="Next: Accordion"
                 aria-label="Next component"
               >
@@ -80,15 +85,18 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({ onNavi
         </div>
 
         <p className="docs-intro-lead">
-          Here you can find all the components available in the library. We are working on adding more components.
+          Here you can find all the components available in the library. We are
+          working on adding more components.
         </p>
       </header>
 
       {/* ─── SECTION 1: NEW COMPONENTS ─── */}
-      <section className="docs-intro-section" style={{ marginTop: '1.5rem' }}>
+      <section className="docs-intro-section" style={{ marginTop: "1.5rem" }}>
         <h2 id="new-components" className="docs-intro-h2">
           <span>New Components</span>
-          <a href="#new-components" className="docs-intro-anchor" aria-hidden>#</a>
+          <a href="#new-components" className="docs-intro-anchor" aria-hidden>
+            #
+          </a>
         </h2>
 
         <div className="docs-comp-grid-3">
@@ -107,10 +115,12 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({ onNavi
       </section>
 
       {/* ─── SECTION 2: ALL COMPONENTS ─── */}
-      <section className="docs-intro-section" style={{ marginTop: '2.5rem' }}>
+      <section className="docs-intro-section" style={{ marginTop: "2.5rem" }}>
         <h2 id="all-components" className="docs-intro-h2">
           <span>All Components</span>
-          <a href="#all-components" className="docs-intro-anchor" aria-hidden>#</a>
+          <a href="#all-components" className="docs-intro-anchor" aria-hidden>
+            #
+          </a>
         </h2>
 
         <div className="docs-comp-grid-3">
@@ -128,27 +138,38 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({ onNavi
       </section>
 
       {/* ─── REGISTRY CALLOUT NOTE ─── */}
-      <p className="docs-intro-note" style={{ marginTop: '3rem' }}>
-        Can't find what you need? Try the{' '}
+      <p className="docs-intro-note" style={{ marginTop: "3rem" }}>
+        Can't find what you need? Try the{" "}
         <a
           href="https://github.com/adityadwi21/SoraUI"
           target="_blank"
           rel="noreferrer"
-          style={{ color: 'var(--docs-fg)', textDecoration: 'underline', fontWeight: 500 }}
+          style={{
+            color: "var(--docs-fg)",
+            textDecoration: "underline",
+            fontWeight: 500,
+          }}
         >
           registry directory
-        </a>{' '}
+        </a>{" "}
         for community-maintained components and blocks.
       </p>
 
       {/* ─── BOTTOM PAGINATION ─── */}
-      <nav className="docs-intro-pagination" aria-label="Pagination" style={{ justifyContent: 'flex-end' }}>
+      <nav
+        className="docs-intro-pagination"
+        aria-label="Pagination"
+        style={{ justifyContent: "flex-end" }}
+      >
         <button
           type="button"
           className="docs-intro-pagination-btn next"
-          onClick={() => onNavigate('/components/accordion')}
+          onClick={() => onNavigate("/components/accordion")}
         >
-          <div className="docs-intro-pagination-text" style={{ textAlign: 'right' }}>
+          <div
+            className="docs-intro-pagination-text"
+            style={{ textAlign: "right" }}
+          >
             <span className="docs-intro-pagination-label">Next Component</span>
             <span className="docs-intro-pagination-title">Accordion</span>
           </div>

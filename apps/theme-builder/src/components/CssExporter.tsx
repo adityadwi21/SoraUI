@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import type { ThemeTokens } from '../presets';
+import { useState } from "react";
+import type { ThemeTokens } from "../presets";
 
 interface CssExporterProps {
   tokens: ThemeTokens;
@@ -32,9 +32,9 @@ export function CssExporter({ tokens }: CssExporterProps) {
   };
 
   const handleDownload = () => {
-    const blob = new Blob([cssCode], { type: 'text/css' });
+    const blob = new Blob([cssCode], { type: "text/css" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = `soraui-theme-${tokens.name.toLowerCase()}.css`;
     a.click();
@@ -47,9 +47,13 @@ export function CssExporter({ tokens }: CssExporterProps) {
         <h3>Export Pure CSS Variables</h3>
         <div className="css-exporter__actions">
           <button type="button" onClick={handleCopy} className="export-btn">
-            {copied ? '✓ Copied to Clipboard!' : '📋 Copy CSS'}
+            {copied ? "✓ Copied to Clipboard!" : "📋 Copy CSS"}
           </button>
-          <button type="button" onClick={handleDownload} className="export-btn export-btn--primary">
+          <button
+            type="button"
+            onClick={handleDownload}
+            className="export-btn export-btn--primary"
+          >
             ⬇ Download .css
           </button>
         </div>

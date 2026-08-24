@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from "react";
 
 export interface ComboboxOption {
   value: string;
@@ -6,7 +6,10 @@ export interface ComboboxOption {
   disabled?: boolean;
 }
 
-export interface ComboboxProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange'> {
+export interface ComboboxProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "defaultValue" | "onChange"
+> {
   options: ComboboxOption[];
   value?: string;
   defaultValue?: string;

@@ -3,7 +3,7 @@
  * Mode: dark
  * Description: Deep emerald night with vibrant teal aurora glows.
  */
-[data-theme='aurora'] {
+[data-theme="aurora"] {
   --ui-background: #022c22;
   --ui-foreground: #f0fdf4;
   --ui-card: #064e3b;

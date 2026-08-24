@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { ArrowUp, Bug, ExternalLink } from 'lucide-react';
-import { GitHubIcon } from './brand-icons';
+import React, { useEffect, useState } from "react";
+import { ArrowUp, Bug, ExternalLink } from "lucide-react";
+import { GitHubIcon } from "./brand-icons";
 
 export interface TocItem {
   id: string;
@@ -12,21 +12,26 @@ export interface TableOfContentsProps {
   currentPath: string;
 }
 
-export const TableOfContents: React.FC<TableOfContentsProps> = ({ currentPath }) => {
+export const TableOfContents: React.FC<TableOfContentsProps> = ({
+  currentPath,
+}) => {
   const [headings, setHeadings] = useState<TocItem[]>([]);
-  const [activeId, setActiveId] = useState<string>('');
+  const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
     // Scan the page for h2 and h3 elements with IDs smoothly and immediately
     const scan = () => {
-      const mainEl = document.getElementById('main-content');
+      const mainEl = document.getElementById("main-content");
       if (!mainEl) return;
 
-      const elements = Array.from(mainEl.querySelectorAll('h2[id], h3[id]'));
+      const elements = Array.from(mainEl.querySelectorAll("h2[id], h3[id]"));
       const items: TocItem[] = elements.map((el) => ({
         id: el.id,
-        title: (el.querySelector('span') || el).textContent?.replace('#', '').trim() || el.id,
-        level: el.tagName === 'H2' ? 2 : 3,
+        title:
+          (el.querySelector("span") || el).textContent
+            ?.replace("#", "")
+            .trim() || el.id,
+        level: el.tagName === "H2" ? 2 : 3,
       }));
 
       setHeadings(items);
@@ -51,9 +56,9 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ currentPath })
         });
       },
       {
-        rootMargin: '-80px 0px -60% 0px',
+        rootMargin: "-80px 0px -60% 0px",
         threshold: 0.1,
-      }
+      },
     );
 
     headings.forEach((h) => {
@@ -69,22 +74,22 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ currentPath })
     if (!el) return;
     const yOffset = -80;
     const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-    window.scrollTo({ top: y, behavior: 'smooth' });
+    window.scrollTo({ top: y, behavior: "smooth" });
     setActiveId(id);
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Derive github edit link
   const getGithubLink = () => {
-    if (currentPath.startsWith('/components/')) {
-      const id = currentPath.replace('/components/', '');
+    if (currentPath.startsWith("/components/")) {
+      const id = currentPath.replace("/components/", "");
       return `https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/components/${id}`;
     }
-    if (currentPath.startsWith('/blocks/')) {
-      const id = currentPath.replace('/blocks/', '');
+    if (currentPath.startsWith("/blocks/")) {
+      const id = currentPath.replace("/blocks/", "");
       return `https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/blocks/${id}`;
     }
     return `https://github.com/adityadwi21/SoraUI/tree/main/apps/docs`;
@@ -102,7 +107,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ currentPath })
                 <button
                   key={h.id}
                   type="button"
-                  className={`docs-toc-link lvl-${h.level}${isActive ? ' active' : ''}`}
+                  className={`docs-toc-link lvl-${h.level}${isActive ? " active" : ""}`}
                   onClick={() => scrollTo(h.id)}
                 >
                   {h.title}
@@ -111,7 +116,13 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ currentPath })
             })}
           </nav>
         ) : (
-          <div style={{ padding: '0 0.5rem', fontSize: '0.75rem', color: 'var(--docs-fg-muted)' }}>
+          <div
+            style={{
+              padding: "0 0.5rem",
+              fontSize: "0.75rem",
+              color: "var(--docs-fg-muted)",
+            }}
+          >
             Overview
           </div>
         )}

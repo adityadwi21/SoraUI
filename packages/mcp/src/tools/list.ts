@@ -1,7 +1,7 @@
-import { listItems } from '../registry/adapter';
+import { listItems } from "../registry/adapter";
 
 export function handleList(params: {
-  kind: 'components' | 'blocks' | 'templates' | 'themes';
+  kind: "components" | "blocks" | "templates" | "themes";
   category?: string | undefined;
 }) {
   const { kind, category } = params;
@@ -9,7 +9,7 @@ export function handleList(params: {
 
   return {
     kind,
-    category: category || 'all',
+    category: category || "all",
     total: items.length,
     items,
   };

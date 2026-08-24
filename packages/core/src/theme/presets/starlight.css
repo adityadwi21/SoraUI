@@ -3,7 +3,7 @@
  * Mode: dark
  * Description: Deep charcoal dark with glowing starlight amber accents.
  */
-[data-theme='starlight'] {
+[data-theme="starlight"] {
   --ui-background: #1c1917;
   --ui-foreground: #fafaf9;
   --ui-card: #292524;

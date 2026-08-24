@@ -1,8 +1,13 @@
-import { forwardRef, useState, type MouseEvent, type KeyboardEvent } from 'react';
-import type { SwitchProps } from './switch.types';
+import {
+  forwardRef,
+  useState,
+  type MouseEvent,
+  type KeyboardEvent,
+} from "react";
+import type { SwitchProps } from "./switch.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
@@ -15,9 +20,10 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked);
+    const [uncontrolledChecked, setUncontrolledChecked] =
+      useState(defaultChecked);
     const isControlled = controlledChecked !== undefined;
     const isChecked = isControlled ? controlledChecked : uncontrolledChecked;
 
@@ -34,7 +40,7 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         toggle();
       }
@@ -50,16 +56,16 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         className={cx(
-          'sora-switch',
-          isChecked && 'sora-switch--checked',
-          disabled && 'sora-switch--disabled',
-          className
+          "sora-switch",
+          isChecked && "sora-switch--checked",
+          disabled && "sora-switch--disabled",
+          className,
         )}
         {...props}
       >
         <span className="sora-switch__thumb" />
       </button>
     );
-  }
+  },
 );
-Switch.displayName = 'Switch';
+Switch.displayName = "Switch";

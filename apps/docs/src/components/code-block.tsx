@@ -1,5 +1,13 @@
-import React, { useState } from 'react';
-import { Check, Copy } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Check,
+  Copy,
+  Terminal,
+  FileJson,
+  FileCode,
+  FileCode2,
+} from "lucide-react";
+import { TypeScriptIcon, JavaScriptIcon, ReactIcon } from "./brand-icons";
 
 export interface CodeBlockProps {
   code: string;
@@ -15,33 +23,41 @@ export interface CodeBlockProps {
   collapsedMaxHeight?: number | string;
 }
 
-function getLanguageBadge(language?: string, filename?: string): string {
-  const target = (filename || language || '').toLowerCase();
+function getLanguageIcon(language?: string, filename?: string) {
+  const target = (filename || language || "").toLowerCase();
   if (
-    target.endsWith('.tsx') ||
-    target.endsWith('.ts') ||
-    target === 'typescript' ||
-    target === 'ts' ||
-    target === 'tsx'
+    target.endsWith(".sh") ||
+    target.endsWith(".bash") ||
+    target === "bash" ||
+    target === "sh" ||
+    target === "shell"
   ) {
-    return 'TS';
+    return <Terminal size={14} style={{ flexShrink: 0, opacity: 0.8 }} />;
+  }
+  if (target.endsWith(".json") || target === "json") {
+    return <FileJson size={14} style={{ flexShrink: 0, opacity: 0.8 }} />;
+  }
+  if (target.endsWith(".css") || target === "css") {
+    return <FileCode size={14} style={{ flexShrink: 0, opacity: 0.8 }} />;
+  }
+  if (target.endsWith(".tsx") || target === "tsx") {
+    return <ReactIcon size={14} />;
+  }
+  if (target.endsWith(".jsx") || target === "jsx") {
+    return <ReactIcon size={14} />;
+  }
+  if (target.endsWith(".ts") || target === "typescript" || target === "ts") {
+    return <TypeScriptIcon size={14} />;
   }
   if (
-    target.endsWith('.jsx') ||
-    target.endsWith('.js') ||
-    target.endsWith('.mjs') ||
-    target === 'javascript' ||
-    target === 'js' ||
-    target === 'jsx'
+    target.endsWith(".js") ||
+    target.endsWith(".mjs") ||
+    target === "javascript" ||
+    target === "js"
   ) {
-    return 'JS';
+    return <JavaScriptIcon size={14} />;
   }
-  if (target.endsWith('.css') || target === 'css') return 'CSS';
-  if (target.endsWith('.json') || target === 'json') return 'JSON';
-  if (target.endsWith('.html') || target.endsWith('.astro') || target === 'html' || target === 'astro') return 'HTML';
-  if (target.endsWith('.sh') || target.endsWith('.bash') || target === 'bash' || target === 'sh' || target === 'shell') return 'SH';
-  if (target.endsWith('.php') || target === 'php') return 'PHP';
-  return '';
+  return <FileCode2 size={14} style={{ flexShrink: 0, opacity: 0.8 }} />;
 }
 
 export const CodeBlock: React.FC<CodeBlockProps> = ({
@@ -52,13 +68,13 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   style,
   expandable = false,
   defaultExpanded = false,
-  collapsedMaxHeight = '240px',
+  collapsedMaxHeight = "240px",
 }) => {
   const [copied, setCopied] = useState(false);
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
-  const badge = getLanguageBadge(language, filename || title);
-  const displayName = title || filename || (language ? language.toLowerCase() : 'code');
+  const displayName =
+    filename || title || (language ? language.toLowerCase() : "code");
 
   const copy = async () => {
     try {
@@ -73,10 +89,13 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   const isCollapsed = expandable && !isExpanded;
 
   return (
-    <div className={`docs-codeblock${expandable ? ' docs-codeblock--expandable' : ''}`} style={style}>
+    <div
+      className={`docs-codeblock${expandable ? " docs-codeblock--expandable" : ""}`}
+      style={style}
+    >
       <div className="docs-codeblock-head">
         <div className="docs-codeblock-head-left">
-          {badge && <span className="docs-codeblock-badge">{badge}</span>}
+          {getLanguageIcon(language, filename || title)}
           <span className="docs-codeblock-filename">{displayName}</span>
         </div>
 
@@ -86,27 +105,27 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
               type="button"
               className="docs-codeblock-expand-toggle"
               onClick={() => setIsExpanded((v) => !v)}
-              aria-label={isExpanded ? 'Collapse code' : 'Expand code'}
+              aria-label={isExpanded ? "Collapse code" : "Expand code"}
             >
-              <span>{isExpanded ? 'Collapse' : 'Expand'}</span>
+              <span>{isExpanded ? "Collapse" : "Expand"}</span>
             </button>
           )}
 
           <button
             type="button"
-            className={`docs-codeblock-copy${copied ? ' ok' : ''}`}
+            className={`docs-codeblock-copy${copied ? " ok" : ""}`}
             onClick={copy}
-            title={copied ? 'Copied!' : 'Copy code'}
-            aria-label={copied ? 'Copied' : 'Copy'}
+            title={copied ? "Copied!" : "Copy code"}
+            aria-label={copied ? "Copied" : "Copy"}
           >
             {copied ? <Check size={13} /> : <Copy size={13} />}
-            <span>{copied ? 'Copied' : 'Copy'}</span>
+            <span>{copied ? "Copied" : "Copy"}</span>
           </button>
         </div>
       </div>
 
       <div
-        className={`docs-codeblock-body${isCollapsed ? ' is-collapsed' : ''}`}
+        className={`docs-codeblock-body${isCollapsed ? " is-collapsed" : ""}`}
         style={isCollapsed ? { maxHeight: collapsedMaxHeight } : undefined}
       >
         <pre className="docs-codeblock-pre">

@@ -1,12 +1,28 @@
-import React, { useState, type FormEvent } from 'react';
-import { Check } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../../components/card/card';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../components/tabs/tabs';
-import { Input } from '../../components/input/input';
-import { Label } from '../../components/label/label';
-import { Button } from '../../components/button/button';
-import { Switch } from '../../components/switch/switch';
-import { Avatar, AvatarFallback, AvatarImage } from '../../components/avatar/avatar';
+import React, { useState, type FormEvent } from "react";
+import { Check } from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "../../components/card/card";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "../../components/tabs/tabs";
+import { Input } from "../../components/input/input";
+import { Label } from "../../components/label/label";
+import { Button } from "../../components/button/button";
+import { Switch } from "../../components/switch/switch";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../../components/avatar/avatar";
 
 export interface SettingsFormProps {
   initialData?: {
@@ -24,8 +40,8 @@ export interface SettingsFormProps {
 
 export function SettingsForm({
   initialData = {
-    name: 'Jane Doe',
-    email: 'jane@example.com',
+    name: "Jane Doe",
+    email: "jane@example.com",
     emailNotifications: true,
     marketingEmails: false,
     twoFactorAuth: true,
@@ -48,11 +64,13 @@ export function SettingsForm({
     <Card className={className} elevated>
       <CardHeader>
         <CardTitle>Account Settings</CardTitle>
-        <CardDescription>Manage your profile, security, and notification preferences.</CardDescription>
+        <CardDescription>
+          Manage your profile, security, and notification preferences.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="general">
-          <TabsList style={{ marginBottom: '1.5rem' }}>
+          <TabsList style={{ marginBottom: "1.5rem" }}>
             <TabsTrigger value="general">General</TabsTrigger>
             <TabsTrigger value="notifications">Notifications</TabsTrigger>
             <TabsTrigger value="security">Security</TabsTrigger>
@@ -61,38 +79,57 @@ export function SettingsForm({
           <form onSubmit={handleSubmit}>
             {/* General Tab */}
             <TabsContent value="general">
-              <div style={{ display: 'grid', gap: '1.25rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <Avatar style={{ width: '64px', height: '64px' }}>
-                    {formData.avatar && <AvatarImage src={formData.avatar} alt={formData.name || 'User'} />}
-                    <AvatarFallback style={{ fontSize: '1.25rem' }}>{(formData.name || 'U').charAt(0)}</AvatarFallback>
+              <div style={{ display: "grid", gap: "1.25rem" }}>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+                >
+                  <Avatar style={{ width: "64px", height: "64px" }}>
+                    {formData.avatar && (
+                      <AvatarImage
+                        src={formData.avatar}
+                        alt={formData.name || "User"}
+                      />
+                    )}
+                    <AvatarFallback style={{ fontSize: "1.25rem" }}>
+                      {(formData.name || "U").charAt(0)}
+                    </AvatarFallback>
                   </Avatar>
                   <div>
                     <Button variant="outline" size="sm" type="button">
                       Change Avatar
                     </Button>
-                    <div style={{ fontSize: 'var(--sora-text-xs, 0.75rem)', color: 'var(--ui-muted-foreground, #71717a)', marginTop: '0.25rem' }}>
+                    <div
+                      style={{
+                        fontSize: "var(--sora-text-xs, 0.75rem)",
+                        color: "var(--ui-muted-foreground, #71717a)",
+                        marginTop: "0.25rem",
+                      }}
+                    >
                       JPG, GIF or PNG. Max size of 2MB.
                     </div>
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gap: '0.375rem' }}>
+                <div style={{ display: "grid", gap: "0.375rem" }}>
                   <Label htmlFor="settings-name">Full Name</Label>
                   <Input
                     id="settings-name"
-                    value={formData.name || ''}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    value={formData.name || ""}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                   />
                 </div>
 
-                <div style={{ display: 'grid', gap: '0.375rem' }}>
+                <div style={{ display: "grid", gap: "0.375rem" }}>
                   <Label htmlFor="settings-email">Email Address</Label>
                   <Input
                     id="settings-email"
                     type="email"
-                    value={formData.email || ''}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    value={formData.email || ""}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -100,32 +137,72 @@ export function SettingsForm({
 
             {/* Notifications Tab */}
             <TabsContent value="notifications">
-              <div style={{ display: 'grid', gap: '1.25rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: "grid", gap: "1.25rem" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: 'var(--sora-text-sm, 0.875rem)' }}>Email Notifications</div>
-                    <div style={{ fontSize: 'var(--sora-text-xs, 0.75rem)', color: 'var(--ui-muted-foreground, #71717a)' }}>
+                    <div
+                      style={{
+                        fontWeight: 600,
+                        fontSize: "var(--sora-text-sm, 0.875rem)",
+                      }}
+                    >
+                      Email Notifications
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "var(--sora-text-xs, 0.75rem)",
+                        color: "var(--ui-muted-foreground, #71717a)",
+                      }}
+                    >
                       Receive emails about account activity and updates.
                     </div>
                   </div>
                   <Switch
                     id="switch-notifications"
                     checked={formData.emailNotifications ?? false}
-                    onCheckedChange={(checked) => setFormData({ ...formData, emailNotifications: checked })}
+                    onCheckedChange={(checked) =>
+                      setFormData({ ...formData, emailNotifications: checked })
+                    }
                   />
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: 'var(--sora-text-sm, 0.875rem)' }}>Marketing Emails</div>
-                    <div style={{ fontSize: 'var(--sora-text-xs, 0.75rem)', color: 'var(--ui-muted-foreground, #71717a)' }}>
+                    <div
+                      style={{
+                        fontWeight: 600,
+                        fontSize: "var(--sora-text-sm, 0.875rem)",
+                      }}
+                    >
+                      Marketing Emails
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "var(--sora-text-xs, 0.75rem)",
+                        color: "var(--ui-muted-foreground, #71717a)",
+                      }}
+                    >
                       Receive emails about new features and product updates.
                     </div>
                   </div>
                   <Switch
                     id="switch-marketing"
                     checked={formData.marketingEmails ?? false}
-                    onCheckedChange={(checked) => setFormData({ ...formData, marketingEmails: checked })}
+                    onCheckedChange={(checked) =>
+                      setFormData({ ...formData, marketingEmails: checked })
+                    }
                   />
                 </div>
               </div>
@@ -133,35 +210,79 @@ export function SettingsForm({
 
             {/* Security Tab */}
             <TabsContent value="security">
-              <div style={{ display: 'grid', gap: '1.25rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: "grid", gap: "1.25rem" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: 'var(--sora-text-sm, 0.875rem)' }}>Two-Factor Authentication</div>
-                    <div style={{ fontSize: 'var(--sora-text-xs, 0.75rem)', color: 'var(--ui-muted-foreground, #71717a)' }}>
+                    <div
+                      style={{
+                        fontWeight: 600,
+                        fontSize: "var(--sora-text-sm, 0.875rem)",
+                      }}
+                    >
+                      Two-Factor Authentication
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "var(--sora-text-xs, 0.75rem)",
+                        color: "var(--ui-muted-foreground, #71717a)",
+                      }}
+                    >
                       Add an extra layer of security to your account.
                     </div>
                   </div>
                   <Switch
                     id="switch-2fa"
                     checked={formData.twoFactorAuth ?? false}
-                    onCheckedChange={(checked) => setFormData({ ...formData, twoFactorAuth: checked })}
+                    onCheckedChange={(checked) =>
+                      setFormData({ ...formData, twoFactorAuth: checked })
+                    }
                   />
                 </div>
 
-                <div style={{ display: 'grid', gap: '0.375rem' }}>
+                <div style={{ display: "grid", gap: "0.375rem" }}>
                   <Label htmlFor="settings-current-pwd">Current Password</Label>
-                  <Input id="settings-current-pwd" type="password" placeholder="••••••••" />
+                  <Input
+                    id="settings-current-pwd"
+                    type="password"
+                    placeholder="••••••••"
+                  />
                 </div>
-                <div style={{ display: 'grid', gap: '0.375rem' }}>
+                <div style={{ display: "grid", gap: "0.375rem" }}>
                   <Label htmlFor="settings-new-pwd">New Password</Label>
-                  <Input id="settings-new-pwd" type="password" placeholder="••••••••" />
+                  <Input
+                    id="settings-new-pwd"
+                    type="password"
+                    placeholder="••••••••"
+                  />
                 </div>
               </div>
             </TabsContent>
 
-            <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.75rem' }}>
+            <div
+              style={{
+                marginTop: "1.5rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                gap: "0.75rem",
+              }}
+            >
               {saved && (
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', color: 'var(--ui-success, #10b981)', fontSize: 'var(--sora-text-sm, 0.875rem)' }}>
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.25rem",
+                    color: "var(--ui-success, #10b981)",
+                    fontSize: "var(--sora-text-sm, 0.875rem)",
+                  }}
+                >
                   <Check size={14} /> Changes saved!
                 </span>
               )}

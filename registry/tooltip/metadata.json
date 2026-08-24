@@ -5,17 +5,40 @@
   "description": "Accessible floating tooltip component with customizable placement, hover/focus triggers, and keyboard support.",
   "props": {
     "delay": { "type": "number", "default": 200 },
-    "placement": { "type": "Placement", "default": "top", "options": ["top", "bottom", "left", "right", "top-start", "top-end", "bottom-start", "bottom-end"] },
+    "placement": {
+      "type": "Placement",
+      "default": "top",
+      "options": [
+        "top",
+        "bottom",
+        "left",
+        "right",
+        "top-start",
+        "top-end",
+        "bottom-start",
+        "bottom-end"
+      ]
+    },
     "offset": { "type": "number", "default": 6 }
   },
   "accessibility": {
-    "keyboard": ["Focus trigger to show", "Escape key to dismiss", "Blur to dismiss"],
-    "aria": ["role=\"tooltip\"", "aria-describedby linked dynamically to trigger"],
+    "keyboard": [
+      "Focus trigger to show",
+      "Escape key to dismiss",
+      "Blur to dismiss"
+    ],
+    "aria": [
+      "role=\"tooltip\"",
+      "aria-describedby linked dynamically to trigger"
+    ],
     "focus": "Does not steal focus"
   },
   "files": [{ "path": "components/ui/tooltip.tsx", "type": "registry:ui" }],
   "dependencies": ["@soraui/hooks"],
-  "installation": { "cli": "npx soraui add tooltip", "npm": "import { Tooltip, TooltipTrigger, TooltipContent } from '@soraui/react'" },
+  "installation": {
+    "cli": "npx soraui add tooltip",
+    "npm": "import { Tooltip, TooltipTrigger, TooltipContent } from '@soraui/react'"
+  },
   "examples": [
     {
       "title": "Basic Tooltip",

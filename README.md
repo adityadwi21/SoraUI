@@ -8,7 +8,7 @@ SoraUI is an open-source, lightweight UI construction system for modern JavaScri
 
 ## Features
 
-- **44 Accessible Primitives**: Level 1 zero-runtime CSS components up to Level 3 interactive primitives (WAI-ARIA, keyboard navigation, focus management).
+- **47 Accessible Primitives**: Level 1 zero-runtime CSS components up to Level 3 interactive primitives (WAI-ARIA, keyboard navigation, focus management).
 - **14 Production Blocks & 4 Page Templates**: UI-only compound blocks and layouts for Authentication, Dashboards, Marketing, and Settings.
 - **Universal `lucide-react` Iconography**: Clean, lightweight icons integrated across all components, blocks, and templates.
 - **3-Layer Design Token Engine**: Primitive (`--sora-*`) -> Semantic (`--ui-*`) -> Component (`--sora-<comp>-*`) with zero hardcoded colors.
@@ -110,11 +110,11 @@ Tools available to your agent:
 
 | Package                             | Purpose                                                | Version |
 | ----------------------------------- | ------------------------------------------------------ | ------- |
-| [`@soraui/core`](./packages/core)   | Tokens, 24-key Theme Contract, CSS Presets             | `0.1.0` |
-| [`@soraui/hooks`](./packages/hooks) | A11y & interaction primitives (focus trap, escape key) | `0.1.0` |
-| [`@soraui/react`](./packages/react) | 44 primitives, 14 blocks, 4 templates, ThemeProvider   | `0.1.0` |
-| [`@soraui/cli`](./packages/cli)     | CLI code generator & dependency resolver               | `0.1.0` |
-| [`@soraui/mcp`](./packages/mcp)     | Official Model Context Protocol stdio server           | `0.1.0` |
+| [`@soraui/core`](./packages/core)   | Tokens, 24-key Theme Contract, CSS Presets             | `0.1.1` |
+| [`@soraui/hooks`](./packages/hooks) | A11y & interaction primitives (focus trap, escape key) | `0.1.1` |
+| [`@soraui/react`](./packages/react) | 47 primitives, 14 blocks, 4 templates, ThemeProvider   | `0.1.1` |
+| [`@soraui/cli`](./packages/cli)     | CLI code generator & dependency resolver               | `0.1.1` |
+| [`@soraui/mcp`](./packages/mcp)     | Official Model Context Protocol stdio server           | `0.1.1` |
 
 ---
 
@@ -129,7 +129,7 @@ soraui/
 ├── packages/
 │   ├── core/           # Design tokens, 24-key Theme Contract, preset stylesheets
 │   ├── hooks/          # A11y & interaction hooks (focus trap, roving index, escape key)
-│   ├── react/          # 44 primitives, 14 blocks, 4 templates, ThemeProvider, ThemeScope
+│   ├── react/          # 47 primitives, 14 blocks, 4 templates, ThemeProvider, ThemeScope
 │   ├── cli/            # @soraui/cli code generator & dependency resolution
 │   └── mcp/            # Model Context Protocol stdio server for AI coding agents
 │

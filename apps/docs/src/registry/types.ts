@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export type ComponentCategory =
-  | 'General'
-  | 'Forms'
-  | 'Navigation'
-  | 'Feedback'
-  | 'Overlays'
-  | 'Data Display'
-  | 'Layout';
+  | "General"
+  | "Forms"
+  | "Navigation"
+  | "Feedback"
+  | "Overlays"
+  | "Data Display"
+  | "Layout";
 
 export interface PropDefinition {
   name: string;
@@ -45,7 +45,7 @@ export interface ComponentDoc {
   description: string;
   dependencies: string[];
   tags: string[];
-  status: 'stable' | 'experimental';
+  status: "stable" | "experimental";
   examples: DocExample[];
   props: PropDefinition[];
   accessibility?: AccessibilityInfo;
@@ -55,7 +55,7 @@ export interface ComponentDoc {
 export interface BlockDoc {
   id: string;
   name: string;
-  category: 'auth' | 'dashboard' | 'marketing' | 'forms';
+  category: "auth" | "dashboard" | "marketing" | "forms";
   description: string;
   dependencies: string[];
   tags: string[];
@@ -75,7 +75,7 @@ export interface BlockDoc {
 export interface TemplateDoc {
   id: string;
   name: string;
-  category: 'auth' | 'dashboard' | 'marketing' | 'settings';
+  category: "auth" | "dashboard" | "marketing" | "settings";
   description: string;
   blocks: string[];
   dependencies: string[];
@@ -91,7 +91,7 @@ export interface TemplateDoc {
 export interface ThemeDoc {
   id: string;
   name: string;
-  mode: 'light' | 'dark';
+  mode: "light" | "dark";
   description: string;
   accentScale: string;
   primaryColor: string;
@@ -100,9 +100,15 @@ export interface ThemeDoc {
 export interface GuideDoc {
   id: string;
   title: string;
-  category: 'Getting Started' | 'Theming' | 'CLI & Tooling' | 'Frameworks' | 'Migration' | 'AI & Tooling' | 'Governance';
+  category:
+    | "Getting Started"
+    | "Theming"
+    | "CLI & Tooling"
+    | "Frameworks"
+    | "Migration"
+    | "AI & Tooling"
+    | "Governance";
   description: string;
   hasDotBadge?: boolean;
   customPath?: string;
 }
-

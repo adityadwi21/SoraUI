@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from "react";
 
 export interface NavigationMenuProps extends HTMLAttributes<HTMLElement> {}
 export interface NavigationMenuListProps extends HTMLAttributes<HTMLUListElement> {}

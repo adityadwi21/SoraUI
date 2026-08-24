@@ -1,9 +1,16 @@
-import { forwardRef, useState, useRef, useEffect, type ChangeEvent, type KeyboardEvent } from 'react';
-import { Check, Minus } from 'lucide-react';
-import type { CheckboxProps } from './checkbox.types';
+import {
+  forwardRef,
+  useState,
+  useRef,
+  useEffect,
+  type ChangeEvent,
+  type KeyboardEvent,
+} from "react";
+import { Check, Minus } from "lucide-react";
+import type { CheckboxProps } from "./checkbox.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
@@ -17,9 +24,11 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       id,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const [uncontrolledChecked, setUncontrolledChecked] = useState<boolean | 'indeterminate'>(defaultChecked);
+    const [uncontrolledChecked, setUncontrolledChecked] = useState<
+      boolean | "indeterminate"
+    >(defaultChecked);
     const isControlled = controlledChecked !== undefined;
     const isChecked = isControlled ? controlledChecked : uncontrolledChecked;
 
@@ -27,26 +36,33 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
     useEffect(() => {
       if (innerRef.current) {
-        innerRef.current.indeterminate = isChecked === 'indeterminate';
+        innerRef.current.indeterminate = isChecked === "indeterminate";
       }
     }, [isChecked]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       if (disabled) return;
-      const nextChecked = isChecked === 'indeterminate' ? true : e.target.checked;
+      const nextChecked =
+        isChecked === "indeterminate" ? true : e.target.checked;
       if (!isControlled) setUncontrolledChecked(nextChecked);
       onCheckedChange?.(nextChecked);
     };
 
     const isTrueChecked = isChecked === true;
-    const isIndeterminate = isChecked === 'indeterminate';
+    const isIndeterminate = isChecked === "indeterminate";
 
     return (
-      <label className={cx('sora-checkbox', disabled && 'sora-checkbox--disabled', className)}>
+      <label
+        className={cx(
+          "sora-checkbox",
+          disabled && "sora-checkbox--disabled",
+          className,
+        )}
+      >
         <input
           ref={(node) => {
             innerRef.current = node;
-            if (typeof ref === 'function') ref(node);
+            if (typeof ref === "function") ref(node);
             else if (ref) (ref as any).current = node;
           }}
           type="checkbox"
@@ -59,21 +75,31 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         />
         <span
           className={cx(
-            'sora-checkbox__box',
-            (isTrueChecked || isIndeterminate) && 'sora-checkbox__box--checked',
-            isIndeterminate && 'sora-checkbox__box--indeterminate'
+            "sora-checkbox__box",
+            (isTrueChecked || isIndeterminate) && "sora-checkbox__box--checked",
+            isIndeterminate && "sora-checkbox__box--indeterminate",
           )}
           aria-hidden="true"
         >
           {isTrueChecked && (
-            <Check size={12} strokeWidth={3} className="sora-checkbox__icon" aria-hidden="true" />
+            <Check
+              size={12}
+              strokeWidth={3}
+              className="sora-checkbox__icon"
+              aria-hidden="true"
+            />
           )}
           {isIndeterminate && (
-            <Minus size={12} strokeWidth={3} className="sora-checkbox__icon" aria-hidden="true" />
+            <Minus
+              size={12}
+              strokeWidth={3}
+              className="sora-checkbox__icon"
+              aria-hidden="true"
+            />
           )}
         </span>
       </label>
     );
-  }
+  },
 );
-Checkbox.displayName = 'Checkbox';
+Checkbox.displayName = "Checkbox";

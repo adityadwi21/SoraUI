@@ -4,7 +4,7 @@ export interface RGB {
   b: number;
 }
 
-export type WCAGLevel = 'AAA' | 'AA' | 'AA Large' | 'Fail';
+export type WCAGLevel = "AAA" | "AA" | "AA Large" | "Fail";
 
 export interface ContrastResult {
   ratio: number;
@@ -22,7 +22,7 @@ export function parseColorToRGB(colorStr: string): RGB | null {
   const str = colorStr.trim().toLowerCase();
 
   // 1. Hex 3-digit or 6-digit
-  if (str.startsWith('#')) {
+  if (str.startsWith("#")) {
     const hex = str.slice(1);
     if (hex.length === 3) {
       const r = parseInt(hex[0]! + hex[0]!, 16);
@@ -100,7 +100,10 @@ export function getRelativeLuminance(rgb: RGB): number {
  * Calculates contrast ratio between two colors (1:1 to 21:1).
  * Formula: (L1 + 0.05) / (L2 + 0.05)
  */
-export function calculateContrast(color1: string, color2: string): ContrastResult {
+export function calculateContrast(
+  color1: string,
+  color2: string,
+): ContrastResult {
   const rgb1 = parseColorToRGB(color1) || { r: 255, g: 255, b: 255 };
   const rgb2 = parseColorToRGB(color2) || { r: 0, g: 0, b: 0 };
 
@@ -117,10 +120,10 @@ export function calculateContrast(color1: string, color2: string): ContrastResul
   const passesAA = ratio >= 4.5;
   const passesAALarge = ratio >= 3.0;
 
-  let level: WCAGLevel = 'Fail';
-  if (passesAAA) level = 'AAA';
-  else if (passesAA) level = 'AA';
-  else if (passesAALarge) level = 'AA Large';
+  let level: WCAGLevel = "Fail";
+  if (passesAAA) level = "AAA";
+  else if (passesAA) level = "AA";
+  else if (passesAALarge) level = "AA Large";
 
   return {
     ratio,

@@ -11,11 +11,24 @@
     "emptyText": { "type": "ReactNode", "default": "No options found." }
   },
   "accessibility": {
-    "keyboard": ["ArrowDown/ArrowUp to cycle highlighted options", "Enter to select option", "Escape to dismiss"],
-    "aria": ["role=\"combobox\"", "role=\"listbox\"", "role=\"option\"", "aria-autocomplete=\"list\"", "aria-activedescendant"],
+    "keyboard": [
+      "ArrowDown/ArrowUp to cycle highlighted options",
+      "Enter to select option",
+      "Escape to dismiss"
+    ],
+    "aria": [
+      "role=\"combobox\"",
+      "role=\"listbox\"",
+      "role=\"option\"",
+      "aria-autocomplete=\"list\"",
+      "aria-activedescendant"
+    ],
     "focus": "Focus stays in input while active descendant changes"
   },
   "files": [{ "path": "components/ui/combobox.tsx", "type": "registry:ui" }],
   "dependencies": ["@soraui/hooks"],
-  "installation": { "cli": "npx soraui add combobox", "npm": "import { Combobox } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add combobox",
+    "npm": "import { Combobox } from '@soraui/react'"
+  }
 }

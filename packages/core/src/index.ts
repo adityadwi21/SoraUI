@@ -15,7 +15,7 @@ export {
   applySystemTheme,
   getThemeInitScript,
   presetRegistry,
-} from './theme/index';
+} from "./theme/index";
 
 export type {
   ThemeId,
@@ -23,7 +23,7 @@ export type {
   ResolvedThemeMode,
   ThemeEntry,
   ThemeInitScriptOptions,
-} from './theme/index';
+} from "./theme/index";
 
 // Design tokens (JS values & Theme Contract)
 export {
@@ -32,7 +32,7 @@ export {
   radius,
   typography,
   THEME_CONTRACT_KEYS,
-} from './tokens/index';
+} from "./tokens/index";
 
 export type {
   ColorScale,
@@ -44,26 +44,25 @@ export type {
   PrimitiveToken,
   SemanticToken,
   ComponentToken,
-} from './tokens/index';
+} from "./tokens/index";
 
 // Token Validator & Exporters
-export { validateTheme } from './tokens/validator';
+export { validateTheme } from "./tokens/validator";
 export type {
   ThemeValidationError,
   ThemeValidationWarning,
   ValidationResult,
-} from './tokens/validator';
+} from "./tokens/validator";
 
 export {
   exportThemeToCSS,
   exportThemeToJSON,
   exportThemeToTailwind,
-} from './tokens/exporters';
+} from "./tokens/exporters";
 export type {
   CSSExportOptions,
   TailwindExportOptions,
-} from './tokens/exporters';
+} from "./tokens/exporters";
 
 // Core utilities
-export { cx, isBrowser } from './utils/index';
-
+export { cx, isBrowser } from "./utils/index";

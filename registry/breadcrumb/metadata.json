@@ -1,1 +1,8 @@
-{"name":"breadcrumb","type":"registry:ui","level":1,"description":"Displays the path to the current resource using a hierarchy of links.","files":[{"path":"components/ui/breadcrumb.tsx","type":"registry:ui"}],"dependencies":[]}
+{
+  "name": "breadcrumb",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "Displays the path to the current resource using a hierarchy of links.",
+  "files": [{ "path": "components/ui/breadcrumb.tsx", "type": "registry:ui" }],
+  "dependencies": []
+}

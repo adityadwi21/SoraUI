@@ -1,6 +1,6 @@
-import type { HTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 
-export type DrawerSide = 'left' | 'right' | 'top' | 'bottom';
+export type DrawerSide = "left" | "right" | "top" | "bottom";
 
 export interface DrawerProps {
   open?: boolean | undefined;

@@ -11,17 +11,16 @@
  * - Normal text (< 18pt regular / < 14pt bold): contrast ratio >= 4.5:1
  * - UI components & non-text (borders, inputs, rings): contrast ratio >= 3:1
  */
-import { describe, it, expect, beforeAll } from 'vitest';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { describe, it, expect, beforeAll } from "vitest";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // Resolve presets dir relative to this file: tests/ → ../src/theme/presets
 const PRESETS_DIR = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
-  '../src/theme/presets'
+  "../src/theme/presets",
 );
-
 
 // ──────────────────────────────────────────────────────────────────────────────
 // CSS Token Parser
@@ -32,7 +31,7 @@ const PRESETS_DIR = path.resolve(
  * Returns a flat map of token name → hex color string.
  */
 function parsePresetTokens(cssFilePath: string): Record<string, string> {
-  const css = fs.readFileSync(cssFilePath, 'utf8');
+  const css = fs.readFileSync(cssFilePath, "utf8");
   const tokens: Record<string, string> = {};
   // Match --ui-xxx: #rrggbb or --ui-xxx: #rrggbbaa
   const tokenRe = /--(ui-[a-z-]+):\s*(#[0-9a-fA-F]{3,8})/g;
@@ -48,10 +47,14 @@ function parsePresetTokens(cssFilePath: string): Record<string, string> {
 // ──────────────────────────────────────────────────────────────────────────────
 
 function hexToRgb(hex: string): [number, number, number] {
-  const clean = hex.replace('#', '');
-  const full = clean.length === 3
-    ? clean.split('').map((c) => c + c).join('')
-    : clean.slice(0, 6);
+  const clean = hex.replace("#", "");
+  const full =
+    clean.length === 3
+      ? clean
+          .split("")
+          .map((c) => c + c)
+          .join("")
+      : clean.slice(0, 6);
   const n = parseInt(full, 16);
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 }
@@ -77,7 +80,7 @@ function contrastRatio(fg: string, bg: string): number {
 // Token Pair Contract
 // ──────────────────────────────────────────────────────────────────────────────
 
-type Threshold = 'normal-text' | 'ui-component';
+type Threshold = "normal-text" | "ui-component";
 
 interface TokenPair {
   fg: string;
@@ -88,32 +91,97 @@ interface TokenPair {
 
 const TOKEN_PAIRS: TokenPair[] = [
   // Normal text pairs: 4.5:1
-  { fg: '--ui-foreground',             bg: '--ui-background',   type: 'normal-text',  label: 'foreground / background' },
-  { fg: '--ui-muted-foreground',       bg: '--ui-background',   type: 'normal-text',  label: 'muted-foreground / background' },
-  { fg: '--ui-card-foreground',        bg: '--ui-card',         type: 'normal-text',  label: 'card-foreground / card' },
-  { fg: '--ui-primary-foreground',     bg: '--ui-primary',      type: 'normal-text',  label: 'primary-foreground / primary' },
-  { fg: '--ui-secondary-foreground',   bg: '--ui-secondary',    type: 'normal-text',  label: 'secondary-foreground / secondary' },
-  { fg: '--ui-accent-foreground',      bg: '--ui-accent',       type: 'normal-text',  label: 'accent-foreground / accent' },
-  { fg: '--ui-destructive-foreground', bg: '--ui-destructive',  type: 'normal-text',  label: 'destructive-foreground / destructive' },
-  { fg: '--ui-popover-foreground',     bg: '--ui-popover',      type: 'normal-text',  label: 'popover-foreground / popover' },
+  {
+    fg: "--ui-foreground",
+    bg: "--ui-background",
+    type: "normal-text",
+    label: "foreground / background",
+  },
+  {
+    fg: "--ui-muted-foreground",
+    bg: "--ui-background",
+    type: "normal-text",
+    label: "muted-foreground / background",
+  },
+  {
+    fg: "--ui-card-foreground",
+    bg: "--ui-card",
+    type: "normal-text",
+    label: "card-foreground / card",
+  },
+  {
+    fg: "--ui-primary-foreground",
+    bg: "--ui-primary",
+    type: "normal-text",
+    label: "primary-foreground / primary",
+  },
+  {
+    fg: "--ui-secondary-foreground",
+    bg: "--ui-secondary",
+    type: "normal-text",
+    label: "secondary-foreground / secondary",
+  },
+  {
+    fg: "--ui-accent-foreground",
+    bg: "--ui-accent",
+    type: "normal-text",
+    label: "accent-foreground / accent",
+  },
+  {
+    fg: "--ui-destructive-foreground",
+    bg: "--ui-destructive",
+    type: "normal-text",
+    label: "destructive-foreground / destructive",
+  },
+  {
+    fg: "--ui-popover-foreground",
+    bg: "--ui-popover",
+    type: "normal-text",
+    label: "popover-foreground / popover",
+  },
   // UI component pairs: 3:1
-  { fg: '--ui-border',                 bg: '--ui-background',   type: 'ui-component', label: 'border / background' },
-  { fg: '--ui-input',                  bg: '--ui-background',   type: 'ui-component', label: 'input / background' },
-  { fg: '--ui-ring',                   bg: '--ui-background',   type: 'ui-component', label: 'ring / background' },
+  {
+    fg: "--ui-border",
+    bg: "--ui-background",
+    type: "ui-component",
+    label: "border / background",
+  },
+  {
+    fg: "--ui-input",
+    bg: "--ui-background",
+    type: "ui-component",
+    label: "input / background",
+  },
+  {
+    fg: "--ui-ring",
+    bg: "--ui-background",
+    type: "ui-component",
+    label: "ring / background",
+  },
 ];
 
 const MIN_RATIO: Record<Threshold, number> = {
-  'normal-text':  4.5,
-  'ui-component': 3.0,
+  "normal-text": 4.5,
+  "ui-component": 3.0,
 };
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Test Suite
 // ──────────────────────────────────────────────────────────────────────────────
 
-const PRESETS = ['sky', 'cloud', 'horizon', 'aurora', 'twilight', 'midnight', 'nebula', 'eclipse', 'starlight'];
+const PRESETS = [
+  "sky",
+  "cloud",
+  "horizon",
+  "aurora",
+  "twilight",
+  "midnight",
+  "nebula",
+  "eclipse",
+  "starlight",
+];
 
-describe('12B — 9-Theme WCAG 2.1 AA Contrast Matrix (99 checks)', () => {
+describe("12B — 9-Theme WCAG 2.1 AA Contrast Matrix (99 checks)", () => {
   const tokensByPreset: Record<string, Record<string, string>> = {};
 
   beforeAll(() => {
@@ -133,7 +201,9 @@ describe('12B — 9-Theme WCAG 2.1 AA Contrast Matrix (99 checks)', () => {
 
           // If either token is not a plain hex (e.g. uses var() or rgba), skip with a note
           if (!fgColor || !bgColor) {
-            console.warn(`[${preset}] Skipping ${pair.label}: token resolves to non-hex value (${fgColor} / ${bgColor})`);
+            console.warn(
+              `[${preset}] Skipping ${pair.label}: token resolves to non-hex value (${fgColor} / ${bgColor})`,
+            );
             return;
           }
 
@@ -142,7 +212,7 @@ describe('12B — 9-Theme WCAG 2.1 AA Contrast Matrix (99 checks)', () => {
 
           expect(
             ratio,
-            `[${preset}] ${pair.label}: contrast ${ratio.toFixed(2)}:1 is below WCAG AA minimum of ${minRatio}:1\n  fg=${fgColor}, bg=${bgColor}`
+            `[${preset}] ${pair.label}: contrast ${ratio.toFixed(2)}:1 is below WCAG AA minimum of ${minRatio}:1\n  fg=${fgColor}, bg=${bgColor}`,
           ).toBeGreaterThanOrEqual(minRatio);
         });
       }

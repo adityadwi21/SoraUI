@@ -1,9 +1,14 @@
-import { forwardRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
-import { ChevronUp, ChevronDown } from 'lucide-react';
-import type { NumberInputProps } from './number-input.types';
+import {
+  forwardRef,
+  useState,
+  type ChangeEvent,
+  type KeyboardEvent,
+} from "react";
+import { ChevronUp, ChevronDown } from "lucide-react";
+import type { NumberInputProps } from "./number-input.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
@@ -19,7 +24,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
     const isControlled = controlledValue !== undefined;
@@ -34,21 +39,27 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
       const parsed = parseFloat(e.target.value);
       if (!isNaN(parsed)) update(parsed);
-      else if (e.target.value === '') update(0);
+      else if (e.target.value === "") update(0);
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'ArrowUp') {
+      if (e.key === "ArrowUp") {
         e.preventDefault();
         update(value + step);
-      } else if (e.key === 'ArrowDown') {
+      } else if (e.key === "ArrowDown") {
         e.preventDefault();
         update(value - step);
       }
     };
 
     return (
-      <div className={cx('sora-number-input', disabled && 'sora-number-input--disabled', className)}>
+      <div
+        className={cx(
+          "sora-number-input",
+          disabled && "sora-number-input--disabled",
+          className,
+        )}
+      >
         <input
           ref={ref}
           type="number"
@@ -84,6 +95,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         </div>
       </div>
     );
-  }
+  },
 );
-NumberInput.displayName = 'NumberInput';
+NumberInput.displayName = "NumberInput";

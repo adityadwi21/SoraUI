@@ -1,13 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 const FOCUSABLE_SELECTORS = [
-  'button:not([disabled])',
-  'input:not([disabled])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  'a[href]',
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  "a[href]",
   '[tabindex]:not([tabindex="-1"])',
-].join(', ');
+].join(", ");
 
 export interface UseFocusTrapOptions {
   returnFocusOnDeactivate?: boolean;
@@ -18,15 +18,19 @@ export interface UseFocusTrapOptions {
  * Hook to trap focus within a container element.
  * Handles Tab key cycling and returns focus to previously active element upon deactivation.
  */
-export function useFocusTrap(active: boolean, options: UseFocusTrapOptions = {}) {
+export function useFocusTrap(
+  active: boolean,
+  options: UseFocusTrapOptions = {},
+) {
   const containerRef = useRef<HTMLElement | null>(null);
   const previousActiveElementRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (!active) return;
 
-    if (typeof document !== 'undefined') {
-      previousActiveElementRef.current = document.activeElement as HTMLElement | null;
+    if (typeof document !== "undefined") {
+      previousActiveElementRef.current =
+        document.activeElement as HTMLElement | null;
     }
 
     const container = containerRef.current;
@@ -37,15 +41,19 @@ export function useFocusTrap(active: boolean, options: UseFocusTrapOptions = {})
       if (options.initialFocusRef?.current) {
         options.initialFocusRef.current.focus();
       } else {
-        const focusable = Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS));
+        const focusable = Array.from(
+          container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS),
+        );
         focusable[0]?.focus();
       }
     }, 10);
 
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key !== 'Tab' || !container) return;
+      if (e.key !== "Tab" || !container) return;
 
-      const focusable = Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS));
+      const focusable = Array.from(
+        container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTORS),
+      );
       if (focusable.length === 0) {
         e.preventDefault();
         return;
@@ -55,24 +63,33 @@ export function useFocusTrap(active: boolean, options: UseFocusTrapOptions = {})
       const last = focusable[focusable.length - 1];
 
       if (e.shiftKey) {
-        if (document.activeElement === first || !container.contains(document.activeElement)) {
+        if (
+          document.activeElement === first ||
+          !container.contains(document.activeElement)
+        ) {
           e.preventDefault();
           last?.focus();
         }
       } else {
-        if (document.activeElement === last || !container.contains(document.activeElement)) {
+        if (
+          document.activeElement === last ||
+          !container.contains(document.activeElement)
+        ) {
           e.preventDefault();
           first?.focus();
         }
       }
     }
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       clearTimeout(focusTimer);
-      document.removeEventListener('keydown', handleKeyDown);
-      if (options.returnFocusOnDeactivate !== false && previousActiveElementRef.current) {
+      document.removeEventListener("keydown", handleKeyDown);
+      if (
+        options.returnFocusOnDeactivate !== false &&
+        previousActiveElementRef.current
+      ) {
         previousActiveElementRef.current.focus?.();
       }
     };

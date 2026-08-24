@@ -1,7 +1,7 @@
-import { useContext, createContext } from 'react';
+import { useContext, createContext } from "react";
 
-export type ThemeMode = 'light' | 'dark' | 'system';
-export type ResolvedThemeMode = 'light' | 'dark';
+export type ThemeMode = "light" | "dark" | "system";
+export type ResolvedThemeMode = "light" | "dark";
 
 export interface ThemeContextValue {
   theme: string;
@@ -20,7 +20,7 @@ export const ThemeContext = createContext<ThemeContextValue | null>(null);
 export function useTheme(): ThemeContextValue {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useTheme must be used within a <ThemeProvider>');
+    throw new Error("useTheme must be used within a <ThemeProvider>");
   }
   return context;
 }

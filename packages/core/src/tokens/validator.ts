@@ -1,14 +1,18 @@
-import { THEME_CONTRACT_KEYS, type ThemeContractKey } from './index';
+import { THEME_CONTRACT_KEYS, type ThemeContractKey } from "./index";
 
 export interface ThemeValidationError {
-  type: 'missing_key' | 'invalid_reference' | 'circular_reference' | 'invalid_value';
+  type:
+    | "missing_key"
+    | "invalid_reference"
+    | "circular_reference"
+    | "invalid_value";
   key?: string;
   message: string;
   chain?: string[];
 }
 
 export interface ThemeValidationWarning {
-  type: 'unknown_token' | 'unreferenced_primitive';
+  type: "unknown_token" | "unreferenced_primitive";
   key?: string;
   message: string;
 }
@@ -37,16 +41,16 @@ function extractReferences(value: string): string[] {
  */
 export function validateTheme(
   themeTokens: Record<string, string>,
-  options: { strict?: boolean } = {}
+  options: { strict?: boolean } = {},
 ): ValidationResult {
   const errors: ThemeValidationError[] = [];
   const warnings: ThemeValidationWarning[] = [];
 
   // 1. Check presence of all required Theme Contract keys
   for (const requiredKey of THEME_CONTRACT_KEYS) {
-    if (!themeTokens[requiredKey] || themeTokens[requiredKey]?.trim() === '') {
+    if (!themeTokens[requiredKey] || themeTokens[requiredKey]?.trim() === "") {
       errors.push({
-        type: 'missing_key',
+        type: "missing_key",
         key: requiredKey,
         message: `Missing required Theme Contract token: "${requiredKey}"`,
       });
@@ -56,9 +60,9 @@ export function validateTheme(
   // 2. Check for unknown optional tokens (warning)
   const knownKeys = new Set<string>(THEME_CONTRACT_KEYS);
   for (const key of Object.keys(themeTokens)) {
-    if (!key.startsWith('--ui-') && !key.startsWith('--sora-')) {
+    if (!key.startsWith("--ui-") && !key.startsWith("--sora-")) {
       warnings.push({
-        type: 'unknown_token',
+        type: "unknown_token",
         key,
         message: `Token "${key}" does not follow the standard --ui-* or --sora-* naming convention.`,
       });
@@ -67,9 +71,9 @@ export function validateTheme(
 
   // 3. Recursive Reference & Circular Dependency Check
   for (const [key, value] of Object.entries(themeTokens)) {
-    if (typeof value !== 'string') {
+    if (typeof value !== "string") {
       errors.push({
-        type: 'invalid_value',
+        type: "invalid_value",
         key,
         message: `Token "${key}" value must be a string, received ${typeof value}.`,
       });
@@ -78,24 +82,28 @@ export function validateTheme(
 
     const visited = [key];
 
-    function checkChain(currentKey: string, currentVal: string, chain: string[]) {
+    function checkChain(
+      currentKey: string,
+      currentVal: string,
+      chain: string[],
+    ) {
       const refs = extractReferences(currentVal);
 
       for (const ref of refs) {
         if (chain.includes(ref)) {
           const fullCycle = [...chain, ref];
           errors.push({
-            type: 'circular_reference',
+            type: "circular_reference",
             key,
             chain: fullCycle,
-            message: `Circular token reference detected: ${fullCycle.join(' -> ')}`,
+            message: `Circular token reference detected: ${fullCycle.join(" -> ")}`,
           });
           return;
         }
 
-        if (ref.startsWith('--ui-') && !(ref in themeTokens)) {
+        if (ref.startsWith("--ui-") && !(ref in themeTokens)) {
           errors.push({
-            type: 'invalid_reference',
+            type: "invalid_reference",
             key,
             message: `Token "${currentKey}" references non-existent semantic token "${ref}".`,
           });

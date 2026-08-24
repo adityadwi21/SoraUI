@@ -1,6 +1,9 @@
-import type { InputHTMLAttributes } from 'react';
+import type { InputHTMLAttributes } from "react";
 
-export interface NumberInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'defaultValue' | 'onChange' | 'type'> {
+export interface NumberInputProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "value" | "defaultValue" | "onChange" | "type"
+> {
   value?: number | undefined;
   defaultValue?: number | undefined;
   min?: number | undefined;

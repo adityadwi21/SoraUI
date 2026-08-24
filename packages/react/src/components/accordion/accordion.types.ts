@@ -1,9 +1,12 @@
-import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from 'react';
+import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
 
-export type AccordionType = 'single' | 'multiple';
+export type AccordionType = "single" | "multiple";
 
-export interface AccordionSingleProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange'> {
-  type: 'single';
+export interface AccordionSingleProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "defaultValue" | "onChange"
+> {
+  type: "single";
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
@@ -11,8 +14,11 @@ export interface AccordionSingleProps extends Omit<HTMLAttributes<HTMLDivElement
   children?: ReactNode;
 }
 
-export interface AccordionMultipleProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange'> {
-  type: 'multiple';
+export interface AccordionMultipleProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "defaultValue" | "onChange"
+> {
+  type: "multiple";
   value?: string[];
   defaultValue?: string[];
   onValueChange?: (value: string[]) => void;

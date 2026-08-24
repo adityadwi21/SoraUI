@@ -10,8 +10,13 @@ import {
   isValidElement,
   type ReactElement,
   type KeyboardEvent,
-} from 'react';
-import { usePositioning, Portal, useEscapeKey, useClickOutside } from '@soraui/hooks';
+} from "react";
+import {
+  usePositioning,
+  Portal,
+  useEscapeKey,
+  useClickOutside,
+} from "@soraui/hooks";
 import type {
   DropdownProps,
   DropdownTriggerProps,
@@ -19,7 +24,7 @@ import type {
   DropdownItemProps,
   DropdownSeparatorProps,
   DropdownLabelProps,
-} from './dropdown.types';
+} from "./dropdown.types";
 
 interface DropdownContextValue {
   open: boolean;
@@ -33,13 +38,13 @@ const DropdownContext = createContext<DropdownContextValue | null>(null);
 function useDropdownContext() {
   const context = useContext(DropdownContext);
   if (!context) {
-    throw new Error('Dropdown sub-components must be used within a <Dropdown>');
+    throw new Error("Dropdown sub-components must be used within a <Dropdown>");
   }
   return context;
 }
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export function Dropdown({
@@ -62,7 +67,7 @@ export function Dropdown({
       }
       onOpenChange?.(nextOpen);
     },
-    [isControlled, onOpenChange]
+    [isControlled, onOpenChange],
   );
 
   return (
@@ -78,8 +83,9 @@ export const DropdownTrigger = forwardRef<HTMLElement, DropdownTriggerProps>(
 
     const mergedRef = (node: HTMLElement | null) => {
       (triggerRef as React.MutableRefObject<HTMLElement | null>).current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLElement | null>).current = node;
     };
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -89,11 +95,11 @@ export const DropdownTrigger = forwardRef<HTMLElement, DropdownTriggerProps>(
 
     const triggerProps = {
       ref: mergedRef,
-      'aria-haspopup': 'menu' as const,
-      'aria-expanded': open,
-      'aria-controls': open ? contentId : undefined,
+      "aria-haspopup": "menu" as const,
+      "aria-expanded": open,
+      "aria-controls": open ? contentId : undefined,
       onClick: handleClick,
-      className: cx('sora-dropdown__trigger', className),
+      className: cx("sora-dropdown__trigger", className),
       ...props,
     };
 
@@ -106,12 +112,15 @@ export const DropdownTrigger = forwardRef<HTMLElement, DropdownTriggerProps>(
         {children}
       </button>
     );
-  }
+  },
 );
-DropdownTrigger.displayName = 'DropdownTrigger';
+DropdownTrigger.displayName = "DropdownTrigger";
 
 export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
-  ({ placement = 'bottom-start', offset = 6, className, children, ...props }, ref) => {
+  (
+    { placement = "bottom-start", offset = 6, className, children, ...props },
+    ref,
+  ) => {
     const { open, setOpen, triggerRef, contentId } = useDropdownContext();
     const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -133,23 +142,30 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
       if (!container) return;
 
       const items = Array.from(
-        container.querySelectorAll<HTMLButtonElement>('[role="menuitem"]:not([disabled])')
+        container.querySelectorAll<HTMLButtonElement>(
+          '[role="menuitem"]:not([disabled])',
+        ),
       );
       if (items.length === 0) return;
 
-      const activeIndex = items.indexOf(document.activeElement as HTMLButtonElement);
+      const activeIndex = items.indexOf(
+        document.activeElement as HTMLButtonElement,
+      );
       let nextIndex = -1;
 
-      if (e.key === 'ArrowDown') {
+      if (e.key === "ArrowDown") {
         e.preventDefault();
         nextIndex = activeIndex === -1 ? 0 : (activeIndex + 1) % items.length;
-      } else if (e.key === 'ArrowUp') {
+      } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        nextIndex = activeIndex === -1 ? items.length - 1 : (activeIndex - 1 + items.length) % items.length;
-      } else if (e.key === 'Home') {
+        nextIndex =
+          activeIndex === -1
+            ? items.length - 1
+            : (activeIndex - 1 + items.length) % items.length;
+      } else if (e.key === "Home") {
         e.preventDefault();
         nextIndex = 0;
-      } else if (e.key === 'End') {
+      } else if (e.key === "End") {
         e.preventDefault();
         nextIndex = items.length - 1;
       }
@@ -161,16 +177,21 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
 
     const mergedRef = (node: HTMLDivElement | null) => {
       contentRef.current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
     };
 
     if (!open) return null;
 
-    const scopedTheme = triggerRef.current?.closest('[data-theme]')?.getAttribute('data-theme') || undefined;
+    const scopedTheme =
+      triggerRef.current?.closest("[data-theme]")?.getAttribute("data-theme") ||
+      undefined;
     const scopedMode =
-      triggerRef.current?.closest('[data-mode]')?.getAttribute('data-mode') ||
-      (typeof document !== 'undefined' ? document.documentElement.getAttribute('data-docs-theme') : undefined) ||
+      triggerRef.current?.closest("[data-mode]")?.getAttribute("data-mode") ||
+      (typeof document !== "undefined"
+        ? document.documentElement.getAttribute("data-docs-theme")
+        : undefined) ||
       undefined;
 
     return (
@@ -187,9 +208,9 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
           data-docs-theme={scopedMode}
           style={style}
           className={cx(
-            'sora-dropdown__content',
-            'sora-dropdown__content--' + actualPlacement,
-            className
+            "sora-dropdown__content",
+            "sora-dropdown__content--" + actualPlacement,
+            className,
           )}
           {...props}
         >
@@ -197,9 +218,9 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
         </div>
       </Portal>
     );
-  }
+  },
 );
-DropdownContent.displayName = 'DropdownContent';
+DropdownContent.displayName = "DropdownContent";
 
 export const DropdownItem = forwardRef<HTMLButtonElement, DropdownItemProps>(
   ({ disabled, destructive, className, children, onClick, ...props }, ref) => {
@@ -221,31 +242,37 @@ export const DropdownItem = forwardRef<HTMLButtonElement, DropdownItemProps>(
         tabIndex={-1}
         onClick={handleClick}
         className={cx(
-          'sora-dropdown__item',
-          destructive && 'sora-dropdown__item--destructive',
-          className
+          "sora-dropdown__item",
+          destructive && "sora-dropdown__item--destructive",
+          className,
         )}
         {...props}
       >
         {children}
       </button>
     );
-  }
+  },
 );
-DropdownItem.displayName = 'DropdownItem';
+DropdownItem.displayName = "DropdownItem";
 
-export const DropdownSeparator = forwardRef<HTMLHRElement, DropdownSeparatorProps>(
-  ({ className, ...props }, ref) => (
-    <hr ref={ref} role="separator" className={cx('sora-dropdown__separator', className)} {...props} />
-  )
-);
-DropdownSeparator.displayName = 'DropdownSeparator';
+export const DropdownSeparator = forwardRef<
+  HTMLHRElement,
+  DropdownSeparatorProps
+>(({ className, ...props }, ref) => (
+  <hr
+    ref={ref}
+    role="separator"
+    className={cx("sora-dropdown__separator", className)}
+    {...props}
+  />
+));
+DropdownSeparator.displayName = "DropdownSeparator";
 
 export const DropdownLabel = forwardRef<HTMLDivElement, DropdownLabelProps>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cx('sora-dropdown__label', className)} {...props}>
+    <div ref={ref} className={cx("sora-dropdown__label", className)} {...props}>
       {children}
     </div>
-  )
+  ),
 );
-DropdownLabel.displayName = 'DropdownLabel';
+DropdownLabel.displayName = "DropdownLabel";

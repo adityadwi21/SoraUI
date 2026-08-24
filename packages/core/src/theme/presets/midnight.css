@@ -3,7 +3,7 @@
  * Mode: adaptive (dark default, light on data-mode="light" or data-docs-theme="light")
  * Description: Clean minimal dark. Indigo accents. Default dark theme.
  */
-[data-theme='midnight'] {
+[data-theme="midnight"] {
   --ui-background: #09090b;
   --ui-foreground: #fafafa;
   --ui-card: #18181b;
@@ -38,12 +38,12 @@
 }
 
 /* ─── Midnight Light Mode ─── */
-html[data-mode="light"] [data-theme='midnight'],
-html[data-docs-theme="light"] [data-theme='midnight'],
-[data-mode="light"] [data-theme='midnight'],
-[data-docs-theme="light"] [data-theme='midnight'],
-[data-theme='midnight'][data-mode='light'],
-[data-theme='midnight'][data-docs-theme='light'] {
+html[data-mode="light"] [data-theme="midnight"],
+html[data-docs-theme="light"] [data-theme="midnight"],
+[data-mode="light"] [data-theme="midnight"],
+[data-docs-theme="light"] [data-theme="midnight"],
+[data-theme="midnight"][data-mode="light"],
+[data-theme="midnight"][data-docs-theme="light"] {
   --ui-background: #ffffff;
   --ui-foreground: #09090b;
   --ui-card: #ffffff;

@@ -1,1 +1,10 @@
-{"name":"navigation-menu","type":"registry:ui","level":2,"description":"A collection of links for navigating websites with dropdown content panels.","files":[{"path":"components/ui/navigation-menu.tsx","type":"registry:ui"}],"dependencies":["@soraui/hooks"]}
+{
+  "name": "navigation-menu",
+  "type": "registry:ui",
+  "level": 2,
+  "description": "A collection of links for navigating websites with dropdown content panels.",
+  "files": [
+    { "path": "components/ui/navigation-menu.tsx", "type": "registry:ui" }
+  ],
+  "dependencies": ["@soraui/hooks"]
+}

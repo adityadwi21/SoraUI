@@ -3,7 +3,7 @@
  * Mode: adaptive (light default, dark on data-mode="dark" or data-docs-theme="dark")
  * Description: Warm sunset orange tones on a bright cream background.
  */
-[data-theme='horizon'] {
+[data-theme="horizon"] {
   --ui-background: #fffbf5;
   --ui-foreground: #431407;
   --ui-card: #ffffff;
@@ -39,12 +39,12 @@
 }
 
 /* ─── Horizon Dark Mode ─── */
-html[data-mode="dark"] [data-theme='horizon'],
-html[data-docs-theme="dark"] [data-theme='horizon'],
-[data-mode="dark"] [data-theme='horizon'],
-[data-docs-theme="dark"] [data-theme='horizon'],
-[data-theme='horizon'][data-mode='dark'],
-[data-theme='horizon'][data-docs-theme='dark'] {
+html[data-mode="dark"] [data-theme="horizon"],
+html[data-docs-theme="dark"] [data-theme="horizon"],
+[data-mode="dark"] [data-theme="horizon"],
+[data-docs-theme="dark"] [data-theme="horizon"],
+[data-theme="horizon"][data-mode="dark"],
+[data-theme="horizon"][data-docs-theme="dark"] {
   --ui-background: #1c0d06;
   --ui-foreground: #fff7ed;
   --ui-card: #2a140b;

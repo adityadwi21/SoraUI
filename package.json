@@ -27,10 +27,6 @@
     "test:ai-agent-mcp": "node scripts/test-ai-agent-mcp-validation.mjs",
     "test:adoption-benchmark": "node scripts/test-developer-adoption-benchmark.mjs"
   },
-
-
-
-
   "devDependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
     "@playwright/test": "^1.62.1",
@@ -46,8 +42,6 @@
     "turbo": "^2.1.0",
     "typescript": "^5.5.4"
   },
-
-
   "packageManager": "pnpm@9.7.0",
   "engines": {
     "node": ">=18.0.0",

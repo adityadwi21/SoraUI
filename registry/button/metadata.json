@@ -4,11 +4,30 @@
   "level": 1,
   "description": "Interactive button component. Multiple variants (primary, secondary, outline, ghost, destructive, link) and sizes (sm, md, lg, icon). Keyboard accessible, loading state, disabled state, focus ring.",
   "props": {
-    "variant": { "type": "ButtonVariant", "default": "primary", "options": ["primary", "secondary", "outline", "ghost", "destructive", "link"] },
-    "size": { "type": "ButtonSize", "default": "md", "options": ["sm", "md", "lg", "icon"] },
+    "variant": {
+      "type": "ButtonVariant",
+      "default": "primary",
+      "options": [
+        "primary",
+        "secondary",
+        "outline",
+        "ghost",
+        "destructive",
+        "link"
+      ]
+    },
+    "size": {
+      "type": "ButtonSize",
+      "default": "md",
+      "options": ["sm", "md", "lg", "icon"]
+    },
     "loading": { "type": "boolean", "default": false },
     "disabled": { "type": "boolean", "default": false },
-    "type": { "type": "string", "default": "button", "options": ["button", "submit", "reset"] }
+    "type": {
+      "type": "string",
+      "default": "button",
+      "options": ["button", "submit", "reset"]
+    }
   },
   "accessibility": {
     "keyboard": ["Enter to activate", "Space to activate", "Tab to focus"],
@@ -29,7 +48,10 @@
   },
   "examples": [
     { "title": "Primary button", "code": "<Button>Click me</Button>" },
-    { "title": "Secondary button", "code": "<Button variant=\"secondary\">Click me</Button>" },
+    {
+      "title": "Secondary button",
+      "code": "<Button variant=\"secondary\">Click me</Button>"
+    },
     { "title": "Loading state", "code": "<Button loading>Saving...</Button>" },
     { "title": "Disabled", "code": "<Button disabled>Disabled</Button>" }
   ]

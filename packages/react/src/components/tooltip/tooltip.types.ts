@@ -1,5 +1,5 @@
-import type { ReactNode, HTMLAttributes } from 'react';
-import type { Placement } from '@soraui/hooks';
+import type { ReactNode, HTMLAttributes } from "react";
+import type { Placement } from "@soraui/hooks";
 
 export interface TooltipProps {
   /** Controlled open state */

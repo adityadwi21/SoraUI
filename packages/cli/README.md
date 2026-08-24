@@ -25,12 +25,14 @@ pnpm dlx @soraui/cli init -t vite
 ## 🧩 Adding Components & Blocks
 
 ### Add UI Primitives
+
 ```bash
 npx @soraui/cli add button
 npx @soraui/cli add dialog select card tabs
 ```
 
 ### Add Production Blocks
+
 ```bash
 npx @soraui/cli add block login-form
 npx @soraui/cli add block metric-grid
@@ -38,6 +40,7 @@ npx @soraui/cli add block dashboard-shell
 ```
 
 ### Add Full-Page Templates
+
 ```bash
 npx @soraui/cli add template dashboard-page
 npx @soraui/cli add template auth-page
@@ -48,11 +51,13 @@ npx @soraui/cli add template auth-page
 ## 🔍 Discovery Commands
 
 ### List all available items
+
 ```bash
 npx @soraui/cli list
 ```
 
 ### Search registry
+
 ```bash
 npx @soraui/cli search auth
 npx @soraui/cli search modal
@@ -62,12 +67,12 @@ npx @soraui/cli search modal
 
 ## 🎨 Options & Flags
 
-| Flag | Description |
-|---|---|
+| Flag                    | Description                                                                          |
+| ----------------------- | ------------------------------------------------------------------------------------ |
 | `-t, --template <name>` | Scaffold a preconfigured template (`next`, `vite`, `start`, `react-router`, `astro`) |
-| `-o, --overwrite` | Overwrite existing files without prompt |
-| `-y, --yes` | Skip confirmation prompts and use default settings |
-| `--path <dir>` | Custom output directory for components |
+| `-o, --overwrite`       | Overwrite existing files without prompt                                              |
+| `-y, --yes`             | Skip confirmation prompts and use default settings                                   |
+| `--path <dir>`          | Custom output directory for components                                               |
 
 ---
 

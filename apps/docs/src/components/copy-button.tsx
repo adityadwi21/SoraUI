@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button } from '@soraui/react';
+import React, { useState } from "react";
+import { Button } from "@soraui/react";
 
 export interface CopyButtonProps {
   text: string;
@@ -28,13 +28,13 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ text, style }) => {
       size="sm"
       onClick={handleCopy}
       style={{
-        fontSize: '0.75rem',
-        padding: '0.25rem 0.5rem',
-        height: '28px',
+        fontSize: "0.75rem",
+        padding: "0.25rem 0.5rem",
+        height: "28px",
         ...style,
       }}
     >
-      {copied ? '✓ Copied' : 'Copy'}
+      {copied ? "✓ Copied" : "Copy"}
     </Button>
   );
 };

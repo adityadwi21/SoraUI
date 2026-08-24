@@ -6,15 +6,27 @@
   "props": {
     "title": { "type": "ReactNode" },
     "description": { "type": "ReactNode" },
-    "variant": { "type": "ToastVariant", "default": "default", "options": ["default", "success", "destructive"] },
+    "variant": {
+      "type": "ToastVariant",
+      "default": "default",
+      "options": ["default", "success", "destructive"]
+    },
     "duration": { "type": "number", "default": 5000 }
   },
   "accessibility": {
     "keyboard": ["Close button is focusable and dismissible via Space/Enter"],
-    "aria": ["role=\"region\" on viewport", "aria-live=\"polite\" on viewport", "role=\"status\" on normal toasts", "role=\"alert\" on destructive toasts"],
+    "aria": [
+      "role=\"region\" on viewport",
+      "aria-live=\"polite\" on viewport",
+      "role=\"status\" on normal toasts",
+      "role=\"alert\" on destructive toasts"
+    ],
     "focus": "Does not steal user focus, announces gracefully to screen readers"
   },
   "files": [{ "path": "components/ui/toast.tsx", "type": "registry:ui" }],
   "dependencies": ["@soraui/hooks"],
-  "installation": { "cli": "npx soraui add toast", "npm": "import { ToastProvider, useToast, Toast, ToastTitle, ToastDescription } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add toast",
+    "npm": "import { ToastProvider, useToast, Toast, ToastTitle, ToastDescription } from '@soraui/react'"
+  }
 }

@@ -1,6 +1,9 @@
-import type { ButtonHTMLAttributes } from 'react';
+import type { ButtonHTMLAttributes } from "react";
 
-export interface SwitchProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
+export interface SwitchProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "onChange"
+> {
   checked?: boolean | undefined;
   defaultChecked?: boolean | undefined;
   onCheckedChange?: ((checked: boolean) => void) | undefined;

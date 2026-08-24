@@ -3,7 +3,7 @@
  * Mode: dark
  * Description: Cosmic deep violet and fuchsia nebula glow.
  */
-[data-theme='nebula'] {
+[data-theme="nebula"] {
   --ui-background: #1e1035;
   --ui-foreground: #faf5ff;
   --ui-card: #2e1065;

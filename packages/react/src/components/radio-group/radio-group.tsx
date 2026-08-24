@@ -5,11 +5,11 @@ import {
   forwardRef,
   useId,
   type ChangeEvent,
-} from 'react';
-import type { RadioGroupProps, RadioGroupItemProps } from './radio-group.types';
+} from "react";
+import type { RadioGroupProps, RadioGroupItemProps } from "./radio-group.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 interface RadioGroupContextValue {
@@ -25,16 +25,16 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
   (
     {
       value: controlledValue,
-      defaultValue = '',
+      defaultValue = "",
       onValueChange,
       name: customName,
       disabled = false,
-      orientation = 'vertical',
+      orientation = "vertical",
       className,
       children,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
     const isControlled = controlledValue !== undefined;
@@ -49,26 +49,43 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     };
 
     return (
-      <RadioGroupContext.Provider value={{ name, value, disabled, onSelect: handleSelect }}>
+      <RadioGroupContext.Provider
+        value={{ name, value, disabled, onSelect: handleSelect }}
+      >
         <div
           ref={ref}
           role="radiogroup"
           aria-orientation={orientation}
-          className={cx('sora-radio-group', `sora-radio-group--${orientation}`, className)}
+          className={cx(
+            "sora-radio-group",
+            `sora-radio-group--${orientation}`,
+            className,
+          )}
           {...props}
         >
           {children}
         </div>
       </RadioGroupContext.Provider>
     );
-  }
+  },
 );
-RadioGroup.displayName = 'RadioGroup';
+RadioGroup.displayName = "RadioGroup";
 
 export const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
-  ({ value, disabled: itemDisabled, className, children, id: customId, ...props }, ref) => {
+  (
+    {
+      value,
+      disabled: itemDisabled,
+      className,
+      children,
+      id: customId,
+      ...props
+    },
+    ref,
+  ) => {
     const context = useContext(RadioGroupContext);
-    if (!context) throw new Error('RadioGroupItem must be used within a RadioGroup');
+    if (!context)
+      throw new Error("RadioGroupItem must be used within a RadioGroup");
 
     const generatedId = useId();
     const id = customId || generatedId;
@@ -83,7 +100,11 @@ export const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
     return (
       <label
         htmlFor={id}
-        className={cx('sora-radio-item', disabled && 'sora-radio-item--disabled', className)}
+        className={cx(
+          "sora-radio-item",
+          disabled && "sora-radio-item--disabled",
+          className,
+        )}
       >
         <input
           ref={ref}
@@ -98,7 +119,10 @@ export const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
           {...props}
         />
         <span
-          className={cx('sora-radio-item__circle', isChecked && 'sora-radio-item__circle--checked')}
+          className={cx(
+            "sora-radio-item__circle",
+            isChecked && "sora-radio-item__circle--checked",
+          )}
           aria-hidden="true"
         >
           {isChecked && <span className="sora-radio-item__dot" />}
@@ -106,6 +130,6 @@ export const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
         {children && <span className="sora-radio-item__label">{children}</span>}
       </label>
     );
-  }
+  },
 );
-RadioGroupItem.displayName = 'RadioGroupItem';
+RadioGroupItem.displayName = "RadioGroupItem";

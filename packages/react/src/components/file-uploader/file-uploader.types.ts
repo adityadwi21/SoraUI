@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from "react";
 
 export interface UploadedFile {
   id: string;
@@ -7,7 +7,10 @@ export interface UploadedFile {
   size: number;
 }
 
-export interface FileUploaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface FileUploaderProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "onChange"
+> {
   /** Comma-separated list of accepted file extensions or MIME types */
   accept?: string;
   /** Maximum file size in bytes (e.g. 5 * 1024 * 1024 for 5MB) */

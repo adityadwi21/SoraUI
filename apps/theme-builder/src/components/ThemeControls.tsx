@@ -1,6 +1,6 @@
-import { THEME_PRESETS, type ThemeTokens } from '../presets';
-import { calculateContrast } from '../utils/contrast';
-import { ContrastBadge } from './ContrastBadge';
+import { THEME_PRESETS, type ThemeTokens } from "../presets";
+import { calculateContrast } from "../utils/contrast";
+import { ContrastBadge } from "./ContrastBadge";
 
 interface ThemeControlsProps {
   tokens: ThemeTokens;
@@ -8,7 +8,11 @@ interface ThemeControlsProps {
   onReset: () => void;
 }
 
-export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps) {
+export function ThemeControls({
+  tokens,
+  onChange,
+  onReset,
+}: ThemeControlsProps) {
   const handleColorChange = (key: keyof ThemeTokens, value: string) => {
     onChange({ ...tokens, [key]: value });
   };
@@ -19,9 +23,15 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
   };
 
   // Contrast evaluations
-  const primaryContrast = calculateContrast(tokens.primary, tokens.primaryForeground);
+  const primaryContrast = calculateContrast(
+    tokens.primary,
+    tokens.primaryForeground,
+  );
   const textContrast = calculateContrast(tokens.background, tokens.foreground);
-  const mutedContrast = calculateContrast(tokens.background, tokens.mutedForeground);
+  const mutedContrast = calculateContrast(
+    tokens.background,
+    tokens.mutedForeground,
+  );
 
   return (
     <aside className="theme-controls">
@@ -41,9 +51,12 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
               key={key}
               type="button"
               onClick={() => handlePresetSelect(key)}
-              className={`preset-chip ${tokens.name.toLowerCase() === p.name.toLowerCase() ? 'preset-chip--active' : ''}`}
+              className={`preset-chip ${tokens.name.toLowerCase() === p.name.toLowerCase() ? "preset-chip--active" : ""}`}
             >
-              <span className="preset-chip__dot" style={{ backgroundColor: p.primary }} />
+              <span
+                className="preset-chip__dot"
+                style={{ backgroundColor: p.primary }}
+              />
               <span>{p.name}</span>
             </button>
           ))}
@@ -54,7 +67,10 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
       <div className="control-group">
         <label className="control-label">WCAG 2.1 Contrast Health</label>
         <div className="contrast-stack">
-          <ContrastBadge label="Primary / Foreground" result={primaryContrast} />
+          <ContrastBadge
+            label="Primary / Foreground"
+            result={primaryContrast}
+          />
           <ContrastBadge label="Background / Text" result={textContrast} />
           <ContrastBadge label="Background / Muted" result={mutedContrast} />
         </div>
@@ -69,7 +85,7 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
             <input
               type="color"
               value={tokens.primary}
-              onChange={(e) => handleColorChange('primary', e.target.value)}
+              onChange={(e) => handleColorChange("primary", e.target.value)}
             />
           </div>
           <div className="color-field">
@@ -77,7 +93,9 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
             <input
               type="color"
               value={tokens.primaryForeground}
-              onChange={(e) => handleColorChange('primaryForeground', e.target.value)}
+              onChange={(e) =>
+                handleColorChange("primaryForeground", e.target.value)
+              }
             />
           </div>
           <div className="color-field">
@@ -85,7 +103,7 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
             <input
               type="color"
               value={tokens.background}
-              onChange={(e) => handleColorChange('background', e.target.value)}
+              onChange={(e) => handleColorChange("background", e.target.value)}
             />
           </div>
           <div className="color-field">
@@ -93,7 +111,7 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
             <input
               type="color"
               value={tokens.foreground}
-              onChange={(e) => handleColorChange('foreground', e.target.value)}
+              onChange={(e) => handleColorChange("foreground", e.target.value)}
             />
           </div>
           <div className="color-field">
@@ -101,7 +119,7 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
             <input
               type="color"
               value={tokens.secondary}
-              onChange={(e) => handleColorChange('secondary', e.target.value)}
+              onChange={(e) => handleColorChange("secondary", e.target.value)}
             />
           </div>
           <div className="color-field">
@@ -109,7 +127,7 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
             <input
               type="color"
               value={tokens.border}
-              onChange={(e) => handleColorChange('border', e.target.value)}
+              onChange={(e) => handleColorChange("border", e.target.value)}
             />
           </div>
           <div className="color-field">
@@ -117,7 +135,7 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
             <input
               type="color"
               value={tokens.ring}
-              onChange={(e) => handleColorChange('ring', e.target.value)}
+              onChange={(e) => handleColorChange("ring", e.target.value)}
             />
           </div>
           <div className="color-field">
@@ -125,7 +143,7 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
             <input
               type="color"
               value={tokens.destructive}
-              onChange={(e) => handleColorChange('destructive', e.target.value)}
+              onChange={(e) => handleColorChange("destructive", e.target.value)}
             />
           </div>
         </div>
@@ -143,7 +161,9 @@ export function ThemeControls({ tokens, onChange, onReset }: ThemeControlsProps)
           max="24"
           step="2"
           value={parseFloat(tokens.radius) * 16}
-          onChange={(e) => handleColorChange('radius', `${parseInt(e.target.value) / 16}rem`)}
+          onChange={(e) =>
+            handleColorChange("radius", `${parseInt(e.target.value) / 16}rem`)
+          }
           className="range-slider"
         />
       </div>

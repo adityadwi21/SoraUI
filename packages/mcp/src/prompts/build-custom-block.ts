@@ -6,12 +6,13 @@ export function getBuildCustomBlockPrompt(params: {
   const { blockName, category, primitivesToUse } = params;
 
   return {
-    description: 'Compose a new reusable UI-only block from SoraUI Level 1-2 primitives.',
+    description:
+      "Compose a new reusable UI-only block from SoraUI Level 1-2 primitives.",
     messages: [
       {
-        role: 'user' as const,
+        role: "user" as const,
         content: {
-          type: 'text' as const,
+          type: "text" as const,
           text: `Create a custom reusable SoraUI Block named "${blockName}" in the "${category}" category.
 Use the following SoraUI primitives: ${primitivesToUse}.
 

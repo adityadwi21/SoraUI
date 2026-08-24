@@ -13,21 +13,21 @@
  * Note: Benchmarks run via Vitest (JSDOM). For more precise timings
  * production measurements should use Playwright with real browser rendering.
  */
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, act, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React, { useState } from 'react';
-
-import { DataTable, type DataTableColumn } from '../../src/components/data-table/data-table';
-import { TreeView, type TreeItemData } from '../../src/components/tree-view/tree-view';
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { render, screen, act, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import React, { useState } from "react";
 
 import {
-  useClickOutside,
-  useEscapeKey,
-  useFocusTrap,
-} from '@soraui/hooks';
+  DataTable,
+  type DataTableColumn,
+} from "../../src/components/data-table/data-table";
+import {
+  TreeView,
+  type TreeItemData,
+} from "../../src/components/tree-view/tree-view";
 
-
+import { useClickOutside, useEscapeKey, useFocusTrap } from "@soraui/hooks";
 
 // ──────────────────────────────────────────────────────────────────────────────
 // 12D-1: DataTable render & interaction performance
@@ -37,7 +37,7 @@ interface Row {
   id: number;
   name: string;
   email: string;
-  status: 'active' | 'inactive' | 'pending';
+  status: "active" | "inactive" | "pending";
   revenue: number;
 }
 
@@ -46,20 +46,23 @@ function generateRows(count: number): Row[] {
     id: i + 1,
     name: `User ${i + 1}`,
     email: `user${i + 1}@soraui.dev`,
-    status: ((['active', 'inactive', 'pending'] as const)[i % 3])!,
+    status: (["active", "inactive", "pending"] as const)[i % 3]!,
     revenue: Math.round(Math.random() * 10000),
   }));
 }
 
 const COLUMNS: DataTableColumn<Row>[] = [
-  { accessorKey: 'id', header: 'ID', sortable: true },
-  { accessorKey: 'name', header: 'Name', sortable: true },
-  { accessorKey: 'email', header: 'Email', sortable: true },
-  { accessorKey: 'status', header: 'Status', sortable: true },
-  { accessorKey: 'revenue', header: 'Revenue', sortable: true },
+  { accessorKey: "id", header: "ID", sortable: true },
+  { accessorKey: "name", header: "Name", sortable: true },
+  { accessorKey: "email", header: "Email", sortable: true },
+  { accessorKey: "status", header: "Status", sortable: true },
+  { accessorKey: "revenue", header: "Revenue", sortable: true },
 ];
 
-function measureRender(renderFn: () => void, iterations = 10): { p50: number; p95: number } {
+function measureRender(
+  renderFn: () => void,
+  iterations = 10,
+): { p50: number; p95: number } {
   const times: number[] = [];
   for (let i = 0; i < iterations; i++) {
     const t0 = performance.now();
@@ -73,21 +76,25 @@ function measureRender(renderFn: () => void, iterations = 10): { p50: number; p9
   return { p50, p95 };
 }
 
-describe('12D — DataTable Performance (1,000 rows)', () => {
+describe("12D — DataTable Performance (1,000 rows)", () => {
   const rows1000 = generateRows(1000);
 
-  it('initial render: p50 < 200ms, p95 < 500ms (JSDOM baseline)', () => {
+  it("initial render: p50 < 200ms, p95 < 500ms (JSDOM baseline)", () => {
     const { p50, p95 } = measureRender(() => {
-      const { unmount } = render(<DataTable data={rows1000} columns={COLUMNS} />);
+      const { unmount } = render(
+        <DataTable data={rows1000} columns={COLUMNS} />,
+      );
       unmount();
     }, 5);
 
-    console.log(`DataTable 1000 rows — p50: ${p50.toFixed(1)}ms, p95: ${p95.toFixed(1)}ms`);
+    console.log(
+      `DataTable 1000 rows — p50: ${p50.toFixed(1)}ms, p95: ${p95.toFixed(1)}ms`,
+    );
     expect(p50).toBeLessThan(400);
   });
 
-  it('mounts and unmounts 1,000 rows without memory errors', () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+  it("mounts and unmounts 1,000 rows without memory errors", () => {
+    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     const { unmount } = render(<DataTable data={rows1000} columns={COLUMNS} />);
     unmount();
     expect(consoleSpy).not.toHaveBeenCalled();
@@ -99,7 +106,11 @@ describe('12D — DataTable Performance (1,000 rows)', () => {
 // 12D-2: TreeView deep structure benchmarks
 // ──────────────────────────────────────────────────────────────────────────────
 
-function generateTree(depth: number, branching: number, prefix = '1'): TreeItemData[] {
+function generateTree(
+  depth: number,
+  branching: number,
+  prefix = "1",
+): TreeItemData[] {
   if (depth === 0) return [];
   return Array.from({ length: branching }, (_, i) => ({
     id: `${prefix}-${i + 1}`,
@@ -111,19 +122,21 @@ function generateTree(depth: number, branching: number, prefix = '1'): TreeItemD
 // 5 levels, branching factor ~3 = ~243 leaf nodes (~364 total)
 const TREE_NODES = generateTree(5, 3);
 
-describe('12D — TreeView Performance (5 levels, ~364 nodes)', () => {
-  it('initial render: p50 < 300ms (JSDOM baseline)', () => {
+describe("12D — TreeView Performance (5 levels, ~364 nodes)", () => {
+  it("initial render: p50 < 300ms (JSDOM baseline)", () => {
     const { p50, p95 } = measureRender(() => {
       const { unmount } = render(<TreeView items={TREE_NODES} />);
       unmount();
     }, 5);
 
-    console.log(`TreeView 364 nodes — p50: ${p50.toFixed(1)}ms, p95: ${p95.toFixed(1)}ms`);
+    console.log(
+      `TreeView 364 nodes — p50: ${p50.toFixed(1)}ms, p95: ${p95.toFixed(1)}ms`,
+    );
     expect(p50).toBeLessThan(600);
   });
 
-  it('mounts and unmounts without errors', () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+  it("mounts and unmounts without errors", () => {
+    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     const { unmount } = render(<TreeView items={TREE_NODES} />);
     unmount();
     expect(consoleSpy).not.toHaveBeenCalled();
@@ -135,23 +148,27 @@ describe('12D — TreeView Performance (5 levels, ~364 nodes)', () => {
 // 12D-3: Event Listener Memory Audit (HARD GATE — 0 leaks)
 // ──────────────────────────────────────────────────────────────────────────────
 
-describe('12D — useClickOutside: 0 dangling listeners on unmount', () => {
-  it('cleans up added document event listeners on unmount', () => {
+describe("12D — useClickOutside: 0 dangling listeners on unmount", () => {
+  it("cleans up added document event listeners on unmount", () => {
     const addedListeners: [string, EventListener][] = [];
     const removedListeners: [string, EventListener][] = [];
 
     const origAdd = document.addEventListener.bind(document);
     const origRemove = document.removeEventListener.bind(document);
 
-    vi.spyOn(document, 'addEventListener').mockImplementation((type: string, handler: any, ...args: any[]) => {
-      addedListeners.push([type, handler]);
-      origAdd(type, handler, ...args);
-    });
+    vi.spyOn(document, "addEventListener").mockImplementation(
+      (type: string, handler: any, ...args: any[]) => {
+        addedListeners.push([type, handler]);
+        origAdd(type, handler, ...args);
+      },
+    );
 
-    vi.spyOn(document, 'removeEventListener').mockImplementation((type: string, handler: any, ...args: any[]) => {
-      removedListeners.push([type, handler]);
-      origRemove(type, handler, ...args);
-    });
+    vi.spyOn(document, "removeEventListener").mockImplementation(
+      (type: string, handler: any, ...args: any[]) => {
+        removedListeners.push([type, handler]);
+        origRemove(type, handler, ...args);
+      },
+    );
 
     const TestComponent = () => {
       const ref = React.useRef<HTMLDivElement>(null);
@@ -165,7 +182,8 @@ describe('12D — useClickOutside: 0 dangling listeners on unmount', () => {
 
     // Every listener added during mount must have been removed during unmount
     const stillActive = addedListeners.filter(
-      ([type, handler]) => !removedListeners.some(([rt, rh]) => rt === type && rh === handler)
+      ([type, handler]) =>
+        !removedListeners.some(([rt, rh]) => rt === type && rh === handler),
     );
 
     expect(stillActive.length).toBe(0);
@@ -174,23 +192,27 @@ describe('12D — useClickOutside: 0 dangling listeners on unmount', () => {
   });
 });
 
-describe('12D — useEscapeKey: 0 dangling listeners on unmount', () => {
-  it('cleans up added keydown listeners on unmount', () => {
+describe("12D — useEscapeKey: 0 dangling listeners on unmount", () => {
+  it("cleans up added keydown listeners on unmount", () => {
     const addedListeners: [string, EventListener][] = [];
     const removedListeners: [string, EventListener][] = [];
 
     const origAdd = document.addEventListener.bind(document);
     const origRemove = document.removeEventListener.bind(document);
 
-    vi.spyOn(document, 'addEventListener').mockImplementation((type: string, handler: any, ...args: any[]) => {
-      addedListeners.push([type, handler]);
-      origAdd(type, handler, ...args);
-    });
+    vi.spyOn(document, "addEventListener").mockImplementation(
+      (type: string, handler: any, ...args: any[]) => {
+        addedListeners.push([type, handler]);
+        origAdd(type, handler, ...args);
+      },
+    );
 
-    vi.spyOn(document, 'removeEventListener').mockImplementation((type: string, handler: any, ...args: any[]) => {
-      removedListeners.push([type, handler]);
-      origRemove(type, handler, ...args);
-    });
+    vi.spyOn(document, "removeEventListener").mockImplementation(
+      (type: string, handler: any, ...args: any[]) => {
+        removedListeners.push([type, handler]);
+        origRemove(type, handler, ...args);
+      },
+    );
 
     const TestComponent = () => {
       useEscapeKey(() => {}, true);
@@ -202,7 +224,8 @@ describe('12D — useEscapeKey: 0 dangling listeners on unmount', () => {
     unmount();
 
     const stillActive = addedListeners.filter(
-      ([type, handler]) => !removedListeners.some(([rt, rh]) => rt === type && rh === handler)
+      ([type, handler]) =>
+        !removedListeners.some(([rt, rh]) => rt === type && rh === handler),
     );
 
     expect(stillActive.length).toBe(0);
@@ -210,4 +233,3 @@ describe('12D — useEscapeKey: 0 dangling listeners on unmount', () => {
     vi.restoreAllMocks();
   });
 });
-

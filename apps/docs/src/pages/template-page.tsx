@@ -1,25 +1,35 @@
-import React, { useState, useMemo } from 'react';
-import type { TemplateDoc } from '../registry/types';
-import { TEMPLATE_DOCS } from '../registry/templates';
-import { ComponentPreview } from '../components/component-preview';
-import { PackageManagerBlock } from '../components/package-manager-block';
-import { Badge } from '@soraui/react';
-import { Check, Copy, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
-import { GitHubIcon } from '../components/brand-icons';
+import React, { useState, useMemo } from "react";
+import type { TemplateDoc } from "../registry/types";
+import { TEMPLATE_DOCS } from "../registry/templates";
+import { ComponentPreview } from "../components/component-preview";
+import { PackageManagerBlock } from "../components/package-manager-block";
+import { Badge } from "@soraui/react";
+import {
+  Check,
+  Copy,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+} from "lucide-react";
+import { GitHubIcon } from "../components/brand-icons";
 
 export interface TemplatePageProps {
   doc: TemplateDoc;
   onNavigate?: (path: string) => void;
 }
 
-export const TemplatePage: React.FC<TemplatePageProps> = ({ doc, onNavigate }) => {
+export const TemplatePage: React.FC<TemplatePageProps> = ({
+  doc,
+  onNavigate,
+}) => {
   const [copied, setCopied] = useState(false);
 
   const { prevTemplate, nextTemplate } = useMemo(() => {
     const idx = TEMPLATE_DOCS.findIndex((t) => t.id === doc.id);
     return {
       prevTemplate: idx > 0 ? TEMPLATE_DOCS[idx - 1] : null,
-      nextTemplate: idx < TEMPLATE_DOCS.length - 1 ? TEMPLATE_DOCS[idx + 1] : null,
+      nextTemplate:
+        idx < TEMPLATE_DOCS.length - 1 ? TEMPLATE_DOCS[idx + 1] : null,
     };
   }, [doc.id]);
 
@@ -28,7 +38,7 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({ doc, onNavigate }) =
       onNavigate(path);
     } else {
       window.location.hash = path;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -59,7 +69,7 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({ doc, onNavigate }) =
             >
               {copied ? (
                 <>
-                  <Check size={13} style={{ color: '#22c55e' }} />
+                  <Check size={13} style={{ color: "#22c55e" }} />
                   <span>Copied</span>
                 </>
               ) : (
@@ -74,22 +84,42 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({ doc, onNavigate }) =
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => prevTemplate && handleNav(`/templates/${prevTemplate.id}`)}
+                onClick={() =>
+                  prevTemplate && handleNav(`/templates/${prevTemplate.id}`)
+                }
                 disabled={!prevTemplate}
-                title={prevTemplate ? `Previous: ${prevTemplate.name}` : 'No previous template'}
+                title={
+                  prevTemplate
+                    ? `Previous: ${prevTemplate.name}`
+                    : "No previous template"
+                }
                 aria-label="Previous template"
-                style={!prevTemplate ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+                style={
+                  !prevTemplate
+                    ? { opacity: 0.35, cursor: "not-allowed" }
+                    : undefined
+                }
               >
                 <ChevronLeft size={14} />
               </button>
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => nextTemplate && handleNav(`/templates/${nextTemplate.id}`)}
+                onClick={() =>
+                  nextTemplate && handleNav(`/templates/${nextTemplate.id}`)
+                }
                 disabled={!nextTemplate}
-                title={nextTemplate ? `Next: ${nextTemplate.name}` : 'No next template'}
+                title={
+                  nextTemplate
+                    ? `Next: ${nextTemplate.name}`
+                    : "No next template"
+                }
                 aria-label="Next template"
-                style={!nextTemplate ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+                style={
+                  !nextTemplate
+                    ? { opacity: 0.35, cursor: "not-allowed" }
+                    : undefined
+                }
               >
                 <ChevronRight size={14} />
               </button>
@@ -100,10 +130,16 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({ doc, onNavigate }) =
         <p className="sora-doc-lead">{doc.description}</p>
 
         <div className="sora-doc-chips">
-          <Badge variant="secondary" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+          <Badge
+            variant="secondary"
+            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
+          >
             Full Template
           </Badge>
-          <Badge variant="outline" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+          <Badge
+            variant="outline"
+            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
+          >
             {doc.category}
           </Badge>
           <a
@@ -123,20 +159,24 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({ doc, onNavigate }) =
       <section className="sora-doc-section">
         <h2 id="live-preview" className="sora-doc-h2">
           <span>Live Interactive Preview</span>
-          <a href="#live-preview" className="sora-doc-anchor">#</a>
+          <a href="#live-preview" className="sora-doc-anchor">
+            #
+          </a>
         </h2>
-        <ComponentPreview code={doc.code}>
-          {doc.render()}
-        </ComponentPreview>
+        <ComponentPreview code={doc.code}>{doc.render()}</ComponentPreview>
       </section>
 
       {/* Installation */}
       <section className="sora-doc-section">
         <h2 id="installation" className="sora-doc-h2">
           <span>Installation</span>
-          <a href="#installation" className="sora-doc-anchor">#</a>
+          <a href="#installation" className="sora-doc-anchor">
+            #
+          </a>
         </h2>
-        <p className="sora-subtext">Add this full template directly to your project:</p>
+        <p className="sora-subtext">
+          Add this full template directly to your project:
+        </p>
         <PackageManagerBlock
           commands={{
             pnpm: `pnpm dlx @soraui/cli add template ${doc.id}`,
@@ -144,7 +184,7 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({ doc, onNavigate }) =
             yarn: `yarn dlx @soraui/cli add template ${doc.id}`,
             bun: `bunx @soraui/cli add template ${doc.id}`,
           }}
-          style={{ marginTop: '0.5rem' }}
+          style={{ marginTop: "0.5rem" }}
         />
       </section>
 
@@ -152,10 +192,14 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({ doc, onNavigate }) =
       <section className="sora-doc-section">
         <h2 id="composed-blocks" className="sora-doc-h2">
           <span>Composed Primitives &amp; Blocks</span>
-          <a href="#composed-blocks" className="sora-doc-anchor">#</a>
+          <a href="#composed-blocks" className="sora-doc-anchor">
+            #
+          </a>
         </h2>
-        <p className="sora-subtext">This template is composed of the following SoraUI primitives:</p>
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+        <p className="sora-subtext">
+          This template is composed of the following SoraUI primitives:
+        </p>
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           {doc.blocks.map((b) => (
             <Badge key={b} variant="default">
               {b}

@@ -10,11 +10,23 @@
     "maxDate": { "type": "Date" }
   },
   "accessibility": {
-    "keyboard": ["Arrow keys to navigate days", "PageUp/PageDown to switch months", "Home/End for first/last day of month"],
-    "aria": ["role=\"grid\"", "role=\"gridcell\"", "aria-selected", "aria-disabled"],
+    "keyboard": [
+      "Arrow keys to navigate days",
+      "PageUp/PageDown to switch months",
+      "Home/End for first/last day of month"
+    ],
+    "aria": [
+      "role=\"grid\"",
+      "role=\"gridcell\"",
+      "aria-selected",
+      "aria-disabled"
+    ],
     "focus": "Full roving tabindex on calendar grid cells"
   },
   "files": [{ "path": "components/ui/calendar.tsx", "type": "registry:ui" }],
   "dependencies": [],
-  "installation": { "cli": "npx soraui add calendar", "npm": "import { Calendar } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add calendar",
+    "npm": "import { Calendar } from '@soraui/react'"
+  }
 }

@@ -1,39 +1,39 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from "vitest";
 import {
   handleInspectComponent,
   handleInspectBlock,
   handleInspectTemplate,
   handleInspectTheme,
-} from '../src/index';
+} from "../src/index";
 
-describe('Phase 11 — MCP Detailed Inspection Contract', () => {
-  it('inspects Level 1, 2, and 3 primitive components', () => {
-    const btn = handleInspectComponent({ name: 'button' });
+describe("Phase 11 — MCP Detailed Inspection Contract", () => {
+  it("inspects Level 1, 2, and 3 primitive components", () => {
+    const btn = handleInspectComponent({ name: "button" });
     expect(btn.level).toBe(1);
 
-    const dialog = handleInspectComponent({ name: 'dialog' });
+    const dialog = handleInspectComponent({ name: "dialog" });
     expect(dialog.level).toBe(2);
 
-    const calendar = handleInspectComponent({ name: 'calendar' });
+    const calendar = handleInspectComponent({ name: "calendar" });
     expect(calendar.level).toBe(3);
   });
 
-  it('inspects all 14 blocks with boundary separation', () => {
+  it("inspects all 14 blocks with boundary separation", () => {
     const blockIds = [
-      'login-form',
-      'register-form',
-      'forgot-password-form',
-      'otp-verification',
-      'dashboard-shell',
-      'metric-grid',
-      'data-table-block',
-      'hero-section',
-      'feature-grid',
-      'pricing-table',
-      'faq-section',
-      'footer-section',
-      'multi-step-wizard',
-      'settings-form',
+      "login-form",
+      "register-form",
+      "forgot-password-form",
+      "otp-verification",
+      "dashboard-shell",
+      "metric-grid",
+      "data-table-block",
+      "hero-section",
+      "feature-grid",
+      "pricing-table",
+      "faq-section",
+      "footer-section",
+      "multi-step-wizard",
+      "settings-form",
     ];
 
     expect(blockIds.length).toBe(14);
@@ -46,8 +46,13 @@ describe('Phase 11 — MCP Detailed Inspection Contract', () => {
     }
   });
 
-  it('inspects all 4 page templates', () => {
-    const tmplIds = ['login-page', 'dashboard-page', 'saas-landing-page', 'settings-page'];
+  it("inspects all 4 page templates", () => {
+    const tmplIds = [
+      "login-page",
+      "dashboard-page",
+      "saas-landing-page",
+      "settings-page",
+    ];
     for (const id of tmplIds) {
       const tmpl = handleInspectTemplate({ id });
       expect(tmpl.id).toBe(id);
@@ -55,8 +60,18 @@ describe('Phase 11 — MCP Detailed Inspection Contract', () => {
     }
   });
 
-  it('inspects all 9 theme presets', () => {
-    const themeIds = ['sky', 'cloud', 'horizon', 'aurora', 'twilight', 'midnight', 'nebula', 'eclipse', 'starlight'];
+  it("inspects all 9 theme presets", () => {
+    const themeIds = [
+      "sky",
+      "cloud",
+      "horizon",
+      "aurora",
+      "twilight",
+      "midnight",
+      "nebula",
+      "eclipse",
+      "starlight",
+    ];
     for (const id of themeIds) {
       const theme = handleInspectTheme({ id });
       expect(theme.id).toBe(id);

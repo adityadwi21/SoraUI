@@ -1,8 +1,14 @@
-import { forwardRef, useState, useRef, type KeyboardEvent, type MouseEvent } from 'react';
-import type { SliderProps } from './slider.types';
+import {
+  forwardRef,
+  useState,
+  useRef,
+  type KeyboardEvent,
+  type MouseEvent,
+} from "react";
+import type { SliderProps } from "./slider.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(
@@ -18,7 +24,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
     const isControlled = controlledValue !== undefined;
@@ -27,23 +33,26 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
     const trackRef = useRef<HTMLDivElement | null>(null);
 
     const updateValue = (newVal: number) => {
-      const clamped = Math.min(max, Math.max(min, Math.round(newVal / step) * step));
+      const clamped = Math.min(
+        max,
+        Math.max(min, Math.round(newVal / step) * step),
+      );
       if (!isControlled) setUncontrolledValue(clamped);
       onValueChange?.(clamped);
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
       if (disabled) return;
-      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      if (e.key === "ArrowRight" || e.key === "ArrowUp") {
         e.preventDefault();
         updateValue(value + step);
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
         e.preventDefault();
         updateValue(value - step);
-      } else if (e.key === 'Home') {
+      } else if (e.key === "Home") {
         e.preventDefault();
         updateValue(min);
-      } else if (e.key === 'End') {
+      } else if (e.key === "End") {
         e.preventDefault();
         updateValue(max);
       }
@@ -57,12 +66,19 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
       updateValue(min + pct * (max - min));
     };
 
-    const percentage = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
+    const percentage = Math.max(
+      0,
+      Math.min(100, ((value - min) / (max - min)) * 100),
+    );
 
     return (
       <div
         ref={ref}
-        className={cx('sora-slider', disabled && 'sora-slider--disabled', className)}
+        className={cx(
+          "sora-slider",
+          disabled && "sora-slider--disabled",
+          className,
+        )}
         {...props}
       >
         <div
@@ -70,7 +86,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
           onClick={handleTrackClick}
           className="sora-slider__track"
         >
-          <div className="sora-slider__range" style={{ width: `${percentage}%` }} />
+          <div
+            className="sora-slider__range"
+            style={{ width: `${percentage}%` }}
+          />
         </div>
         <div
           role="slider"
@@ -79,16 +98,16 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
           aria-valuemin={min}
           aria-valuemax={max}
           aria-disabled={disabled || undefined}
-          aria-label={props['aria-label']}
-          aria-labelledby={props['aria-labelledby']}
-          aria-describedby={props['aria-describedby']}
+          aria-label={props["aria-label"]}
+          aria-labelledby={props["aria-labelledby"]}
+          aria-describedby={props["aria-describedby"]}
           onKeyDown={handleKeyDown}
           style={{ left: `${percentage}%` }}
           className="sora-slider__thumb"
         />
       </div>
     );
-  }
+  },
 );
 
-Slider.displayName = 'Slider';
+Slider.displayName = "Slider";

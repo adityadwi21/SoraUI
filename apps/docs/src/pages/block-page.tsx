@@ -1,12 +1,18 @@
-import React, { useState, useMemo } from 'react';
-import type { BlockDoc } from '../registry/types';
-import { BLOCK_DOCS } from '../registry/blocks';
-import { ComponentPreview } from '../components/component-preview';
-import { PropTable } from '../components/prop-table';
-import { PackageManagerBlock } from '../components/package-manager-block';
-import { Badge } from '@soraui/react';
-import { Check, Copy, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
-import { GitHubIcon } from '../components/brand-icons';
+import React, { useState, useMemo } from "react";
+import type { BlockDoc } from "../registry/types";
+import { BLOCK_DOCS } from "../registry/blocks";
+import { ComponentPreview } from "../components/component-preview";
+import { PropTable } from "../components/prop-table";
+import { PackageManagerBlock } from "../components/package-manager-block";
+import { Badge } from "@soraui/react";
+import {
+  Check,
+  Copy,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+} from "lucide-react";
+import { GitHubIcon } from "../components/brand-icons";
 
 export interface BlockPageProps {
   doc: BlockDoc;
@@ -29,7 +35,7 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
       onNavigate(path);
     } else {
       window.location.hash = path;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -60,7 +66,7 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
             >
               {copied ? (
                 <>
-                  <Check size={13} style={{ color: '#22c55e' }} />
+                  <Check size={13} style={{ color: "#22c55e" }} />
                   <span>Copied</span>
                 </>
               ) : (
@@ -75,22 +81,38 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => prevBlock && handleNav(`/blocks/${prevBlock.id}`)}
+                onClick={() =>
+                  prevBlock && handleNav(`/blocks/${prevBlock.id}`)
+                }
                 disabled={!prevBlock}
-                title={prevBlock ? `Previous: ${prevBlock.name}` : 'No previous block'}
+                title={
+                  prevBlock
+                    ? `Previous: ${prevBlock.name}`
+                    : "No previous block"
+                }
                 aria-label="Previous block"
-                style={!prevBlock ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+                style={
+                  !prevBlock
+                    ? { opacity: 0.35, cursor: "not-allowed" }
+                    : undefined
+                }
               >
                 <ChevronLeft size={14} />
               </button>
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => nextBlock && handleNav(`/blocks/${nextBlock.id}`)}
+                onClick={() =>
+                  nextBlock && handleNav(`/blocks/${nextBlock.id}`)
+                }
                 disabled={!nextBlock}
-                title={nextBlock ? `Next: ${nextBlock.name}` : 'No next block'}
+                title={nextBlock ? `Next: ${nextBlock.name}` : "No next block"}
                 aria-label="Next block"
-                style={!nextBlock ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+                style={
+                  !nextBlock
+                    ? { opacity: 0.35, cursor: "not-allowed" }
+                    : undefined
+                }
               >
                 <ChevronRight size={14} />
               </button>
@@ -101,10 +123,16 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
         <p className="sora-doc-lead">{doc.description}</p>
 
         <div className="sora-doc-chips">
-          <Badge variant="secondary" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+          <Badge
+            variant="secondary"
+            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
+          >
             Production Block
           </Badge>
-          <Badge variant="outline" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+          <Badge
+            variant="outline"
+            style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}
+          >
             {doc.category}
           </Badge>
           <a
@@ -124,36 +152,92 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
       <section className="sora-doc-section">
         <h2 id="live-preview" className="sora-doc-h2">
           <span>Live Interactive Preview</span>
-          <a href="#live-preview" className="sora-doc-anchor">#</a>
+          <a href="#live-preview" className="sora-doc-anchor">
+            #
+          </a>
         </h2>
-        <ComponentPreview code={doc.code}>
-          {doc.render()}
-        </ComponentPreview>
+        <ComponentPreview code={doc.code}>{doc.render()}</ComponentPreview>
       </section>
 
       {/* Architecture & Boundary Matrix */}
       <section className="sora-doc-section">
         <h2 id="boundary-matrix" className="sora-doc-h2">
           <span>Architecture &amp; Boundary Matrix</span>
-          <a href="#boundary-matrix" className="sora-doc-anchor">#</a>
+          <a href="#boundary-matrix" className="sora-doc-anchor">
+            #
+          </a>
         </h2>
-        <p className="sora-subtext">Clear separation between UI primitives and your business logic:</p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
-          <div style={{ padding: '1.25rem', borderRadius: 'var(--docs-radius)', border: '1px solid var(--docs-border)', borderLeft: '4px solid #22c55e', background: 'var(--docs-bg-subtle)' }}>
-            <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#22c55e', marginBottom: '0.625rem' }}>
+        <p className="sora-subtext">
+          Clear separation between UI primitives and your business logic:
+        </p>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "1rem",
+          }}
+        >
+          <div
+            style={{
+              padding: "1.25rem",
+              borderRadius: "var(--docs-radius)",
+              border: "1px solid var(--docs-border)",
+              borderLeft: "4px solid #22c55e",
+              background: "var(--docs-bg-subtle)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "0.875rem",
+                fontWeight: 700,
+                color: "#22c55e",
+                marginBottom: "0.625rem",
+              }}
+            >
               ✓ SoraUI Handles (UI Layer)
             </div>
-            <ul style={{ margin: 0, paddingLeft: '1.25rem', fontSize: '0.8125rem', color: 'var(--docs-fg-muted)', lineHeight: 1.7 }}>
+            <ul
+              style={{
+                margin: 0,
+                paddingLeft: "1.25rem",
+                fontSize: "0.8125rem",
+                color: "var(--docs-fg-muted)",
+                lineHeight: 1.7,
+              }}
+            >
               {doc.boundaryExplanation.soraHandles.map((h, i) => (
                 <li key={i}>{h}</li>
               ))}
             </ul>
           </div>
-          <div style={{ padding: '1.25rem', borderRadius: 'var(--docs-radius)', border: '1px solid var(--docs-border)', borderLeft: '4px solid var(--docs-accent)', background: 'var(--docs-bg-subtle)' }}>
-            <div style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--docs-accent)', marginBottom: '0.625rem' }}>
+          <div
+            style={{
+              padding: "1.25rem",
+              borderRadius: "var(--docs-radius)",
+              border: "1px solid var(--docs-border)",
+              borderLeft: "4px solid var(--docs-accent)",
+              background: "var(--docs-bg-subtle)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "0.875rem",
+                fontWeight: 700,
+                color: "var(--docs-accent)",
+                marginBottom: "0.625rem",
+              }}
+            >
               → Your App Handles (Consumer Domain)
             </div>
-            <ul style={{ margin: 0, paddingLeft: '1.25rem', fontSize: '0.8125rem', color: 'var(--docs-fg-muted)', lineHeight: 1.7 }}>
+            <ul
+              style={{
+                margin: 0,
+                paddingLeft: "1.25rem",
+                fontSize: "0.8125rem",
+                color: "var(--docs-fg-muted)",
+                lineHeight: 1.7,
+              }}
+            >
               {doc.boundaryExplanation.consumerHandles.map((h, i) => (
                 <li key={i}>{h}</li>
               ))}
@@ -166,9 +250,13 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
       <section className="sora-doc-section">
         <h2 id="installation" className="sora-doc-h2">
           <span>Installation</span>
-          <a href="#installation" className="sora-doc-anchor">#</a>
+          <a href="#installation" className="sora-doc-anchor">
+            #
+          </a>
         </h2>
-        <p className="sora-subtext">Add this block directly into your project via CLI:</p>
+        <p className="sora-subtext">
+          Add this block directly into your project via CLI:
+        </p>
         <PackageManagerBlock
           commands={{
             pnpm: `pnpm dlx @soraui/cli add block ${doc.id}`,
@@ -176,7 +264,7 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
             yarn: `yarn dlx @soraui/cli add block ${doc.id}`,
             bun: `bunx @soraui/cli add block ${doc.id}`,
           }}
-          style={{ marginTop: '0.5rem' }}
+          style={{ marginTop: "0.5rem" }}
         />
       </section>
 
@@ -184,7 +272,9 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
       <section className="sora-doc-section">
         <h2 id="props-reference" className="sora-doc-h2">
           <span>Props Reference</span>
-          <a href="#props-reference" className="sora-doc-anchor">#</a>
+          <a href="#props-reference" className="sora-doc-anchor">
+            #
+          </a>
         </h2>
         <PropTable props={doc.props} />
       </section>
@@ -193,9 +283,11 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
       <section className="sora-doc-section">
         <h2 id="dependencies" className="sora-doc-h2">
           <span>Required Dependencies</span>
-          <a href="#dependencies" className="sora-doc-anchor">#</a>
+          <a href="#dependencies" className="sora-doc-anchor">
+            #
+          </a>
         </h2>
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           {doc.dependencies.map((dep) => (
             <Badge key={dep} variant="outline">
               {dep}

@@ -11,10 +11,21 @@
     "selectable": { "type": "boolean", "default": false }
   },
   "accessibility": {
-    "keyboard": ["Column headers clickable/activatable", "Pagination controls keyboard accessible", "Checkboxes accessible"],
-    "aria": ["aria-sort=\"ascending|descending|none\" on column headers", "role=\"table\"", "<caption> supported"]
+    "keyboard": [
+      "Column headers clickable/activatable",
+      "Pagination controls keyboard accessible",
+      "Checkboxes accessible"
+    ],
+    "aria": [
+      "aria-sort=\"ascending|descending|none\" on column headers",
+      "role=\"table\"",
+      "<caption> supported"
+    ]
   },
   "files": [{ "path": "components/ui/data-table.tsx", "type": "registry:ui" }],
   "dependencies": [],
-  "installation": { "cli": "npx soraui add data-table", "npm": "import { DataTable } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add data-table",
+    "npm": "import { DataTable } from '@soraui/react'"
+  }
 }

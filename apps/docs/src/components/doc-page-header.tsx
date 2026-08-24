@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Copy, Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState } from "react";
+import { Copy, Check, ChevronLeft, ChevronRight } from "lucide-react";
 
 export interface DocPageHeaderProps {
   title: string;
@@ -28,7 +28,8 @@ export const DocPageHeader: React.FC<DocPageHeaderProps> = ({
 
   const handleCopy = async () => {
     const textToCopy =
-      markdownContent || `# ${title}\n\n${lead || ''}\n\nhttps://github.com/adityadwi21/SoraUI`;
+      markdownContent ||
+      `# ${title}\n\n${lead || ""}\n\nhttps://github.com/adityadwi21/SoraUI`;
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
@@ -44,7 +45,7 @@ export const DocPageHeader: React.FC<DocPageHeaderProps> = ({
       onNavigate(path);
     } else {
       window.location.hash = path;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -62,7 +63,7 @@ export const DocPageHeader: React.FC<DocPageHeaderProps> = ({
           >
             {copied ? (
               <>
-                <Check size={13} style={{ color: '#22c55e' }} />
+                <Check size={13} style={{ color: "#22c55e" }} />
                 <span>Copied</span>
               </>
             ) : (
@@ -79,9 +80,11 @@ export const DocPageHeader: React.FC<DocPageHeaderProps> = ({
               className="docs-intro-nav-arrow-btn"
               onClick={() => go(prevHref)}
               disabled={!prevHref}
-              title={prevTitle ? `Previous: ${prevTitle}` : 'Previous page'}
+              title={prevTitle ? `Previous: ${prevTitle}` : "Previous page"}
               aria-label="Previous page"
-              style={!prevHref ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+              style={
+                !prevHref ? { opacity: 0.35, cursor: "not-allowed" } : undefined
+              }
             >
               <ChevronLeft size={14} />
             </button>
@@ -90,9 +93,11 @@ export const DocPageHeader: React.FC<DocPageHeaderProps> = ({
               className="docs-intro-nav-arrow-btn"
               onClick={() => go(nextHref)}
               disabled={!nextHref}
-              title={nextTitle ? `Next: ${nextTitle}` : 'Next page'}
+              title={nextTitle ? `Next: ${nextTitle}` : "Next page"}
               aria-label="Next page"
-              style={!nextHref ? { opacity: 0.35, cursor: 'not-allowed' } : undefined}
+              style={
+                !nextHref ? { opacity: 0.35, cursor: "not-allowed" } : undefined
+              }
             >
               <ChevronRight size={14} />
             </button>

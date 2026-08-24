@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
-import {
-  Copy,
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  Terminal,
-} from 'lucide-react';
-import { Button } from '@soraui/react';
-import { CodeBlock } from '../../components/code-block';
+import React, { useState } from "react";
+import { Copy, Check, ChevronLeft, ChevronRight, Terminal } from "lucide-react";
+import { Button } from "@soraui/react";
+import { CodeBlock } from "../../components/code-block";
 
 export interface VitePageProps {
   onNavigate?: (path: string) => void;
@@ -15,29 +9,35 @@ export interface VitePageProps {
 
 export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
   const [copied, setCopied] = useState(false);
-  const [tab1, setTab1] = useState<'pnpm' | 'npm' | 'yarn' | 'bun'>('pnpm');
-  const [tab2, setTab2] = useState<'pnpm' | 'npm' | 'yarn' | 'bun'>('pnpm');
-  const [tab3, setTab3] = useState<'pnpm' | 'npm' | 'yarn' | 'bun'>('pnpm');
-  const [tab4, setTab4] = useState<'pnpm' | 'npm' | 'yarn' | 'bun'>('pnpm');
-  const [tab5, setTab5] = useState<'pnpm' | 'npm' | 'yarn' | 'bun'>('pnpm');
+  const [tab1, setTab1] = useState<"pnpm" | "npm" | "yarn" | "bun">("pnpm");
+  const [tab2, setTab2] = useState<"pnpm" | "npm" | "yarn" | "bun">("pnpm");
+  const [tab3, setTab3] = useState<"pnpm" | "npm" | "yarn" | "bun">("pnpm");
+  const [tab4, setTab4] = useState<"pnpm" | "npm" | "yarn" | "bun">("pnpm");
+  const [tab5, setTab5] = useState<"pnpm" | "npm" | "yarn" | "bun">("pnpm");
 
   const [copiedCmd, setCopiedCmd] = useState<string | null>(null);
-  const [activeStartPoint, setActiveStartPoint] = useState<'theme-builder' | 'cli' | 'existing'>('cli');
+  const [activeStartPoint, setActiveStartPoint] = useState<
+    "theme-builder" | "cli" | "existing"
+  >("cli");
 
   const go = (path: string) => {
     if (onNavigate) onNavigate(path);
   };
 
-  const scrollToSection = (sectionId: string, pointId: 'theme-builder' | 'cli' | 'existing') => {
+  const scrollToSection = (
+    sectionId: string,
+    pointId: "theme-builder" | "cli" | "existing",
+  ) => {
     setActiveStartPoint(pointId);
     const element = document.getElementById(sectionId);
     if (element) {
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
   };
@@ -55,40 +55,60 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
     setTimeout(() => setCopiedCmd(null), 2000);
   };
 
-  const getCmd = (type: 'init-t' | 'add' | 'create-vite' | 'init', tab: 'pnpm' | 'npm' | 'yarn' | 'bun', extra = '') => {
-    if (type === 'init-t') {
+  const getCmd = (
+    type: "init-t" | "add" | "create-vite" | "init",
+    tab: "pnpm" | "npm" | "yarn" | "bun",
+    extra = "",
+  ) => {
+    if (type === "init-t") {
       switch (tab) {
-        case 'pnpm': return `pnpm dlx @soraui/cli@latest init -t vite ${extra}`.trim();
-        case 'npm': return `npx @soraui/cli@latest init -t vite ${extra}`.trim();
-        case 'yarn': return `yarn dlx @soraui/cli@latest init -t vite ${extra}`.trim();
-        case 'bun': return `bunx --bun @soraui/cli@latest init -t vite ${extra}`.trim();
+        case "pnpm":
+          return `pnpm dlx @soraui/cli@latest init -t vite ${extra}`.trim();
+        case "npm":
+          return `npx @soraui/cli@latest init -t vite ${extra}`.trim();
+        case "yarn":
+          return `yarn dlx @soraui/cli@latest init -t vite ${extra}`.trim();
+        case "bun":
+          return `bunx --bun @soraui/cli@latest init -t vite ${extra}`.trim();
       }
     }
-    if (type === 'add') {
+    if (type === "add") {
       switch (tab) {
-        case 'pnpm': return `pnpm dlx @soraui/cli@latest add ${extra}`.trim();
-        case 'npm': return `npx @soraui/cli@latest add ${extra}`.trim();
-        case 'yarn': return `yarn dlx @soraui/cli@latest add ${extra}`.trim();
-        case 'bun': return `bunx --bun @soraui/cli@latest add ${extra}`.trim();
+        case "pnpm":
+          return `pnpm dlx @soraui/cli@latest add ${extra}`.trim();
+        case "npm":
+          return `npx @soraui/cli@latest add ${extra}`.trim();
+        case "yarn":
+          return `yarn dlx @soraui/cli@latest add ${extra}`.trim();
+        case "bun":
+          return `bunx --bun @soraui/cli@latest add ${extra}`.trim();
       }
     }
-    if (type === 'create-vite') {
+    if (type === "create-vite") {
       switch (tab) {
-        case 'pnpm': return 'pnpm create vite my-app --template react-ts';
-        case 'npm': return 'npm create vite@latest my-app -- --template react-ts';
-        case 'yarn': return 'yarn create vite my-app --template react-ts';
-        case 'bun': return 'bun create vite my-app --template react-ts';
+        case "pnpm":
+          return "pnpm create vite my-app --template react-ts";
+        case "npm":
+          return "npm create vite@latest my-app -- --template react-ts";
+        case "yarn":
+          return "yarn create vite my-app --template react-ts";
+        case "bun":
+          return "bun create vite my-app --template react-ts";
       }
     }
-    if (type === 'init') {
+    if (type === "init") {
       switch (tab) {
-        case 'pnpm': return 'pnpm dlx @soraui/cli@latest init';
-        case 'npm': return 'npx @soraui/cli@latest init';
-        case 'yarn': return 'yarn dlx @soraui/cli@latest init';
-        case 'bun': return 'bunx --bun @soraui/cli@latest init';
+        case "pnpm":
+          return "pnpm dlx @soraui/cli@latest init";
+        case "npm":
+          return "npx @soraui/cli@latest init";
+        case "yarn":
+          return "yarn dlx @soraui/cli@latest init";
+        case "bun":
+          return "bunx --bun @soraui/cli@latest init";
       }
     }
-    return '';
+    return "";
   };
 
   return (
@@ -106,7 +126,7 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
             >
               {copied ? (
                 <>
-                  <Check size={13} style={{ color: '#22c55e' }} />
+                  <Check size={13} style={{ color: "#22c55e" }} />
                   <span>Copied</span>
                 </>
               ) : (
@@ -121,7 +141,7 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => go('/guides/nextjs')}
+                onClick={() => go("/guides/nextjs")}
                 title="Previous: Next.js"
                 aria-label="Previous page"
               >
@@ -130,7 +150,7 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => go('/guides/theming')}
+                onClick={() => go("/guides/theming")}
                 title="Next: Theming"
                 aria-label="Next page"
               >
@@ -146,26 +166,30 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
       </header>
 
       {/* ─── STARTING CARDS ─── */}
-      <div className="docs-intro-statement" style={{ margin: '1rem 0 0.875rem' }}>
+      <div
+        className="docs-intro-statement"
+        style={{ margin: "1rem 0 0.875rem" }}
+      >
         Choose the setup that matches your starting point.
       </div>
 
       <div className="docs-install-start-grid">
         <button
           type="button"
-          className={`docs-install-start-card${activeStartPoint === 'theme-builder' ? ' active' : ''}`}
-          onClick={() => scrollToSection('use-theme-builder', 'theme-builder')}
+          className={`docs-install-start-card${activeStartPoint === "theme-builder" ? " active" : ""}`}
+          onClick={() => scrollToSection("use-theme-builder", "theme-builder")}
         >
           <div className="docs-install-start-title">Use Theme Builder</div>
           <div className="docs-install-start-sub">
-            Build your preset visually, preview your choices, and generate a setup command.
+            Build your preset visually, preview your choices, and generate a
+            setup command.
           </div>
         </button>
 
         <button
           type="button"
-          className={`docs-install-start-card${activeStartPoint === 'cli' ? ' active' : ''}`}
-          onClick={() => scrollToSection('use-the-cli', 'cli')}
+          className={`docs-install-start-card${activeStartPoint === "cli" ? " active" : ""}`}
+          onClick={() => scrollToSection("use-the-cli", "cli")}
         >
           <div className="docs-install-start-title">Use the CLI</div>
           <div className="docs-install-start-sub">
@@ -175,8 +199,8 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
 
         <button
           type="button"
-          className={`docs-install-start-card${activeStartPoint === 'existing' ? ' active' : ''}`}
-          onClick={() => scrollToSection('existing-project', 'existing')}
+          className={`docs-install-start-card${activeStartPoint === "existing" ? " active" : ""}`}
+          onClick={() => scrollToSection("existing-project", "existing")}
         >
           <div className="docs-install-start-title">Existing Project</div>
           <div className="docs-install-start-sub">
@@ -188,10 +212,20 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
       {/* ═════════════════════════════════════════════════════════════════════
           METHOD 1: USE THEME BUILDER
           ═════════════════════════════════════════════════════════════════════ */}
-      <section className="docs-intro-section" id="use-theme-builder" style={{ marginTop: '2.5rem' }}>
+      <section
+        className="docs-intro-section"
+        id="use-theme-builder"
+        style={{ marginTop: "2.5rem" }}
+      >
         <h2 className="docs-intro-h2">
           <span>Use Theme Builder</span>
-          <a href="#use-theme-builder" className="docs-intro-anchor" aria-hidden>#</a>
+          <a
+            href="#use-theme-builder"
+            className="docs-intro-anchor"
+            aria-hidden
+          >
+            #
+          </a>
         </h2>
 
         <div className="docs-step-flow">
@@ -201,13 +235,14 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
             <div className="docs-step-flow-body">
               <h3 className="docs-step-flow-title">Build Your Preset</h3>
               <p className="docs-step-flow-desc">
-                Build your preset visually, preview your choices, and generate a Vite-specific setup command.
+                Build your preset visually, preview your choices, and generate a
+                Vite-specific setup command.
               </p>
-              <div style={{ marginTop: '0.625rem' }}>
+              <div style={{ marginTop: "0.625rem" }}>
                 <Button
                   variant="primary"
                   size="sm"
-                  onClick={() => go('/playground')}
+                  onClick={() => go("/playground")}
                   style={{ fontWeight: 600 }}
                 >
                   Open Theme Builder
@@ -222,16 +257,17 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
             <div className="docs-step-flow-body">
               <h3 className="docs-step-flow-title">Create Project</h3>
               <p className="docs-step-flow-desc">
-                Run the command generated by Theme Builder to create your Vite project:
+                Run the command generated by Theme Builder to create your Vite
+                project:
               </p>
               <div className="docs-tabbed-codeblock">
                 <div className="docs-tabbed-codeblock-header">
                   <div className="docs-tabbed-codeblock-tabs">
-                    {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((tab) => (
+                    {(["pnpm", "npm", "yarn", "bun"] as const).map((tab) => (
                       <button
                         key={tab}
                         type="button"
-                        className={`docs-tabbed-codeblock-tab${tab1 === tab ? ' active' : ''}`}
+                        className={`docs-tabbed-codeblock-tab${tab1 === tab ? " active" : ""}`}
                         onClick={() => setTab1(tab)}
                       >
                         <Terminal size={12} style={{ opacity: 0.7 }} />
@@ -242,13 +278,17 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
                   <button
                     type="button"
                     className="docs-tabbed-codeblock-copy"
-                    onClick={() => copyText(getCmd('init-t', tab1), 'cmd1')}
+                    onClick={() => copyText(getCmd("init-t", tab1), "cmd1")}
                   >
-                    {copiedCmd === 'cmd1' ? <Check size={13} style={{ color: '#22c55e' }} /> : <Copy size={13} />}
+                    {copiedCmd === "cmd1" ? (
+                      <Check size={13} style={{ color: "#22c55e" }} />
+                    ) : (
+                      <Copy size={13} />
+                    )}
                   </button>
                 </div>
                 <pre className="docs-tabbed-codeblock-pre">
-                  <code>{getCmd('init-t', tab1)}</code>
+                  <code>{getCmd("init-t", tab1)}</code>
                 </pre>
               </div>
             </div>
@@ -265,11 +305,11 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
               <div className="docs-tabbed-codeblock">
                 <div className="docs-tabbed-codeblock-header">
                   <div className="docs-tabbed-codeblock-tabs">
-                    {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((tab) => (
+                    {(["pnpm", "npm", "yarn", "bun"] as const).map((tab) => (
                       <button
                         key={tab}
                         type="button"
-                        className={`docs-tabbed-codeblock-tab${tab2 === tab ? ' active' : ''}`}
+                        className={`docs-tabbed-codeblock-tab${tab2 === tab ? " active" : ""}`}
                         onClick={() => setTab2(tab)}
                       >
                         <Terminal size={12} style={{ opacity: 0.7 }} />
@@ -280,17 +320,29 @@ export const VitePage: React.FC<VitePageProps> = ({ onNavigate }) => {
                   <button
                     type="button"
                     className="docs-tabbed-codeblock-copy"
-                    onClick={() => copyText(getCmd('add', tab2, 'button card dialog'), 'cmd2')}
+                    onClick={() =>
+                      copyText(
+                        getCmd("add", tab2, "button card dialog"),
+                        "cmd2",
+                      )
+                    }
                   >
-                    {copiedCmd === 'cmd2' ? <Check size={13} style={{ color: '#22c55e' }} /> : <Copy size={13} />}
+                    {copiedCmd === "cmd2" ? (
+                      <Check size={13} style={{ color: "#22c55e" }} />
+                    ) : (
+                      <Copy size={13} />
+                    )}
                   </button>
                 </div>
                 <pre className="docs-tabbed-codeblock-pre">
-                  <code>{getCmd('add', tab2, 'button card dialog')}</code>
+                  <code>{getCmd("add", tab2, "button card dialog")}</code>
                 </pre>
               </div>
 
-              <p className="docs-step-flow-desc" style={{ marginTop: '0.875rem' }}>
+              <p
+                className="docs-step-flow-desc"
+                style={{ marginTop: "0.875rem" }}
+              >
                 Import and render the component in <code>src/App.tsx</code>:
               </p>
               <CodeBlock
@@ -314,10 +366,16 @@ export function App() {
       {/* ═════════════════════════════════════════════════════════════════════
           METHOD 2: USE THE CLI
           ═════════════════════════════════════════════════════════════════════ */}
-      <section className="docs-intro-section" id="use-the-cli" style={{ marginTop: '3rem' }}>
+      <section
+        className="docs-intro-section"
+        id="use-the-cli"
+        style={{ marginTop: "3rem" }}
+      >
         <h2 className="docs-intro-h2">
           <span>Use the CLI</span>
-          <a href="#use-the-cli" className="docs-intro-anchor" aria-hidden>#</a>
+          <a href="#use-the-cli" className="docs-intro-anchor" aria-hidden>
+            #
+          </a>
         </h2>
 
         <div className="docs-step-flow">
@@ -332,11 +390,11 @@ export function App() {
               <div className="docs-tabbed-codeblock">
                 <div className="docs-tabbed-codeblock-header">
                   <div className="docs-tabbed-codeblock-tabs">
-                    {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((tab) => (
+                    {(["pnpm", "npm", "yarn", "bun"] as const).map((tab) => (
                       <button
                         key={tab}
                         type="button"
-                        className={`docs-tabbed-codeblock-tab${tab3 === tab ? ' active' : ''}`}
+                        className={`docs-tabbed-codeblock-tab${tab3 === tab ? " active" : ""}`}
                         onClick={() => setTab3(tab)}
                       >
                         <Terminal size={12} style={{ opacity: 0.7 }} />
@@ -347,13 +405,17 @@ export function App() {
                   <button
                     type="button"
                     className="docs-tabbed-codeblock-copy"
-                    onClick={() => copyText(getCmd('init-t', tab3), 'cmd3')}
+                    onClick={() => copyText(getCmd("init-t", tab3), "cmd3")}
                   >
-                    {copiedCmd === 'cmd3' ? <Check size={13} style={{ color: '#22c55e' }} /> : <Copy size={13} />}
+                    {copiedCmd === "cmd3" ? (
+                      <Check size={13} style={{ color: "#22c55e" }} />
+                    ) : (
+                      <Copy size={13} />
+                    )}
                   </button>
                 </div>
                 <pre className="docs-tabbed-codeblock-pre">
-                  <code>{getCmd('init-t', tab3)}</code>
+                  <code>{getCmd("init-t", tab3)}</code>
                 </pre>
               </div>
             </div>
@@ -370,11 +432,11 @@ export function App() {
               <div className="docs-tabbed-codeblock">
                 <div className="docs-tabbed-codeblock-header">
                   <div className="docs-tabbed-codeblock-tabs">
-                    {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((tab) => (
+                    {(["pnpm", "npm", "yarn", "bun"] as const).map((tab) => (
                       <button
                         key={tab}
                         type="button"
-                        className={`docs-tabbed-codeblock-tab${tab4 === tab ? ' active' : ''}`}
+                        className={`docs-tabbed-codeblock-tab${tab4 === tab ? " active" : ""}`}
                         onClick={() => setTab4(tab)}
                       >
                         <Terminal size={12} style={{ opacity: 0.7 }} />
@@ -385,13 +447,19 @@ export function App() {
                   <button
                     type="button"
                     className="docs-tabbed-codeblock-copy"
-                    onClick={() => copyText(getCmd('add', tab4, 'button'), 'cmd4')}
+                    onClick={() =>
+                      copyText(getCmd("add", tab4, "button"), "cmd4")
+                    }
                   >
-                    {copiedCmd === 'cmd4' ? <Check size={13} style={{ color: '#22c55e' }} /> : <Copy size={13} />}
+                    {copiedCmd === "cmd4" ? (
+                      <Check size={13} style={{ color: "#22c55e" }} />
+                    ) : (
+                      <Copy size={13} />
+                    )}
                   </button>
                 </div>
                 <pre className="docs-tabbed-codeblock-pre">
-                  <code>{getCmd('add', tab4, 'button')}</code>
+                  <code>{getCmd("add", tab4, "button")}</code>
                 </pre>
               </div>
             </div>
@@ -402,10 +470,16 @@ export function App() {
       {/* ═════════════════════════════════════════════════════════════════════
           METHOD 3: EXISTING PROJECT
           ═════════════════════════════════════════════ */}
-      <section className="docs-intro-section" id="existing-project" style={{ marginTop: '3rem' }}>
+      <section
+        className="docs-intro-section"
+        id="existing-project"
+        style={{ marginTop: "3rem" }}
+      >
         <h2 className="docs-intro-h2">
           <span>Existing Project</span>
-          <a href="#existing-project" className="docs-intro-anchor" aria-hidden>#</a>
+          <a href="#existing-project" className="docs-intro-anchor" aria-hidden>
+            #
+          </a>
         </h2>
 
         <div className="docs-step-flow">
@@ -415,16 +489,17 @@ export function App() {
             <div className="docs-step-flow-body">
               <h3 className="docs-step-flow-title">Create Project</h3>
               <p className="docs-step-flow-desc">
-                If you don't have an existing Vite project, scaffold one with <code>create-vite</code>:
+                If you don't have an existing Vite project, scaffold one with{" "}
+                <code>create-vite</code>:
               </p>
               <div className="docs-tabbed-codeblock">
                 <div className="docs-tabbed-codeblock-header">
                   <div className="docs-tabbed-codeblock-tabs">
-                    {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((tab) => (
+                    {(["pnpm", "npm", "yarn", "bun"] as const).map((tab) => (
                       <button
                         key={tab}
                         type="button"
-                        className={`docs-tabbed-codeblock-tab${tab5 === tab ? ' active' : ''}`}
+                        className={`docs-tabbed-codeblock-tab${tab5 === tab ? " active" : ""}`}
                         onClick={() => setTab5(tab)}
                       >
                         <Terminal size={12} style={{ opacity: 0.7 }} />
@@ -435,13 +510,19 @@ export function App() {
                   <button
                     type="button"
                     className="docs-tabbed-codeblock-copy"
-                    onClick={() => copyText(getCmd('create-vite', tab5), 'cmd5')}
+                    onClick={() =>
+                      copyText(getCmd("create-vite", tab5), "cmd5")
+                    }
                   >
-                    {copiedCmd === 'cmd5' ? <Check size={13} style={{ color: '#22c55e' }} /> : <Copy size={13} />}
+                    {copiedCmd === "cmd5" ? (
+                      <Check size={13} style={{ color: "#22c55e" }} />
+                    ) : (
+                      <Copy size={13} />
+                    )}
                   </button>
                 </div>
                 <pre className="docs-tabbed-codeblock-pre">
-                  <code>{getCmd('create-vite', tab5)}</code>
+                  <code>{getCmd("create-vite", tab5)}</code>
                 </pre>
               </div>
             </div>
@@ -451,9 +532,12 @@ export function App() {
           <div className="docs-step-flow-item">
             <div className="docs-step-flow-badge">2</div>
             <div className="docs-step-flow-body">
-              <h3 className="docs-step-flow-title">Configure tsconfig.json &amp; vite.config.ts</h3>
+              <h3 className="docs-step-flow-title">
+                Configure tsconfig.json &amp; vite.config.ts
+              </h3>
               <p className="docs-step-flow-desc">
-                Ensure path aliases (<code>@/*</code>) are configured in <code>tsconfig.json</code> and <code>vite.config.ts</code>:
+                Ensure path aliases (<code>@/*</code>) are configured in{" "}
+                <code>tsconfig.json</code> and <code>vite.config.ts</code>:
               </p>
               <CodeBlock
                 language="typescript"
@@ -485,11 +569,11 @@ export default defineConfig({
               <div className="docs-tabbed-codeblock">
                 <div className="docs-tabbed-codeblock-header">
                   <div className="docs-tabbed-codeblock-tabs">
-                    {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((tab) => (
+                    {(["pnpm", "npm", "yarn", "bun"] as const).map((tab) => (
                       <button
                         key={tab}
                         type="button"
-                        className={`docs-tabbed-codeblock-tab${tab5 === tab ? ' active' : ''}`}
+                        className={`docs-tabbed-codeblock-tab${tab5 === tab ? " active" : ""}`}
                         onClick={() => setTab5(tab)}
                       >
                         <Terminal size={12} style={{ opacity: 0.7 }} />
@@ -500,13 +584,17 @@ export default defineConfig({
                   <button
                     type="button"
                     className="docs-tabbed-codeblock-copy"
-                    onClick={() => copyText(getCmd('init', tab5), 'cmd6')}
+                    onClick={() => copyText(getCmd("init", tab5), "cmd6")}
                   >
-                    {copiedCmd === 'cmd6' ? <Check size={13} style={{ color: '#22c55e' }} /> : <Copy size={13} />}
+                    {copiedCmd === "cmd6" ? (
+                      <Check size={13} style={{ color: "#22c55e" }} />
+                    ) : (
+                      <Copy size={13} />
+                    )}
                   </button>
                 </div>
                 <pre className="docs-tabbed-codeblock-pre">
-                  <code>{getCmd('init', tab5)}</code>
+                  <code>{getCmd("init", tab5)}</code>
                 </pre>
               </div>
             </div>
@@ -519,7 +607,7 @@ export default defineConfig({
         <button
           type="button"
           className="docs-intro-pagination-btn prev"
-          onClick={() => go('/guides/nextjs')}
+          onClick={() => go("/guides/nextjs")}
         >
           <ChevronLeft size={16} />
           <div className="docs-intro-pagination-text">
@@ -531,11 +619,16 @@ export default defineConfig({
         <button
           type="button"
           className="docs-intro-pagination-btn next"
-          onClick={() => go('/guides/theming')}
+          onClick={() => go("/guides/theming")}
         >
-          <div className="docs-intro-pagination-text" style={{ textAlign: 'right' }}>
+          <div
+            className="docs-intro-pagination-text"
+            style={{ textAlign: "right" }}
+          >
             <span className="docs-intro-pagination-label">Next</span>
-            <span className="docs-intro-pagination-title">Theming & Tokens</span>
+            <span className="docs-intro-pagination-title">
+              Theming & Tokens
+            </span>
           </div>
           <ChevronRight size={16} />
         </button>

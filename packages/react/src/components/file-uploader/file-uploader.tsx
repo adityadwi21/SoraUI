@@ -6,9 +6,9 @@ import {
   type DragEvent,
   type ChangeEvent,
   type KeyboardEvent,
-} from 'react';
-import { UploadCloud, X } from 'lucide-react';
-import type { FileUploaderProps, UploadedFile } from './file-uploader.types';
+} from "react";
+import { UploadCloud, X } from "lucide-react";
+import type { FileUploaderProps, UploadedFile } from "./file-uploader.types";
 
 function formatFileSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -17,7 +17,7 @@ function formatFileSize(bytes: number): string {
 }
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
@@ -27,12 +27,12 @@ export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
       maxSize,
       multiple = false,
       onFilesChange,
-      promptText = 'Drag & drop files here or click to browse',
+      promptText = "Drag & drop files here or click to browse",
       disabled = false,
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [files, setFiles] = useState<UploadedFile[]>([]);
     const [isDragging, setIsDragging] = useState(false);
@@ -52,7 +52,9 @@ export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
           if (!file) continue;
 
           if (maxSize && file.size > maxSize) {
-            setErrorMessage(`File "${file.name}" exceeds maximum allowed size (${formatFileSize(maxSize)}).`);
+            setErrorMessage(
+              `File "${file.name}" exceeds maximum allowed size (${formatFileSize(maxSize)}).`,
+            );
             continue;
           }
 
@@ -72,7 +74,7 @@ export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
         setFiles(updated);
         onFilesChange?.(updated.map((f) => f.file));
       },
-      [files, maxSize, multiple, onFilesChange]
+      [files, maxSize, multiple, onFilesChange],
     );
 
     const handleRemoveFile = (id: string) => {
@@ -99,7 +101,7 @@ export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
       handleProcessFiles(e.target.files);
-      if (inputRef.current) inputRef.current.value = '';
+      if (inputRef.current) inputRef.current.value = "";
     };
 
     const handleClick = () => {
@@ -107,14 +109,14 @@ export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         handleClick();
       }
     };
 
     return (
-      <div ref={ref} className={cx('sora-file-uploader', className)} {...props}>
+      <div ref={ref} className={cx("sora-file-uploader", className)} {...props}>
         <input
           ref={inputRef}
           type="file"
@@ -137,12 +139,11 @@ export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           className={cx(
-            'sora-file-uploader__dropzone',
-            isDragging && 'sora-file-uploader__dropzone--dragging',
-            disabled && 'sora-file-uploader__dropzone--disabled'
+            "sora-file-uploader__dropzone",
+            isDragging && "sora-file-uploader__dropzone--dragging",
+            disabled && "sora-file-uploader__dropzone--disabled",
           )}
         >
-
           <div className="sora-file-uploader__icon" aria-hidden="true">
             <UploadCloud size={32} />
           </div>
@@ -164,7 +165,9 @@ export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
           <ul className="sora-file-uploader__list" aria-label="Uploaded files">
             {files.map((item) => (
               <li key={item.id} className="sora-file-uploader__item">
-                <span className="sora-file-uploader__item-name">{item.name}</span>
+                <span className="sora-file-uploader__item-name">
+                  {item.name}
+                </span>
                 <span className="sora-file-uploader__item-size">
                   {formatFileSize(item.size)}
                 </span>
@@ -182,6 +185,6 @@ export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
         )}
       </div>
     );
-  }
+  },
 );
-FileUploader.displayName = 'FileUploader';
+FileUploader.displayName = "FileUploader";

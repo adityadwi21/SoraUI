@@ -4,5 +4,13 @@
   margin: 0;
   flex-shrink: 0;
 }
-.horizontal { display: block; height: 1px; width: 100%; }
-.vertical { display: inline-block; width: 1px; height: 100%; }
+.horizontal {
+  display: block;
+  height: 1px;
+  width: 100%;
+}
+.vertical {
+  display: inline-block;
+  width: 1px;
+  height: 100%;
+}

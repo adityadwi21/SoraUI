@@ -6,7 +6,6 @@
     "tag": "latest"
   },
   "description": "SoraUI CLI: Add accessible UI components, blocks, and themes to your project from the canonical registry",
-
   "license": "MIT",
   "author": "SoraUI Team",
   "repository": {
@@ -24,7 +23,6 @@
     "generator"
   ],
   "type": "module",
-
   "bin": {
     "soraui": "./dist/index.js"
   },
@@ -44,7 +42,6 @@
     "test": "vitest run",
     "clean": "rm -rf dist"
   },
-
   "dependencies": {
     "commander": "^12.1.0",
     "picocolors": "^1.1.0",

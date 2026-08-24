@@ -1,1 +1,8 @@
-{"name":"statistic","type":"registry:ui","level":1,"description":"Display statistics or metrics with trend indicators.","files":[{"path":"components/ui/statistic.tsx","type":"registry:ui"}],"dependencies":[]}
+{
+  "name": "statistic",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "Display statistics or metrics with trend indicators.",
+  "files": [{ "path": "components/ui/statistic.tsx", "type": "registry:ui" }],
+  "dependencies": []
+}

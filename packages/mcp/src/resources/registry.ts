@@ -1,35 +1,35 @@
-import { loadCanonicalRegistry } from '../registry/adapter';
+import { loadCanonicalRegistry } from "../registry/adapter";
 
 export function getRegistryResource(subpath?: string) {
   const registry = loadCanonicalRegistry();
 
-  if (subpath === 'components') {
+  if (subpath === "components") {
     return {
-      uri: 'soraui://registry/components',
-      mimeType: 'application/json',
+      uri: "soraui://registry/components",
+      mimeType: "application/json",
       text: JSON.stringify({ components: registry.components }, null, 2),
     };
   }
 
-  if (subpath === 'blocks') {
+  if (subpath === "blocks") {
     return {
-      uri: 'soraui://registry/blocks',
-      mimeType: 'application/json',
+      uri: "soraui://registry/blocks",
+      mimeType: "application/json",
       text: JSON.stringify({ blocks: registry.blocks }, null, 2),
     };
   }
 
-  if (subpath === 'templates') {
+  if (subpath === "templates") {
     return {
-      uri: 'soraui://registry/templates',
-      mimeType: 'application/json',
+      uri: "soraui://registry/templates",
+      mimeType: "application/json",
       text: JSON.stringify({ templates: registry.templates }, null, 2),
     };
   }
 
   return {
-    uri: 'soraui://registry',
-    mimeType: 'application/json',
+    uri: "soraui://registry",
+    mimeType: "application/json",
     text: JSON.stringify(registry, null, 2),
   };
 }

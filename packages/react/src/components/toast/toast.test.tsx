@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, act } from '@testing-library/react';
-import { ToastProvider, useToast } from './toast';
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { render, screen, act } from "@testing-library/react";
+import { ToastProvider, useToast } from "./toast";
 
 function TestComponent() {
   const { toast } = useToast();
@@ -10,9 +10,9 @@ function TestComponent() {
         type="button"
         onClick={() =>
           toast({
-            title: 'Success!',
-            description: 'Your changes have been saved.',
-            variant: 'success',
+            title: "Success!",
+            description: "Your changes have been saved.",
+            variant: "success",
             duration: 3000,
           })
         }
@@ -23,9 +23,9 @@ function TestComponent() {
         type="button"
         onClick={() =>
           toast({
-            title: 'Error!',
-            description: 'Failed to delete record.',
-            variant: 'destructive',
+            title: "Error!",
+            description: "Failed to delete record.",
+            variant: "destructive",
           })
         }
       >
@@ -35,7 +35,7 @@ function TestComponent() {
   );
 }
 
-describe('Toast', () => {
+describe("Toast", () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -45,47 +45,49 @@ describe('Toast', () => {
     vi.useRealTimers();
   });
 
-  it('renders toast with title, description, and dismisses after duration', () => {
+  it("renders toast with title, description, and dismisses after duration", () => {
     render(
       <ToastProvider>
         <TestComponent />
-      </ToastProvider>
+      </ToastProvider>,
     );
 
-    const btn = screen.getByRole('button', { name: 'Show Toast' });
-    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    const btn = screen.getByRole("button", { name: "Show Toast" });
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
 
     act(() => {
       btn.click();
     });
 
-    const toast = screen.getByRole('status');
+    const toast = screen.getByRole("status");
     expect(toast).toBeInTheDocument();
-    expect(screen.getByText('Success!')).toBeInTheDocument();
-    expect(screen.getByText('Your changes have been saved.')).toBeInTheDocument();
+    expect(screen.getByText("Success!")).toBeInTheDocument();
+    expect(
+      screen.getByText("Your changes have been saved."),
+    ).toBeInTheDocument();
 
     // Auto-dismiss after 3000ms
     act(() => {
       vi.advanceTimersByTime(3000);
     });
 
-    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
   });
 
   it('renders destructive toast with role="alert" for high-priority a11y', () => {
     render(
       <ToastProvider>
         <TestComponent />
-      </ToastProvider>
+      </ToastProvider>,
     );
 
-    const btn = screen.getByRole('button', { name: 'Show Error' });
+    const btn = screen.getByRole("button", { name: "Show Error" });
 
     act(() => {
       btn.click();
     });
 
-    expect(screen.getByRole('alert')).toBeInTheDocument();
-    expect(screen.getByText('Error!')).toBeInTheDocument();
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByText("Error!")).toBeInTheDocument();
   });
 });

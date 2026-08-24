@@ -1,5 +1,5 @@
-import React, { forwardRef } from 'react';
-import { cx } from '@soraui/core';
+import React, { forwardRef } from "react";
+import { cx } from "@soraui/core";
 
 export interface ThemeScopeProps extends React.HTMLAttributes<HTMLDivElement> {
   theme: string;
@@ -16,13 +16,13 @@ export const ThemeScope = forwardRef<HTMLDivElement, ThemeScopeProps>(
       <div
         ref={ref}
         data-theme={theme}
-        className={cx('sora-theme-scope', className)}
+        className={cx("sora-theme-scope", className)}
         {...props}
       >
         {children}
       </div>
     );
-  }
+  },
 );
 
-ThemeScope.displayName = 'ThemeScope';
+ThemeScope.displayName = "ThemeScope";

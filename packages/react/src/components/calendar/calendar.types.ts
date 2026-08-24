@@ -1,6 +1,9 @@
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes } from "react";
 
-export interface CalendarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange'> {
+export interface CalendarProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "defaultValue" | "onChange"
+> {
   /** The selected date (controlled) */
   value?: Date | null | undefined;
   /** The default selected date (uncontrolled) */

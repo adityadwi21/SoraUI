@@ -6,7 +6,6 @@
     "tag": "latest"
   },
   "description": "SoraUI reusable React hooks",
-
   "license": "MIT",
   "author": "SoraUI Team",
   "repository": {
@@ -23,7 +22,6 @@
     "use-click-outside"
   ],
   "type": "module",
-
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -34,7 +32,9 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",

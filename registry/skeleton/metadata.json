@@ -5,5 +5,8 @@
   "description": "SoraUI skeleton component. Level 1 - minimal runtime, accessible, CSS variables based.",
   "files": [{ "path": "components/ui/skeleton.tsx", "type": "registry:ui" }],
   "dependencies": [],
-  "installation": { "cli": "npx soraui add skeleton", "npm": "import { Skeleton } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add skeleton",
+    "npm": "import { Skeleton } from '@soraui/react'"
+  }
 }

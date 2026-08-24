@@ -10,11 +10,22 @@
     "defaultValue": { "type": "string | string[]" }
   },
   "accessibility": {
-    "keyboard": ["Space or Enter to toggle expansion", "Tab to move through triggers"],
-    "aria": ["aria-expanded", "aria-controls", "role=\"region\"", "aria-labelledby"],
+    "keyboard": [
+      "Space or Enter to toggle expansion",
+      "Tab to move through triggers"
+    ],
+    "aria": [
+      "aria-expanded",
+      "aria-controls",
+      "role=\"region\"",
+      "aria-labelledby"
+    ],
     "focus": "Standard keyboard focus ring on trigger"
   },
   "files": [{ "path": "components/ui/accordion.tsx", "type": "registry:ui" }],
   "dependencies": [],
-  "installation": { "cli": "npx soraui add accordion", "npm": "import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add accordion",
+    "npm": "import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@soraui/react'"
+  }
 }

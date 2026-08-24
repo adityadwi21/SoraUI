@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import {
   ThemeContext,
   type ThemeMode,
   type ResolvedThemeMode,
   type ThemeContextValue,
-} from './use-theme';
+} from "./use-theme";
 
 export interface ThemeProviderProps {
   children?: React.ReactNode;
@@ -19,17 +19,17 @@ export interface ThemeProviderProps {
 
 export function ThemeProvider({
   children,
-  defaultTheme = 'sky',
-  defaultMode = 'system',
-  storageKey = 'soraui-theme',
-  modeStorageKey = 'soraui-mode',
-  attribute = 'data-theme',
-  modeAttribute = 'data-mode',
+  defaultTheme = "sky",
+  defaultMode = "system",
+  storageKey = "soraui-theme",
+  modeStorageKey = "soraui-mode",
+  attribute = "data-theme",
+  modeAttribute = "data-mode",
   enableSystem = true,
 }: ThemeProviderProps) {
   // Reconcile initial state from existing DOM attributes (set by getThemeInitScript) or defaults
   const [theme, setThemeState] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const domTheme = document.documentElement.getAttribute(attribute);
       if (domTheme) return domTheme;
       try {
@@ -43,9 +43,11 @@ export function ThemeProvider({
   });
 
   const [mode, setModeState] = useState<ThemeMode>(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       try {
-        const storedMode = localStorage.getItem(modeStorageKey) as ThemeMode | null;
+        const storedMode = localStorage.getItem(
+          modeStorageKey,
+        ) as ThemeMode | null;
         if (storedMode) return storedMode;
       } catch {
         // Storage access restricted
@@ -56,23 +58,32 @@ export function ThemeProvider({
 
   // Calculate resolved brightness mode
   const [systemDark, setSystemDark] = useState<boolean>(() => {
-    if (typeof window !== 'undefined' && enableSystem && typeof window.matchMedia === 'function') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (
+      typeof window !== "undefined" &&
+      enableSystem &&
+      typeof window.matchMedia === "function"
+    ) {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
     }
     return false;
   });
 
   // Subscribe to system color scheme changes
   useEffect(() => {
-    if (typeof window === 'undefined' || !enableSystem || typeof window.matchMedia !== 'function') return;
+    if (
+      typeof window === "undefined" ||
+      !enableSystem ||
+      typeof window.matchMedia !== "function"
+    )
+      return;
 
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) => {
       setSystemDark(e.matches);
     };
 
     if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', handleChange);
+      mediaQuery.addEventListener("change", handleChange);
     } else if (mediaQuery.addListener) {
       // Legacy browsers
       mediaQuery.addListener(handleChange);
@@ -80,7 +91,7 @@ export function ThemeProvider({
 
     return () => {
       if (mediaQuery.removeEventListener) {
-        mediaQuery.removeEventListener('change', handleChange);
+        mediaQuery.removeEventListener("change", handleChange);
       } else if (mediaQuery.removeListener) {
         mediaQuery.removeListener(handleChange);
       }
@@ -88,15 +99,15 @@ export function ThemeProvider({
   }, [enableSystem]);
 
   const resolvedMode: ResolvedThemeMode = useMemo(() => {
-    if (mode === 'system') {
-      return systemDark ? 'dark' : 'light';
+    if (mode === "system") {
+      return systemDark ? "dark" : "light";
     }
     return mode;
   }, [mode, systemDark]);
 
   // Apply theme & mode to DOM root whenever changed
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const root = document.documentElement;
     root.setAttribute(attribute, theme);
@@ -108,7 +119,15 @@ export function ThemeProvider({
     } catch {
       // Storage access restricted
     }
-  }, [theme, mode, resolvedMode, attribute, modeAttribute, storageKey, modeStorageKey]);
+  }, [
+    theme,
+    mode,
+    resolvedMode,
+    attribute,
+    modeAttribute,
+    storageKey,
+    modeStorageKey,
+  ]);
 
   const setTheme = useCallback((newTheme: string) => {
     setThemeState(newTheme);
@@ -120,8 +139,9 @@ export function ThemeProvider({
 
   const toggleMode = useCallback(() => {
     setModeState((prev) => {
-      const currentResolved = prev === 'system' ? (systemDark ? 'dark' : 'light') : prev;
-      return currentResolved === 'dark' ? 'light' : 'dark';
+      const currentResolved =
+        prev === "system" ? (systemDark ? "dark" : "light") : prev;
+      return currentResolved === "dark" ? "light" : "dark";
     });
   }, [systemDark]);
 
@@ -134,7 +154,7 @@ export function ThemeProvider({
       resolvedMode,
       toggleMode,
     }),
-    [theme, setTheme, mode, setMode, resolvedMode, toggleMode]
+    [theme, setTheme, mode, setMode, resolvedMode, toggleMode],
   );
 
   return (

@@ -9,8 +9,8 @@ import {
   cloneElement,
   isValidElement,
   type MouseEvent,
-} from 'react';
-import { Portal, useFocusTrap, useEscapeKey } from '@soraui/hooks';
+} from "react";
+import { Portal, useFocusTrap, useEscapeKey } from "@soraui/hooks";
 import type {
   DrawerProps,
   DrawerTriggerProps,
@@ -21,10 +21,10 @@ import type {
   DrawerFooterProps,
   DrawerCloseProps,
   DrawerSide,
-} from './drawer.types';
+} from "./drawer.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 interface DrawerContextValue {
@@ -41,7 +41,7 @@ export function Drawer({
   open: controlledOpen,
   defaultOpen = false,
   onOpenChange,
-  side = 'right',
+  side = "right",
   children,
 }: DrawerProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
@@ -66,7 +66,7 @@ export function Drawer({
 export const DrawerTrigger = forwardRef<HTMLButtonElement, DrawerTriggerProps>(
   ({ asChild = false, className, onClick, children, ...props }, ref) => {
     const ctx = useContext(DrawerContext);
-    if (!ctx) throw new Error('DrawerTrigger must be within Drawer');
+    if (!ctx) throw new Error("DrawerTrigger must be within Drawer");
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
       onClick?.(e);
@@ -88,96 +88,138 @@ export const DrawerTrigger = forwardRef<HTMLButtonElement, DrawerTriggerProps>(
       <button
         ref={ref}
         type="button"
-        className={cx('sora-drawer__trigger', className)}
+        className={cx("sora-drawer__trigger", className)}
         onClick={handleClick}
         {...props}
       >
         {children}
       </button>
     );
-  }
+  },
 );
-DrawerTrigger.displayName = 'DrawerTrigger';
+DrawerTrigger.displayName = "DrawerTrigger";
 
-export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(({ className, children, ...props }, ref) => {
-  const ctx = useContext(DrawerContext);
-  if (!ctx) throw new Error('DrawerContent must be within Drawer');
+export const DrawerContent = forwardRef<HTMLDivElement, DrawerContentProps>(
+  ({ className, children, ...props }, ref) => {
+    const ctx = useContext(DrawerContext);
+    if (!ctx) throw new Error("DrawerContent must be within Drawer");
 
-  const contentRef = useFocusTrap(ctx.open);
-  useEscapeKey(() => ctx.setOpen(false), ctx.open);
+    const contentRef = useFocusTrap(ctx.open);
+    useEscapeKey(() => ctx.setOpen(false), ctx.open);
 
-  // Scroll lock on body
-  useEffect(() => {
-    if (!ctx.open || typeof document === 'undefined') return;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
-  }, [ctx.open]);
+    // Scroll lock on body
+    useEffect(() => {
+      if (!ctx.open || typeof document === "undefined") return;
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }, [ctx.open]);
 
-  if (!ctx.open) return null;
+    if (!ctx.open) return null;
 
-  return (
-    <Portal>
-      <div className="sora-drawer__backdrop" onClick={() => ctx.setOpen(false)}>
+    return (
+      <Portal>
         <div
-          ref={(el) => {
-            contentRef.current = el;
-            if (typeof ref === 'function') ref(el);
-            else if (ref) (ref as any).current = el;
-          }}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby={ctx.titleId}
-          aria-describedby={ctx.descId}
-          onClick={(e) => e.stopPropagation()}
-          className={cx('sora-drawer__content', `sora-drawer__content--${ctx.side}`, className)}
-          {...props}
+          className="sora-drawer__backdrop"
+          onClick={() => ctx.setOpen(false)}
         >
-          {children}
+          <div
+            ref={(el) => {
+              contentRef.current = el;
+              if (typeof ref === "function") ref(el);
+              else if (ref) (ref as any).current = el;
+            }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={ctx.titleId}
+            aria-describedby={ctx.descId}
+            onClick={(e) => e.stopPropagation()}
+            className={cx(
+              "sora-drawer__content",
+              `sora-drawer__content--${ctx.side}`,
+              className,
+            )}
+            {...props}
+          >
+            {children}
+          </div>
         </div>
-      </div>
-    </Portal>
-  );
-});
-DrawerContent.displayName = 'DrawerContent';
+      </Portal>
+    );
+  },
+);
+DrawerContent.displayName = "DrawerContent";
 
-export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cx('sora-drawer__header', className)} {...props} />
-));
-DrawerHeader.displayName = 'DrawerHeader';
+export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cx("sora-drawer__header", className)}
+      {...props}
+    />
+  ),
+);
+DrawerHeader.displayName = "DrawerHeader";
 
-export const DrawerTitle = forwardRef<HTMLHeadingElement, DrawerTitleProps>(({ className, ...props }, ref) => {
-  const ctx = useContext(DrawerContext);
-  return <h2 ref={ref} id={ctx?.titleId} className={cx('sora-drawer__title', className)} {...props} />;
-});
-DrawerTitle.displayName = 'DrawerTitle';
+export const DrawerTitle = forwardRef<HTMLHeadingElement, DrawerTitleProps>(
+  ({ className, ...props }, ref) => {
+    const ctx = useContext(DrawerContext);
+    return (
+      <h2
+        ref={ref}
+        id={ctx?.titleId}
+        className={cx("sora-drawer__title", className)}
+        {...props}
+      />
+    );
+  },
+);
+DrawerTitle.displayName = "DrawerTitle";
 
-export const DrawerDescription = forwardRef<HTMLParagraphElement, DrawerDescriptionProps>(({ className, ...props }, ref) => {
-  const ctx = useContext(DrawerContext);
-  return <p ref={ref} id={ctx?.descId} className={cx('sora-drawer__description', className)} {...props} />;
-});
-DrawerDescription.displayName = 'DrawerDescription';
-
-export const DrawerFooter = forwardRef<HTMLDivElement, DrawerFooterProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cx('sora-drawer__footer', className)} {...props} />
-));
-DrawerFooter.displayName = 'DrawerFooter';
-
-export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(({ className, onClick, ...props }, ref) => {
+export const DrawerDescription = forwardRef<
+  HTMLParagraphElement,
+  DrawerDescriptionProps
+>(({ className, ...props }, ref) => {
   const ctx = useContext(DrawerContext);
   return (
-    <button
+    <p
       ref={ref}
-      type="button"
-      className={cx('sora-drawer__close', className)}
-      onClick={(e) => {
-        onClick?.(e);
-        ctx?.setOpen(false);
-      }}
+      id={ctx?.descId}
+      className={cx("sora-drawer__description", className)}
       {...props}
     />
   );
 });
-DrawerClose.displayName = 'DrawerClose';
+DrawerDescription.displayName = "DrawerDescription";
+
+export const DrawerFooter = forwardRef<HTMLDivElement, DrawerFooterProps>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cx("sora-drawer__footer", className)}
+      {...props}
+    />
+  ),
+);
+DrawerFooter.displayName = "DrawerFooter";
+
+export const DrawerClose = forwardRef<HTMLButtonElement, DrawerCloseProps>(
+  ({ className, onClick, ...props }, ref) => {
+    const ctx = useContext(DrawerContext);
+    return (
+      <button
+        ref={ref}
+        type="button"
+        className={cx("sora-drawer__close", className)}
+        onClick={(e) => {
+          onClick?.(e);
+          ctx?.setOpen(false);
+        }}
+        {...props}
+      />
+    );
+  },
+);
+DrawerClose.displayName = "DrawerClose";

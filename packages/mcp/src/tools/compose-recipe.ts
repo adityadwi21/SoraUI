@@ -1,22 +1,34 @@
-export const RECIPE_KEYS = ['auth_flow', 'dashboard', 'saas_landing', 'settings_tabs'] as const;
+export const RECIPE_KEYS = [
+  "auth_flow",
+  "dashboard",
+  "saas_landing",
+  "settings_tabs",
+] as const;
 export type RecipeKey = (typeof RECIPE_KEYS)[number];
 
 export function handleComposeRecipe(params: {
   recipe: RecipeKey;
   theme?: string | undefined;
-  mode?: 'light' | 'dark' | undefined;
+  mode?: "light" | "dark" | undefined;
 }) {
-  const { recipe, theme = 'sky', mode = 'light' } = params;
+  const { recipe, theme = "sky", mode = "light" } = params;
 
   switch (recipe) {
-    case 'auth_flow':
+    case "auth_flow":
       return {
-        recipeVersion: '1.0',
-        pattern: 'auth_flow',
-        theme: theme ?? 'sky',
-        mode: mode ?? 'light',
-        requiredComponents: ['card', 'input', 'label', 'button', 'separator', 'badge'],
-        requiredBlocks: ['login-form'],
+        recipeVersion: "1.0",
+        pattern: "auth_flow",
+        theme: theme ?? "sky",
+        mode: mode ?? "light",
+        requiredComponents: [
+          "card",
+          "input",
+          "label",
+          "button",
+          "separator",
+          "badge",
+        ],
+        requiredBlocks: ["login-form"],
         generatedCode: `'use client';
 
 import React from 'react';
@@ -30,9 +42,9 @@ export default function AuthPage() {
   };
 
   return (
-    <ThemeProvider defaultTheme="${theme ?? 'sky'}" defaultMode="${mode ?? 'light'}">
+    <ThemeProvider defaultTheme="${theme ?? "sky"}" defaultMode="${mode ?? "light"}">
       <main className="sora-auth-container" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-        <ThemeScope theme="${theme ?? 'sky'}">
+        <ThemeScope theme="${theme ?? "sky"}">
           <LoginForm
             onSubmit={handleLogin}
             onForgotPassword={() => console.log('Navigate to forgot password')}
@@ -45,14 +57,23 @@ export default function AuthPage() {
 `,
       };
 
-    case 'dashboard':
+    case "dashboard":
       return {
-        recipeVersion: '1.0',
-        pattern: 'dashboard',
-        theme: theme ?? 'sky',
-        mode: mode ?? 'light',
-        requiredComponents: ['button', 'avatar', 'dropdown', 'card', 'statistic', 'input', 'data-table', 'pagination'],
-        requiredBlocks: ['dashboard-shell', 'metric-grid', 'data-table-block'],
+        recipeVersion: "1.0",
+        pattern: "dashboard",
+        theme: theme ?? "sky",
+        mode: mode ?? "light",
+        requiredComponents: [
+          "button",
+          "avatar",
+          "dropdown",
+          "card",
+          "statistic",
+          "input",
+          "data-table",
+          "pagination",
+        ],
+        requiredBlocks: ["dashboard-shell", "metric-grid", "data-table-block"],
         generatedCode: `'use client';
 
 import React from 'react';
@@ -72,7 +93,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <ThemeProvider defaultTheme="${theme ?? 'sky'}" defaultMode="${mode ?? 'light'}">
+    <ThemeProvider defaultTheme="${theme ?? "sky"}" defaultMode="${mode ?? "light"}">
       <DashboardShell
         user={{ name: 'Alex Rivera', email: 'alex@example.com', role: 'Administrator' }}
         onLogout={() => console.log('User logged out')}
@@ -88,14 +109,28 @@ export default function DashboardPage() {
 `,
       };
 
-    case 'saas_landing':
+    case "saas_landing":
       return {
-        recipeVersion: '1.0',
-        pattern: 'saas_landing',
-        theme: theme ?? 'sky',
-        mode: mode ?? 'light',
-        requiredComponents: ['button', 'badge', 'card', 'switch', 'accordion', 'input', 'separator'],
-        requiredBlocks: ['hero-section', 'feature-grid', 'pricing-table', 'faq-section', 'footer-section'],
+        recipeVersion: "1.0",
+        pattern: "saas_landing",
+        theme: theme ?? "sky",
+        mode: mode ?? "light",
+        requiredComponents: [
+          "button",
+          "badge",
+          "card",
+          "switch",
+          "accordion",
+          "input",
+          "separator",
+        ],
+        requiredBlocks: [
+          "hero-section",
+          "feature-grid",
+          "pricing-table",
+          "faq-section",
+          "footer-section",
+        ],
         generatedCode: `'use client';
 
 import React from 'react';
@@ -111,7 +146,7 @@ import '@soraui/react/styles';
 
 export default function LandingPage() {
   return (
-    <ThemeProvider defaultTheme="${theme ?? 'sky'}" defaultMode="${mode ?? 'light'}">
+    <ThemeProvider defaultTheme="${theme ?? "sky"}" defaultMode="${mode ?? "light"}">
       <div className="sora-landing-wrapper">
         <HeroSection
           badgeText="✨ SoraUI v1.0 Released"
@@ -131,14 +166,23 @@ export default function LandingPage() {
 `,
       };
 
-    case 'settings_tabs':
+    case "settings_tabs":
       return {
-        recipeVersion: '1.0',
-        pattern: 'settings_tabs',
-        theme: theme ?? 'sky',
-        mode: mode ?? 'light',
-        requiredComponents: ['button', 'avatar', 'dropdown', 'card', 'tabs', 'input', 'label', 'switch'],
-        requiredBlocks: ['dashboard-shell', 'settings-form'],
+        recipeVersion: "1.0",
+        pattern: "settings_tabs",
+        theme: theme ?? "sky",
+        mode: mode ?? "light",
+        requiredComponents: [
+          "button",
+          "avatar",
+          "dropdown",
+          "card",
+          "tabs",
+          "input",
+          "label",
+          "switch",
+        ],
+        requiredBlocks: ["dashboard-shell", "settings-form"],
         generatedCode: `'use client';
 
 import React from 'react';
@@ -155,7 +199,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <ThemeProvider defaultTheme="${theme ?? 'sky'}" defaultMode="${mode ?? 'light'}">
+    <ThemeProvider defaultTheme="${theme ?? "sky"}" defaultMode="${mode ?? "light"}">
       <DashboardShell
         user={{ name: 'Alex Rivera', email: 'alex@example.com' }}
       >
@@ -168,6 +212,8 @@ export default function SettingsPage() {
       };
 
     default:
-      throw new Error(`Unknown recipe pattern "${recipe}". Available: auth_flow, dashboard, saas_landing, settings_tabs`);
+      throw new Error(
+        `Unknown recipe pattern "${recipe}". Available: auth_flow, dashboard, saas_landing, settings_tabs`,
+      );
   }
 }

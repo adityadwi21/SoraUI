@@ -6,7 +6,7 @@ Official interactive documentation platform for SoraUI, built with Vite, React, 
 
 ## 🌟 Key Features
 
-- **Interactive Component Playground**: Live rendered canvas with code copy, prop tables, and variant toggles for all 44 accessible primitives.
+- **Interactive Component Playground**: Live rendered canvas with code copy, prop tables, and variant toggles for all 47 accessible primitives.
 - **Production Blocks & Templates**: Interactive previews and source code for 14 compound UI blocks and 4 full-page templates.
 - **Dedicated Framework Guides**: Step-by-step setup guides for Next.js (App & Pages Router), Vite SPA, Laravel 11/12 Inertia React, React Router v7 / Remix, Astro Island Architecture, and Manual Pure React setup.
 - **Instant Search (`Cmd + K`)**: Keyboard-driven modal search indexing all components, blocks, templates, and guides with per-category icons.

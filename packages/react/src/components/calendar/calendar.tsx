@@ -1,5 +1,11 @@
-import { useState, useCallback, useId, forwardRef, type KeyboardEvent } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  useState,
+  useCallback,
+  useId,
+  forwardRef,
+  type KeyboardEvent,
+} from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   isSameDay,
   getDaysInMonth,
@@ -7,11 +13,11 @@ import {
   isDateDisabled as checkIsDateDisabled,
   MONTH_NAMES,
   WEEKDAY_NAMES,
-} from './calendar.utils';
-import type { CalendarProps } from './calendar.types';
+} from "./calendar.utils";
+import type { CalendarProps } from "./calendar.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
@@ -26,9 +32,11 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
-    const [uncontrolledValue, setUncontrolledValue] = useState<Date | null>(defaultValue);
+    const [uncontrolledValue, setUncontrolledValue] = useState<Date | null>(
+      defaultValue,
+    );
     const isControlled = controlledValue !== undefined;
     const selectedDate = isControlled ? controlledValue : uncontrolledValue;
 
@@ -59,33 +67,47 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
     const handleSelectDate = useCallback(
       (day: number) => {
         const newDate = new Date(viewYear, viewMonth, day);
-        if (checkIsDateDisabled(newDate, minDate, maxDate, isDateDisabled)) return;
+        if (checkIsDateDisabled(newDate, minDate, maxDate, isDateDisabled))
+          return;
 
         if (!isControlled) setUncontrolledValue(newDate);
         onValueChange?.(newDate);
       },
-      [viewYear, viewMonth, minDate, maxDate, isDateDisabled, isControlled, onValueChange]
+      [
+        viewYear,
+        viewMonth,
+        minDate,
+        maxDate,
+        isDateDisabled,
+        isControlled,
+        onValueChange,
+      ],
     );
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>, currentDay: number) => {
+    const handleKeyDown = (
+      e: KeyboardEvent<HTMLButtonElement>,
+      currentDay: number,
+    ) => {
       let targetDay = currentDay;
       const totalDays = getDaysInMonth(viewYear, viewMonth);
 
-      if (e.key === 'ArrowRight') targetDay = Math.min(totalDays, currentDay + 1);
-      else if (e.key === 'ArrowLeft') targetDay = Math.max(1, currentDay - 1);
-      else if (e.key === 'ArrowDown') targetDay = Math.min(totalDays, currentDay + 7);
-      else if (e.key === 'ArrowUp') targetDay = Math.max(1, currentDay - 7);
-      else if (e.key === 'Home') targetDay = 1;
-      else if (e.key === 'End') targetDay = totalDays;
-      else if (e.key === 'PageUp') {
+      if (e.key === "ArrowRight")
+        targetDay = Math.min(totalDays, currentDay + 1);
+      else if (e.key === "ArrowLeft") targetDay = Math.max(1, currentDay - 1);
+      else if (e.key === "ArrowDown")
+        targetDay = Math.min(totalDays, currentDay + 7);
+      else if (e.key === "ArrowUp") targetDay = Math.max(1, currentDay - 7);
+      else if (e.key === "Home") targetDay = 1;
+      else if (e.key === "End") targetDay = totalDays;
+      else if (e.key === "PageUp") {
         e.preventDefault();
         handlePrevMonth();
         return;
-      } else if (e.key === 'PageDown') {
+      } else if (e.key === "PageDown") {
         e.preventDefault();
         handleNextMonth();
         return;
-      } else if (e.key === 'Enter' || e.key === ' ') {
+      } else if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         handleSelectDate(currentDay);
         return;
@@ -93,7 +115,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
 
       if (targetDay !== currentDay) {
         e.preventDefault();
-        const el = document.getElementById(`sora-calendar-day-${viewYear}-${viewMonth}-${targetDay}`);
+        const el = document.getElementById(
+          `sora-calendar-day-${viewYear}-${viewMonth}-${targetDay}`,
+        );
         el?.focus();
       }
     };
@@ -104,14 +128,24 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
 
     const calendarCells = [];
     for (let i = 0; i < startWeekday; i++) {
-      calendarCells.push(<div key={`empty-${i}`} className="sora-calendar__cell sora-calendar__cell--empty" />);
+      calendarCells.push(
+        <div
+          key={`empty-${i}`}
+          className="sora-calendar__cell sora-calendar__cell--empty"
+        />,
+      );
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(viewYear, viewMonth, day);
       const isSelected = isSameDay(selectedDate, date);
       const isToday = isSameDay(today, date);
-      const disabled = checkIsDateDisabled(date, minDate, maxDate, isDateDisabled);
+      const disabled = checkIsDateDisabled(
+        date,
+        minDate,
+        maxDate,
+        isDateDisabled,
+      );
 
       calendarCells.push(
         <button
@@ -126,19 +160,19 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           onClick={() => handleSelectDate(day)}
           onKeyDown={(e) => handleKeyDown(e, day)}
           className={cx(
-            'sora-calendar__day',
-            isSelected && 'sora-calendar__day--selected',
-            isToday && 'sora-calendar__day--today',
-            disabled && 'sora-calendar__day--disabled'
+            "sora-calendar__day",
+            isSelected && "sora-calendar__day--selected",
+            isToday && "sora-calendar__day--today",
+            disabled && "sora-calendar__day--disabled",
           )}
         >
           {day}
-        </button>
+        </button>,
       );
     }
 
     return (
-      <div ref={ref} className={cx('sora-calendar', className)} {...props}>
+      <div ref={ref} className={cx("sora-calendar", className)} {...props}>
         <div className="sora-calendar__header">
           <button
             type="button"
@@ -161,10 +195,18 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           </button>
         </div>
 
-        <div role="grid" aria-labelledby={titleId} className="sora-calendar__grid">
+        <div
+          role="grid"
+          aria-labelledby={titleId}
+          className="sora-calendar__grid"
+        >
           <div role="row" className="sora-calendar__weekdays">
             {WEEKDAY_NAMES.map((wd) => (
-              <span key={wd} role="columnheader" className="sora-calendar__weekday">
+              <span
+                key={wd}
+                role="columnheader"
+                className="sora-calendar__weekday"
+              >
                 {wd}
               </span>
             ))}
@@ -173,6 +215,6 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
         </div>
       </div>
     );
-  }
+  },
 );
-Calendar.displayName = 'Calendar';
+Calendar.displayName = "Calendar";

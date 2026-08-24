@@ -6,7 +6,6 @@
     "tag": "latest"
   },
   "description": "SoraUI React: Accessible, lightweight, customizable React components",
-
   "license": "MIT",
   "author": "SoraUI Team",
   "repository": {
@@ -25,7 +24,6 @@
     "tailwind-free"
   ],
   "type": "module",
-
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

@@ -9,9 +9,13 @@ import {
   cloneElement,
   isValidElement,
   type ReactElement,
-} from 'react';
-import { usePositioning, Portal, useEscapeKey } from '@soraui/hooks';
-import type { TooltipProps, TooltipTriggerProps, TooltipContentProps } from './tooltip.types';
+} from "react";
+import { usePositioning, Portal, useEscapeKey } from "@soraui/hooks";
+import type {
+  TooltipProps,
+  TooltipTriggerProps,
+  TooltipContentProps,
+} from "./tooltip.types";
 
 interface TooltipContextValue {
   open: boolean;
@@ -26,13 +30,13 @@ const TooltipContext = createContext<TooltipContextValue | null>(null);
 function useTooltipContext() {
   const context = useContext(TooltipContext);
   if (!context) {
-    throw new Error('Tooltip sub-components must be used within a <Tooltip>');
+    throw new Error("Tooltip sub-components must be used within a <Tooltip>");
   }
   return context;
 }
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export function Tooltip({
@@ -56,11 +60,13 @@ export function Tooltip({
       }
       onOpenChange?.(nextOpen);
     },
-    [isControlled, onOpenChange]
+    [isControlled, onOpenChange],
   );
 
   return (
-    <TooltipContext.Provider value={{ open, setOpen, triggerRef, contentId, delay }}>
+    <TooltipContext.Provider
+      value={{ open, setOpen, triggerRef, contentId, delay }}
+    >
       {children}
     </TooltipContext.Provider>
   );
@@ -89,20 +95,21 @@ export const TooltipTrigger = forwardRef<HTMLElement, TooltipTriggerProps>(
 
     const mergedRef = (node: HTMLElement | null) => {
       (triggerRef as React.MutableRefObject<HTMLElement | null>).current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLElement | null>).current = node;
     };
 
     const triggerProps = {
       ref: mergedRef,
-      'aria-describedby': open ? contentId : undefined,
+      "aria-describedby": open ? contentId : undefined,
       onPointerEnter: handleOpen,
       onPointerLeave: handleClose,
       onMouseEnter: handleOpen,
       onMouseLeave: handleClose,
       onFocus: handleOpen,
       onBlur: handleClose,
-      className: cx('sora-tooltip__trigger', className),
+      className: cx("sora-tooltip__trigger", className),
       ...props,
     };
 
@@ -115,12 +122,12 @@ export const TooltipTrigger = forwardRef<HTMLElement, TooltipTriggerProps>(
         {children}
       </button>
     );
-  }
+  },
 );
-TooltipTrigger.displayName = 'TooltipTrigger';
+TooltipTrigger.displayName = "TooltipTrigger";
 
 export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
-  ({ placement = 'top', offset = 6, className, children, ...props }, ref) => {
+  ({ placement = "top", offset = 6, className, children, ...props }, ref) => {
     const { open, setOpen, triggerRef, contentId } = useTooltipContext();
     const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -134,8 +141,9 @@ export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
 
     const mergedRef = (node: HTMLDivElement | null) => {
       contentRef.current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
     };
 
     if (!open) return null;
@@ -148,9 +156,9 @@ export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
           role="tooltip"
           style={style}
           className={cx(
-            'sora-tooltip__content',
-            'sora-tooltip__content--' + actualPlacement,
-            className
+            "sora-tooltip__content",
+            "sora-tooltip__content--" + actualPlacement,
+            className,
           )}
           {...props}
         >
@@ -158,6 +166,6 @@ export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
         </div>
       </Portal>
     );
-  }
+  },
 );
-TooltipContent.displayName = 'TooltipContent';
+TooltipContent.displayName = "TooltipContent";

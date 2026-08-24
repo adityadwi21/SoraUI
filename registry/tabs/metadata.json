@@ -6,14 +6,34 @@
   "props": {
     "value": { "type": "string" },
     "defaultValue": { "type": "string" },
-    "orientation": { "type": "TabsOrientation", "default": "horizontal", "options": ["horizontal", "vertical"] }
+    "orientation": {
+      "type": "TabsOrientation",
+      "default": "horizontal",
+      "options": ["horizontal", "vertical"]
+    }
   },
   "accessibility": {
-    "keyboard": ["ArrowRight/ArrowLeft (horizontal)", "ArrowUp/ArrowDown (vertical)", "Home to first tab", "End to last tab", "Tab moves focus into panel"],
-    "aria": ["role=\"tablist\"", "role=\"tab\"", "role=\"tabpanel\"", "aria-selected", "aria-controls", "aria-labelledby"],
+    "keyboard": [
+      "ArrowRight/ArrowLeft (horizontal)",
+      "ArrowUp/ArrowDown (vertical)",
+      "Home to first tab",
+      "End to last tab",
+      "Tab moves focus into panel"
+    ],
+    "aria": [
+      "role=\"tablist\"",
+      "role=\"tab\"",
+      "role=\"tabpanel\"",
+      "aria-selected",
+      "aria-controls",
+      "aria-labelledby"
+    ],
     "focus": "Roving tabindex (selected tab has tabIndex=0, others -1)"
   },
   "files": [{ "path": "components/ui/tabs.tsx", "type": "registry:ui" }],
   "dependencies": [],
-  "installation": { "cli": "npx soraui add tabs", "npm": "import { Tabs, TabsList, TabsTrigger, TabsContent } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add tabs",
+    "npm": "import { Tabs, TabsList, TabsTrigger, TabsContent } from '@soraui/react'"
+  }
 }

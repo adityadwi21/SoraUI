@@ -2,4 +2,4 @@
  * SoraUI — Test Setup
  * Configures @testing-library/jest-dom matchers for all test files.
  */
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";

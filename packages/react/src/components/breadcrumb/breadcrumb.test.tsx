@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -7,10 +7,10 @@ import {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from './breadcrumb';
+} from "./breadcrumb";
 
-describe('Breadcrumb Component & A11y', () => {
-  it('renders accessible breadcrumb navigation hierarchy', () => {
+describe("Breadcrumb Component & A11y", () => {
+  it("renders accessible breadcrumb navigation hierarchy", () => {
     render(
       <Breadcrumb>
         <BreadcrumbList>
@@ -22,11 +22,19 @@ describe('Breadcrumb Component & A11y', () => {
             <BreadcrumbPage>Settings</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
-      </Breadcrumb>
+      </Breadcrumb>,
     );
 
-    expect(screen.getByRole('navigation', { name: 'breadcrumb' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
-    expect(screen.getByText('Settings')).toHaveAttribute('aria-current', 'page');
+    expect(
+      screen.getByRole("navigation", { name: "breadcrumb" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute(
+      "href",
+      "/",
+    );
+    expect(screen.getByText("Settings")).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
   });
 });

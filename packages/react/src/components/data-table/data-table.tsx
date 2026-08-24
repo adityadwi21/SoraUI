@@ -1,11 +1,11 @@
-import { useState, useMemo, forwardRef, type ChangeEvent } from 'react';
-import { ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
-import type { DataTableProps, DataTableColumn } from './data-table.types';
+import { useState, useMemo, forwardRef, type ChangeEvent } from "react";
+import { ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
+import type { DataTableProps, DataTableColumn } from "./data-table.types";
 
-type SortDirection = 'asc' | 'desc' | null;
+type SortDirection = "asc" | "desc" | null;
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export function DataTable<T extends Record<string, any>>({
@@ -13,30 +13,30 @@ export function DataTable<T extends Record<string, any>>({
   columns = [],
   pageSize: initialPageSize = 10,
   searchable = true,
-  searchPlaceholder = 'Filter records...',
+  searchPlaceholder = "Filter records...",
   selectable = false,
   getRowId,
   onSelectionChange,
-  emptyText = 'No records found.',
+  emptyText = "No records found.",
   caption,
   className,
   ...props
 }: DataTableProps<T>) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [sortColumn, setSortColumn] = useState<keyof T | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
-  const [selectedIndices, setSelectedIndices] = useState<Set<number>>(new Set());
+  const [selectedIndices, setSelectedIndices] = useState<Set<number>>(
+    new Set(),
+  );
 
   // 1. Filter
   const filteredData = useMemo(() => {
     if (!searchQuery) return data;
     const q = searchQuery.toLowerCase();
     return data.filter((row) =>
-      Object.values(row).some((val) =>
-        String(val).toLowerCase().includes(q)
-      )
+      Object.values(row).some((val) => String(val).toLowerCase().includes(q)),
     );
   }, [data, searchQuery]);
 
@@ -48,8 +48,8 @@ export function DataTable<T extends Record<string, any>>({
       const valB = b[sortColumn];
       if (valA == null) return 1;
       if (valB == null) return -1;
-      if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
-      if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
+      if (valA < valB) return sortDirection === "asc" ? -1 : 1;
+      if (valA > valB) return sortDirection === "asc" ? 1 : -1;
       return 0;
     });
   }, [filteredData, sortColumn, sortDirection]);
@@ -65,9 +65,9 @@ export function DataTable<T extends Record<string, any>>({
     if (!colKey) return;
     if (sortColumn !== colKey) {
       setSortColumn(colKey);
-      setSortDirection('asc');
-    } else if (sortDirection === 'asc') {
-      setSortDirection('desc');
+      setSortDirection("asc");
+    } else if (sortDirection === "asc") {
+      setSortDirection("desc");
     } else {
       setSortColumn(null);
       setSortDirection(null);
@@ -101,7 +101,7 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   return (
-    <div className={cx('sora-data-table', className)} {...props}>
+    <div className={cx("sora-data-table", className)} {...props}>
       {searchable && (
         <div className="sora-data-table__toolbar">
           <input
@@ -120,7 +120,9 @@ export function DataTable<T extends Record<string, any>>({
 
       <div className="sora-data-table__wrapper">
         <table className="sora-data-table__table">
-          {caption && <caption className="sora-data-table__caption">{caption}</caption>}
+          {caption && (
+            <caption className="sora-data-table__caption">{caption}</caption>
+          )}
           <thead className="sora-data-table__thead">
             <tr>
               {selectable && (
@@ -141,26 +143,41 @@ export function DataTable<T extends Record<string, any>>({
                 const ariaSort = !col.sortable
                   ? undefined
                   : isSorted
-                  ? sortDirection === 'asc'
-                    ? 'ascending'
-                    : 'descending'
-                  : 'none';
+                    ? sortDirection === "asc"
+                      ? "ascending"
+                      : "descending"
+                    : "none";
 
                 return (
                   <th
                     key={col.id || idx}
                     aria-sort={ariaSort}
                     className={cx(
-                      'sora-data-table__th',
-                      col.sortable && 'sora-data-table__th--sortable'
+                      "sora-data-table__th",
+                      col.sortable && "sora-data-table__th--sortable",
                     )}
                     onClick={() => col.sortable && handleSort(col.accessorKey)}
                   >
                     <div className="sora-data-table__th-content">
                       <span>{col.header}</span>
                       {col.sortable && (
-                        <span className="sora-data-table__sort-icon" aria-hidden="true" style={{ display: 'inline-flex', alignItems: 'center' }}>
-                          {isSorted ? (sortDirection === 'asc' ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} />}
+                        <span
+                          className="sora-data-table__sort-icon"
+                          aria-hidden="true"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          {isSorted ? (
+                            sortDirection === "asc" ? (
+                              <ArrowUp size={12} />
+                            ) : (
+                              <ArrowDown size={12} />
+                            )
+                          ) : (
+                            <ArrowUpDown size={12} />
+                          )}
                         </span>
                       )}
                     </div>
@@ -187,8 +204,8 @@ export function DataTable<T extends Record<string, any>>({
                   <tr
                     key={rowKey}
                     className={cx(
-                      'sora-data-table__tr',
-                      isSelected && 'sora-data-table__tr--selected'
+                      "sora-data-table__tr",
+                      isSelected && "sora-data-table__tr--selected",
                     )}
                   >
                     {selectable && (
@@ -202,12 +219,15 @@ export function DataTable<T extends Record<string, any>>({
                       </td>
                     )}
                     {columns.map((col, colIdx) => (
-                      <td key={col.id || colIdx} className="sora-data-table__td">
+                      <td
+                        key={col.id || colIdx}
+                        className="sora-data-table__td"
+                      >
                         {col.cell
                           ? col.cell(row, rowIdx)
                           : col.accessorKey
-                          ? String(row[col.accessorKey] ?? '')
-                          : null}
+                            ? String(row[col.accessorKey] ?? "")
+                            : null}
                       </td>
                     ))}
                   </tr>

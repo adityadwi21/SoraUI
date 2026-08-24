@@ -1,4 +1,4 @@
-export type Severity = 'error' | 'warning' | 'info';
+export type Severity = "error" | "warning" | "info";
 
 export interface Diagnostic {
   rule: string;

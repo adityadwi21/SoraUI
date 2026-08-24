@@ -1,4 +1,4 @@
-import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from 'react';
+import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
 
 export interface DialogProps {
   open?: boolean;

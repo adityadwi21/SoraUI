@@ -1,1 +1,8 @@
-{"name":"avatar","type":"registry:ui","level":1,"description":"An image element with a fallback for representing the user.","files":[{"path":"components/ui/avatar.tsx","type":"registry:ui"}],"dependencies":[]}
+{
+  "name": "avatar",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "An image element with a fallback for representing the user.",
+  "files": [{ "path": "components/ui/avatar.tsx", "type": "registry:ui" }],
+  "dependencies": []
+}

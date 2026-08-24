@@ -3,7 +3,7 @@
  * Mode: dark
  * Description: Pure high-contrast obsidian black with sharp yellow accents.
  */
-[data-theme='eclipse'] {
+[data-theme="eclipse"] {
   --ui-background: #000000;
   --ui-foreground: #ffffff;
   --ui-card: #0a0a0a;

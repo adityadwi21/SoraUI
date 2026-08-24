@@ -1,4 +1,4 @@
-﻿import type { LabelHTMLAttributes } from 'react';
+﻿import type { LabelHTMLAttributes } from "react";
 
 export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
   /** Whether the associated field is required — shows visual indicator */

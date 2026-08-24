@@ -10,7 +10,7 @@
  * Intentionally minimal — no runtime complexity.
  */
 export function cx(...classes: (string | undefined | null | false)[]): string {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 /**
@@ -18,5 +18,5 @@ export function cx(...classes: (string | undefined | null | false)[]): string {
  * Used to guard DOM operations for SSR safety.
  */
 export function isBrowser(): boolean {
-  return typeof window !== 'undefined' && typeof document !== 'undefined';
+  return typeof window !== "undefined" && typeof document !== "undefined";
 }

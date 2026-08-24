@@ -1,12 +1,6 @@
-import React, { useState } from 'react';
-import {
-  Copy,
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  Terminal,
-} from 'lucide-react';
-import { CodeBlock } from '../../components/code-block';
+import React, { useState } from "react";
+import { Copy, Check, ChevronLeft, ChevronRight, Terminal } from "lucide-react";
+import { CodeBlock } from "../../components/code-block";
 
 export interface ManualPageProps {
   onNavigate?: (path: string) => void;
@@ -14,7 +8,7 @@ export interface ManualPageProps {
 
 export const ManualPage: React.FC<ManualPageProps> = ({ onNavigate }) => {
   const [copied, setCopied] = useState(false);
-  const [tab1, setTab1] = useState<'pnpm' | 'npm' | 'yarn' | 'bun'>('pnpm');
+  const [tab1, setTab1] = useState<"pnpm" | "npm" | "yarn" | "bun">("pnpm");
 
   const go = (path: string) => {
     if (onNavigate) onNavigate(path);
@@ -58,7 +52,7 @@ export const ManualPage: React.FC<ManualPageProps> = ({ onNavigate }) => {
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => go('/guides/astro')}
+                onClick={() => go("/guides/astro")}
                 title="Previous: Astro"
                 aria-label="Previous page"
               >
@@ -67,7 +61,7 @@ export const ManualPage: React.FC<ManualPageProps> = ({ onNavigate }) => {
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => go('/guides/introduction')}
+                onClick={() => go("/guides/introduction")}
                 title="Next: Introduction"
                 aria-label="Next page"
               >
@@ -78,7 +72,8 @@ export const ManualPage: React.FC<ManualPageProps> = ({ onNavigate }) => {
         </div>
 
         <p className="docs-intro-lead">
-          Add SoraUI dependencies, tokens, and primitives manually to any custom React setup or bundler.
+          Add SoraUI dependencies, tokens, and primitives manually to any custom
+          React setup or bundler.
         </p>
       </header>
 
@@ -86,18 +81,23 @@ export const ManualPage: React.FC<ManualPageProps> = ({ onNavigate }) => {
       <section className="docs-intro-section">
         <h2 className="docs-intro-h2">
           <span>1. Install Packages</span>
-          <a href="#install-packages" className="docs-intro-anchor" aria-hidden>#</a>
+          <a href="#install-packages" className="docs-intro-anchor" aria-hidden>
+            #
+          </a>
         </h2>
-        <p>Install the core styling tokens, React primitive bindings, and utility packages:</p>
+        <p>
+          Install the core styling tokens, React primitive bindings, and utility
+          packages:
+        </p>
 
         <div className="docs-tabbed-codeblock">
           <div className="docs-tabbed-codeblock-header">
             <div className="docs-tabbed-codeblock-tabs">
-              {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((tab) => (
+              {(["pnpm", "npm", "yarn", "bun"] as const).map((tab) => (
                 <button
                   key={tab}
                   type="button"
-                  className={`docs-tabbed-codeblock-tab${tab1 === tab ? ' active' : ''}`}
+                  className={`docs-tabbed-codeblock-tab${tab1 === tab ? " active" : ""}`}
                   onClick={() => setTab1(tab)}
                 >
                   <Terminal size={12} style={{ opacity: 0.7 }} />
@@ -108,10 +108,14 @@ export const ManualPage: React.FC<ManualPageProps> = ({ onNavigate }) => {
           </div>
           <pre className="docs-tabbed-codeblock-pre">
             <code>
-              {tab1 === 'pnpm' && 'pnpm add @soraui/react @soraui/core @soraui/hooks lucide-react clsx'}
-              {tab1 === 'npm' && 'npm install @soraui/react @soraui/core @soraui/hooks lucide-react clsx'}
-              {tab1 === 'yarn' && 'yarn add @soraui/react @soraui/core @soraui/hooks lucide-react clsx'}
-              {tab1 === 'bun' && 'bun add @soraui/react @soraui/core @soraui/hooks lucide-react clsx'}
+              {tab1 === "pnpm" &&
+                "pnpm add @soraui/react @soraui/core @soraui/hooks lucide-react clsx"}
+              {tab1 === "npm" &&
+                "npm install @soraui/react @soraui/core @soraui/hooks lucide-react clsx"}
+              {tab1 === "yarn" &&
+                "yarn add @soraui/react @soraui/core @soraui/hooks lucide-react clsx"}
+              {tab1 === "bun" &&
+                "bun add @soraui/react @soraui/core @soraui/hooks lucide-react clsx"}
             </code>
           </pre>
         </div>
@@ -121,9 +125,13 @@ export const ManualPage: React.FC<ManualPageProps> = ({ onNavigate }) => {
       <section className="docs-intro-section">
         <h2 className="docs-intro-h2">
           <span>2. Configure Path Aliases</span>
-          <a href="#path-aliases" className="docs-intro-anchor" aria-hidden>#</a>
+          <a href="#path-aliases" className="docs-intro-anchor" aria-hidden>
+            #
+          </a>
         </h2>
-        <p>Add <code>@/*</code> path mapping to your <code>tsconfig.json</code>:</p>
+        <p>
+          Add <code>@/*</code> path mapping to your <code>tsconfig.json</code>:
+        </p>
         <CodeBlock
           language="json"
           title="tsconfig.json"
@@ -142,9 +150,14 @@ export const ManualPage: React.FC<ManualPageProps> = ({ onNavigate }) => {
       <section className="docs-intro-section">
         <h2 className="docs-intro-h2">
           <span>3. Configure CSS Variable Contract</span>
-          <a href="#css-tokens" className="docs-intro-anchor" aria-hidden>#</a>
+          <a href="#css-tokens" className="docs-intro-anchor" aria-hidden>
+            #
+          </a>
         </h2>
-        <p>Import the base tokens or define the 20-token contract in your global stylesheet:</p>
+        <p>
+          Import the base tokens or define the 20-token contract in your global
+          stylesheet:
+        </p>
         <CodeBlock
           language="css"
           title="src/index.css"
@@ -180,9 +193,13 @@ export const ManualPage: React.FC<ManualPageProps> = ({ onNavigate }) => {
       <section className="docs-intro-section">
         <h2 className="docs-intro-h2">
           <span>4. Setup Theme Provider</span>
-          <a href="#theme-provider" className="docs-intro-anchor" aria-hidden>#</a>
+          <a href="#theme-provider" className="docs-intro-anchor" aria-hidden>
+            #
+          </a>
         </h2>
-        <p>Wrap your application root with <code>ThemeProvider</code>:</p>
+        <p>
+          Wrap your application root with <code>ThemeProvider</code>:
+        </p>
         <CodeBlock
           language="tsx"
           title="src/App.tsx"
@@ -204,11 +221,15 @@ export default function App() {
       </section>
 
       {/* ─── BOTTOM PAGINATION ─── */}
-      <nav className="docs-intro-pagination" aria-label="Pagination" style={{ marginTop: '3rem' }}>
+      <nav
+        className="docs-intro-pagination"
+        aria-label="Pagination"
+        style={{ marginTop: "3rem" }}
+      >
         <button
           type="button"
           className="docs-intro-pagination-btn prev"
-          onClick={() => go('/guides/astro')}
+          onClick={() => go("/guides/astro")}
         >
           <ChevronLeft size={16} />
           <div className="docs-intro-pagination-text">
@@ -220,9 +241,12 @@ export default function App() {
         <button
           type="button"
           className="docs-intro-pagination-btn next"
-          onClick={() => go('/guides/introduction')}
+          onClick={() => go("/guides/introduction")}
         >
-          <div className="docs-intro-pagination-text" style={{ textAlign: 'right' }}>
+          <div
+            className="docs-intro-pagination-text"
+            style={{ textAlign: "right" }}
+          >
             <span className="docs-intro-pagination-label">Next</span>
             <span className="docs-intro-pagination-title">Introduction</span>
           </div>

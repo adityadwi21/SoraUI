@@ -1,1 +1,8 @@
-{"name":"checkbox","type":"registry:ui","level":1,"description":"A control that allows the user to toggle between checked and not checked.","files":[{"path":"components/ui/checkbox.tsx","type":"registry:ui"}],"dependencies":[]}
+{
+  "name": "checkbox",
+  "type": "registry:ui",
+  "level": 1,
+  "description": "A control that allows the user to toggle between checked and not checked.",
+  "files": [{ "path": "components/ui/checkbox.tsx", "type": "registry:ui" }],
+  "dependencies": []
+}

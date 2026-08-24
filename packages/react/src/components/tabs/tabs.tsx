@@ -7,14 +7,14 @@ import {
   useRef,
   forwardRef,
   type KeyboardEvent,
-} from 'react';
+} from "react";
 import type {
   TabsProps,
   TabsListProps,
   TabsTriggerProps,
   TabsContentProps,
   TabsOrientation,
-} from './tabs.types';
+} from "./tabs.types";
 
 interface TabsContextValue {
   value: string;
@@ -28,20 +28,20 @@ const TabsContext = createContext<TabsContextValue | null>(null);
 function useTabsContext() {
   const context = useContext(TabsContext);
   if (!context) {
-    throw new Error('Tabs sub-components must be used within a <Tabs>');
+    throw new Error("Tabs sub-components must be used within a <Tabs>");
   }
   return context;
 }
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export function Tabs({
   value: controlledValue,
-  defaultValue = '',
+  defaultValue = "",
   onValueChange,
-  orientation = 'horizontal',
+  orientation = "horizontal",
   className,
   children,
   ...props
@@ -58,13 +58,13 @@ export function Tabs({
       }
       onValueChange?.(nextValue);
     },
-    [isControlled, onValueChange]
+    [isControlled, onValueChange],
   );
 
   return (
     <TabsContext.Provider value={{ value, setValue, orientation, baseId }}>
       <div
-        className={cx('sora-tabs', 'sora-tabs--' + orientation, className)}
+        className={cx("sora-tabs", "sora-tabs--" + orientation, className)}
         data-orientation={orientation}
         {...props}
       >
@@ -84,23 +84,29 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
       if (!list) return;
 
       const tabs = Array.from(
-        list.querySelectorAll<HTMLButtonElement>('[role="tab"]:not([disabled])')
+        list.querySelectorAll<HTMLButtonElement>(
+          '[role="tab"]:not([disabled])',
+        ),
       );
       if (tabs.length === 0) return;
 
-      const activeIndex = tabs.indexOf(document.activeElement as HTMLButtonElement);
+      const activeIndex = tabs.indexOf(
+        document.activeElement as HTMLButtonElement,
+      );
       let nextIndex = -1;
 
-      if (orientation === 'horizontal') {
-        if (e.key === 'ArrowRight') nextIndex = (activeIndex + 1) % tabs.length;
-        else if (e.key === 'ArrowLeft') nextIndex = (activeIndex - 1 + tabs.length) % tabs.length;
+      if (orientation === "horizontal") {
+        if (e.key === "ArrowRight") nextIndex = (activeIndex + 1) % tabs.length;
+        else if (e.key === "ArrowLeft")
+          nextIndex = (activeIndex - 1 + tabs.length) % tabs.length;
       } else {
-        if (e.key === 'ArrowDown') nextIndex = (activeIndex + 1) % tabs.length;
-        else if (e.key === 'ArrowUp') nextIndex = (activeIndex - 1 + tabs.length) % tabs.length;
+        if (e.key === "ArrowDown") nextIndex = (activeIndex + 1) % tabs.length;
+        else if (e.key === "ArrowUp")
+          nextIndex = (activeIndex - 1 + tabs.length) % tabs.length;
       }
 
-      if (e.key === 'Home') nextIndex = 0;
-      else if (e.key === 'End') nextIndex = tabs.length - 1;
+      if (e.key === "Home") nextIndex = 0;
+      else if (e.key === "End") nextIndex = tabs.length - 1;
 
       if (nextIndex >= 0 && nextIndex < tabs.length) {
         e.preventDefault();
@@ -112,8 +118,9 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
 
     const mergedRef = (node: HTMLDivElement | null) => {
       listRef.current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
     };
 
     return (
@@ -122,15 +129,15 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
         role="tablist"
         aria-orientation={orientation}
         onKeyDown={handleKeyDown}
-        className={cx('sora-tabs__list', className)}
+        className={cx("sora-tabs__list", className)}
         {...props}
       >
         {children}
       </div>
     );
-  }
+  },
 );
-TabsList.displayName = 'TabsList';
+TabsList.displayName = "TabsList";
 
 export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
   ({ value: tabValue, disabled, className, children, ...props }, ref) => {
@@ -152,18 +159,18 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
         disabled={disabled}
         onClick={() => setValue(tabValue)}
         className={cx(
-          'sora-tabs__trigger',
-          isSelected && 'sora-tabs__trigger--active',
-          className
+          "sora-tabs__trigger",
+          isSelected && "sora-tabs__trigger--active",
+          className,
         )}
         {...props}
       >
         {children}
       </button>
     );
-  }
+  },
 );
-TabsTrigger.displayName = 'TabsTrigger';
+TabsTrigger.displayName = "TabsTrigger";
 
 export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
   ({ value: tabValue, className, children, ...props }, ref) => {
@@ -182,12 +189,12 @@ export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
         id={panelId}
         aria-labelledby={triggerId}
         tabIndex={0}
-        className={cx('sora-tabs__content', className)}
+        className={cx("sora-tabs__content", className)}
         {...props}
       >
         {children}
       </div>
     );
-  }
+  },
 );
-TabsContent.displayName = 'TabsContent';
+TabsContent.displayName = "TabsContent";

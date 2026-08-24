@@ -9,8 +9,8 @@ import {
   cloneElement,
   isValidElement,
   type MouseEvent,
-} from 'react';
-import { Portal, useFocusTrap, useEscapeKey } from '@soraui/hooks';
+} from "react";
+import { Portal, useFocusTrap, useEscapeKey } from "@soraui/hooks";
 import type {
   AlertDialogProps,
   AlertDialogTriggerProps,
@@ -21,10 +21,10 @@ import type {
   AlertDialogFooterProps,
   AlertDialogActionProps,
   AlertDialogCancelProps,
-} from './alert-dialog.types';
+} from "./alert-dialog.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 interface AlertContextValue {
@@ -57,60 +57,66 @@ export function AlertDialog({
   };
 
   return (
-    <AlertContext.Provider value={{ open, setOpen, titleId, descId, cancelRef: cancelRef as any }}>
+    <AlertContext.Provider
+      value={{ open, setOpen, titleId, descId, cancelRef: cancelRef as any }}
+    >
       {children}
     </AlertContext.Provider>
   );
 }
 
-export const AlertDialogTrigger = forwardRef<HTMLButtonElement, AlertDialogTriggerProps>(
-  ({ asChild = false, className, onClick, children, ...props }, ref) => {
-    const ctx = useContext(AlertContext);
-    if (!ctx) throw new Error('AlertDialogTrigger must be inside AlertDialog');
-
-    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-      onClick?.(e);
-      ctx.setOpen(true);
-    };
-
-    if (asChild && isValidElement(children)) {
-      return cloneElement(children as any, {
-        ref,
-        onClick: (e: MouseEvent<HTMLButtonElement>) => {
-          (children.props as any)?.onClick?.(e);
-          ctx.setOpen(true);
-        },
-        ...props,
-      });
-    }
-
-    return (
-      <button
-        ref={ref}
-        type="button"
-        className={cx('sora-alert-dialog__trigger', className)}
-        onClick={handleClick}
-        {...props}
-      >
-        {children}
-      </button>
-    );
-  }
-);
-AlertDialogTrigger.displayName = 'AlertDialogTrigger';
-
-export const AlertDialogContent = forwardRef<HTMLDivElement, AlertDialogContentProps>(({ className, children, ...props }, ref) => {
+export const AlertDialogTrigger = forwardRef<
+  HTMLButtonElement,
+  AlertDialogTriggerProps
+>(({ asChild = false, className, onClick, children, ...props }, ref) => {
   const ctx = useContext(AlertContext);
-  if (!ctx) throw new Error('AlertDialogContent must be inside AlertDialog');
+  if (!ctx) throw new Error("AlertDialogTrigger must be inside AlertDialog");
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    onClick?.(e);
+    ctx.setOpen(true);
+  };
+
+  if (asChild && isValidElement(children)) {
+    return cloneElement(children as any, {
+      ref,
+      onClick: (e: MouseEvent<HTMLButtonElement>) => {
+        (children.props as any)?.onClick?.(e);
+        ctx.setOpen(true);
+      },
+      ...props,
+    });
+  }
+
+  return (
+    <button
+      ref={ref}
+      type="button"
+      className={cx("sora-alert-dialog__trigger", className)}
+      onClick={handleClick}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+});
+AlertDialogTrigger.displayName = "AlertDialogTrigger";
+
+export const AlertDialogContent = forwardRef<
+  HTMLDivElement,
+  AlertDialogContentProps
+>(({ className, children, ...props }, ref) => {
+  const ctx = useContext(AlertContext);
+  if (!ctx) throw new Error("AlertDialogContent must be inside AlertDialog");
 
   const contentRef = useFocusTrap(ctx.open, { initialFocusRef: ctx.cancelRef });
   useEscapeKey(() => ctx.setOpen(false), ctx.open);
 
   // Scroll lock on body
   useEffect(() => {
-    if (!ctx.open || typeof document === 'undefined') return;
+    if (!ctx.open || typeof document === "undefined") return;
     const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = originalOverflow;
     };
@@ -124,14 +130,14 @@ export const AlertDialogContent = forwardRef<HTMLDivElement, AlertDialogContentP
         <div
           ref={(el) => {
             contentRef.current = el;
-            if (typeof ref === 'function') ref(el);
+            if (typeof ref === "function") ref(el);
             else if (ref) (ref as any).current = el;
           }}
           role="alertdialog"
           aria-modal="true"
           aria-labelledby={ctx.titleId}
           aria-describedby={ctx.descId}
-          className={cx('sora-alert-dialog__content', className)}
+          className={cx("sora-alert-dialog__content", className)}
           {...props}
         >
           {children}
@@ -140,37 +146,74 @@ export const AlertDialogContent = forwardRef<HTMLDivElement, AlertDialogContentP
     </Portal>
   );
 });
-AlertDialogContent.displayName = 'AlertDialogContent';
+AlertDialogContent.displayName = "AlertDialogContent";
 
-export const AlertDialogHeader = forwardRef<HTMLDivElement, AlertDialogHeaderProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cx('sora-alert-dialog__header', className)} {...props} />
+export const AlertDialogHeader = forwardRef<
+  HTMLDivElement,
+  AlertDialogHeaderProps
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cx("sora-alert-dialog__header", className)}
+    {...props}
+  />
 ));
-AlertDialogHeader.displayName = 'AlertDialogHeader';
+AlertDialogHeader.displayName = "AlertDialogHeader";
 
-export const AlertDialogTitle = forwardRef<HTMLHeadingElement, AlertDialogTitleProps>(({ className, ...props }, ref) => {
+export const AlertDialogTitle = forwardRef<
+  HTMLHeadingElement,
+  AlertDialogTitleProps
+>(({ className, ...props }, ref) => {
   const ctx = useContext(AlertContext);
-  return <h2 ref={ref} id={ctx?.titleId} className={cx('sora-alert-dialog__title', className)} {...props} />;
+  return (
+    <h2
+      ref={ref}
+      id={ctx?.titleId}
+      className={cx("sora-alert-dialog__title", className)}
+      {...props}
+    />
+  );
 });
-AlertDialogTitle.displayName = 'AlertDialogTitle';
+AlertDialogTitle.displayName = "AlertDialogTitle";
 
-export const AlertDialogDescription = forwardRef<HTMLParagraphElement, AlertDialogDescriptionProps>(({ className, ...props }, ref) => {
+export const AlertDialogDescription = forwardRef<
+  HTMLParagraphElement,
+  AlertDialogDescriptionProps
+>(({ className, ...props }, ref) => {
   const ctx = useContext(AlertContext);
-  return <p ref={ref} id={ctx?.descId} className={cx('sora-alert-dialog__description', className)} {...props} />;
+  return (
+    <p
+      ref={ref}
+      id={ctx?.descId}
+      className={cx("sora-alert-dialog__description", className)}
+      {...props}
+    />
+  );
 });
-AlertDialogDescription.displayName = 'AlertDialogDescription';
+AlertDialogDescription.displayName = "AlertDialogDescription";
 
-export const AlertDialogFooter = forwardRef<HTMLDivElement, AlertDialogFooterProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cx('sora-alert-dialog__footer', className)} {...props} />
+export const AlertDialogFooter = forwardRef<
+  HTMLDivElement,
+  AlertDialogFooterProps
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cx("sora-alert-dialog__footer", className)}
+    {...props}
+  />
 ));
-AlertDialogFooter.displayName = 'AlertDialogFooter';
+AlertDialogFooter.displayName = "AlertDialogFooter";
 
-export const AlertDialogAction = forwardRef<HTMLButtonElement, AlertDialogActionProps>(({ className, onClick, ...props }, ref) => {
+export const AlertDialogAction = forwardRef<
+  HTMLButtonElement,
+  AlertDialogActionProps
+>(({ className, onClick, ...props }, ref) => {
   const ctx = useContext(AlertContext);
   return (
     <button
       ref={ref}
       type="button"
-      className={cx('sora-alert-dialog__action', className)}
+      className={cx("sora-alert-dialog__action", className)}
       onClick={(e) => {
         onClick?.(e);
         ctx?.setOpen(false);
@@ -179,19 +222,22 @@ export const AlertDialogAction = forwardRef<HTMLButtonElement, AlertDialogAction
     />
   );
 });
-AlertDialogAction.displayName = 'AlertDialogAction';
+AlertDialogAction.displayName = "AlertDialogAction";
 
-export const AlertDialogCancel = forwardRef<HTMLButtonElement, AlertDialogCancelProps>(({ className, onClick, ...props }, ref) => {
+export const AlertDialogCancel = forwardRef<
+  HTMLButtonElement,
+  AlertDialogCancelProps
+>(({ className, onClick, ...props }, ref) => {
   const ctx = useContext(AlertContext);
   return (
     <button
       ref={(el) => {
         if (ctx) (ctx.cancelRef as any).current = el;
-        if (typeof ref === 'function') ref(el);
+        if (typeof ref === "function") ref(el);
         else if (ref) (ref as any).current = el;
       }}
       type="button"
-      className={cx('sora-alert-dialog__cancel', className)}
+      className={cx("sora-alert-dialog__cancel", className)}
       onClick={(e) => {
         onClick?.(e);
         ctx?.setOpen(false);
@@ -200,4 +246,4 @@ export const AlertDialogCancel = forwardRef<HTMLButtonElement, AlertDialogCancel
     />
   );
 });
-AlertDialogCancel.displayName = 'AlertDialogCancel';
+AlertDialogCancel.displayName = "AlertDialogCancel";

@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
-import { Card, CardHeader, CardContent, CardFooter } from '../../components/card/card';
-import { Stepper, StepperItem } from '../../components/stepper/stepper';
-import { Button } from '../../components/button/button';
-import type { WizardStep } from '../types';
+import React, { useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+} from "../../components/card/card";
+import { Stepper, StepperItem } from "../../components/stepper/stepper";
+import { Button } from "../../components/button/button";
+import type { WizardStep } from "../types";
 
 export interface MultiStepWizardProps {
   steps: WizardStep[];
@@ -61,16 +66,29 @@ export function MultiStepWizard({
         </Stepper>
       </CardHeader>
 
-      <CardContent style={{ minHeight: '200px', padding: '1.5rem 0' }}>
+      <CardContent style={{ minHeight: "200px", padding: "1.5rem 0" }}>
         {currentStepData?.description && (
-          <p style={{ color: 'var(--ui-muted-foreground, #71717a)', fontSize: 'var(--sora-text-sm, 0.875rem)', marginBottom: '1rem' }}>
+          <p
+            style={{
+              color: "var(--ui-muted-foreground, #71717a)",
+              fontSize: "var(--sora-text-sm, 0.875rem)",
+              marginBottom: "1rem",
+            }}
+          >
             {currentStepData.description}
           </p>
         )}
         {currentStepData?.component}
       </CardContent>
 
-      <CardFooter style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--ui-border, #e4e4e7)', paddingTop: '1rem' }}>
+      <CardFooter
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          borderTop: "1px solid var(--ui-border, #e4e4e7)",
+          paddingTop: "1rem",
+        }}
+      >
         <Button
           variant="outline"
           onClick={handleBack}
@@ -78,12 +96,8 @@ export function MultiStepWizard({
         >
           Back
         </Button>
-        <Button
-          variant="primary"
-          onClick={handleNext}
-          loading={loading}
-        >
-          {activeStep === steps.length - 1 ? 'Complete' : 'Continue'}
+        <Button variant="primary" onClick={handleNext} loading={loading}>
+          {activeStep === steps.length - 1 ? "Complete" : "Continue"}
         </Button>
       </CardFooter>
     </Card>

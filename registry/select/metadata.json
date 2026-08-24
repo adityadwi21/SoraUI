@@ -10,11 +10,24 @@
     "disabled": { "type": "boolean", "default": false }
   },
   "accessibility": {
-    "keyboard": ["Space or Enter to open", "ArrowDown/ArrowUp to navigate options", "Enter or Space to choose item", "Escape to dismiss"],
-    "aria": ["role=\"combobox\" on trigger", "role=\"listbox\" on content", "role=\"option\" on items", "aria-selected on selected item"],
+    "keyboard": [
+      "Space or Enter to open",
+      "ArrowDown/ArrowUp to navigate options",
+      "Enter or Space to choose item",
+      "Escape to dismiss"
+    ],
+    "aria": [
+      "role=\"combobox\" on trigger",
+      "role=\"listbox\" on content",
+      "role=\"option\" on items",
+      "aria-selected on selected item"
+    ],
     "focus": "Focus moves between options, returns to trigger on close"
   },
   "files": [{ "path": "components/ui/select.tsx", "type": "registry:ui" }],
   "dependencies": ["@soraui/hooks"],
-  "installation": { "cli": "npx soraui add select", "npm": "import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectSeparator } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add select",
+    "npm": "import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectSeparator } from '@soraui/react'"
+  }
 }

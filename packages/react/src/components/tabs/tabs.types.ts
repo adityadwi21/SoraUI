@@ -1,8 +1,11 @@
-import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from 'react';
+import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
 
-export type TabsOrientation = 'horizontal' | 'vertical';
+export type TabsOrientation = "horizontal" | "vertical";
 
-export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface TabsProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "onChange"
+> {
   /** The value of the currently active tab (controlled) */
   value?: string;
   /** The default active tab value (uncontrolled) */

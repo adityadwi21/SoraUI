@@ -5,7 +5,7 @@
  * WCAG: All combinations verified >= 4.5:1 for text, >= 3:1 for UI elements.
  */
 :root,
-[data-theme='sky'] {
+[data-theme="sky"] {
   --ui-background: #ffffff;
   --ui-foreground: #0c1a2b;
   --ui-card: #ffffff;
@@ -42,12 +42,12 @@
 }
 
 /* ─── Sky Dark Mode ─── */
-html[data-mode="dark"] [data-theme='sky'],
-html[data-docs-theme="dark"] [data-theme='sky'],
-[data-mode="dark"] [data-theme='sky'],
-[data-docs-theme="dark"] [data-theme='sky'],
-[data-theme='sky'][data-mode='dark'],
-[data-theme='sky'][data-docs-theme='dark'],
+html[data-mode="dark"] [data-theme="sky"],
+html[data-docs-theme="dark"] [data-theme="sky"],
+[data-mode="dark"] [data-theme="sky"],
+[data-docs-theme="dark"] [data-theme="sky"],
+[data-theme="sky"][data-mode="dark"],
+[data-theme="sky"][data-docs-theme="dark"],
 html[data-mode="dark"]:not([data-theme]),
 html[data-docs-theme="dark"]:not([data-theme]) {
   --ui-background: #090d16;

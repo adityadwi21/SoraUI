@@ -5,11 +5,11 @@ import {
   type ChangeEvent,
   type KeyboardEvent,
   type ClipboardEvent,
-} from 'react';
-import type { InputOTPProps } from './input-otp.types';
+} from "react";
+import type { InputOTPProps } from "./input-otp.types";
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
@@ -17,25 +17,25 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
     {
       length = 6,
       value: controlledValue,
-      defaultValue = '',
+      defaultValue = "",
       onValueChange,
       disabled = false,
       autoFocus = false,
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
     const isControlled = controlledValue !== undefined;
     const rawVal = isControlled ? controlledValue : uncontrolledValue;
-    const digits = rawVal.split('').slice(0, length);
-    while (digits.length < length) digits.push('');
+    const digits = rawVal.split("").slice(0, length);
+    while (digits.length < length) digits.push("");
 
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
     const updateDigits = (newDigits: string[]) => {
-      const code = newDigits.join('');
+      const code = newDigits.join("");
       if (!isControlled) setUncontrolledValue(code);
       onValueChange?.(code);
     };
@@ -51,18 +51,18 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, idx: number) => {
-      if (e.key === 'Backspace') {
+      if (e.key === "Backspace") {
         if (!digits[idx] && idx > 0) {
           e.preventDefault();
           const next = [...digits];
-          next[idx - 1] = '';
+          next[idx - 1] = "";
           updateDigits(next);
           inputRefs.current[idx - 1]?.focus();
         }
-      } else if (e.key === 'ArrowLeft' && idx > 0) {
+      } else if (e.key === "ArrowLeft" && idx > 0) {
         e.preventDefault();
         inputRefs.current[idx - 1]?.focus();
-      } else if (e.key === 'ArrowRight' && idx < length - 1) {
+      } else if (e.key === "ArrowRight" && idx < length - 1) {
         e.preventDefault();
         inputRefs.current[idx + 1]?.focus();
       }
@@ -70,9 +70,9 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
 
     const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
       e.preventDefault();
-      const pasted = e.clipboardData.getData('text').trim().slice(0, length);
-      const next = pasted.split('');
-      while (next.length < length) next.push('');
+      const pasted = e.clipboardData.getData("text").trim().slice(0, length);
+      const next = pasted.split("");
+      while (next.length < length) next.push("");
       updateDigits(next);
       const targetIdx = Math.min(length - 1, pasted.length);
       inputRefs.current[targetIdx]?.focus();
@@ -83,13 +83,15 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
         ref={ref}
         role="group"
         aria-label="One-time password input"
-        className={cx('sora-input-otp', className)}
+        className={cx("sora-input-otp", className)}
         {...props}
       >
         {digits.map((digit, i) => (
           <input
             key={i}
-            ref={(el) => { inputRefs.current[i] = el; }}
+            ref={(el) => {
+              inputRefs.current[i] = el;
+            }}
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
@@ -106,6 +108,6 @@ export const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
         ))}
       </div>
     );
-  }
+  },
 );
-InputOTP.displayName = 'InputOTP';
+InputOTP.displayName = "InputOTP";

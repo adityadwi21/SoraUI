@@ -39,7 +39,10 @@
         "properties": {
           "id": { "type": "string" },
           "name": { "type": "string" },
-          "category": { "type": "string", "enum": ["auth", "dashboard", "marketing", "forms"] },
+          "category": {
+            "type": "string",
+            "enum": ["auth", "dashboard", "marketing", "forms"]
+          },
           "description": { "type": "string" },
           "dependencies": { "type": "array", "items": { "type": "string" } },
           "tags": { "type": "array", "items": { "type": "string" } },
@@ -57,11 +60,21 @@
       "type": "object",
       "additionalProperties": {
         "type": "object",
-        "required": ["id", "name", "category", "description", "blocks", "dependencies"],
+        "required": [
+          "id",
+          "name",
+          "category",
+          "description",
+          "blocks",
+          "dependencies"
+        ],
         "properties": {
           "id": { "type": "string" },
           "name": { "type": "string" },
-          "category": { "type": "string", "enum": ["auth", "dashboard", "marketing", "settings"] },
+          "category": {
+            "type": "string",
+            "enum": ["auth", "dashboard", "marketing", "settings"]
+          },
           "description": { "type": "string" },
           "blocks": { "type": "array", "items": { "type": "string" } },
           "dependencies": { "type": "array", "items": { "type": "string" } },

@@ -1,7 +1,7 @@
 export interface CSSExportOptions {
   themeId?: string;
   isDefault?: boolean;
-  mode?: 'light' | 'dark';
+  mode?: "light" | "dark";
 }
 
 export interface TailwindExportOptions {
@@ -14,9 +14,9 @@ export interface TailwindExportOptions {
  */
 export function exportThemeToCSS(
   tokens: Record<string, string>,
-  options: CSSExportOptions = {}
+  options: CSSExportOptions = {},
 ): string {
-  const { themeId = 'custom', isDefault = false, mode } = options;
+  const { themeId = "custom", isDefault = false, mode } = options;
 
   let selector = `[data-theme="${themeId}"]`;
   if (isDefault) {
@@ -29,7 +29,7 @@ export function exportThemeToCSS(
   const lines = Object.entries(tokens)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([key, value]) => `  ${key}: ${value};`)
-    .join('\n');
+    .join("\n");
 
   return `${selector} {\n${lines}\n}\n`;
 }
@@ -39,26 +39,26 @@ export function exportThemeToCSS(
  */
 export function exportThemeToJSON(
   tokens: Record<string, string>,
-  metadata: { name?: string; description?: string } = {}
+  metadata: { name?: string; description?: string } = {},
 ): Record<string, any> {
   const dtcg: Record<string, any> = {
-    $name: metadata.name || 'SoraUI Theme',
-    $description: metadata.description || 'SoraUI Design Tokens',
+    $name: metadata.name || "SoraUI Theme",
+    $description: metadata.description || "SoraUI Design Tokens",
     color: {},
     dimension: {},
   };
 
   for (const [key, value] of Object.entries(tokens)) {
-    const cleanKey = key.replace(/^--ui-/, '').replace(/^--sora-/, '');
+    const cleanKey = key.replace(/^--ui-/, "").replace(/^--sora-/, "");
 
-    if (cleanKey.includes('radius') || cleanKey.includes('space')) {
+    if (cleanKey.includes("radius") || cleanKey.includes("space")) {
       dtcg.dimension[cleanKey] = {
-        $type: 'dimension',
+        $type: "dimension",
         $value: value,
       };
     } else {
       dtcg.color[cleanKey] = {
-        $type: 'color',
+        $type: "color",
         $value: value,
       };
     }
@@ -73,15 +73,15 @@ export function exportThemeToJSON(
  */
 export function exportThemeToTailwind(
   tokens: Record<string, string>,
-  _options: TailwindExportOptions = {}
+  _options: TailwindExportOptions = {},
 ): Record<string, any> {
   const colors: Record<string, string> = {};
   const borderRadius: Record<string, string> = {};
 
   for (const [key] of Object.entries(tokens)) {
-    if (key.startsWith('--ui-')) {
-      const cleanKey = key.replace(/^--ui-/, '');
-      if (cleanKey.includes('radius')) {
+    if (key.startsWith("--ui-")) {
+      const cleanKey = key.replace(/^--ui-/, "");
+      if (cleanKey.includes("radius")) {
         borderRadius[cleanKey] = `var(${key})`;
       } else {
         colors[cleanKey] = `var(${key})`;

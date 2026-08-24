@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2026-08-24
+
+### Component Expansion & Release Candidate Stabilization (47 Components)
+
+- **3 New Primitives Added (`Alert`, `AspectRatio`, `Attachment`)**:
+  - `Alert` (`AlertTitle`, `AlertDescription`): Compound alert banner supporting `default` and `destructive` variants, full dark mode integration, accessible SVG icon slotting, and stacked rendering.
+  - `AspectRatio`: Ratio wrapper (`ratio={16 / 9}`, `4 / 3`, `1 / 1`) ensuring responsive fixed-aspect media rendering without layout shifts.
+  - `Attachment`: Attachment file chip component with preview badge, human-readable file size formatting, and interactive remove action.
+  - Exported all 3 primitives in `@soraui/react` public API and registered in canonical `registry/registry.json`.
+- **Monorepo-Wide Verification & Release Passport**:
+  - Total unit test count: **448 tests passed** across all 8 packages (236 React, 120 Core, 62 MCP, 15 Docs, 11 CLI, 4 Theme Builder).
+  - Clean TypeScript typecheck across all 8 workspace packages.
+  - Monorepo-wide code style formatting compliance with Prettier.
+  - Automated Release Candidate validation (`pnpm run verify:rc`) passed all 8 release gates with 0 console errors and 0 runtime faults across Next.js 14 App Router, Vite SPA, and AI/MCP applications.
+- **Documentation & Agent Skill Synchronization**:
+  - Updated all documentation pages, getting started guides, `README.md`, and `skills/soraui/SKILL.md` to reflect the 47 components, v0.1.1 versioning, and updated examples.
+
 ## [0.1.0] - 2026-08-24
 
 ### Phase 14G: Documentation Platform Redesign, Universal Lucide Iconography & Multi-Framework Guides (COMPLETED)
@@ -33,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0-rc.2] - 2026-08-22
 
 ### Phase 14E: RC Feedback Triage & Hardening (COMPLETED)
+
 - **Public Repository Metadata Synchronization**:
   - Updated repository and homepage URLs across all package manifests (`@soraui/core`, `@soraui/hooks`, `@soraui/react`, `@soraui/cli`, `@soraui/mcp`) and docs to `https://github.com/adityadwi21/SoraUI.git`.
   - Published live to public NPM registry under `--tag rc --access public`.
@@ -43,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0-rc.1] - 2026-08-22
 
 ### Phase 14D: Real Developer Adoption Benchmark (T0 -> T4) (COMPLETED)
+
 - **Deterministic Out-of-the-Box Onboarding Suite**:
   - Automated developer adoption benchmark (`scripts/test-developer-adoption-benchmark.mjs` / `pnpm test:adoption-benchmark`) simulating end-to-end onboarding from blank project to production runtime in isolated OS temporary directories.
   - Measured milestones across 4 package managers (`npm`, `pnpm`, `yarn`, `bun`) and the official CLI:
@@ -112,6 +131,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2026-08-22
 
 ### Added
+
 - **Monorepo & CI/CD (Phase 0)**: Turborepo + pnpm workspaces with automated pipelines for CI, accessibility, bundle size budgeting, and security audits.
 - **Core Architecture & Tokens (Phase 1)**: 3-layer CSS variable token architecture, 9 space/sky-themed preset themes (`sky`, `cloud`, `horizon`, `aurora`, `twilight`, `midnight`, `nebula`, `eclipse`, `starlight`), and `@soraui/core` theme utilities.
 - **Level 1 Zero-Runtime Components (Phase 1)**:

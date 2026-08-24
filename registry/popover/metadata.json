@@ -11,11 +11,22 @@
     "trapFocus": { "type": "boolean", "default": false }
   },
   "accessibility": {
-    "keyboard": ["Space/Enter to toggle trigger", "Escape to dismiss", "Tab navigation"],
-    "aria": ["role=\"dialog\"", "aria-haspopup=\"dialog\"", "aria-expanded on trigger"],
+    "keyboard": [
+      "Space/Enter to toggle trigger",
+      "Escape to dismiss",
+      "Tab navigation"
+    ],
+    "aria": [
+      "role=\"dialog\"",
+      "aria-haspopup=\"dialog\"",
+      "aria-expanded on trigger"
+    ],
     "focus": "Optional focus trapping, restores focus to trigger on close"
   },
   "files": [{ "path": "components/ui/popover.tsx", "type": "registry:ui" }],
   "dependencies": ["@soraui/hooks"],
-  "installation": { "cli": "npx soraui add popover", "npm": "import { Popover, PopoverTrigger, PopoverContent, PopoverClose } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add popover",
+    "npm": "import { Popover, PopoverTrigger, PopoverContent, PopoverClose } from '@soraui/react'"
+  }
 }

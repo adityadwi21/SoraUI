@@ -7,9 +7,14 @@ import {
   useCallback,
   forwardRef,
   type KeyboardEvent,
-} from 'react';
-import { usePositioning, Portal, useEscapeKey, useClickOutside } from '@soraui/hooks';
-import { ChevronDown, Check } from 'lucide-react';
+} from "react";
+import {
+  usePositioning,
+  Portal,
+  useEscapeKey,
+  useClickOutside,
+} from "@soraui/hooks";
+import { ChevronDown, Check } from "lucide-react";
 import type {
   SelectProps,
   SelectTriggerProps,
@@ -19,7 +24,7 @@ import type {
   SelectGroupProps,
   SelectLabelProps,
   SelectSeparatorProps,
-} from './select.types';
+} from "./select.types";
 
 interface SelectContextValue {
   value: string;
@@ -38,18 +43,18 @@ const SelectContext = createContext<SelectContextValue | null>(null);
 function useSelectContext() {
   const context = useContext(SelectContext);
   if (!context) {
-    throw new Error('Select sub-components must be used within a <Select>');
+    throw new Error("Select sub-components must be used within a <Select>");
   }
   return context;
 }
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export function Select({
   value: controlledValue,
-  defaultValue = '',
+  defaultValue = "",
   onValueChange,
   open: controlledOpen,
   defaultOpen = false,
@@ -60,7 +65,7 @@ export function Select({
   children,
 }: SelectProps) {
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
-  const [selectedLabel, setSelectedLabel] = useState('');
+  const [selectedLabel, setSelectedLabel] = useState("");
   const isControlledValue = controlledValue !== undefined;
   const value = isControlledValue ? controlledValue : uncontrolledValue;
 
@@ -76,7 +81,7 @@ export function Select({
       if (!isControlledOpen) setUncontrolledOpen(nextOpen);
       onOpenChange?.(nextOpen);
     },
-    [isControlledOpen, onOpenChange]
+    [isControlledOpen, onOpenChange],
   );
 
   const setValue = useCallback(
@@ -87,7 +92,7 @@ export function Select({
       setOpen(false);
       triggerRef.current?.focus();
     },
-    [isControlledValue, onValueChange, setOpen]
+    [isControlledValue, onValueChange, setOpen],
   );
 
   return (
@@ -112,12 +117,16 @@ export function Select({
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(
   ({ className, children, onClick, ...props }, ref) => {
-    const { open, setOpen, disabled, triggerRef, contentId } = useSelectContext();
+    const { open, setOpen, disabled, triggerRef, contentId } =
+      useSelectContext();
 
     const mergedRef = (node: HTMLButtonElement | null) => {
-      (triggerRef as React.MutableRefObject<HTMLButtonElement | null>).current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+      (triggerRef as React.MutableRefObject<HTMLButtonElement | null>).current =
+        node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLButtonElement | null>).current =
+          node;
     };
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -137,25 +146,34 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(
         disabled={disabled}
         onClick={handleClick}
         className={cx(
-          'sora-select__trigger',
-          open && 'sora-select__trigger--open',
-          disabled && 'sora-select__trigger--disabled',
-          className
+          "sora-select__trigger",
+          open && "sora-select__trigger--open",
+          disabled && "sora-select__trigger--disabled",
+          className,
         )}
         {...props}
       >
         <span className="sora-select__trigger-content">{children}</span>
-        <ChevronDown size={14} className="sora-select__icon" aria-hidden="true" />
+        <ChevronDown
+          size={14}
+          className="sora-select__icon"
+          aria-hidden="true"
+        />
       </button>
     );
-  }
+  },
 );
-SelectTrigger.displayName = 'SelectTrigger';
+SelectTrigger.displayName = "SelectTrigger";
 
 export const SelectValue = forwardRef<HTMLSpanElement, SelectValueProps>(
   ({ placeholder: propPlaceholder, className, ...props }, ref) => {
-    const { value, selectedLabel, placeholder: contextPlaceholder } = useSelectContext();
-    const effectivePlaceholder = propPlaceholder ?? contextPlaceholder ?? 'Select an option...';
+    const {
+      value,
+      selectedLabel,
+      placeholder: contextPlaceholder,
+    } = useSelectContext();
+    const effectivePlaceholder =
+      propPlaceholder ?? contextPlaceholder ?? "Select an option...";
     const display = selectedLabel || value || effectivePlaceholder;
     const isPlaceholder = !selectedLabel && !value;
 
@@ -163,21 +181,24 @@ export const SelectValue = forwardRef<HTMLSpanElement, SelectValueProps>(
       <span
         ref={ref}
         className={cx(
-          'sora-select__value',
-          isPlaceholder && 'sora-select__value--placeholder',
-          className
+          "sora-select__value",
+          isPlaceholder && "sora-select__value--placeholder",
+          className,
         )}
         {...props}
       >
         {display}
       </span>
     );
-  }
+  },
 );
-SelectValue.displayName = 'SelectValue';
+SelectValue.displayName = "SelectValue";
 
 export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
-  ({ placement = 'bottom-start', offset = 4, className, children, ...props }, ref) => {
+  (
+    { placement = "bottom-start", offset = 4, className, children, ...props },
+    ref,
+  ) => {
     const { open, setOpen, triggerRef, contentId } = useSelectContext();
     const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -199,23 +220,30 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
       if (!container) return;
 
       const items = Array.from(
-        container.querySelectorAll<HTMLDivElement>('[role="option"]:not([aria-disabled="true"])')
+        container.querySelectorAll<HTMLDivElement>(
+          '[role="option"]:not([aria-disabled="true"])',
+        ),
       );
       if (items.length === 0) return;
 
-      const activeIndex = items.indexOf(document.activeElement as HTMLDivElement);
+      const activeIndex = items.indexOf(
+        document.activeElement as HTMLDivElement,
+      );
       let nextIndex = -1;
 
-      if (e.key === 'ArrowDown') {
+      if (e.key === "ArrowDown") {
         e.preventDefault();
         nextIndex = activeIndex === -1 ? 0 : (activeIndex + 1) % items.length;
-      } else if (e.key === 'ArrowUp') {
+      } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        nextIndex = activeIndex === -1 ? items.length - 1 : (activeIndex - 1 + items.length) % items.length;
-      } else if (e.key === 'Home') {
+        nextIndex =
+          activeIndex === -1
+            ? items.length - 1
+            : (activeIndex - 1 + items.length) % items.length;
+      } else if (e.key === "Home") {
         e.preventDefault();
         nextIndex = 0;
-      } else if (e.key === 'End') {
+      } else if (e.key === "End") {
         e.preventDefault();
         nextIndex = items.length - 1;
       }
@@ -227,16 +255,21 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
 
     const mergedRef = (node: HTMLDivElement | null) => {
       contentRef.current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
     };
 
     if (!open) return null;
 
-    const scopedTheme = triggerRef.current?.closest('[data-theme]')?.getAttribute('data-theme') || undefined;
+    const scopedTheme =
+      triggerRef.current?.closest("[data-theme]")?.getAttribute("data-theme") ||
+      undefined;
     const scopedMode =
-      triggerRef.current?.closest('[data-mode]')?.getAttribute('data-mode') ||
-      (typeof document !== 'undefined' ? document.documentElement.getAttribute('data-docs-theme') : undefined) ||
+      triggerRef.current?.closest("[data-mode]")?.getAttribute("data-mode") ||
+      (typeof document !== "undefined"
+        ? document.documentElement.getAttribute("data-docs-theme")
+        : undefined) ||
       undefined;
 
     return (
@@ -252,9 +285,9 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
           data-docs-theme={scopedMode}
           style={{ ...style, ...props.style }}
           className={cx(
-            'sora-select__content',
-            'sora-select__content--' + actualPlacement,
-            className
+            "sora-select__content",
+            "sora-select__content--" + actualPlacement,
+            className,
           )}
           {...props}
         >
@@ -262,16 +295,16 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
         </div>
       </Portal>
     );
-  }
+  },
 );
-SelectContent.displayName = 'SelectContent';
+SelectContent.displayName = "SelectContent";
 
 export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
   ({ value: itemValue, disabled, className, children, ...props }, ref) => {
     const { value, setValue } = useSelectContext();
     const isSelected = value === itemValue;
 
-    const labelText = typeof children === 'string' ? children : itemValue;
+    const labelText = typeof children === "string" ? children : itemValue;
 
     const handleSelect = () => {
       if (disabled) return;
@@ -279,7 +312,7 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'Enter' || e.key === ' ') {
+      if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         handleSelect();
       }
@@ -290,49 +323,63 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
         ref={ref}
         role="option"
         aria-selected={isSelected}
-        aria-disabled={disabled ? 'true' : undefined}
+        aria-disabled={disabled ? "true" : undefined}
         tabIndex={disabled ? undefined : -1}
         onClick={handleSelect}
         onKeyDown={handleKeyDown}
         className={cx(
-          'sora-select__item',
-          isSelected && 'sora-select__item--selected',
-          disabled && 'sora-select__item--disabled',
-          className
+          "sora-select__item",
+          isSelected && "sora-select__item--selected",
+          disabled && "sora-select__item--disabled",
+          className,
         )}
         {...props}
       >
         <span className="sora-select__item-text">{children}</span>
         {isSelected && (
-          <Check size={14} className="sora-select__item-indicator" aria-hidden="true" />
+          <Check
+            size={14}
+            className="sora-select__item-indicator"
+            aria-hidden="true"
+          />
         )}
       </div>
     );
-  }
+  },
 );
-SelectItem.displayName = 'SelectItem';
+SelectItem.displayName = "SelectItem";
 
 export const SelectGroup = forwardRef<HTMLDivElement, SelectGroupProps>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} role="group" className={cx('sora-select__group', className)} {...props}>
+    <div
+      ref={ref}
+      role="group"
+      className={cx("sora-select__group", className)}
+      {...props}
+    >
       {children}
     </div>
-  )
+  ),
 );
-SelectGroup.displayName = 'SelectGroup';
+SelectGroup.displayName = "SelectGroup";
 
 export const SelectLabel = forwardRef<HTMLDivElement, SelectLabelProps>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cx('sora-select__label', className)} {...props}>
+    <div ref={ref} className={cx("sora-select__label", className)} {...props}>
       {children}
     </div>
-  )
+  ),
 );
-SelectLabel.displayName = 'SelectLabel';
+SelectLabel.displayName = "SelectLabel";
 
 export const SelectSeparator = forwardRef<HTMLHRElement, SelectSeparatorProps>(
   ({ className, ...props }, ref) => (
-    <hr ref={ref} role="separator" className={cx('sora-select__separator', className)} {...props} />
-  )
+    <hr
+      ref={ref}
+      role="separator"
+      className={cx("sora-select__separator", className)}
+      {...props}
+    />
+  ),
 );
-SelectSeparator.displayName = 'SelectSeparator';
+SelectSeparator.displayName = "SelectSeparator";

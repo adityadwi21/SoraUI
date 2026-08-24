@@ -1,16 +1,16 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import {
   Menubar,
   MenubarMenu,
   MenubarTrigger,
   MenubarContent,
   MenubarItem,
-} from './menubar';
+} from "./menubar";
 
-describe('Menubar Component & A11y', () => {
-  it('opens menubar submenu and triggers item click', async () => {
+describe("Menubar Component & A11y", () => {
+  it("opens menubar submenu and triggers item click", async () => {
     const user = userEvent.setup();
     const handleNew = vi.fn();
 
@@ -22,21 +22,21 @@ describe('Menubar Component & A11y', () => {
             <MenubarItem onClick={handleNew}>New File</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
-      </Menubar>
+      </Menubar>,
     );
 
-    const trigger = screen.getByRole('menuitem', { name: 'File' });
+    const trigger = screen.getByRole("menuitem", { name: "File" });
     await user.click(trigger);
 
-    const item = screen.getByRole('menuitem', { name: 'New File' });
+    const item = screen.getByRole("menuitem", { name: "New File" });
     expect(item).toBeInTheDocument();
 
     await user.click(item);
     expect(handleNew).toHaveBeenCalled();
-    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
   });
 
-  it('closes menubar submenu on Escape key', async () => {
+  it("closes menubar submenu on Escape key", async () => {
     const user = userEvent.setup();
 
     render(
@@ -47,18 +47,18 @@ describe('Menubar Component & A11y', () => {
             <MenubarItem>Undo</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
-      </Menubar>
+      </Menubar>,
     );
 
-    const trigger = screen.getByRole('menuitem', { name: 'Edit' });
+    const trigger = screen.getByRole("menuitem", { name: "Edit" });
     await user.click(trigger);
-    expect(screen.getByRole('menu')).toBeInTheDocument();
+    expect(screen.getByRole("menu")).toBeInTheDocument();
 
-    await user.keyboard('{Escape}');
-    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
   });
 
-  it('ignores clicks on disabled menubar items', async () => {
+  it("ignores clicks on disabled menubar items", async () => {
     const user = userEvent.setup();
     const handleDisabled = vi.fn();
 
@@ -67,17 +67,19 @@ describe('Menubar Component & A11y', () => {
         <MenubarMenu>
           <MenubarTrigger>View</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem disabled onClick={handleDisabled}>Disabled Action</MenubarItem>
+            <MenubarItem disabled onClick={handleDisabled}>
+              Disabled Action
+            </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
-      </Menubar>
+      </Menubar>,
     );
 
-    const trigger = screen.getByRole('menuitem', { name: 'View' });
+    const trigger = screen.getByRole("menuitem", { name: "View" });
     await user.click(trigger);
 
-    const item = screen.getByRole('menuitem', { name: 'Disabled Action' });
-    expect(item).toHaveAttribute('aria-disabled', 'true');
+    const item = screen.getByRole("menuitem", { name: "Disabled Action" });
+    expect(item).toHaveAttribute("aria-disabled", "true");
     await user.click(item);
     expect(handleDisabled).not.toHaveBeenCalled();
   });

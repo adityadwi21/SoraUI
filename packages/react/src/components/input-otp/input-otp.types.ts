@@ -1,6 +1,9 @@
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes } from "react";
 
-export interface InputOTPProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface InputOTPProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "onChange"
+> {
   length?: number | undefined;
   value?: string | undefined;
   defaultValue?: string | undefined;

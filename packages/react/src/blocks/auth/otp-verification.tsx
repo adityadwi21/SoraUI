@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -6,9 +6,9 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from '../../components/card/card';
-import { InputOTP } from '../../components/input-otp/input-otp';
-import { Button } from '../../components/button/button';
+} from "../../components/card/card";
+import { InputOTP } from "../../components/input-otp/input-otp";
+import { Button } from "../../components/button/button";
 
 export interface OTPVerificationProps {
   title?: string;
@@ -23,8 +23,8 @@ export interface OTPVerificationProps {
 }
 
 export function OTPVerification({
-  title = 'Two-Factor Authentication',
-  description = 'Enter the 6-digit code sent to your device',
+  title = "Two-Factor Authentication",
+  description = "Enter the 6-digit code sent to your device",
   recipient,
   length = 6,
   loading = false,
@@ -33,7 +33,7 @@ export function OTPVerification({
   onResend,
   className,
 }: OTPVerificationProps) {
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState("");
 
   const handleComplete = (completedOtp: string) => {
     setOtp(completedOtp);
@@ -42,26 +42,37 @@ export function OTPVerification({
 
   return (
     <Card className={className} elevated>
-      <CardHeader style={{ textAlign: 'center' }}>
+      <CardHeader style={{ textAlign: "center" }}>
         <CardTitle>{title}</CardTitle>
         <CardDescription>
           {description}
-          {recipient && <strong style={{ display: 'block', marginTop: '0.25rem' }}>{recipient}</strong>}
+          {recipient && (
+            <strong style={{ display: "block", marginTop: "0.25rem" }}>
+              {recipient}
+            </strong>
+          )}
         </CardDescription>
       </CardHeader>
-      <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem' }}>
+      <CardContent
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "1.25rem",
+        }}
+      >
         {error && (
           <div
             role="alert"
             style={{
-              width: '100%',
-              padding: '0.75rem 1rem',
-              borderRadius: 'var(--ui-radius, 0.5rem)',
-              backgroundColor: 'var(--ui-muted, #f4f4f5)',
-              color: 'var(--ui-destructive, #ef4444)',
-              fontSize: 'var(--sora-text-sm, 0.875rem)',
-              border: '1px solid var(--ui-border, #e4e4e7)',
-              textAlign: 'center',
+              width: "100%",
+              padding: "0.75rem 1rem",
+              borderRadius: "var(--ui-radius, 0.5rem)",
+              backgroundColor: "var(--ui-muted, #f4f4f5)",
+              color: "var(--ui-destructive, #ef4444)",
+              fontSize: "var(--sora-text-sm, 0.875rem)",
+              border: "1px solid var(--ui-border, #e4e4e7)",
+              textAlign: "center",
             }}
           >
             {error}
@@ -81,25 +92,32 @@ export function OTPVerification({
           loading={loading}
           disabled={otp.length !== length}
           onClick={() => onVerify?.(otp)}
-          style={{ width: '100%' }}
+          style={{ width: "100%" }}
         >
           Verify Code
         </Button>
       </CardContent>
-      <CardFooter style={{ justifyContent: 'center', fontSize: 'var(--sora-text-sm, 0.875rem)' }}>
-        <span style={{ color: 'var(--ui-muted-foreground, #71717a)' }}>Didn't receive code? </span>
+      <CardFooter
+        style={{
+          justifyContent: "center",
+          fontSize: "var(--sora-text-sm, 0.875rem)",
+        }}
+      >
+        <span style={{ color: "var(--ui-muted-foreground, #71717a)" }}>
+          Didn't receive code?{" "}
+        </span>
         <button
           type="button"
           onClick={onResend}
           disabled={loading}
           style={{
-            background: 'none',
-            border: 'none',
+            background: "none",
+            border: "none",
             padding: 0,
-            marginLeft: '0.25rem',
-            color: 'var(--ui-primary, #0ea5e9)',
+            marginLeft: "0.25rem",
+            color: "var(--ui-primary, #0ea5e9)",
             fontWeight: 500,
-            cursor: 'pointer',
+            cursor: "pointer",
           }}
         >
           Resend

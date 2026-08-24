@@ -5,5 +5,8 @@
   "description": "SoraUI separator component. Level 1 - minimal runtime, accessible, CSS variables based.",
   "files": [{ "path": "components/ui/separator.tsx", "type": "registry:ui" }],
   "dependencies": [],
-  "installation": { "cli": "npx soraui add separator", "npm": "import { Separator } from '@soraui/react'" }
+  "installation": {
+    "cli": "npx soraui add separator",
+    "npm": "import { Separator } from '@soraui/react'"
+  }
 }

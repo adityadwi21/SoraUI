@@ -9,14 +9,20 @@ import {
   cloneElement,
   isValidElement,
   type ReactElement,
-} from 'react';
-import { usePositioning, Portal, useEscapeKey, useClickOutside, useFocusTrap } from '@soraui/hooks';
+} from "react";
+import {
+  usePositioning,
+  Portal,
+  useEscapeKey,
+  useClickOutside,
+  useFocusTrap,
+} from "@soraui/hooks";
 import type {
   PopoverProps,
   PopoverTriggerProps,
   PopoverContentProps,
   PopoverCloseProps,
-} from './popover.types';
+} from "./popover.types";
 
 interface PopoverContextValue {
   open: boolean;
@@ -30,13 +36,13 @@ const PopoverContext = createContext<PopoverContextValue | null>(null);
 function usePopoverContext() {
   const context = useContext(PopoverContext);
   if (!context) {
-    throw new Error('Popover sub-components must be used within a <Popover>');
+    throw new Error("Popover sub-components must be used within a <Popover>");
   }
   return context;
 }
 
 function cx(...c: (string | undefined | false | null)[]): string {
-  return c.filter(Boolean).join(' ');
+  return c.filter(Boolean).join(" ");
 }
 
 export function Popover({
@@ -59,7 +65,7 @@ export function Popover({
       }
       onOpenChange?.(nextOpen);
     },
-    [isControlled, onOpenChange]
+    [isControlled, onOpenChange],
   );
 
   return (
@@ -75,8 +81,9 @@ export const PopoverTrigger = forwardRef<HTMLElement, PopoverTriggerProps>(
 
     const mergedRef = (node: HTMLElement | null) => {
       (triggerRef as React.MutableRefObject<HTMLElement | null>).current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLElement | null>).current = node;
     };
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -86,11 +93,11 @@ export const PopoverTrigger = forwardRef<HTMLElement, PopoverTriggerProps>(
 
     const triggerProps = {
       ref: mergedRef,
-      'aria-haspopup': 'dialog' as const,
-      'aria-expanded': open,
-      'aria-controls': open ? contentId : undefined,
+      "aria-haspopup": "dialog" as const,
+      "aria-expanded": open,
+      "aria-controls": open ? contentId : undefined,
       onClick: handleClick,
-      className: cx('sora-popover__trigger', className),
+      className: cx("sora-popover__trigger", className),
       ...props,
     };
 
@@ -103,12 +110,22 @@ export const PopoverTrigger = forwardRef<HTMLElement, PopoverTriggerProps>(
         {children}
       </button>
     );
-  }
+  },
 );
-PopoverTrigger.displayName = 'PopoverTrigger';
+PopoverTrigger.displayName = "PopoverTrigger";
 
 export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
-  ({ placement = 'bottom', offset = 8, trapFocus = false, className, children, ...props }, ref) => {
+  (
+    {
+      placement = "bottom",
+      offset = 8,
+      trapFocus = false,
+      className,
+      children,
+      ...props
+    },
+    ref,
+  ) => {
     const { open, setOpen, triggerRef, contentId } = usePopoverContext();
     const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -124,8 +141,9 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
 
     const mergedRef = (node: HTMLDivElement | null) => {
       contentRef.current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
     };
 
     if (!open) return null;
@@ -136,12 +154,12 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
           ref={mergedRef}
           id={contentId}
           role="dialog"
-          aria-modal={trapFocus ? 'true' : 'false'}
+          aria-modal={trapFocus ? "true" : "false"}
           style={style}
           className={cx(
-            'sora-popover__content',
-            'sora-popover__content--' + actualPlacement,
-            className
+            "sora-popover__content",
+            "sora-popover__content--" + actualPlacement,
+            className,
           )}
           {...props}
         >
@@ -149,9 +167,9 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
         </div>
       </Portal>
     );
-  }
+  },
 );
-PopoverContent.displayName = 'PopoverContent';
+PopoverContent.displayName = "PopoverContent";
 
 export const PopoverClose = forwardRef<HTMLButtonElement, PopoverCloseProps>(
   ({ asChild, children, className, onClick, ...props }, ref) => {
@@ -175,12 +193,12 @@ export const PopoverClose = forwardRef<HTMLButtonElement, PopoverCloseProps>(
         ref={ref}
         type="button"
         onClick={handleClick}
-        className={cx('sora-popover__close', className)}
+        className={cx("sora-popover__close", className)}
         {...props}
       >
         {children}
       </button>
     );
-  }
+  },
 );
-PopoverClose.displayName = 'PopoverClose';
+PopoverClose.displayName = "PopoverClose";

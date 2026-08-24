@@ -6,7 +6,6 @@
     "tag": "latest"
   },
   "description": "SoraUI core: design tokens, theme engine, and CSS variable system",
-
   "license": "MIT",
   "author": "SoraUI Team",
   "repository": {
@@ -23,7 +22,6 @@
     "themes"
   ],
   "type": "module",
-
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -40,8 +38,12 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
-  "sideEffects": ["**/*.css"],
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",

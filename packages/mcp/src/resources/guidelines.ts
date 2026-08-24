@@ -19,8 +19,8 @@ Use \`<ThemeScope theme="aurora">\` to create isolated themed subtrees with zero
 `;
 
   return {
-    uri: 'soraui://guidelines',
-    mimeType: 'text/markdown',
+    uri: "soraui://guidelines",
+    mimeType: "text/markdown",
     text: markdown,
   };
 }

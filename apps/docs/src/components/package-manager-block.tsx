@@ -1,33 +1,53 @@
-import React, { useState } from 'react';
-import { Check, Copy, Terminal } from 'lucide-react';
+import React, { useState } from "react";
+import { Check, Copy } from "lucide-react";
+import { PnpmIcon, NpmIcon, YarnIcon, BunIcon } from "./brand-icons";
 
-export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
-export const PACKAGE_MANAGERS: PackageManager[] = ['pnpm', 'npm', 'yarn', 'bun'];
+export type PackageManager = "pnpm" | "npm" | "yarn" | "bun";
+export const PACKAGE_MANAGERS: PackageManager[] = [
+  "pnpm",
+  "npm",
+  "yarn",
+  "bun",
+];
 
 export interface PackageManagerBlockProps {
-  /** Record of package manager → command string */
+  /** Record of package manager -> command string */
   commands: Partial<Record<PackageManager, string>>;
   /** Default selected tab (default: 'pnpm') */
   defaultTab?: PackageManager;
   style?: React.CSSProperties;
 }
 
+function getPmIcon(pm: PackageManager) {
+  switch (pm) {
+    case "pnpm":
+      return <PnpmIcon size={13} />;
+    case "npm":
+      return <NpmIcon size={13} />;
+    case "yarn":
+      return <YarnIcon size={13} />;
+    case "bun":
+      return <BunIcon size={13} />;
+    default:
+      return null;
+  }
+}
+
 /**
- * Reusable tabbed code block with pnpm/npm/yarn/bun tabs and a unified Copy button.
- * Replaces all inline docs-tabbed-codeblock JSX across guide pages.
+ * Reusable tabbed code block with pnpm/npm/yarn/bun tabs and brand icons.
  */
 export const PackageManagerBlock: React.FC<PackageManagerBlockProps> = ({
   commands,
-  defaultTab = 'pnpm',
+  defaultTab = "pnpm",
   style,
 }) => {
   const available = PACKAGE_MANAGERS.filter((pm) => commands[pm] !== undefined);
   const [active, setActive] = useState<PackageManager>(
-    available.includes(defaultTab) ? defaultTab : (available[0] ?? 'pnpm')
+    available.includes(defaultTab) ? defaultTab : (available[0] ?? "pnpm"),
   );
   const [copied, setCopied] = useState(false);
 
-  const currentCmd = commands[active] ?? '';
+  const currentCmd = commands[active] ?? "";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(currentCmd).catch(() => {});
@@ -43,10 +63,10 @@ export const PackageManagerBlock: React.FC<PackageManagerBlockProps> = ({
             <button
               key={pm}
               type="button"
-              className={`docs-tabbed-codeblock-tab${active === pm ? ' active' : ''}`}
+              className={`docs-tabbed-codeblock-tab${active === pm ? " active" : ""}`}
               onClick={() => setActive(pm)}
             >
-              {pm === 'pnpm' && <Terminal size={12} style={{ opacity: 0.7 }} />}
+              {getPmIcon(pm)}
               <span>{pm}</span>
             </button>
           ))}
@@ -54,13 +74,13 @@ export const PackageManagerBlock: React.FC<PackageManagerBlockProps> = ({
 
         <button
           type="button"
-          className={`docs-tabbed-codeblock-copy${copied ? ' copied' : ''}`}
+          className={`docs-tabbed-codeblock-copy${copied ? " copied" : ""}`}
           onClick={handleCopy}
-          title={copied ? 'Copied!' : 'Copy command'}
-          aria-label={copied ? 'Copied' : 'Copy command'}
+          title={copied ? "Copied!" : "Copy command"}
+          aria-label={copied ? "Copied" : "Copy command"}
         >
           {copied ? (
-            <Check size={13} style={{ color: '#22c55e' }} />
+            <Check size={13} style={{ color: "#22c55e" }} />
           ) : (
             <Copy size={13} />
           )}

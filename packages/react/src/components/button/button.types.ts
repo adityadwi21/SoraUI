@@ -1,14 +1,9 @@
-﻿import type { ButtonHTMLAttributes, ReactNode } from 'react';
+﻿import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 export type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'outline'
-  | 'ghost'
-  | 'destructive'
-  | 'link';
+  "primary" | "secondary" | "outline" | "ghost" | "destructive" | "link";
 
-export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
+export type ButtonSize = "sm" | "md" | "lg" | "icon";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Visual variant of the button */
