@@ -26,10 +26,16 @@ export const GUIDE_DOCS: GuideDoc[] = [
     description: 'Comprehensive guide to soraui init, add, list, and search commands.',
   },
   {
-    id: 'mcp-guide',
-    title: 'Skills & MCP',
+    id: 'skills',
+    title: 'Skills',
     category: 'AI & Tooling',
-    description: 'AI coding agent tools, Model Context Protocol (MCP), and Cursor integration.',
+    description: 'Give your AI assistant deep knowledge of SoraUI components, patterns, and best practices.',
+  },
+  {
+    id: 'mcp-guide',
+    title: 'MCP Server',
+    category: 'AI & Tooling',
+    description: 'Connect Cursor, Claude Desktop, and Gemini CLI to SoraUI via Model Context Protocol.',
   },
   {
     id: 'changelog',

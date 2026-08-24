@@ -19,6 +19,7 @@ import { ReactRouterPage } from './pages/guides/react-router-page';
 import { AstroPage } from './pages/guides/astro-page';
 import { ManualPage } from './pages/guides/manual-page';
 import { MigrationPage } from './pages/guides/migration-page';
+import { SkillsPage } from './pages/guides/skills-page';
 import { McpGuidePage } from './pages/guides/mcp-guide-page';
 import { SemverPage } from './pages/guides/semver-page';
 
@@ -34,7 +35,8 @@ function normalizeRoute(route: string): string {
   if (r === '/theming' || r === '/themes' || r === '/guides/themes' || r === '/guides/theming') return '/guides/theming';
   if (r === '/theme-presets' || r === '/presets' || r === '/guides/presets' || r === '/guides/theme-presets') return '/guides/theme-presets';
   if (r === '/cli' || r === '/cli-reference' || r === '/guides/cli' || r === '/guides/cli-reference') return '/guides/cli-reference';
-  if (r === '/skills' || r === '/mcp' || r === '/mcp-guide' || r === '/guides/skills' || r === '/guides/mcp' || r === '/guides/mcp-guide') return '/guides/mcp-guide';
+  if (r === '/skills' || r === '/guides/skills') return '/guides/skills';
+  if (r === '/mcp' || r === '/mcp-guide' || r === '/guides/mcp' || r === '/guides/mcp-guide') return '/guides/mcp-guide';
   if (r === '/changelog' || r === '/guides/changelog') return '/guides/changelog';
   if (r === '/next' || r === '/nextjs' || r === '/guides/next' || r === '/guides/nextjs') return '/guides/nextjs';
   if (r === '/vite' || r === '/guides/vite') return '/guides/vite';
@@ -169,6 +171,9 @@ export const App: React.FC = () => {
     }
     if (currentPath === '/guides/migration') {
       return <MigrationPage onNavigate={navigate} />;
+    }
+    if (currentPath === '/guides/skills') {
+      return <SkillsPage onNavigate={navigate} />;
     }
     if (currentPath === '/guides/mcp-guide') {
       return <McpGuidePage onNavigate={navigate} />;
