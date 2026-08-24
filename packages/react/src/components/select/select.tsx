@@ -9,6 +9,7 @@ import {
   type KeyboardEvent,
 } from 'react';
 import { usePositioning, Portal, useEscapeKey, useClickOutside } from '@soraui/hooks';
+import { ChevronDown, Check } from 'lucide-react';
 import type {
   SelectProps,
   SelectTriggerProps,
@@ -144,9 +145,7 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(
         {...props}
       >
         <span className="sora-select__trigger-content">{children}</span>
-        <span className="sora-select__icon" aria-hidden="true">
-          ▼
-        </span>
+        <ChevronDown size={14} className="sora-select__icon" aria-hidden="true" />
       </button>
     );
   }
@@ -305,9 +304,7 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
       >
         <span className="sora-select__item-text">{children}</span>
         {isSelected && (
-          <span className="sora-select__item-indicator" aria-hidden="true">
-            ✓
-          </span>
+          <Check size={14} className="sora-select__item-indicator" aria-hidden="true" />
         )}
       </div>
     );

@@ -1,6 +1,6 @@
 # @soraui/react
 
-> Accessible, token-first React component construction system with 44 primitives, 14 production blocks, 4 page templates, and zero-runtime CSS.
+> Accessible, token-first React component construction system with 44 primitives, 14 production blocks, 4 page templates, universal `lucide-react` iconography, and zero-runtime CSS.
 
 [![npm version](https://img.shields.io/npm/v/@soraui/react.svg)](https://www.npmjs.com/package/@soraui/react)
 [![license](https://img.shields.io/npm/l/@soraui/react.svg)](https://github.com/adityadwi21/SoraUI/blob/main/LICENSE)
@@ -11,16 +11,16 @@
 
 ```bash
 # Using npm
-npm install @soraui/react @soraui/core @soraui/hooks
+npm install @soraui/react @soraui/core @soraui/hooks lucide-react
 
 # Using pnpm
-pnpm add @soraui/react @soraui/core @soraui/hooks
+pnpm add @soraui/react @soraui/core @soraui/hooks lucide-react
 
 # Using yarn
-yarn add @soraui/react @soraui/core @soraui/hooks
+yarn add @soraui/react @soraui/core @soraui/hooks lucide-react
 
 # Using bun
-bun add @soraui/react @soraui/core @soraui/hooks
+bun add @soraui/react @soraui/core @soraui/hooks lucide-react
 ```
 
 ---
@@ -51,6 +51,7 @@ import {
   CardFooter,
   Badge,
 } from '@soraui/react';
+import { ArrowRight } from 'lucide-react';
 
 export function App() {
   return (
@@ -69,7 +70,9 @@ export function App() {
           </CardContent>
           <CardFooter style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
             <Button variant="outline">Cancel</Button>
-            <Button variant="primary">Get Started →</Button>
+            <Button variant="primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
+              Get Started <ArrowRight size={14} />
+            </Button>
           </CardFooter>
         </Card>
       </main>
@@ -85,6 +88,7 @@ export function App() {
 - **44 Accessible Primitives**: WAI-ARIA compliant, full keyboard navigation, accessible focus rings, and screen-reader support.
 - **14 Production Blocks**: Authentication, Dashboards, Metric grids, Settings, and Forms.
 - **4 Full-Page Templates**: Dashboard, SaaS Landing, Analytics, and Settings.
+- **Universal Lucide Iconography**: Native `lucide-react` integration across all components and blocks.
 - **9 Cosmic Themes & ThemeScope**: Pure CSS cascading (`Sky`, `Cloud`, `Horizon`, `Aurora`, `Twilight`, `Midnight`, `Nebula`, `Eclipse`, `Starlight`).
 - **Zero Runtime Styling**: 100% native CSS custom properties. 0ms runtime generation, 0 KB runtime parser.
 - **AI-Native MCP Support**: Compatible with `@soraui/mcp` for Claude, Cursor, and Gemini.

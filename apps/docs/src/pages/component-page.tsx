@@ -4,6 +4,7 @@ import { COMPONENT_DOCS } from '../registry/components';
 import { ComponentPreview } from '../components/component-preview';
 import { PropTable } from '../components/prop-table';
 import { CodeBlock } from '../components/code-block';
+import { PackageManagerBlock } from '../components/package-manager-block';
 import { getManualComponentCode } from '../registry/manual-source';
 import { Badge } from '@soraui/react';
 
@@ -11,8 +12,6 @@ export interface ComponentPageProps {
   doc: ComponentDoc;
   onNavigate?: (path: string) => void;
 }
-
-type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun';
 
 function getMinimalUsageSnippet(doc: ComponentDoc): string {
   switch (doc.id) {
@@ -39,14 +38,12 @@ function getMinimalUsageSnippet(doc: ComponentDoc): string {
   }
 }
 
-import { Check, Copy, ChevronLeft, ChevronRight, ExternalLink, Info, FileCode } from 'lucide-react';
+import { Check, Copy, ChevronLeft, ChevronRight, ExternalLink, Info } from 'lucide-react';
 import { GitHubIcon } from '../components/brand-icons';
 
 export const ComponentPage: React.FC<ComponentPageProps> = ({ doc, onNavigate }) => {
   const [installTab, setInstallTab] = useState<'cli' | 'manual'>('cli');
-  const [pkgManager, setPkgManager] = useState<PackageManager>('pnpm');
   const [pageCopied, setPageCopied] = useState(false);
-  const [manualExpanded, setManualExpanded] = useState(false);
 
   // Find previous and next components in registry
   const { prevComp, nextComp } = useMemo(() => {
@@ -102,32 +99,18 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || '-'}\` | 
     }
   };
 
-  // CLI Command based on package manager
-  const getCliCommand = (pm: PackageManager) => {
-    switch (pm) {
-      case 'pnpm':
-        return `pnpm dlx @soraui/cli add ${doc.id}`;
-      case 'npm':
-        return `npx @soraui/cli add ${doc.id}`;
-      case 'yarn':
-        return `yarn dlx @soraui/cli add ${doc.id}`;
-      case 'bun':
-        return `bunx @soraui/cli add ${doc.id}`;
-    }
+  const cliCommands = {
+    pnpm: `pnpm dlx @soraui/cli add ${doc.id}`,
+    npm: `npx @soraui/cli add ${doc.id}`,
+    yarn: `yarn dlx @soraui/cli add ${doc.id}`,
+    bun: `bunx @soraui/cli add ${doc.id}`,
   };
 
-  // Package install command based on package manager
-  const getPkgInstallCommand = (pm: PackageManager) => {
-    switch (pm) {
-      case 'pnpm':
-        return `pnpm add @soraui/react`;
-      case 'npm':
-        return `npm install @soraui/react`;
-      case 'yarn':
-        return `yarn add @soraui/react`;
-      case 'bun':
-        return `bun add @soraui/react`;
-    }
+  const pkgInstallCommands = {
+    pnpm: `pnpm add @soraui/react`,
+    npm: `npm install @soraui/react`,
+    yarn: `yarn add @soraui/react`,
+    bun: `bun add @soraui/react`,
   };
 
   const manualSourceCode = getManualComponentCode(doc.id, doc.name);
@@ -290,22 +273,7 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || '-'}\` | 
         {installTab === 'cli' ? (
           <div className="sora-tab-content">
             <p className="sora-subtext">Install dependencies:</p>
-
-            {/* Package Manager Selectors */}
-            <div className="sora-pm-tabs">
-              {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((pm) => (
-                <button
-                  key={pm}
-                  type="button"
-                  className={`sora-pm-btn${pkgManager === pm ? ' active' : ''}`}
-                  onClick={() => setPkgManager(pm)}
-                >
-                  {pm}
-                </button>
-              ))}
-            </div>
-
-            <CodeBlock code={getCliCommand(pkgManager)} language="bash" />
+            <PackageManagerBlock commands={cliCommands} style={{ marginTop: '0.5rem' }} />
           </div>
         ) : (
           /* Manual Tab Content */
@@ -315,19 +283,7 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || '-'}\` | 
                 <span className="sora-step-num">1</span>
                 <div className="sora-step-body">
                   <p className="sora-step-text">Install the following dependencies:</p>
-                  <div className="sora-pm-tabs">
-                    {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((pm) => (
-                      <button
-                        key={pm}
-                        type="button"
-                        className={`sora-pm-btn${pkgManager === pm ? ' active' : ''}`}
-                        onClick={() => setPkgManager(pm)}
-                      >
-                        {pm}
-                      </button>
-                    ))}
-                  </div>
-                  <CodeBlock code={getPkgInstallCommand(pkgManager)} language="bash" />
+                  <PackageManagerBlock commands={pkgInstallCommands} style={{ marginTop: '0.5rem' }} />
                 </div>
               </div>
 
@@ -335,26 +291,13 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || '-'}\` | 
                 <span className="sora-step-num">2</span>
                 <div className="sora-step-body">
                   <p className="sora-step-text">Copy and paste the following code into your project:</p>
-
-                  <div className="sora-manual-code-wrapper">
-                    <div className="sora-manual-header">
-                      <div className="sora-file-badge">
-                        <FileCode size={13} />
-                        <span>components/ui/{doc.id}.tsx</span>
-                      </div>
-                      <button
-                        type="button"
-                        className="sora-expand-btn"
-                        onClick={() => setManualExpanded((v) => !v)}
-                      >
-                        {manualExpanded ? 'Collapse' : 'Expand'}
-                      </button>
-                    </div>
-
-                    <div className={`sora-manual-code-container${manualExpanded ? ' expanded' : ' collapsed'}`}>
-                      <CodeBlock code={manualSourceCode} language="typescript" filename={`components/ui/${doc.id}.tsx`} />
-                    </div>
-                  </div>
+                  <CodeBlock
+                    code={manualSourceCode}
+                    language="typescript"
+                    filename={`components/ui/${doc.id}.tsx`}
+                    expandable
+                    style={{ marginTop: '0.5rem' }}
+                  />
                 </div>
               </div>
 

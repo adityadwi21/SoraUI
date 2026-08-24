@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Check } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../../components/card/card';
 import { Button } from '../../components/button/button';
 import { Badge } from '../../components/badge/badge';
@@ -134,7 +135,7 @@ export function PricingTable({
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '0.75rem' }}>
                   {plan.features.map((feat, i) => (
                     <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: 'var(--sora-text-sm, 0.875rem)' }}>
-                      <span style={{ color: 'var(--ui-primary, #0ea5e9)', fontWeight: 700 }}>✓</span>
+                      <Check size={14} style={{ color: 'var(--ui-primary, #0ea5e9)', flexShrink: 0 }} />
                       <span>{feat}</span>
                     </li>
                   ))}

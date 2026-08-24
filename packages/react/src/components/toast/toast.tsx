@@ -7,6 +7,7 @@ import {
   forwardRef,
   type ReactNode,
 } from 'react';
+import { X } from 'lucide-react';
 import { Portal } from '@soraui/hooks';
 import type {
   ToastData,
@@ -125,7 +126,7 @@ function ToastItem({ data, onDismiss }: { data: ToastData; onDismiss: () => void
         aria-label="Close notification"
         className="sora-toast__close"
       >
-        ✕
+        <X size={14} aria-hidden="true" />
       </button>
     </div>
   );
@@ -148,7 +149,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
           aria-label="Close notification"
           className="sora-toast__close"
         >
-          ✕
+          <X size={14} aria-hidden="true" />
         </button>
       </div>
     );

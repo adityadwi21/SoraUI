@@ -59,7 +59,8 @@
   },
   "dependencies": {
     "@soraui/core": "workspace:*",
-    "@soraui/hooks": "workspace:*"
+    "@soraui/hooks": "workspace:*",
+    "lucide-react": "^1.33.0"
   },
   "devDependencies": {
     "@axe-core/react": "^4.13.0",

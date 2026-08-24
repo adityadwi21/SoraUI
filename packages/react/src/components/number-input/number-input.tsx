@@ -1,4 +1,5 @@
 import { forwardRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 import type { NumberInputProps } from './number-input.types';
 
 function cx(...c: (string | undefined | false | null)[]): string {
@@ -69,7 +70,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             onClick={() => update(value + step)}
             className="sora-number-input__btn"
           >
-            ▲
+            <ChevronUp size={11} aria-hidden="true" />
           </button>
           <button
             type="button"
@@ -78,7 +79,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             onClick={() => update(value - step)}
             className="sora-number-input__btn"
           >
-            ▼
+            <ChevronDown size={11} aria-hidden="true" />
           </button>
         </div>
       </div>

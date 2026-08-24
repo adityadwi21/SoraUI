@@ -211,19 +211,19 @@ export const ChangelogPage: React.FC<ChangelogPageProps> = ({ onNavigate }) => {
 
           <ul className="docs-intro-bullet-list" style={{ marginTop: '1rem' }}>
             <li>
+              <strong>Universal Lucide Iconography</strong>: Migrated all 44 primitives, 14 blocks, and 4 templates to native <code>lucide-react</code> icons, completely eliminating unicode placeholders and raw SVG bloat.
+            </li>
+            <li>
+              <strong>Centered Dual-Mode Viewport Switcher</strong>: Clean Desktop and Mobile switching centered in preview toolbars with Lucide <code>Monitor</code> and <code>Smartphone</code> icons.
+            </li>
+            <li>
+              <strong>Expandable Code Blocks with Fade Overlay</strong>: Code blocks feature high-contrast Expand/Collapse toggles, syntax language badges (<code>TS</code>, <code>JS</code>, <code>CSS</code>), and smooth bottom gradient overlays.
+            </li>
+            <li>
               <strong>3-Column Responsive Layout</strong>: Edge-to-edge layout with a 240px compact sidebar, auto-centered readable content area, and permanent sticky Table of Contents.
             </li>
             <li>
-              <strong>Dynamic Theme-Adaptive Code Blocks</strong>: Code blocks, package manager selectors, and inline code badges now automatically adapt to light mode (`#f8fafc`) and dark mode (`#0d1117`).
-            </li>
-            <li>
               <strong>Zero-Lag Theme Toggle (0ms Latency)</strong>: Removed global transition lag on background switches, enabling instant synchronous theme toggling.
-            </li>
-            <li>
-              <strong>Interactive Starting Point Cards</strong>: Interactive selectors on Installation, Next.js, and Vite guides with smooth scrolling and active indicators.
-            </li>
-            <li>
-              <strong>Icon System Modernization</strong>: Integrated <code>lucide-react</code> across all navigation buttons, search dialog, and component demo previews.
             </li>
           </ul>
         </section>

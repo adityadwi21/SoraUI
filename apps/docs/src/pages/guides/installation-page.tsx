@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Copy,
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  Terminal,
-  Layers,
-  Sparkles,
-  Code2,
-} from 'lucide-react';
+import { Copy, Check, ChevronLeft, ChevronRight, Layers, Sparkles, Code2 } from 'lucide-react';
 import { Button } from '@soraui/react';
+import { PackageManagerBlock } from '../../components/package-manager-block';
 
 export interface InstallationPageProps {
   onNavigate?: (path: string) => void;
@@ -17,8 +9,6 @@ export interface InstallationPageProps {
 
 export const InstallationPage: React.FC<InstallationPageProps> = ({ onNavigate }) => {
   const [copied, setCopied] = useState(false);
-  const [pkgTab, setPkgTab] = useState<'pnpm' | 'npm' | 'yarn' | 'bun'>('pnpm');
-  const [copiedCmd, setCopiedCmd] = useState(false);
   const [activeStartPoint, setActiveStartPoint] = useState<'theme-builder' | 'cli' | 'existing'>('cli');
 
   const go = (path: string) => {
@@ -32,10 +22,7 @@ export const InstallationPage: React.FC<InstallationPageProps> = ({ onNavigate }
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
   };
 
@@ -46,25 +33,11 @@ export const InstallationPage: React.FC<InstallationPageProps> = ({ onNavigate }
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const getCliCommand = () => {
-    switch (pkgTab) {
-      case 'pnpm':
-        return 'pnpm dlx @soraui/cli@latest init -t [framework]';
-      case 'npm':
-        return 'npx @soraui/cli@latest init -t [framework]';
-      case 'yarn':
-        return 'yarn dlx @soraui/cli@latest init -t [framework]';
-      case 'bun':
-        return 'bunx --bun @soraui/cli@latest init -t [framework]';
-      default:
-        return 'pnpm dlx @soraui/cli@latest init -t [framework]';
-    }
-  };
-
-  const copyCommand = () => {
-    navigator.clipboard.writeText(getCliCommand()).catch(() => {});
-    setCopiedCmd(true);
-    setTimeout(() => setCopiedCmd(false), 2000);
+  const cliCommands = {
+    pnpm: 'pnpm dlx @soraui/cli@latest init -t [framework]',
+    npm: 'npx @soraui/cli@latest init -t [framework]',
+    yarn: 'yarn dlx @soraui/cli@latest init -t [framework]',
+    bun: 'bunx --bun @soraui/cli@latest init -t [framework]',
   };
 
   return (
@@ -207,45 +180,7 @@ export const InstallationPage: React.FC<InstallationPageProps> = ({ onNavigate }
         </p>
 
         {/* Tabbed Package Manager Codeblock */}
-        <div className="docs-tabbed-codeblock">
-          <div className="docs-tabbed-codeblock-header">
-            <div className="docs-tabbed-codeblock-tabs">
-              {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((tab) => (
-                <button
-                  key={tab}
-                  type="button"
-                  className={`docs-tabbed-codeblock-tab${pkgTab === tab ? ' active' : ''}`}
-                  onClick={() => setPkgTab(tab)}
-                >
-                  <Terminal size={12} style={{ opacity: 0.7 }} />
-                  <span>{tab}</span>
-                </button>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              className="docs-tabbed-codeblock-copy"
-              onClick={copyCommand}
-              title="Copy command"
-            >
-              {copiedCmd ? (
-                <>
-                  <Check size={13} style={{ color: '#22c55e' }} />
-                  <span>Copied</span>
-                </>
-              ) : (
-                <>
-                  <Copy size={13} />
-                </>
-              )}
-            </button>
-          </div>
-
-          <pre className="docs-tabbed-codeblock-pre">
-            <code>{getCliCommand()}</code>
-          </pre>
-        </div>
+        <PackageManagerBlock commands={cliCommands} />
 
         <p className="docs-intro-note">
           Supported templates: <code>next</code>, <code>vite</code>, <code>start</code>, <code>react-router</code>, and <code>astro</code>.

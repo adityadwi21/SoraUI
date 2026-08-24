@@ -91,6 +91,7 @@ Input.displayName = "Input";
       return `"use client";
 
 import * as React from "react";
+import { Check } from "lucide-react";
 
 export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
   checked?: boolean;
@@ -121,9 +122,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         />
         <span className="sora-checkbox__box" aria-hidden="true">
           {actualChecked && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ width: 12, height: 12 }}>
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
+            <Check size={12} strokeWidth={3} className="sora-checkbox__icon" />
           )}
         </span>
       </label>
@@ -243,10 +242,81 @@ export const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
 Switch.displayName = "Switch";
 `;
 
+    case 'accordion':
+      return `"use client";
+
+import * as React from "react";
+import { ChevronDown } from "lucide-react";
+
+interface AccordionContextValue {
+  openItems: string[];
+  toggleItem: (val: string) => void;
+}
+
+const AccordionContext = React.createContext<AccordionContextValue | null>(null);
+
+export function Accordion({ type = "single", defaultValue, children, className = "" }: any) {
+  const [openItems, setOpenItems] = React.useState<string[]>(
+    defaultValue ? (Array.isArray(defaultValue) ? defaultValue : [defaultValue]) : []
+  );
+
+  const toggleItem = (val: string) => {
+    setOpenItems((prev) => {
+      if (type === "single") {
+        return prev.includes(val) ? [] : [val];
+      }
+      return prev.includes(val) ? prev.filter((i) => i !== val) : [...prev, val];
+    });
+  };
+
+  return (
+    <AccordionContext.Provider value={{ openItems, toggleItem }}>
+      <div className={\`sora-accordion \${className}\`.trim()}>{children}</div>
+    </AccordionContext.Provider>
+  );
+}
+
+export const AccordionItem = ({ value, children, className = "" }: any) => {
+  return <div className={\`sora-accordion__item \${className}\`.trim()}>{children}</div>;
+};
+
+export const AccordionTrigger = ({ value, children, className = "" }: any) => {
+  const ctx = React.useContext(AccordionContext);
+  const isOpen = ctx?.openItems.includes(value);
+
+  return (
+    <h3 className="sora-accordion__heading">
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        onClick={() => ctx?.toggleItem(value)}
+        className={\`sora-accordion__trigger \${isOpen ? "sora-accordion__trigger--open" : ""} \${className}\`.trim()}
+      >
+        <span className="sora-accordion__trigger-text">{children}</span>
+        <ChevronDown size={16} className="sora-accordion__chevron" aria-hidden="true" />
+      </button>
+    </h3>
+  );
+};
+
+export const AccordionContent = ({ value, children, className = "" }: any) => {
+  const ctx = React.useContext(AccordionContext);
+  const isOpen = ctx?.openItems.includes(value);
+
+  if (!isOpen) return null;
+  return (
+    <div className={\`sora-accordion__content \${className}\`.trim()}>
+      <div className="sora-accordion__body">{children}</div>
+    </div>
+  );
+};
+`;
+
     case 'select':
       return `"use client";
 
 import * as React from "react";
+import { ChevronDown, Check } from "lucide-react";
 
 interface SelectContextValue {
   value: string;
@@ -292,7 +362,7 @@ export const SelectTrigger = React.forwardRef<HTMLButtonElement, React.ButtonHTM
         {...props}
       >
         <span className="sora-select__trigger-content">{children}</span>
-        <span className="sora-select__icon">▼</span>
+        <ChevronDown size={14} className="sora-select__icon" aria-hidden="true" />
       </button>
     );
   }
@@ -323,7 +393,7 @@ export const SelectItem = ({ value, children, className = "", disabled }: any) =
       className={\`sora-select__item \${isSelected ? "sora-select__item--selected" : ""} \${disabled ? "sora-select__item--disabled" : ""} \${className}\`.trim()}
     >
       <span>{children}</span>
-      {isSelected && <span className="sora-select__item-indicator">✓</span>}
+      {isSelected && <Check size={14} className="sora-select__item-indicator" aria-hidden="true" />}
     </div>
   );
 };

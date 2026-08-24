@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { ChevronRight } from 'lucide-react';
 import type {
   BreadcrumbProps,
   BreadcrumbListProps,
@@ -37,9 +38,9 @@ export const BreadcrumbPage = forwardRef<HTMLSpanElement, BreadcrumbPageProps>((
 ));
 BreadcrumbPage.displayName = 'BreadcrumbPage';
 
-export const BreadcrumbSeparator = ({ children = '›', className, ...props }: BreadcrumbSeparatorProps) => (
+export const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => (
   <li role="presentation" aria-hidden="true" className={cx('sora-breadcrumb__separator', className)} {...props}>
-    {children}
+    {children || <ChevronRight size={14} aria-hidden="true" />}
   </li>
 );
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator';

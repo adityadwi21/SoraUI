@@ -1,4 +1,5 @@
 import { useState, useCallback, useId, forwardRef, type KeyboardEvent } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   isSameDay,
   getDaysInMonth,
@@ -145,7 +146,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
             aria-label="Previous month"
             className="sora-calendar__nav-btn"
           >
-            ‹
+            <ChevronLeft size={16} aria-hidden="true" />
           </button>
           <div id={titleId} aria-live="polite" className="sora-calendar__title">
             {MONTH_NAMES[viewMonth]} {viewYear}
@@ -156,7 +157,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
             aria-label="Next month"
             className="sora-calendar__nav-btn"
           >
-            ›
+            <ChevronRight size={16} aria-hidden="true" />
           </button>
         </div>
 

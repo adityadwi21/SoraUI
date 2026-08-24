@@ -3,9 +3,10 @@ import type { BlockDoc } from '../registry/types';
 import { BLOCK_DOCS } from '../registry/blocks';
 import { ComponentPreview } from '../components/component-preview';
 import { PropTable } from '../components/prop-table';
-import { CodeBlock } from '../components/code-block';
+import { PackageManagerBlock } from '../components/package-manager-block';
 import { Badge } from '@soraui/react';
-import { Check, Copy, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Check, Copy, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { GitHubIcon } from '../components/brand-icons';
 
 export interface BlockPageProps {
   doc: BlockDoc;
@@ -112,11 +113,9 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
             rel="noreferrer"
             className="sora-doc-link-chip"
           >
-            <svg viewBox="0 0 16 16" fill="currentColor" style={{ width: 13, height: 13 }}>
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-            </svg>
+            <GitHubIcon size={13} />
             <span>Source Code</span>
-            <span style={{ fontSize: '0.6875rem' }}>↗</span>
+            <ExternalLink size={11} />
           </a>
         </div>
       </div>
@@ -170,7 +169,15 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
           <a href="#installation" className="sora-doc-anchor">#</a>
         </h2>
         <p className="sora-subtext">Add this block directly into your project via CLI:</p>
-        <CodeBlock code={`npx @soraui/cli add block ${doc.id}`} language="bash" />
+        <PackageManagerBlock
+          commands={{
+            pnpm: `pnpm dlx @soraui/cli add block ${doc.id}`,
+            npm: `npx @soraui/cli add block ${doc.id}`,
+            yarn: `yarn dlx @soraui/cli add block ${doc.id}`,
+            bun: `bunx @soraui/cli add block ${doc.id}`,
+          }}
+          style={{ marginTop: '0.5rem' }}
+        />
       </section>
 
       {/* Props Reference */}

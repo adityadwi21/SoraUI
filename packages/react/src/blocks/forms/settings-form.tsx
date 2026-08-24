@@ -1,4 +1,5 @@
 import React, { useState, type FormEvent } from 'react';
+import { Check } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../../components/card/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../components/tabs/tabs';
 import { Input } from '../../components/input/input';
@@ -160,8 +161,8 @@ export function SettingsForm({
 
             <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.75rem' }}>
               {saved && (
-                <span style={{ color: 'var(--ui-success, #10b981)', fontSize: 'var(--sora-text-sm, 0.875rem)' }}>
-                  ✓ Changes saved!
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', color: 'var(--ui-success, #10b981)', fontSize: 'var(--sora-text-sm, 0.875rem)' }}>
+                  <Check size={14} /> Changes saved!
                 </span>
               )}
               <Button type="submit" variant="primary" loading={loading}>

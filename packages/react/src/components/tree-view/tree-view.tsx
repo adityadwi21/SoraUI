@@ -1,4 +1,5 @@
 import { forwardRef, useState } from 'react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 import type { TreeViewProps, TreeItemData } from './tree-view.types';
 
 function cx(...c: (string | undefined | false | null)[]): string {
@@ -49,8 +50,8 @@ function TreeItemNode({
         onKeyDown={handleKeyDown}
       >
         {hasChildren ? (
-          <span className="sora-tree-view__arrow" aria-hidden="true">
-            {expanded ? '▾' : '▸'}
+          <span className="sora-tree-view__arrow" aria-hidden="true" style={{ display: 'inline-flex', alignItems: 'center' }}>
+            {expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
           </span>
         ) : (
           <span className="sora-tree-view__spacer" />

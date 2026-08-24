@@ -1,4 +1,5 @@
 import React, { useState, type FormEvent, type ReactNode } from 'react';
+import { Check } from 'lucide-react';
 import { Input } from '../../components/input/input';
 import { Button } from '../../components/button/button';
 import { Separator } from '../../components/separator/separator';
@@ -72,8 +73,8 @@ export function FooterSection({
                 {newsletter.title || 'Stay updated'}
               </div>
               {subscribed ? (
-                <p style={{ color: 'var(--ui-success, #10b981)', fontSize: 'var(--sora-text-xs, 0.75rem)' }}>
-                  ✓ Thanks for subscribing!
+                <p style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', color: 'var(--ui-success, #10b981)', fontSize: 'var(--sora-text-xs, 0.75rem)' }}>
+                  <Check size={13} /> Thanks for subscribing!
                 </p>
               ) : (
                 <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>

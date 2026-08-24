@@ -8,6 +8,7 @@ import {
   type ChangeEvent,
 } from 'react';
 import { usePositioning, Portal, useEscapeKey, useClickOutside } from '@soraui/hooks';
+import { Check } from 'lucide-react';
 import type { ComboboxProps, ComboboxOption } from './combobox.types';
 
 function cx(...c: (string | undefined | false | null)[]): string {
@@ -164,9 +165,7 @@ export const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(
                     >
                       <span className="sora-combobox__item-text">{opt.label}</span>
                       {isSelected && (
-                        <span className="sora-combobox__item-check" aria-hidden="true">
-                          ✓
-                        </span>
+                        <Check size={14} className="sora-combobox__item-check" aria-hidden="true" />
                       )}
                     </div>
                   );

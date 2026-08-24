@@ -34,30 +34,32 @@ export const PreviewToolbar: React.FC<PreviewToolbarProps> = ({
         borderRadius: 'var(--ui-radius, 0.5rem) var(--ui-radius, 0.5rem) 0 0',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        <div style={{ display: 'inline-flex', gap: '0.25rem' }}>
-          <Button
-            variant={activeTab === 'preview' ? 'primary' : 'ghost'}
-            size="sm"
-            onClick={() => onTabChange('preview')}
-            style={{ fontSize: '0.75rem', height: '28px' }}
-          >
-            Preview
-          </Button>
-          <Button
-            variant={activeTab === 'code' ? 'primary' : 'ghost'}
-            size="sm"
-            onClick={() => onTabChange('code')}
-            style={{ fontSize: '0.75rem', height: '28px' }}
-          >
-            Code
-          </Button>
-        </div>
+      <div style={{ display: 'inline-flex', gap: '0.25rem', flex: 1 }}>
+        <Button
+          variant={activeTab === 'preview' ? 'primary' : 'ghost'}
+          size="sm"
+          onClick={() => onTabChange('preview')}
+          style={{ fontSize: '0.75rem', height: '28px' }}
+        >
+          Preview
+        </Button>
+        <Button
+          variant={activeTab === 'code' ? 'primary' : 'ghost'}
+          size="sm"
+          onClick={() => onTabChange('code')}
+          style={{ fontSize: '0.75rem', height: '28px' }}
+        >
+          Code
+        </Button>
+      </div>
 
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
         <ViewportSwitcher value={viewport} onChange={onViewportChange} />
       </div>
 
-      <ThemeSwitcher value={theme} onChange={onThemeChange} />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', flex: 1 }}>
+        <ThemeSwitcher value={theme} onChange={onThemeChange} />
+      </div>
     </div>
   );
 };

@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import {
-  Check,
-  Copy,
-  ChevronLeft,
-  ChevronRight,
-  Terminal,
-  ExternalLink,
-} from 'lucide-react';
+import { Check, Copy, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { PackageManagerBlock } from '../../components/package-manager-block';
 
 export interface SkillsPageProps {
   onNavigate?: (path: string) => void;
@@ -14,8 +8,6 @@ export interface SkillsPageProps {
 
 export const SkillsPage: React.FC<SkillsPageProps> = ({ onNavigate }) => {
   const [copied, setCopied] = useState(false);
-  const [pkgTab, setPkgTab] = useState<'pnpm' | 'npm' | 'yarn' | 'bun'>('pnpm');
-  const [copiedCmd, setCopiedCmd] = useState(false);
 
   const go = (path: string) => {
     if (onNavigate) {
@@ -37,25 +29,11 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ onNavigate }) => {
     }
   };
 
-  const getSkillCommand = () => {
-    switch (pkgTab) {
-      case 'pnpm':
-        return 'pnpm dlx skills add soraui';
-      case 'npm':
-        return 'npx skills add soraui';
-      case 'yarn':
-        return 'yarn dlx skills add soraui';
-      case 'bun':
-        return 'bunx --bun skills add soraui';
-      default:
-        return 'pnpm dlx skills add soraui';
-    }
-  };
-
-  const handleCopyCmd = () => {
-    navigator.clipboard.writeText(getSkillCommand()).catch(() => {});
-    setCopiedCmd(true);
-    setTimeout(() => setCopiedCmd(false), 2000);
+  const skillCommands = {
+    pnpm: 'pnpm dlx skills add adityadwi21/soraui',
+    npm: 'npx skills add adityadwi21/soraui',
+    yarn: 'yarn dlx skills add adityadwi21/soraui',
+    bun: 'bunx --bun skills add adityadwi21/soraui',
   };
 
   return (
@@ -152,69 +130,21 @@ export const SkillsPage: React.FC<SkillsPageProps> = ({ onNavigate }) => {
           <a href="#install" className="docs-intro-anchor">#</a>
         </h2>
 
-        <div className="docs-tabbed-codeblock" style={{ marginTop: '1rem' }}>
-          <div className="docs-tabbed-codeblock-header">
-            <div className="docs-tabbed-codeblock-tabs">
-              <button
-                type="button"
-                className={`docs-tabbed-codeblock-tab ${pkgTab === 'pnpm' ? 'active' : ''}`}
-                onClick={() => setPkgTab('pnpm')}
-              >
-                <Terminal size={12} />
-                <span>pnpm</span>
-              </button>
-              <button
-                type="button"
-                className={`docs-tabbed-codeblock-tab ${pkgTab === 'npm' ? 'active' : ''}`}
-                onClick={() => setPkgTab('npm')}
-              >
-                <span>npm</span>
-              </button>
-              <button
-                type="button"
-                className={`docs-tabbed-codeblock-tab ${pkgTab === 'yarn' ? 'active' : ''}`}
-                onClick={() => setPkgTab('yarn')}
-              >
-                <span>yarn</span>
-              </button>
-              <button
-                type="button"
-                className={`docs-tabbed-codeblock-tab ${pkgTab === 'bun' ? 'active' : ''}`}
-                onClick={() => setPkgTab('bun')}
-              >
-                <span>bun</span>
-              </button>
-            </div>
-
-            <button
-              type="button"
-              className="docs-tabbed-codeblock-copy"
-              onClick={handleCopyCmd}
-              title="Copy Command"
-              aria-label="Copy Command"
-            >
-              {copiedCmd ? <Check size={13} style={{ color: '#22c55e' }} /> : <Copy size={13} />}
-            </button>
-          </div>
-
-          <pre className="docs-tabbed-codeblock-pre">
-            <code>{getSkillCommand()}</code>
-          </pre>
-        </div>
+        <PackageManagerBlock commands={skillCommands} style={{ marginTop: '1rem' }} />
 
         <p className="docs-intro-note" style={{ marginTop: '1rem' }}>
           This installs the SoraUI skill into your project. Once installed, your AI assistant automatically loads it when working with SoraUI components.
         </p>
 
         <p className="docs-intro-note" style={{ marginTop: '0.5rem' }}>
-          Learn more about skills at{' '}
+          View official pack at{' '}
           <a
-            href="https://skills.sh"
+            href="https://www.skills.sh/p/6LwtJHRsTeTBCO1k/soraui"
             target="_blank"
             rel="noreferrer"
             style={{ color: 'var(--docs-accent)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', fontWeight: 500 }}
           >
-            skills.sh <ExternalLink size={12} />
+            skills.sh/p/6LwtJHRsTeTBCO1k <ExternalLink size={12} />
           </a>.
         </p>
       </section>

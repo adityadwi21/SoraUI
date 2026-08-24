@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { TrendingUp, TrendingDown } from 'lucide-react';
 import type { StatisticProps } from './statistic.types';
 
 function cx(...c: (string | undefined | false | null)[]): string {
@@ -16,7 +17,7 @@ export const Statistic = forwardRef<HTMLDivElement, StatisticProps>(
       </div>
       {trend && trendValue && (
         <div className={cx('sora-statistic__trend', `sora-statistic__trend--${trend}`)}>
-          <span>{trend === 'up' ? '▲' : '▼'}</span>
+          {trend === 'up' ? <TrendingUp size={14} aria-hidden="true" /> : <TrendingDown size={14} aria-hidden="true" />}
           <span>{trendValue}</span>
         </div>
       )}

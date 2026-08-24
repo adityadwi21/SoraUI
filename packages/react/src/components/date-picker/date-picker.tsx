@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, forwardRef, type KeyboardEvent, type MouseEvent } from 'react';
+import { Calendar as CalendarIcon, X } from 'lucide-react';
 import { Popover, PopoverTrigger, PopoverContent } from '../popover/popover';
 import { Calendar } from '../calendar/calendar';
 import { formatDate as defaultFormatDate } from '../calendar/calendar.utils';
@@ -91,12 +92,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                     onKeyDown={handleClearKeyDown}
                     className="sora-date-picker__clear-btn"
                   >
-                    ✕
+                    <X size={13} aria-hidden="true" />
                   </span>
                 )}
-                <span className="sora-date-picker__icon" aria-hidden="true">
-                  📅
-                </span>
+                <CalendarIcon size={14} className="sora-date-picker__icon" aria-hidden="true" />
               </div>
             </button>
           </PopoverTrigger>

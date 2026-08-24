@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { Check } from 'lucide-react';
 import type { StepperProps, StepperItemProps } from './stepper.types';
 
 function cx(...c: (string | undefined | false | null)[]): string {
@@ -30,12 +31,7 @@ export const StepperItem = forwardRef<HTMLDivElement, StepperItemProps>(
         className
       )}
       {...props}
-    >
-      <div className="sora-stepper__indicator" aria-hidden="true">
-        {completed ? '✓' : step}
-      </div>
-      <div className="sora-stepper__content">{children}</div>
-    </div>
+    />
   )
 );
 StepperItem.displayName = 'StepperItem';

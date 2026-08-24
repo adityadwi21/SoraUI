@@ -1,4 +1,5 @@
 import React from 'react';
+import { TrendingUp, TrendingDown } from 'lucide-react';
 import { Card, CardContent } from '../../components/card/card';
 import { Statistic } from '../../components/statistic/statistic';
 import type { MetricItem } from '../types';
@@ -24,8 +25,12 @@ export function MetricGrid({ items, columns = 4, className }: MetricGridProps) {
       }}
     >
       {items.map((item, index) => {
-        const trendIcon =
-          item.trend?.direction === 'up' ? '▲ ' : item.trend?.direction === 'down' ? '▼ ' : '';
+        const TrendIcon =
+          item.trend?.direction === 'up'
+            ? TrendingUp
+            : item.trend?.direction === 'down'
+            ? TrendingDown
+            : null;
 
         return (
           <Card key={item.id || index} elevated>
@@ -83,6 +88,9 @@ export function MetricGrid({ items, columns = 4, className }: MetricGridProps) {
                   {item.trend && (
                     <span
                       style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.25rem',
                         fontWeight: 600,
                         color:
                           item.trend.direction === 'up'
@@ -92,7 +100,7 @@ export function MetricGrid({ items, columns = 4, className }: MetricGridProps) {
                             : 'var(--ui-muted-foreground, #71717a)',
                       }}
                     >
-                      {trendIcon}
+                      {TrendIcon && <TrendIcon size={12} />}
                       {item.trend.value}
                     </span>
                   )}

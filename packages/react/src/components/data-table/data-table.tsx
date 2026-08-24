@@ -1,4 +1,5 @@
 import { useState, useMemo, forwardRef, type ChangeEvent } from 'react';
+import { ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
 import type { DataTableProps, DataTableColumn } from './data-table.types';
 
 type SortDirection = 'asc' | 'desc' | null;
@@ -158,8 +159,8 @@ export function DataTable<T extends Record<string, any>>({
                     <div className="sora-data-table__th-content">
                       <span>{col.header}</span>
                       {col.sortable && (
-                        <span className="sora-data-table__sort-icon" aria-hidden="true">
-                          {isSorted ? (sortDirection === 'asc' ? '▲' : '▼') : '⇅'}
+                        <span className="sora-data-table__sort-icon" aria-hidden="true" style={{ display: 'inline-flex', alignItems: 'center' }}>
+                          {isSorted ? (sortDirection === 'asc' ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ArrowUpDown size={12} />}
                         </span>
                       )}
                     </div>

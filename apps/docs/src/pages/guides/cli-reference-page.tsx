@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CodeBlock } from '../../components/code-block';
+import { PackageManagerBlock } from '../../components/package-manager-block';
 import { Badge } from '@soraui/react';
 import { Check, Copy, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -99,7 +99,15 @@ export const CLIReferencePage: React.FC<CLIReferencePageProps> = ({ onNavigate }
         <p className="sora-subtext">
           Initializes SoraUI in your project directory, creating <code>soraui.config.json</code> and setting up the theme tokens.
         </p>
-        <CodeBlock code="npx @soraui/cli init" language="bash" />
+        <PackageManagerBlock
+          commands={{
+            pnpm: 'pnpm dlx @soraui/cli init',
+            npm: 'npx @soraui/cli init',
+            yarn: 'yarn dlx @soraui/cli init',
+            bun: 'bunx @soraui/cli init',
+          }}
+          style={{ marginTop: '0.5rem' }}
+        />
       </section>
 
       <section className="sora-doc-section">
@@ -110,7 +118,15 @@ export const CLIReferencePage: React.FC<CLIReferencePageProps> = ({ onNavigate }
         <p className="sora-subtext">
           Downloads and writes primitive component source code directly into your configured components directory.
         </p>
-        <CodeBlock code="npx @soraui/cli add button input card dialog select" language="bash" />
+        <PackageManagerBlock
+          commands={{
+            pnpm: 'pnpm dlx @soraui/cli add button input card dialog select',
+            npm: 'npx @soraui/cli add button input card dialog select',
+            yarn: 'yarn dlx @soraui/cli add button input card dialog select',
+            bun: 'bunx @soraui/cli add button input card dialog select',
+          }}
+          style={{ marginTop: '0.5rem' }}
+        />
       </section>
 
       <section className="sora-doc-section">
@@ -121,7 +137,15 @@ export const CLIReferencePage: React.FC<CLIReferencePageProps> = ({ onNavigate }
         <p className="sora-subtext">
           Resolves all primitive dependencies and copies the production block into your project.
         </p>
-        <CodeBlock code="npx @soraui/cli add block login-form" language="bash" />
+        <PackageManagerBlock
+          commands={{
+            pnpm: 'pnpm dlx @soraui/cli add block login-form',
+            npm: 'npx @soraui/cli add block login-form',
+            yarn: 'yarn dlx @soraui/cli add block login-form',
+            bun: 'bunx @soraui/cli add block login-form',
+          }}
+          style={{ marginTop: '0.5rem' }}
+        />
       </section>
 
       <section className="sora-doc-section">
@@ -132,7 +156,15 @@ export const CLIReferencePage: React.FC<CLIReferencePageProps> = ({ onNavigate }
         <p className="sora-subtext">
           Displays all available components, blocks, and templates available in the offline bundled registry.
         </p>
-        <CodeBlock code="npx @soraui/cli list" language="bash" />
+        <PackageManagerBlock
+          commands={{
+            pnpm: 'pnpm dlx @soraui/cli list',
+            npm: 'npx @soraui/cli list',
+            yarn: 'yarn dlx @soraui/cli list',
+            bun: 'bunx @soraui/cli list',
+          }}
+          style={{ marginTop: '0.5rem' }}
+        />
       </section>
 
       <section className="sora-doc-section">
@@ -143,7 +175,15 @@ export const CLIReferencePage: React.FC<CLIReferencePageProps> = ({ onNavigate }
         <p className="sora-subtext">
           Instant offline fuzzy search across all registry items.
         </p>
-        <CodeBlock code="npx @soraui/cli search auth" language="bash" />
+        <PackageManagerBlock
+          commands={{
+            pnpm: 'pnpm dlx @soraui/cli search auth',
+            npm: 'npx @soraui/cli search auth',
+            yarn: 'yarn dlx @soraui/cli search auth',
+            bun: 'bunx @soraui/cli search auth',
+          }}
+          style={{ marginTop: '0.5rem' }}
+        />
       </section>
     </div>
   );

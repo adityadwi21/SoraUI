@@ -6,6 +6,7 @@ import {
   useCallback,
   forwardRef,
 } from 'react';
+import { ChevronDown } from 'lucide-react';
 import type {
   AccordionProps,
   AccordionItemProps,
@@ -152,9 +153,7 @@ export const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerPr
           {...props}
         >
           <span className="sora-accordion__trigger-text">{children}</span>
-          <span className="sora-accordion__chevron" aria-hidden="true">
-            ▼
-          </span>
+          <ChevronDown size={16} className="sora-accordion__chevron" aria-hidden="true" />
         </button>
       </h3>
     );

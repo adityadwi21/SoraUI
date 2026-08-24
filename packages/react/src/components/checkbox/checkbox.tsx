@@ -1,4 +1,5 @@
 import { forwardRef, useState, useRef, useEffect, type ChangeEvent, type KeyboardEvent } from 'react';
+import { Check, Minus } from 'lucide-react';
 import type { CheckboxProps } from './checkbox.types';
 
 function cx(...c: (string | undefined | false | null)[]): string {
@@ -65,14 +66,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           aria-hidden="true"
         >
           {isTrueChecked && (
-            <svg className="sora-checkbox__icon" viewBox="0 0 16 16" fill="none">
-              <path d="M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z" fill="currentColor" />
-            </svg>
+            <Check size={12} strokeWidth={3} className="sora-checkbox__icon" aria-hidden="true" />
           )}
           {isIndeterminate && (
-            <svg className="sora-checkbox__icon" viewBox="0 0 16 16" fill="none">
-              <path d="M4 8a1 1 0 011-1h6a1 1 0 110 2H5a1 1 0 01-1-1z" fill="currentColor" />
-            </svg>
+            <Minus size={12} strokeWidth={3} className="sora-checkbox__icon" aria-hidden="true" />
           )}
         </span>
       </label>

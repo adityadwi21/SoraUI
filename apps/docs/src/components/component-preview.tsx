@@ -23,13 +23,13 @@ export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
   const [viewport, setViewport] = useState<ViewportMode>('desktop');
   const [tab, setTab] = useState<'preview' | 'code'>('preview');
 
-  const vpWidth = viewport === 'mobile' ? '375px' : viewport === 'tablet' ? '768px' : '100%';
+  const vpWidth = viewport === 'mobile' ? '375px' : '100%';
 
   return (
     <div className="docs-preview-root" style={style}>
       {/* Toolbar */}
       <div className="docs-preview-toolbar">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div className="docs-preview-toolbar-left">
           <div className="docs-preview-tabs" role="tablist">
             {(['preview', 'code'] as const).map(t => (
               <button
@@ -42,9 +42,15 @@ export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
               </button>
             ))}
           </div>
+        </div>
+
+        <div className="docs-preview-toolbar-center">
           {tab === 'preview' && <ViewportSwitcher value={viewport} onChange={setViewport} />}
         </div>
-        <ThemeSwitcher value={previewTheme} onChange={setPreviewTheme} />
+
+        <div className="docs-preview-toolbar-right">
+          <ThemeSwitcher value={previewTheme} onChange={setPreviewTheme} />
+        </div>
       </div>
 
       {/* Content */}
@@ -53,12 +59,17 @@ export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
           <div style={{
             width: vpWidth,
             transition: 'width 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-            display: 'flex',
-            justifyContent: align === 'center' ? 'center' : 'flex-start',
-            alignItems: align === 'center' ? 'center' : 'flex-start',
           }}>
             <ThemeScope theme={previewTheme as Parameters<typeof ThemeScope>[0]['theme']}>
-              <div style={{ width: '100%' }}>{children}</div>
+              <div
+                className="docs-preview-theme-canvas"
+                style={{
+                  justifyContent: align === 'center' ? 'center' : 'flex-start',
+                  alignItems: align === 'center' ? 'center' : 'flex-start',
+                }}
+              >
+                {children}
+              </div>
             </ThemeScope>
           </div>
         </div>

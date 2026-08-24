@@ -7,6 +7,7 @@ import {
   type ChangeEvent,
   type KeyboardEvent,
 } from 'react';
+import { UploadCloud, X } from 'lucide-react';
 import type { FileUploaderProps, UploadedFile } from './file-uploader.types';
 
 function formatFileSize(bytes: number): string {
@@ -143,7 +144,7 @@ export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
         >
 
           <div className="sora-file-uploader__icon" aria-hidden="true">
-            📁
+            <UploadCloud size={32} />
           </div>
           <div className="sora-file-uploader__prompt">{promptText}</div>
           {maxSize && (
@@ -173,7 +174,7 @@ export const FileUploader = forwardRef<HTMLDivElement, FileUploaderProps>(
                   aria-label={`Remove file ${item.name}`}
                   className="sora-file-uploader__remove-btn"
                 >
-                  ✕
+                  <X size={14} aria-hidden="true" />
                 </button>
               </li>
             ))}

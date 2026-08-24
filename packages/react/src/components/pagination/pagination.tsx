@@ -1,4 +1,5 @@
-import { forwardRef, type HTMLAttributes } from 'react';
+import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import type {
   PaginationProps,
   PaginationContentProps,
@@ -35,23 +36,41 @@ export const PaginationLink = forwardRef<HTMLAnchorElement, PaginationLinkProps>
 ));
 PaginationLink.displayName = 'PaginationLink';
 
-export const PaginationPrevious = forwardRef<HTMLAnchorElement, PaginationLinkProps>(({ className, children = '‹ Previous', ...props }, ref) => (
-  <PaginationLink ref={ref} aria-label="Go to previous page" className={cx('sora-pagination__prev', className)} {...props}>
-    {children}
-  </PaginationLink>
-));
+export const PaginationPrevious = forwardRef<HTMLAnchorElement, PaginationLinkProps>(
+  ({ className, children, ...props }, ref) => (
+    <PaginationLink
+      ref={ref}
+      aria-label="Go to previous page"
+      className={cx('sora-pagination__prev', className)}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}
+      {...props}
+    >
+      <ChevronLeft size={14} aria-hidden="true" />
+      {children || <span>Previous</span>}
+    </PaginationLink>
+  )
+);
 PaginationPrevious.displayName = 'PaginationPrevious';
 
-export const PaginationNext = forwardRef<HTMLAnchorElement, PaginationLinkProps>(({ className, children = 'Next ›', ...props }, ref) => (
-  <PaginationLink ref={ref} aria-label="Go to next page" className={cx('sora-pagination__next', className)} {...props}>
-    {children}
-  </PaginationLink>
-));
+export const PaginationNext = forwardRef<HTMLAnchorElement, PaginationLinkProps>(
+  ({ className, children, ...props }, ref) => (
+    <PaginationLink
+      ref={ref}
+      aria-label="Go to next page"
+      className={cx('sora-pagination__next', className)}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}
+      {...props}
+    >
+      {children || <span>Next</span>}
+      <ChevronRight size={14} aria-hidden="true" />
+    </PaginationLink>
+  )
+);
 PaginationNext.displayName = 'PaginationNext';
 
 export const PaginationEllipsis = ({ className, ...props }: HTMLAttributes<HTMLSpanElement>) => (
   <span aria-hidden="true" className={cx('sora-pagination__ellipsis', className)} {...props}>
-    …
+    <MoreHorizontal size={14} />
   </span>
 );
 PaginationEllipsis.displayName = 'PaginationEllipsis';

@@ -10,10 +10,11 @@ Before contributing, please understand our core principles:
 
 > **Build fast. Ship less. Own your UI.**
 
-- **Lightweight first** — every addition must justify its bundle cost
-- **CSS over JS** — if it can be CSS, it should be CSS
-- **Accessibility is not optional** — every component must pass a11y checks
-- **No unnecessary abstractions** — keep component APIs simple
+- **Lightweight first** : every addition must justify its bundle cost
+- **CSS over JS** : if it can be CSS, it should be CSS
+- **Accessibility is not optional** : every component must pass a11y checks
+- **No unnecessary abstractions** : keep component APIs simple
+- **Universal Lucide Iconography** : always use `lucide-react` for component and block icons
 
 ---
 
@@ -42,18 +43,18 @@ Each component must have these 4 files minimum:
 ```text
 packages/react/src/components/{name}/
 ├── {name}.tsx           # Implementation
-├── {name}.module.css    # Styles (CSS Modules, no hardcoded colors)
 ├── {name}.types.ts      # TypeScript types
 └── {name}.test.tsx      # Unit + accessibility tests
 ```
 
 ### Component Rules
 
-1. No hardcoded hex colors — use `var(--ui-*)` CSS variables only
+1. No hardcoded hex colors : use `var(--ui-*)` CSS variables only
 2. No JS for behavior that CSS can handle
 3. Must pass: TypeScript check, Vitest, a11y tests
 4. Must be within performance budget (see ARCHITECTURE.md)
 5. Must support keyboard navigation, ARIA, and focus management
+6. Icons must strictly be imported from `lucide-react`
 
 ---
 
@@ -75,9 +76,10 @@ Before submitting a PR:
 - [ ] TypeScript check passes
 - [ ] ESLint passes
 - [ ] Component is within bundle budget
-- [ ] No hardcoded colors — all via CSS variables
+- [ ] No hardcoded colors : all via CSS variables
 - [ ] Keyboard navigation works
 - [ ] ARIA attributes correct
+- [ ] Icons use `lucide-react`
 - [ ] Added entry to registry metadata
 - [ ] Updated CHANGELOG.md
 

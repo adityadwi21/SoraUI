@@ -6,11 +6,12 @@ SoraUI is an open-source, lightweight UI construction system for modern JavaScri
 
 ---
 
-## 🌌 Features
+## Features
 
 - **44 Accessible Primitives**: Level 1 zero-runtime CSS components up to Level 3 interactive primitives (WAI-ARIA, keyboard navigation, focus management).
 - **14 Production Blocks & 4 Page Templates**: UI-only compound blocks and layouts for Authentication, Dashboards, Marketing, and Settings.
-- **3-Layer Design Token Engine**: Primitive (`--sora-*`) → Semantic (`--ui-*`) → Component (`--sora-<comp>-*`) with zero hardcoded colors.
+- **Universal `lucide-react` Iconography**: Clean, lightweight icons integrated across all components, blocks, and templates.
+- **3-Layer Design Token Engine**: Primitive (`--sora-*`) -> Semantic (`--ui-*`) -> Component (`--sora-<comp>-*`) with zero hardcoded colors.
 - **9 Space-Themed Presets & ThemeScope**: Pure CSS cascading themes (`Sky`, `Cloud`, `Horizon`, `Aurora`, `Twilight`, `Midnight`, `Nebula`, `Eclipse`, `Starlight`) with isolated `<ThemeScope>` subtrees.
 - **AI-Native MCP Server (`@soraui/mcp`)**: 11 structured JSON-Schema-driven tools, static composition analysis, resources, and prompt templates for Claude Desktop, Cursor, Gemini, and Copilot.
 - **Zero-FOUC & SSR Ready**: Seamless Next.js App/Pages Router, Vite SPA, Laravel Inertia, React Router v7, and Astro support.
@@ -18,23 +19,23 @@ SoraUI is an open-source, lightweight UI construction system for modern JavaScri
 
 ---
 
-## 🎨 Themes
+## Themes
 
-| Theme | Mode | Description |
-|---|---|---|
-| **Sky** | Light | Clean blue sky (default light theme) |
-| **Cloud** | Light | Soft white and neutral cloud tones |
-| **Horizon** | Light | Warm sunset transition colors |
-| **Aurora** | Dark | Vibrant teal and emerald aurora |
-| **Twilight** | Dark | Deep dusk indigo and purple |
-| **Midnight** | Dark | Minimal dark with indigo accents (default dark theme) |
-| **Nebula** | Dark | Purple and magenta deep-space nebula |
-| **Eclipse** | Dark | High-contrast pitch black with golden accent |
-| **Starlight** | Dark | Dark navy with radiant star highlights |
+| Theme         | Mode  | Description                                           |
+| ------------- | ----- | ----------------------------------------------------- |
+| **Sky**       | Light | Clean blue sky (default light theme)                  |
+| **Cloud**     | Light | Soft white and neutral cloud tones                    |
+| **Horizon**   | Light | Warm sunset transition colors                         |
+| **Aurora**    | Dark  | Vibrant teal and emerald aurora                       |
+| **Twilight**  | Dark  | Deep dusk indigo and purple                           |
+| **Midnight**  | Dark  | Minimal dark with indigo accents (default dark theme) |
+| **Nebula**    | Dark  | Purple and magenta deep-space nebula                  |
+| **Eclipse**   | Dark  | High-contrast pitch black with golden accent          |
+| **Starlight** | Dark  | Dark navy with radiant star highlights                |
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Via CLI (Source Distribution: "Own Your UI")
 
@@ -55,18 +56,19 @@ npx @soraui/cli add template dashboard-page
 ### 2. Via NPM SDK
 
 ```bash
-npm install @soraui/react @soraui/core @soraui/hooks
+# Install core package, primitives, hooks, and Lucide icons
+npm install @soraui/react @soraui/core @soraui/hooks lucide-react
 ```
 
 ```tsx
-import React from 'react';
-import { ThemeProvider, ThemeScope, Button, Card } from '@soraui/react';
-import '@soraui/react/styles.css';
+import React from "react";
+import { ThemeProvider, ThemeScope, Button, Card } from "@soraui/react";
+import "@soraui/react/styles.css";
 
 export default function App() {
   return (
     <ThemeProvider defaultTheme="midnight" defaultMode="dark">
-      <main style={{ padding: '2rem' }}>
+      <main style={{ padding: "2rem" }}>
         <Card>
           <h1>Hello SoraUI!</h1>
           <Button variant="primary">Click Me</Button>
@@ -79,7 +81,7 @@ export default function App() {
 
 ---
 
-## 🤖 AI Coding Agents (Model Context Protocol)
+## AI Coding Agents (Model Context Protocol)
 
 Connect SoraUI to Claude Desktop, Cursor, or Gemini:
 
@@ -95,6 +97,7 @@ Connect SoraUI to Claude Desktop, Cursor, or Gemini:
 ```
 
 Tools available to your agent:
+
 - `soraui_get_context`: Rapid ecosystem overview & architectural guidelines.
 - `soraui_search`: Deterministic scoring search across all components, blocks, and templates.
 - `soraui_inspect_component` / `soraui_inspect_block`: Full prop tables, WAI-ARIA roles, and boundary rules.
@@ -103,19 +106,19 @@ Tools available to your agent:
 
 ---
 
-## 📦 Monorepo Packages
+## Monorepo Packages
 
-| Package | Purpose | Version |
-|---|---|---|
-| [`@soraui/core`](./packages/core) | Tokens, 24-key Theme Contract, CSS Presets | `0.1.0` |
+| Package                             | Purpose                                                | Version |
+| ----------------------------------- | ------------------------------------------------------ | ------- |
+| [`@soraui/core`](./packages/core)   | Tokens, 24-key Theme Contract, CSS Presets             | `0.1.0` |
 | [`@soraui/hooks`](./packages/hooks) | A11y & interaction primitives (focus trap, escape key) | `0.1.0` |
-| [`@soraui/react`](./packages/react) | 44 primitives, 14 blocks, 4 templates, ThemeProvider | `0.1.0` |
-| [`@soraui/cli`](./packages/cli) | CLI code generator & dependency resolver | `0.1.0` |
-| [`@soraui/mcp`](./packages/mcp) | Official Model Context Protocol stdio server | `0.1.0` |
+| [`@soraui/react`](./packages/react) | 44 primitives, 14 blocks, 4 templates, ThemeProvider   | `0.1.0` |
+| [`@soraui/cli`](./packages/cli)     | CLI code generator & dependency resolver               | `0.1.0` |
+| [`@soraui/mcp`](./packages/mcp)     | Official Model Context Protocol stdio server           | `0.1.0` |
 
 ---
 
-## 📦 Monorepo Architecture
+## Monorepo Architecture
 
 ```text
 soraui/
@@ -135,7 +138,7 @@ soraui/
 
 ---
 
-## 🛠️ Development & Testing Suites
+## Development & Testing Suites
 
 ```bash
 # Install dependencies
@@ -162,6 +165,6 @@ pnpm test:ai-agent-mcp
 
 ---
 
-## 📄 License
+## License
 
 [MIT](./LICENSE) © SoraUI Contributors
