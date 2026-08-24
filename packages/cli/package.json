@@ -1,13 +1,11 @@
 {
   "name": "@soraui/cli",
-  "version": "0.1.0-rc.2",
-
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public",
-    "tag": "rc"
+    "tag": "latest"
   },
-
-  "description": "SoraUI CLI — Add accessible UI components, blocks, and themes to your project from the canonical registry",
+  "description": "SoraUI CLI: Add accessible UI components, blocks, and themes to your project from the canonical registry",
 
   "license": "MIT",
   "author": "SoraUI Team",

@@ -1,11 +1,11 @@
 {
   "name": "@soraui/react",
-  "version": "0.1.0-rc.2",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public",
-    "tag": "rc"
+    "tag": "latest"
   },
-  "description": "SoraUI React — Accessible, lightweight, customizable React components",
+  "description": "SoraUI React: Accessible, lightweight, customizable React components",
 
   "license": "MIT",
   "author": "SoraUI Team",

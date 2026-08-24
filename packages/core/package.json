@@ -1,11 +1,11 @@
 {
   "name": "@soraui/core",
-  "version": "0.1.0-rc.2",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public",
-    "tag": "rc"
+    "tag": "latest"
   },
-  "description": "SoraUI core — design tokens, theme engine, and CSS variable system",
+  "description": "SoraUI core: design tokens, theme engine, and CSS variable system",
 
   "license": "MIT",
   "author": "SoraUI Team",
