@@ -150,42 +150,53 @@ const AlertInteractiveDemo: React.FC = () => {
       type: "default" | "destructive" | "warning" | "success";
       title: string;
       description: string;
+      isExiting?: boolean;
     }>
   >([]);
 
-  // Dismiss a specific alert
+  // Dismiss an alert with smooth exit animation
   const removeAlert = (id: number) => {
-    setAlerts((prev) => prev.filter((a) => a.id !== id));
+    setAlerts((prev) =>
+      prev.map((a) => (a.id === id ? { ...a, isExiting: true } : a)),
+    );
+    setTimeout(() => {
+      setAlerts((prev) => prev.filter((a) => a.id !== id));
+    }, 280);
   };
 
-  // Add alert and auto-dismiss after 4 seconds (oldest expires first)
+  // Add alert and auto-dismiss after 3 seconds (FIFO sequence)
   const addAlert = (
     type: "default" | "destructive" | "warning" | "success",
   ) => {
     const newId = Date.now() + Math.random();
     let title = "Notification";
-    let description = "Informasi sistem terbaru.";
+    let description = "Informational update received.";
 
     if (type === "destructive") {
       title = "Critical Error";
-      description = "Gagal terhubung ke server database.";
+      description =
+        "Unable to establish connection to the remote database cluster.";
     } else if (type === "warning") {
       title = "Storage Limit Warning";
-      description = "Penyimpanan cloud Anda telah mencapai 88%.";
+      description = "Cloud database storage has reached 88% capacity.";
     } else if (type === "success") {
       title = "Deployment Succeeded";
-      description = "Production build v0.1.1 berhasil dideploy.";
+      description = "Production build v0.1.1 was successfully deployed.";
     } else {
       title = "Heads up!";
-      description = "Komponen Alert floating muncul di pojok kanan atas.";
+      description =
+        "Floating alert notification triggered in the top-right corner.";
     }
 
-    setAlerts((prev) => [...prev, { id: newId, type, title, description }]);
+    setAlerts((prev) => [
+      ...prev,
+      { id: newId, type, title, description, isExiting: false },
+    ]);
 
-    // Auto dismiss after 4 seconds for sequential disappearance
+    // Auto dismiss after 3 seconds (3000ms) for sequential disappearance
     setTimeout(() => {
       removeAlert(newId);
-    }, 4000);
+    }, 3000);
   };
 
   return (
@@ -285,10 +296,10 @@ const AlertInteractiveDemo: React.FC = () => {
             lineHeight: 1.5,
           }}
         >
-          Klik salah satu tombol di atas untuk memunculkan alert di{" "}
-          <strong>pojok kanan atas layar</strong>. Alert yang paling lama muncul
-          akan otomatis hilang berurutan dalam 4 detik (atau klik tombol{" "}
-          <strong>×</strong> untuk dismiss langsung).
+          Click any action button above to trigger a floating alert in the{" "}
+          <strong>top-right corner of the screen</strong>. The oldest active
+          alert will automatically dismiss in sequential order after 3 seconds
+          (or click the <strong>×</strong> button to dismiss immediately).
         </p>
       </div>
 
@@ -301,7 +312,10 @@ const AlertInteractiveDemo: React.FC = () => {
             aria-atomic="true"
           >
             {alerts.map((item) => (
-              <div key={item.id} className="sora-floating-alert-item">
+              <div
+                key={item.id}
+                className={`sora-floating-alert-item${item.isExiting ? " is-exiting" : ""}`}
+              >
                 <Alert
                   variant={
                     item.type === "destructive" ? "destructive" : "default"
@@ -386,6 +400,21 @@ const AlertInteractiveDemo: React.FC = () => {
                       <X size={14} />
                     </button>
                   </div>
+
+                  {/* 2026 Smooth Depleting Progress Line */}
+                  <div
+                    className="sora-alert-timer-bar"
+                    style={{
+                      color:
+                        item.type === "destructive"
+                          ? "var(--ui-destructive, #ef4444)"
+                          : item.type === "warning"
+                            ? "#eab308"
+                            : item.type === "success"
+                              ? "#22c55e"
+                              : "var(--ui-primary, #0ea5e9)",
+                    }}
+                  />
                 </Alert>
               </div>
             ))}
@@ -2924,7 +2953,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         id: "interactive",
         title: "Interactive Trigger & Dismiss",
         description:
-          "Click the action buttons to trigger new alerts, stack them together, or dismiss them.",
+          "Click the action buttons to trigger floating alerts in the top-right corner with 3-second FIFO auto-dismiss.",
         code: `function FloatingAlerts() {
   const [alerts, setAlerts] = React.useState([]);
 
@@ -2932,13 +2961,13 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     const id = Date.now();
     setAlerts((prev) => [
       ...prev,
-      { id, type, title: 'Notification', desc: 'Alert floating di pojok kanan atas.' },
+      { id, type, title: 'Notification', desc: 'Floating alert triggered in top-right corner.' },
     ]);
 
-    // Auto dismiss after 4 seconds (oldest disappears first)
+    // Auto dismiss after 3 seconds (oldest disappears first)
     setTimeout(() => {
       setAlerts((prev) => prev.filter((a) => a.id !== id));
-    }, 4000);
+    }, 3000);
   };
 
   return (
