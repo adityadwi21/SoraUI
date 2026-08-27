@@ -16,9 +16,11 @@ export const IntroductionPage: React.FC<IntroductionPageProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [faqOpen, setFaqOpen] = useState(false);
+  const [rtlFaqOpen, setRtlFaqOpen] = useState(false);
+  const [tailwindFaqOpen, setTailwindFaqOpen] = useState(false);
 
   const handleCopyPage = () => {
-    const fullText = `# Introduction\n\nSoraUI is a set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks and AI models. Open Source. Open Code.\n\nThis is not a component library. It is how you build your component library.\n\nhttps://github.com/adityadwi21/SoraUI`;
+    const fullText = `# Introduction\n\nSoraUI is a set of beautifully-designed, accessible components and a code distribution platform. Built with Zero-Runtime CSS, First-Class RTL support, and native AI/MCP integration. Open Source. Open Code.\n\nThis is not a component library. It is how you build your component library.\n\nhttps://github.com/adityadwi21/SoraUI`;
     navigator.clipboard.writeText(fullText).catch(() => {});
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -74,9 +76,7 @@ export const IntroductionPage: React.FC<IntroductionPageProps> = ({
         </div>
 
         <p className="docs-intro-lead">
-          SoraUI is a set of beautifully-designed, accessible components and a
-          code distribution platform. Works with your favorite frameworks and AI
-          models. Open Source. Open Code.
+          SoraUI is a set of beautifully-designed, accessible components, a flexible code distribution platform, and an AI-native design system. Built with Zero-Runtime CSS, First-Class RTL multi-language support, and Model Context Protocol (MCP) tooling. Open Source. Open Code.
         </p>
       </header>
 
@@ -90,88 +90,69 @@ export const IntroductionPage: React.FC<IntroductionPageProps> = ({
 
       <div className="docs-intro-body">
         <p>
-          You know how most traditional component libraries work: you install a
-          package from NPM, import the components, and use them in your app.
+          You know how traditional component libraries work: you install a heavy NPM package, import rigid black-box components, and struggle to customize them to match your unique brand identity.
         </p>
 
         <p>
-          This approach works well until you need to customize a component to
-          fit your design system or require one that isn't included in the
-          library.{" "}
+          This approach breaks down when you need deep style overrides, specialized accessibility logic, or non-Latin multi-language support (like Arabic and Hebrew).{" "}
           <strong>
-            Often, you end up wrapping library components, writing workarounds
-            to override styles, or mixing components from different libraries
-            with incompatible APIs.
+            Often, you end up wrapping library components, fighting CSS specificity battles, dealing with heavy JavaScript runtime overhead, or mixing incompatible libraries.
           </strong>
         </p>
 
         <p>
-          This is what SoraUI aims to solve. It is built around the following
-          principles:
+          SoraUI solves this from first principles with seven core pillars:
         </p>
 
         <ul className="docs-intro-principles-list">
           <li>
-            <strong>Open Code:</strong> The top layer of your component code is
-            open for modification.
+            <strong>Open Code & Total Ownership:</strong> You own the component code directly in your repository. No black-box abstractions.
           </li>
           <li>
-            <strong>Composition:</strong> Every component uses a common,
-            composable interface, making them predictable.
+            <strong>Zero-Runtime CSS:</strong> Native CSS Variables (<code>--ui-*</code>) with 0ms JavaScript runtime styling cost. Works seamlessly with or without Tailwind CSS.
           </li>
           <li>
-            <strong>Distribution:</strong> A flat-file schema and command-line
-            tool make it easy to distribute components.
+            <strong>First-Class RTL & Internationalization:</strong> Native bidirectional support for English (LTR), Arabic (RTL), and Hebrew (RTL) built directly into components.
           </li>
           <li>
-            <strong>Beautiful Defaults:</strong> Carefully chosen default
-            styles, so you get great design out-of-the-box.
+            <strong>Dual Distribution (CLI + NPM):</strong> Add source files via <code>@soraui/cli</code> or install centralized packages (<code>@soraui/react</code>).
           </li>
           <li>
-            <strong>AI-Ready:</strong> Open code for LLMs to read, understand,
-            and improve.
+            <strong>Composition & WAI-ARIA Accessibility:</strong> Modular sub-components with predictable keyboard navigation, focus management, and screen reader compliance.
+          </li>
+          <li>
+            <strong>9 Curated Space Theme Presets:</strong> 3-layer design tokens with runtime dynamic theming via <code>ThemeProvider</code> and localized <code>ThemeScope</code>.
+          </li>
+          <li>
+            <strong>AI-Native & MCP Server:</strong> Built-in Model Context Protocol server (<code>@soraui/mcp</code>) and Agent Skills for Cursor, Claude Desktop, and Gemini CLI.
           </li>
         </ul>
 
         {/* ─── SECTION 1: OPEN CODE ─── */}
         <section className="docs-intro-section">
           <h2 id="open-code" className="docs-intro-h2">
-            <span>Open Code</span>
+            <span>Open Code & Total Ownership</span>
             <a href="#open-code" className="docs-intro-anchor" aria-hidden>
               #
             </a>
           </h2>
 
           <p>
-            SoraUI hands you the actual component code. You have full control to
-            customize and extend the components to your needs. This means:
+            SoraUI hands you the actual source code of each component. You have full transparency and complete freedom to customize, optimize, and extend everything to your project's exact requirements:
           </p>
 
           <ul className="docs-intro-bullet-list">
             <li>
-              <strong>Full Transparency:</strong> You see exactly how each
-              component is built.
+              <strong>Full Transparency:</strong> Inspect and modify every JSX element, hook, and CSS variable directly in your project.
             </li>
             <li>
-              <strong>Easy Customization:</strong> Modify any part of a
-              component to fit your design and functionality requirements.
+              <strong>Zero Vendor Lock-in:</strong> You are not locked into any single framework vendor's release cycle or breaking changes.
             </li>
             <li>
-              <strong>AI Integration:</strong> Access to the code makes it
-              straightforward for LLMs to read, understand, and even improve
-              your components.
+              <strong>Clean Code Quality:</strong> Built with strict TypeScript, clean BEM-prefixed CSS classes (<code>sora-*</code>), and zero unnecessary dependencies.
             </li>
           </ul>
 
-          <p className="docs-intro-note">
-            <em>
-              In a typical library, if you need to change a button's behavior,
-              you have to override styles or wrap the component. With SoraUI,
-              you simply edit the button code directly.
-            </em>
-          </p>
-
-          {/* Accordion FAQ in Open Code */}
           <div className="docs-intro-faq">
             <button
               type="button"
@@ -180,7 +161,7 @@ export const IntroductionPage: React.FC<IntroductionPageProps> = ({
               aria-expanded={faqOpen}
             >
               <span>
-                How do I pull upstream updates in an Open Code approach?
+                How do I receive upstream updates in an Open Code approach?
               </span>
               <ChevronDown
                 size={16}
@@ -194,140 +175,224 @@ export const IntroductionPage: React.FC<IntroductionPageProps> = ({
             {faqOpen && (
               <div className="docs-intro-faq-content">
                 <p>
-                  Because components live directly in your repository as pure
-                  TypeScript and CSS custom properties, you can update them
-                  using the SoraUI CLI (
-                  <code>npx @soraui/cli add [component] --overwrite</code>) or
-                  review updates via standard git diffs. You maintain 100%
-                  ownership of what gets merged.
+                  Because components live directly in your repository as pure TypeScript and CSS custom properties, you can update them using the SoraUI CLI (
+                  <code>npx @soraui/cli add [component] --overwrite</code>) or review updates via standard git diffs. You maintain 100% control of what gets merged.
                 </p>
               </div>
             )}
           </div>
         </section>
 
-        {/* ─── SECTION 2: COMPOSITION ─── */}
+        {/* ─── SECTION 2: ZERO-RUNTIME CSS ─── */}
         <section className="docs-intro-section">
-          <h2 id="composition" className="docs-intro-h2">
-            <span>Composition</span>
-            <a href="#composition" className="docs-intro-anchor" aria-hidden>
+          <h2 id="zero-runtime-css" className="docs-intro-h2">
+            <span>Zero-Runtime CSS & Framework Agnostic</span>
+            <a href="#zero-runtime-css" className="docs-intro-anchor" aria-hidden>
               #
             </a>
           </h2>
 
           <p>
-            Every component in SoraUI shares a common, composable interface.{" "}
-            <strong>
-              If a component does not exist, we bring it in, make it composable,
-              and adjust its style to match and work with the rest of the design
-              system.
-            </strong>
+            Unlike CSS-in-JS libraries (Emotion, styled-components) that parse and inject styles at runtime inside the browser, SoraUI relies on <strong>Pure Static CSS & CSS Custom Properties (<code>--ui-*</code>)</strong>:
           </p>
 
-          <p className="docs-intro-note">
-            <em>
-              A shared, composable interface means it's predictable for both
-              your team and LLMs. You are not learning different APIs for every
-              new component. Even for third party ones.
-            </em>
-          </p>
+          <ul className="docs-intro-bullet-list">
+            <li>
+              <strong>0ms JavaScript Styling Overhead:</strong> The browser renders styles natively with zero script execution penalty.
+            </li>
+            <li>
+              <strong>Tailwind CSS Compatible:</strong> Use SoraUI alongside Tailwind CSS or without Tailwind entirely. Component classes use isolated <code>sora-*</code> prefixes, preventing any class name collisions.
+            </li>
+            <li>
+              <strong>Server-Side Rendering & RSC Ready:</strong> Instant rendering with zero layout shift, hydration mismatches, or flash of unstyled content (FOUC) in Next.js, Vite, Astro, and Laravel.
+            </li>
+          </ul>
+
+          <div className="docs-intro-faq">
+            <button
+              type="button"
+              className={`docs-intro-faq-trigger${tailwindFaqOpen ? " open" : ""}`}
+              onClick={() => setTailwindFaqOpen((prev) => !prev)}
+              aria-expanded={tailwindFaqOpen}
+            >
+              <span>
+                Can I use Tailwind CSS utility classes with SoraUI components?
+              </span>
+              <ChevronDown
+                size={16}
+                className="docs-intro-faq-chevron"
+                style={{
+                  transform: tailwindFaqOpen ? "rotate(180deg)" : "rotate(0deg)",
+                  transition: "transform var(--docs-transition-fast)",
+                }}
+              />
+            </button>
+            {tailwindFaqOpen && (
+              <div className="docs-intro-faq-content">
+                <p>
+                  Yes! All SoraUI components accept standard <code>className</code> and <code>style</code> props. You can use Tailwind classes for layout, positioning, and responsive grids (e.g. <code>className="flex gap-4 max-w-lg mt-6"</code>) while letting SoraUI handle component design tokens and interactive behaviors.
+                </p>
+              </div>
+            )}
+          </div>
         </section>
 
-        {/* ─── SECTION 3: DISTRIBUTION ─── */}
+        {/* ─── SECTION 3: FIRST-CLASS RTL ─── */}
+        <section className="docs-intro-section">
+          <h2 id="first-class-rtl" className="docs-intro-h2">
+            <span>First-Class RTL & Internationalization</span>
+            <a href="#first-class-rtl" className="docs-intro-anchor" aria-hidden>
+              #
+            </a>
+          </h2>
+
+          <p>
+            SoraUI is built from the ground up with <strong>Native Right-to-Left (RTL)</strong> multi-language architecture. It provides seamless bidirectional support for languages such as <strong>Arabic (العربية)</strong> and <strong>Hebrew (עברית)</strong>:
+          </p>
+
+          <ul className="docs-intro-bullet-list">
+            <li>
+              <strong>Automatic Layout Inversion:</strong> Just set <code>dir="rtl"</code> on your page or container. Margins, padding, and text alignments adjust automatically.
+            </li>
+            <li>
+              <strong>Direction-Aware Components:</strong> Chevrons rotate correctly, avatar overlapping stacks reverse direction, and dialog transitions mirror smoothly without extra CSS code.
+            </li>
+            <li>
+              <strong>Interactive RTL Demos:</strong> Test components in real-time across English, Arabic, and Hebrew in our documentation.
+            </li>
+          </ul>
+
+          <div className="docs-intro-faq">
+            <button
+              type="button"
+              className={`docs-intro-faq-trigger${rtlFaqOpen ? " open" : ""}`}
+              onClick={() => setRtlFaqOpen((prev) => !prev)}
+              aria-expanded={rtlFaqOpen}
+            >
+              <span>
+                Do I need to install separate RTL plugins or post-processors?
+              </span>
+              <ChevronDown
+                size={16}
+                className="docs-intro-faq-chevron"
+                style={{
+                  transform: rtlFaqOpen ? "rotate(180deg)" : "rotate(0deg)",
+                  transition: "transform var(--docs-transition-fast)",
+                }}
+              />
+            </button>
+            {rtlFaqOpen && (
+              <div className="docs-intro-faq-content">
+                <p>
+                  No. RTL support is natively compiled into <code>@soraui/react/styles.css</code> using CSS logical properties and <code>[dir="rtl"]</code> selectors. It works out-of-the-box without requiring PostCSS RTL plugins or complex configuration.
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* ─── SECTION 4: COMPOSITION & ACCESSIBILITY ─── */}
+        <section className="docs-intro-section">
+          <h2 id="composition-accessibility" className="docs-intro-h2">
+            <span>Composition & Accessibility (WAI-ARIA)</span>
+            <a href="#composition-accessibility" className="docs-intro-anchor" aria-hidden>
+              #
+            </a>
+          </h2>
+
+          <p>
+            Every component in SoraUI follows a predictable, composable sub-component architecture (e.g. <code>&lt;Accordion&gt;</code>, <code>&lt;AccordionItem&gt;</code>, <code>&lt;AccordionTrigger&gt;</code>, <code>&lt;AccordionContent&gt;</code>).
+          </p>
+
+          <ul className="docs-intro-bullet-list">
+            <li>
+              <strong>WAI-ARIA Compliant:</strong> Adheres to official WAI-ARIA authoring practices for modal dialogs, menus, accordions, and dropdowns.
+            </li>
+            <li>
+              <strong>Full Keyboard Navigation:</strong> Supports Tab, Escape, Arrow keys, Enter, and Spacebar navigation with automatic focus trapping.
+            </li>
+            <li>
+              <strong>Screen Reader Ready:</strong> Includes automated <code>aria-expanded</code>, <code>aria-controls</code>, <code>aria-labelledby</code>, and live region announcements.
+            </li>
+          </ul>
+        </section>
+
+        {/* ─── SECTION 5: DUAL DISTRIBUTION ─── */}
         <section className="docs-intro-section">
           <h2 id="distribution" className="docs-intro-h2">
-            <span>Distribution</span>
+            <span>Dual Distribution: CLI & NPM Packages</span>
             <a href="#distribution" className="docs-intro-anchor" aria-hidden>
               #
             </a>
           </h2>
 
           <p>
-            SoraUI is also a code distribution system. It defines a schema for
-            components and a CLI to distribute them.
+            SoraUI adapts to both individual developers and enterprise design system teams through dual distribution models:
           </p>
 
           <ul className="docs-intro-bullet-list">
             <li>
-              <strong>Schema:</strong> A flat-file structure (
-              <code>registry.json</code>) that defines the components, their
-              dependencies, and properties.
+              <strong>CLI Flat-File Generator:</strong> Use <code>npx @soraui/cli init</code> and <code>npx @soraui/cli add [component]</code> to generate editable source code directly into your repository.
             </li>
             <li>
-              <strong>CLI:</strong> A command-line tool to distribute and
-              install components across projects with cross-framework support.
+              <strong>Centralized NPM Package:</strong> Enterprise teams can install <code>@soraui/react</code> as a standard NPM dependency for unified version management across multiple repositories.
+            </li>
+            <li>
+              <strong>Schema-Driven Registry:</strong> Flat-file <code>registry.json</code> definitions make it trivial to distribute custom internal components across teams.
             </li>
           </ul>
-
-          <p className="docs-intro-note">
-            <em>
-              You can use the schema to distribute your components to other
-              projects or have AI generate completely new components based on
-              existing schema.
-            </em>
-          </p>
         </section>
 
-        {/* ─── SECTION 4: BEAUTIFUL DEFAULTS ─── */}
+        {/* ─── SECTION 6: THEMING & PRESETS ─── */}
         <section className="docs-intro-section">
-          <h2 id="beautiful-defaults" className="docs-intro-h2">
-            <span>Beautiful Defaults</span>
-            <a
-              href="#beautiful-defaults"
-              className="docs-intro-anchor"
-              aria-hidden
-            >
+          <h2 id="theming-presets" className="docs-intro-h2">
+            <span>9 Space Theme Presets & Dynamic Theming</span>
+            <a href="#theming-presets" className="docs-intro-anchor" aria-hidden>
               #
             </a>
           </h2>
 
           <p>
-            SoraUI comes with 47 components, 14 production blocks, and 9 curated
-            theme presets (Sky, Cloud, Horizon, Aurora, Twilight, Midnight,
-            Nebula, Eclipse, Starlight) that have carefully chosen default
-            styles. They are designed to look good on their own and to work well
-            together as a consistent system:
+            SoraUI ships with <strong>47 primitives</strong>, <strong>14 production blocks</strong>, and <strong>9 celestial space theme presets</strong> designed for high visual appeal:
           </p>
 
           <ul className="docs-intro-bullet-list">
             <li>
-              <strong>Good Out-of-the-Box:</strong> Your UI has a clean and
-              minimal look without extra work.
+              <strong>Light Mode Presets:</strong> <code>Sky</code> (Azure Cyan), <code>Cloud</code> (Neutral Indigo), <code>Horizon</code> (Amber Dawn).
             </li>
             <li>
-              <strong>Unified Design:</strong> Components naturally fit with one
-              another. Each component is built to match the others, keeping your
-              UI consistent.
+              <strong>Dark Mode Presets:</strong> <code>Aurora</code> (Borealis Teal), <code>Twilight</code> (Violet Dusk), <code>Midnight</code> (Deep Space Navy), <code>Nebula</code> (Cosmic Purple), <code>Eclipse</code> (Solar Gold), <code>Starlight</code> (Ice Blue).
             </li>
             <li>
-              <strong>Easily Customizable:</strong> If you want to change
-              something, it's simple to override and extend the defaults.
+              <strong>Runtime Theming:</strong> Switch themes dynamically using <code>&lt;ThemeProvider&gt;</code> or scope specific sections with localized <code>&lt;ThemeScope&gt;</code>.
             </li>
           </ul>
         </section>
 
-        {/* ─── SECTION 5: AI-READY ─── */}
+        {/* ─── SECTION 7: AI-READY & MCP SERVER ─── */}
         <section className="docs-intro-section">
           <h2 id="ai-ready" className="docs-intro-h2">
-            <span>AI-Ready</span>
+            <span>AI-Ready & Model Context Protocol (MCP)</span>
             <a href="#ai-ready" className="docs-intro-anchor" aria-hidden>
               #
             </a>
           </h2>
 
           <p>
-            The design of SoraUI makes it easy for AI tools to work with your
-            code. Its open code and consistent API allow AI models to read,
-            understand, and even generate new components.
+            SoraUI is built for the AI era. We provide native tooling for AI coding assistants to discover, understand, and generate SoraUI components with zero friction:
           </p>
 
-          <p className="docs-intro-note">
-            <em>
-              An AI model can learn how your components work and suggest
-              improvements or even create new components that integrate with
-              your existing design.
-            </em>
-          </p>
+          <ul className="docs-intro-bullet-list">
+            <li>
+              <strong>SoraUI MCP Server (<code>@soraui/mcp</code>):</strong> Connect Cursor, Claude Desktop, and Gemini CLI to query component metadata, inspect props, and fetch clean JSX snippets via MCP tools.
+            </li>
+            <li>
+              <strong>Agent Skills:</strong> Pre-configured AI agent skills that teach LLMs the architectural patterns, tokens, and best practices of SoraUI.
+            </li>
+            <li>
+              <strong>Predictable AI Generation:</strong> Clean TypeScript interfaces and open schema enable LLMs to write accurate, bug-free components effortlessly.
+            </li>
+          </ul>
         </section>
       </div>
 

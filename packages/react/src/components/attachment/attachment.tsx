@@ -1,4 +1,15 @@
 import { forwardRef } from "react";
+import {
+  FileText,
+  Image,
+  Video,
+  Music,
+  Archive,
+  Code,
+  File,
+  Loader2,
+  X,
+} from "lucide-react";
 import type {
   AttachmentProps,
   AttachmentItemProps,
@@ -6,6 +17,7 @@ import type {
   AttachmentInfoProps,
   AttachmentNameProps,
   AttachmentSizeProps,
+  AttachmentStatusProps,
   AttachmentProgressProps,
   AttachmentActionsProps,
   AttachmentRemoveProps,
@@ -36,13 +48,15 @@ export const Attachment = forwardRef<HTMLDivElement, AttachmentProps>(
 Attachment.displayName = "Attachment";
 
 export const AttachmentItem = forwardRef<HTMLDivElement, AttachmentItemProps>(
-  ({ elevated, className, children, ...props }, ref) => {
+  ({ elevated, variant = "default", loading, className, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
         className={cx(
           "sora-attachment-item",
-          elevated && "sora-attachment-item--elevated",
+          (elevated || variant === "elevated") && "sora-attachment-item--elevated",
+          variant === "pill" && "sora-attachment-item--pill",
+          loading && "sora-attachment-item--loading",
           className,
         )}
         {...props}
@@ -55,32 +69,35 @@ export const AttachmentItem = forwardRef<HTMLDivElement, AttachmentItemProps>(
 AttachmentItem.displayName = "AttachmentItem";
 
 export const AttachmentIcon = forwardRef<HTMLDivElement, AttachmentIconProps>(
-  ({ type = "file", className, children, ...props }, ref) => {
+  ({ type = "file", spinner, className, children, ...props }, ref) => {
+    const isSpinner = spinner || type === "spinner";
+    const defaultIcon = isSpinner ? (
+      <Loader2 size={18} className="sora-attachment-spinner" aria-hidden="true" />
+    ) : (
+      {
+        pdf: <FileText size={18} aria-hidden="true" />,
+        document: <FileText size={18} aria-hidden="true" />,
+        image: <Image size={18} aria-hidden="true" />,
+        video: <Video size={18} aria-hidden="true" />,
+        audio: <Music size={18} aria-hidden="true" />,
+        archive: <Archive size={18} aria-hidden="true" />,
+        code: <Code size={18} aria-hidden="true" />,
+        file: <File size={18} aria-hidden="true" />,
+      }[type as string] || <File size={18} aria-hidden="true" />
+    );
+
     return (
       <div
         ref={ref}
         className={cx(
           "sora-attachment-icon",
           "sora-attachment-icon--" + type,
+          isSpinner && "sora-attachment-icon--spinner",
           className,
         )}
         {...props}
       >
-        {children || (
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-          </svg>
-        )}
+        {children || defaultIcon}
       </div>
     );
   },
@@ -123,11 +140,15 @@ export const AttachmentInfo = forwardRef<HTMLDivElement, AttachmentInfoProps>(
 AttachmentInfo.displayName = "AttachmentInfo";
 
 export const AttachmentName = forwardRef<HTMLSpanElement, AttachmentNameProps>(
-  ({ className, children, ...props }, ref) => {
+  ({ shimmer, className, children, ...props }, ref) => {
     return (
       <span
         ref={ref}
-        className={cx("sora-attachment-name", className)}
+        className={cx(
+          "sora-attachment-name",
+          shimmer && "sora-attachment-name--shimmer",
+          className,
+        )}
         {...props}
       >
         {children}
@@ -138,11 +159,16 @@ export const AttachmentName = forwardRef<HTMLSpanElement, AttachmentNameProps>(
 AttachmentName.displayName = "AttachmentName";
 
 export const AttachmentSize = forwardRef<HTMLSpanElement, AttachmentSizeProps>(
-  ({ className, children, ...props }, ref) => {
+  ({ status, shimmer, className, children, ...props }, ref) => {
     return (
       <span
         ref={ref}
-        className={cx("sora-attachment-size", className)}
+        className={cx(
+          "sora-attachment-size",
+          status && "sora-attachment-size--" + status,
+          shimmer && "sora-attachment-size--shimmer",
+          className,
+        )}
         {...props}
       >
         {children}
@@ -151,6 +177,26 @@ export const AttachmentSize = forwardRef<HTMLSpanElement, AttachmentSizeProps>(
   },
 );
 AttachmentSize.displayName = "AttachmentSize";
+
+export const AttachmentStatus = forwardRef<HTMLSpanElement, AttachmentStatusProps>(
+  ({ variant = "info", shimmer, className, children, ...props }, ref) => {
+    return (
+      <span
+        ref={ref}
+        className={cx(
+          "sora-attachment-status",
+          "sora-attachment-status--" + variant,
+          shimmer && "sora-attachment-status--shimmer",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </span>
+    );
+  },
+);
+AttachmentStatus.displayName = "AttachmentStatus";
 
 export const AttachmentProgress = forwardRef<
   HTMLDivElement,
@@ -203,22 +249,9 @@ export const AttachmentRemove = forwardRef<
       className={cx("sora-attachment-remove", className)}
       {...props}
     >
-      {children || (
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      )}
+      {children || <X size={14} aria-hidden="true" />}
     </button>
   );
 });
 AttachmentRemove.displayName = "AttachmentRemove";
+

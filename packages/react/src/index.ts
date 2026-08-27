@@ -5,9 +5,10 @@
  */
 
 // Level 1 — Zero/Minimal Runtime Components
-export { Button } from "./components/button/button";
+export { Button, ButtonGroup } from "./components/button/button";
 export type {
   ButtonProps,
+  ButtonGroupProps,
   ButtonVariant,
   ButtonSize,
 } from "./components/button/button.types";
@@ -23,12 +24,14 @@ export {
   CardHeader,
   CardTitle,
   CardDescription,
+  CardAction,
   CardContent,
   CardFooter,
 } from "./components/card/card";
 export type {
   CardProps,
   CardHeaderProps,
+  CardActionProps,
   CardContentProps,
   CardFooterProps,
   CardTitleProps,
@@ -194,15 +197,45 @@ export type {
 
 // Level 3 — Advanced Components
 export { Calendar } from "./components/calendar/calendar";
-export type { CalendarProps } from "./components/calendar/calendar.types";
+export type {
+  CalendarProps,
+  DateRange,
+  CalendarMode,
+  CaptionLayout,
+  CalendarSystem,
+  CalendarFormatters,
+  Matcher,
+} from "./components/calendar/calendar.types";
 
 export { DatePicker } from "./components/date-picker/date-picker";
 export type { DatePickerProps } from "./components/date-picker/date-picker.types";
 
-export { Combobox } from "./components/combobox/combobox";
+export {
+  Combobox,
+  ComboboxInput,
+  ComboboxTrigger,
+  ComboboxContent,
+  ComboboxList,
+  ComboboxItem,
+  ComboboxEmpty,
+  ComboboxGroup,
+  ComboboxLabel,
+  ComboboxSeparator,
+} from "./components/combobox/combobox";
 export type {
   ComboboxProps,
   ComboboxOption,
+  ComboboxInputProps,
+  ComboboxTriggerProps,
+  ComboboxContentProps,
+  ComboboxListProps,
+  ComboboxItemProps,
+  ComboboxEmptyProps,
+  ComboboxGroupProps,
+  ComboboxLabelProps,
+  ComboboxSeparatorProps,
+  ComboboxContextValue,
+  RegisteredComboboxItem,
 } from "./components/combobox/combobox.types";
 
 export { FileUploader } from "./components/file-uploader/file-uploader";
@@ -249,6 +282,7 @@ export {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
+  BreadcrumbEllipsis,
 } from "./components/breadcrumb/breadcrumb";
 export type {
   BreadcrumbProps,
@@ -257,6 +291,7 @@ export type {
   BreadcrumbLinkProps,
   BreadcrumbPageProps,
   BreadcrumbSeparatorProps,
+  BreadcrumbEllipsisProps,
 } from "./components/breadcrumb/breadcrumb.types";
 
 export {
@@ -326,6 +361,7 @@ export {
   AlertDialogTrigger,
   AlertDialogContent,
   AlertDialogHeader,
+  AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -337,11 +373,13 @@ export type {
   AlertDialogTriggerProps,
   AlertDialogContentProps,
   AlertDialogHeaderProps,
+  AlertDialogMediaProps,
   AlertDialogTitleProps,
   AlertDialogDescriptionProps,
   AlertDialogFooterProps,
   AlertDialogActionProps,
   AlertDialogCancelProps,
+  AlertDialogSize,
 } from "./components/alert-dialog/alert-dialog.types";
 
 export {
@@ -397,11 +435,19 @@ export {
   Avatar,
   AvatarImage,
   AvatarFallback,
+  AvatarBadge,
+  AvatarGroup,
 } from "./components/avatar/avatar";
 export type {
   AvatarProps,
   AvatarImageProps,
   AvatarFallbackProps,
+  AvatarBadgeProps,
+  AvatarGroupProps,
+  AvatarSize,
+  AvatarShape,
+  AvatarBadgeStatus,
+  AvatarBadgePosition,
 } from "./components/avatar/avatar.types";
 
 export {
@@ -450,6 +496,7 @@ export {
   AttachmentInfo,
   AttachmentName,
   AttachmentSize,
+  AttachmentStatus,
   AttachmentProgress,
   AttachmentActions,
   AttachmentRemove,
@@ -462,6 +509,7 @@ export type {
   AttachmentInfoProps,
   AttachmentNameProps,
   AttachmentSizeProps,
+  AttachmentStatusProps,
   AttachmentProgressProps,
   AttachmentActionsProps,
   AttachmentRemoveProps,

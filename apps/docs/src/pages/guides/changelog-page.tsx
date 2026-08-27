@@ -164,8 +164,7 @@ export const ChangelogPage: React.FC<ChangelogPageProps> = ({ onNavigate }) => {
               </div>
               <p className="docs-changelog-card-desc">
                 Sky, Cloud, Horizon, Aurora, Twilight, Midnight, Nebula,
-                Eclipse, and Starlight with <code>&lt;ThemeScope&gt;</code>{" "}
-                subtree cascading.
+                Eclipse, and Starlight with Dual-Mode Adaptive tokens (Light & Dark), 100% WCAG 2.1 AA contrast verification, and isolated <code>&lt;ThemeScope&gt;</code> subtrees.
               </p>
             </div>
 

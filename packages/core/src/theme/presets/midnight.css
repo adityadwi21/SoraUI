@@ -1,9 +1,12 @@
 /**
  * SoraUI Theme — Midnight
- * Mode: adaptive (dark default, light on data-mode="light" or data-docs-theme="light")
+ * Mode: adaptive (dark default, light on data-mode="light")
  * Description: Clean minimal dark. Indigo accents. Default dark theme.
  */
-[data-theme="midnight"] {
+[data-theme="midnight"],
+[data-theme="midnight"][data-mode="dark"],
+[data-mode="dark"] [data-theme="midnight"]:not([data-mode="light"]),
+[data-mode="dark"][data-theme="midnight"]:not([data-mode="light"]) {
   --ui-background: #09090b;
   --ui-foreground: #fafafa;
   --ui-card: #18181b;
@@ -34,16 +37,13 @@
 
   --ui-button-radius: var(--ui-radius);
   --ui-input-radius: var(--ui-radius);
-  --ui-card-radius: var(--ui-radius);
+  --ui-card-radius: calc(var(--ui-radius) + 0.375rem);
 }
 
 /* ─── Midnight Light Mode ─── */
-html[data-mode="light"] [data-theme="midnight"],
-html[data-docs-theme="light"] [data-theme="midnight"],
-[data-mode="light"] [data-theme="midnight"],
-[data-docs-theme="light"] [data-theme="midnight"],
 [data-theme="midnight"][data-mode="light"],
-[data-theme="midnight"][data-docs-theme="light"] {
+[data-mode="light"] [data-theme="midnight"]:not([data-mode="dark"]),
+[data-mode="light"][data-theme="midnight"]:not([data-mode="dark"]) {
   --ui-background: #ffffff;
   --ui-foreground: #09090b;
   --ui-card: #ffffff;

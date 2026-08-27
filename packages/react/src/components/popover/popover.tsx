@@ -155,7 +155,7 @@ export const PopoverContent = forwardRef<HTMLDivElement, PopoverContentProps>(
           id={contentId}
           role="dialog"
           aria-modal={trapFocus ? "true" : "false"}
-          style={style}
+          style={{ ...style, ...props.style }}
           className={cx(
             "sora-popover__content",
             "sora-popover__content--" + actualPlacement,

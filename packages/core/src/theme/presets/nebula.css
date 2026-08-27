@@ -1,9 +1,12 @@
 /**
  * SoraUI Theme — Nebula
- * Mode: dark
+ * Mode: adaptive (dark default, light on data-mode="light")
  * Description: Cosmic deep violet and fuchsia nebula glow.
  */
-[data-theme="nebula"] {
+[data-theme="nebula"],
+[data-theme="nebula"][data-mode="dark"],
+[data-mode="dark"] [data-theme="nebula"]:not([data-mode="light"]),
+[data-mode="dark"][data-theme="nebula"]:not([data-mode="light"]) {
   --ui-background: #1e1035;
   --ui-foreground: #faf5ff;
   --ui-card: #2e1065;
@@ -12,12 +15,14 @@
   --ui-popover-foreground: #faf5ff;
   --ui-primary: #c084fc;
   --ui-primary-foreground: #1e1035;
+
   --ui-secondary: #3b0764;
   --ui-secondary-foreground: #f3e8ff;
   --ui-muted: #2e1065;
   --ui-muted-foreground: #d8b4fe;
   --ui-accent: #581c87;
   --ui-accent-foreground: #ffffff;
+
   --ui-destructive: #dc2626;
   --ui-destructive-foreground: #ffffff;
 
@@ -25,13 +30,45 @@
   --ui-success-foreground: #ffffff;
   --ui-warning: #f59e0b;
   --ui-warning-foreground: #ffffff;
-  --ui-border: #9333ea;
-  --ui-input: #9333ea;
-
+  --ui-border: rgba(192, 132, 252, 0.25);
+  --ui-input: rgba(192, 132, 252, 0.25);
   --ui-ring: #c084fc;
+
   --ui-radius: 0.5rem;
 
   --ui-button-radius: var(--ui-radius);
   --ui-input-radius: var(--ui-radius);
-  --ui-card-radius: var(--ui-radius);
+  --ui-card-radius: calc(var(--ui-radius) + 0.375rem);
+}
+
+/* ─── Nebula Light Mode ─── */
+[data-theme="nebula"][data-mode="light"],
+[data-mode="light"] [data-theme="nebula"]:not([data-mode="dark"]),
+[data-mode="light"][data-theme="nebula"]:not([data-mode="dark"]) {
+  --ui-background: #ffffff;
+  --ui-foreground: #4a044e;
+  --ui-card: #ffffff;
+  --ui-card-foreground: #4a044e;
+  --ui-popover: #ffffff;
+  --ui-popover-foreground: #4a044e;
+  --ui-primary: #c026d3;
+  --ui-primary-foreground: #ffffff;
+
+  --ui-secondary: #fae8ff;
+  --ui-secondary-foreground: #86198f;
+  --ui-muted: #fdf4ff;
+  --ui-muted-foreground: #a21caf;
+  --ui-accent: #fae8ff;
+  --ui-accent-foreground: #a21caf;
+
+  --ui-destructive: #dc2626;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #ffffff;
+  --ui-border: rgba(192, 38, 211, 0.25);
+  --ui-input: rgba(192, 38, 211, 0.25);
+  --ui-ring: #c026d3;
 }

@@ -154,7 +154,7 @@ export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>(
           ref={mergedRef}
           id={contentId}
           role="tooltip"
-          style={style}
+          style={{ ...style, ...props.style }}
           className={cx(
             "sora-tooltip__content",
             "sora-tooltip__content--" + actualPlacement,

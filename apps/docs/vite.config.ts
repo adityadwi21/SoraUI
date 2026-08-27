@@ -31,4 +31,27 @@ export default defineConfig({
   server: {
     port: 3001,
   },
+  build: {
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Core React runtime — loaded on every page, cached permanently
+          "vendor-react": ["react", "react-dom"],
+          // Lucide icon pack — large but rarely changes
+          "vendor-icons": ["lucide-react"],
+          // Registry data — large static data, separate from UI logic
+          "registry-components": [
+            "./src/registry/components.tsx",
+          ],
+          "registry-blocks": [
+            "./src/registry/blocks.tsx",
+          ],
+          "registry-templates": [
+            "./src/registry/templates.tsx",
+          ],
+        },
+      },
+    },
+  },
 });

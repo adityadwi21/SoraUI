@@ -15,6 +15,7 @@ export interface DropdownTriggerProps extends ButtonHTMLAttributes<HTMLButtonEle
 
 export interface DropdownContentProps extends HTMLAttributes<HTMLDivElement> {
   placement?: Placement;
+  align?: "start" | "end" | "center";
   offset?: number;
   children?: ReactNode;
 }

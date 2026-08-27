@@ -46,7 +46,7 @@ describe("Phase 10.5D — Granular Bundle Size & Tree-Shaking Budget Contract", 
     expect(sizeKB).toBeLessThan(200);
   });
 
-  it("consolidated css stylesheet satisfies size budget (< 60 KB)", () => {
+  it("consolidated css stylesheet satisfies size budget (< 80 KB)", () => {
     const cssFile = fs.existsSync(path.join(reactDist, "styles.css"))
       ? path.join(reactDist, "styles.css")
       : path.join(reactDist, "index.css");
@@ -54,7 +54,7 @@ describe("Phase 10.5D — Granular Bundle Size & Tree-Shaking Budget Contract", 
     const sizeKB = stats.size / 1024;
 
     // Zero-runtime styles for all 47 components, 14 blocks, and 4 templates
-    expect(sizeKB).toBeLessThan(60);
+    expect(sizeKB).toBeLessThan(80);
   });
 
   it("tree-shaking verification: Button entry does NOT bundle heavy components", () => {

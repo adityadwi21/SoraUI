@@ -1,9 +1,12 @@
 /**
  * SoraUI Theme — Horizon
- * Mode: adaptive (light default, dark on data-mode="dark" or data-docs-theme="dark")
+ * Mode: adaptive (light default, dark on data-mode="dark")
  * Description: Warm sunset orange tones on a bright cream background.
  */
-[data-theme="horizon"] {
+[data-theme="horizon"],
+[data-theme="horizon"][data-mode="light"],
+[data-mode="light"] [data-theme="horizon"]:not([data-mode="dark"]),
+[data-mode="light"][data-theme="horizon"]:not([data-mode="dark"]) {
   --ui-background: #fffbf5;
   --ui-foreground: #431407;
   --ui-card: #ffffff;
@@ -17,7 +20,6 @@
   --ui-secondary-foreground: #7c2d12;
   --ui-muted: #fff7ed;
   --ui-muted-foreground: #9a3412;
-
   --ui-accent: #ffedd5;
   --ui-accent-foreground: #c2410c;
   --ui-destructive: #dc2626;
@@ -35,16 +37,13 @@
 
   --ui-button-radius: var(--ui-radius);
   --ui-input-radius: var(--ui-radius);
-  --ui-card-radius: var(--ui-radius);
+  --ui-card-radius: calc(var(--ui-radius) + 0.375rem);
 }
 
 /* ─── Horizon Dark Mode ─── */
-html[data-mode="dark"] [data-theme="horizon"],
-html[data-docs-theme="dark"] [data-theme="horizon"],
-[data-mode="dark"] [data-theme="horizon"],
-[data-docs-theme="dark"] [data-theme="horizon"],
 [data-theme="horizon"][data-mode="dark"],
-[data-theme="horizon"][data-docs-theme="dark"] {
+[data-mode="dark"] [data-theme="horizon"]:not([data-mode="light"]),
+[data-mode="dark"][data-theme="horizon"]:not([data-mode="light"]) {
   --ui-background: #1c0d06;
   --ui-foreground: #fff7ed;
   --ui-card: #2a140b;

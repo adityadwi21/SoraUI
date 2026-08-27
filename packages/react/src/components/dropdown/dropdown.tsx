@@ -93,22 +93,42 @@ export const DropdownTrigger = forwardRef<HTMLElement, DropdownTriggerProps>(
       onClick?.(e as React.MouseEvent<HTMLButtonElement>);
     };
 
-    const triggerProps = {
-      ref: mergedRef,
-      "aria-haspopup": "menu" as const,
-      "aria-expanded": open,
-      "aria-controls": open ? contentId : undefined,
-      onClick: handleClick,
-      className: cx("sora-dropdown__trigger", className),
-      ...props,
-    };
-
     if (asChild && isValidElement(children)) {
-      return cloneElement(children as ReactElement, triggerProps);
+      const child = children as ReactElement;
+      return cloneElement(child, {
+        ref: (node: HTMLElement | null) => {
+          mergedRef(node);
+          const childRef = (child as any).ref;
+          if (typeof childRef === "function") childRef(node);
+          else if (childRef) childRef.current = node;
+        },
+        "aria-haspopup": "menu",
+        "aria-expanded": open,
+        "aria-controls": open ? contentId : undefined,
+        onClick: (e: React.MouseEvent<HTMLElement>) => {
+          handleClick(e);
+          (child.props as any).onClick?.(e);
+        },
+        className: cx(
+          "sora-dropdown__trigger",
+          className,
+          (child.props as any).className
+        ),
+        ...props,
+      });
     }
 
     return (
-      <button type="button" {...triggerProps}>
+      <button
+        ref={mergedRef}
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls={open ? contentId : undefined}
+        onClick={handleClick}
+        className={cx("sora-dropdown__trigger", className)}
+        {...props}
+      >
         {children}
       </button>
     );
@@ -118,14 +138,32 @@ DropdownTrigger.displayName = "DropdownTrigger";
 
 export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
   (
-    { placement = "bottom-start", offset = 6, className, children, ...props },
+    {
+      placement = "bottom-start",
+      align,
+      offset = 6,
+      className,
+      style: propStyle,
+      children,
+      ...props
+    },
     ref,
   ) => {
     const { open, setOpen, triggerRef, contentId } = useDropdownContext();
     const contentRef = useRef<HTMLDivElement | null>(null);
 
+    // Support align="start" | "end" | "center" as alias for bottom-start / bottom-end
+    const resolvedPlacement =
+      align === "start"
+        ? "bottom-start"
+        : align === "end"
+        ? "bottom-end"
+        : align === "center"
+        ? "bottom"
+        : placement;
+
     const { style, actualPlacement } = usePositioning(triggerRef, contentRef, {
-      placement,
+      placement: resolvedPlacement,
       offset,
       enabled: open,
     });
@@ -206,7 +244,7 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
           data-theme={scopedTheme}
           data-mode={scopedMode}
           data-docs-theme={scopedMode}
-          style={style}
+          style={{ ...style, ...propStyle }}
           className={cx(
             "sora-dropdown__content",
             "sora-dropdown__content--" + actualPlacement,

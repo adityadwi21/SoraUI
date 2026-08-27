@@ -1,25 +1,36 @@
 import { describe, it, expect } from "vitest";
 import {
   isSameDay,
+  isSameMonth,
   getDaysInMonth,
   getFirstDayOfWeek,
   startOfMonth,
   endOfMonth,
   addMonths,
   isDateDisabled,
+  isDateInRange,
+  isRangeStart,
+  isRangeEnd,
+  matchDate,
+  getCalendarGrid,
+  getWeekdayNames,
   formatDate,
   parseDate,
 } from "./calendar.utils";
 
 describe("Calendar Date Engine Utilities", () => {
-  it("correctly compares same day", () => {
+  it("correctly compares same day and month", () => {
     const d1 = new Date(2026, 7, 22, 10, 0);
     const d2 = new Date(2026, 7, 22, 18, 30);
     const d3 = new Date(2026, 7, 23);
+    const d4 = new Date(2026, 8, 22);
 
     expect(isSameDay(d1, d2)).toBe(true);
     expect(isSameDay(d1, d3)).toBe(false);
     expect(isSameDay(null, d1)).toBe(false);
+
+    expect(isSameMonth(d1, d2)).toBe(true);
+    expect(isSameMonth(d1, d4)).toBe(false);
   });
 
   it("calculates days in month correctly (including leap years)", () => {
@@ -37,7 +48,7 @@ describe("Calendar Date Engine Utilities", () => {
     expect(endOfMonth(start).getDate()).toBe(31);
   });
 
-  it("validates min, max, and custom disabled date predicates", () => {
+  it("validates min, max, custom predicates, and matchers", () => {
     const min = new Date(2026, 7, 10);
     const max = new Date(2026, 7, 20);
 
@@ -52,6 +63,46 @@ describe("Calendar Date Engine Utilities", () => {
         (d) => d.getDate() === 15,
       ),
     ).toBe(true);
+
+    // Matcher array test
+    expect(
+      matchDate([new Date(2026, 7, 12), new Date(2026, 7, 18)], new Date(2026, 7, 18)),
+    ).toBe(true);
+
+    // Matcher range test
+    expect(
+      matchDate({ from: new Date(2026, 7, 1), to: new Date(2026, 7, 5) }, new Date(2026, 7, 3)),
+    ).toBe(true);
+  });
+
+  it("identifies date ranges, start, and end correctly", () => {
+    const range = {
+      from: new Date(2026, 7, 10),
+      to: new Date(2026, 7, 15),
+    };
+
+    expect(isRangeStart(new Date(2026, 7, 10), range)).toBe(true);
+    expect(isRangeEnd(new Date(2026, 7, 15), range)).toBe(true);
+    expect(isDateInRange(new Date(2026, 7, 12), range)).toBe(true);
+    expect(isDateInRange(new Date(2026, 7, 10), range)).toBe(false);
+    expect(isDateInRange(new Date(2026, 7, 15), range)).toBe(false);
+    expect(isDateInRange(new Date(2026, 7, 18), range)).toBe(false);
+  });
+
+  it("generates calendar grids with outside days and fixed weeks", () => {
+    const grid = getCalendarGrid(2026, 7, { showOutsideDays: true, fixedWeeks: true });
+    expect(grid.length).toBe(42); // 6 rows * 7 days
+    const currentMonthDays = grid.filter((c) => !c.isOutside);
+    expect(currentMonthDays.length).toBe(31); // Aug has 31 days
+  });
+
+  it("shifts weekday headers with weekStartsOn", () => {
+    const sunStart = getWeekdayNames(0);
+    expect(sunStart[0]).toBe("Su");
+
+    const monStart = getWeekdayNames(1);
+    expect(monStart[0]).toBe("Mo");
+    expect(monStart[6]).toBe("Su");
   });
 
   it("formats and parses ISO YYYY-MM-DD strings", () => {

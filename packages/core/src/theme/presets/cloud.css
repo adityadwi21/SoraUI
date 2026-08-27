@@ -1,9 +1,12 @@
 /**
  * SoraUI Theme — Cloud
- * Mode: adaptive (light default, dark on data-mode="dark" or data-docs-theme="dark")
+ * Mode: adaptive (light default, dark on data-mode="dark")
  * Description: Soft neutral gray with subtle slate undertones.
  */
-[data-theme="cloud"] {
+[data-theme="cloud"],
+[data-theme="cloud"][data-mode="light"],
+[data-mode="light"] [data-theme="cloud"]:not([data-mode="dark"]),
+[data-mode="light"][data-theme="cloud"]:not([data-mode="dark"]) {
   --ui-background: #fafafa;
   --ui-foreground: #18181b;
   --ui-card: #ffffff;
@@ -33,16 +36,13 @@
 
   --ui-button-radius: var(--ui-radius);
   --ui-input-radius: var(--ui-radius);
-  --ui-card-radius: var(--ui-radius);
+  --ui-card-radius: calc(var(--ui-radius) + 0.375rem);
 }
 
 /* ─── Cloud Dark Mode ─── */
-html[data-mode="dark"] [data-theme="cloud"],
-html[data-docs-theme="dark"] [data-theme="cloud"],
-[data-mode="dark"] [data-theme="cloud"],
-[data-docs-theme="dark"] [data-theme="cloud"],
 [data-theme="cloud"][data-mode="dark"],
-[data-theme="cloud"][data-docs-theme="dark"] {
+[data-mode="dark"] [data-theme="cloud"]:not([data-mode="light"]),
+[data-mode="dark"][data-theme="cloud"]:not([data-mode="light"]) {
   --ui-background: #09090b;
   --ui-foreground: #fafafa;
   --ui-card: #18181b;

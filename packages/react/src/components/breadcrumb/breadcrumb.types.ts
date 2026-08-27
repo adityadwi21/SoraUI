@@ -10,3 +10,6 @@ export interface BreadcrumbPageProps extends HTMLAttributes<HTMLSpanElement> {}
 export interface BreadcrumbSeparatorProps extends HTMLAttributes<HTMLLIElement> {
   children?: ReactNode | undefined;
 }
+export interface BreadcrumbEllipsisProps extends HTMLAttributes<HTMLSpanElement> {
+  children?: ReactNode | undefined;
+}

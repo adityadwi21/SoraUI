@@ -35,17 +35,18 @@ SoraUI decouples raw color scales from semantic application contracts:
 
 ---
 
-## 🌌 9 Cosmic Theme Presets
+## 🌌 9 Dual-Mode Space Theme Presets
+Each preset includes fully adaptive Light and Dark mode tokens with 100% WCAG 2.1 AA contrast verification:
 
-- **Sky** (Light): Crisp azure blue with clean slate neutrals.
-- **Cloud** (Light): Soft white and neutral cloud tones.
-- **Horizon** (Light): Warm sunset transition colors.
-- **Aurora** (Dark): Vibrant teal and emerald aurora lights.
-- **Twilight** (Dark): Deep dusk indigo and purple undertones.
-- **Midnight** (Dark): Minimal deep blue with indigo accents.
-- **Nebula** (Dark): Purple and magenta deep-space nebula.
-- **Eclipse** (Dark): High-contrast pitch black with golden accent.
-- **Starlight** (Dark): Dark navy with radiant star highlights.
+- **Sky**: Vivid azure blue with clean slate neutrals (default theme).
+- **Cloud**: Soft monochrome aesthetic with neutral zinc tones and minimal styling.
+- **Horizon**: Warm dawn sunrise palette with amber, orange highlights, and cozy warm paper cards.
+- **Midnight**: Ultra-deep space navy background with crisp luminescent indigo and cyan highlights.
+- **Aurora**: Vibrant emerald green & teal nature borealis palette on dark moss green backdrops.
+- **Twilight**: Deep oceanic indigo and dusk violet sky aesthetic on obsidian card surfaces.
+- **Nebula**: Cosmic deep violet and fuchsia nebula glow tailored for gaming and AI interfaces.
+- **Eclipse**: Pure high-contrast obsidian black with sharp solar flare gold and amber glow.
+- **Starlight**: Deep charcoal dark backdrop with glowing starlight amber accents for dev tools.
 
 ---
 

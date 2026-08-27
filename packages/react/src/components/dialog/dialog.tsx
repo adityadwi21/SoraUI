@@ -12,6 +12,7 @@ import {
   type ReactElement,
 } from "react";
 import { Portal, useEscapeKey, useFocusTrap } from "@soraui/hooks";
+import { useScopedTheme } from "../../theme/theme-scope";
 import type {
   DialogProps,
   DialogTriggerProps,
@@ -134,6 +135,7 @@ DialogOverlay.displayName = "DialogOverlay";
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   ({ closeOnOverlayClick = true, className, children, ...props }, ref) => {
     const { open, setOpen, titleId, descriptionId } = useDialogContext();
+    const scopedTheme = useScopedTheme();
     const trapRef = useFocusTrap(open, { returnFocusOnDeactivate: true });
 
     useEscapeKey(() => setOpen(false), open);
@@ -159,7 +161,10 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
     return (
       <Portal>
-        <div className="sora-dialog__wrapper">
+        <div
+          className="sora-dialog__wrapper"
+          data-theme={scopedTheme || undefined}
+        >
           <DialogOverlay
             onClick={closeOnOverlayClick ? () => setOpen(false) : undefined}
           />

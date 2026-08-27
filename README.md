@@ -19,19 +19,17 @@ SoraUI is an open-source, lightweight UI construction system for modern JavaScri
 
 ---
 
-## Themes
-
-| Theme         | Mode  | Description                                           |
-| ------------- | ----- | ----------------------------------------------------- |
-| **Sky**       | Light | Clean blue sky (default light theme)                  |
-| **Cloud**     | Light | Soft white and neutral cloud tones                    |
-| **Horizon**   | Light | Warm sunset transition colors                         |
-| **Aurora**    | Dark  | Vibrant teal and emerald aurora                       |
-| **Twilight**  | Dark  | Deep dusk indigo and purple                           |
-| **Midnight**  | Dark  | Minimal dark with indigo accents (default dark theme) |
-| **Nebula**    | Dark  | Purple and magenta deep-space nebula                  |
-| **Eclipse**   | Dark  | High-contrast pitch black with golden accent          |
-| **Starlight** | Dark  | Dark navy with radiant star highlights                |
+| Theme         | Base Palette | Dual-Mode Support | Description                                            |
+| ------------- | ------------ | ----------------- | ------------------------------------------------------ |
+| **Sky**       | Azure Cyan   | Light & Dark Mode | Clean daylight azure sky (default theme)               |
+| **Cloud**     | Neutral Zinc | Light & Dark Mode | Minimalist monochrome slate & zinc tones               |
+| **Horizon**   | Dawn Amber   | Light & Dark Mode | Warm sunrise transition colors on cream cards          |
+| **Midnight**  | Deep Space   | Dark & Light Mode | Minimal deep space with indigo highlights              |
+| **Aurora**    | Emerald Teal | Dark & Light Mode | Vibrant teal & emerald borealis on dark moss backdrops |
+| **Twilight**  | Dusk Violet  | Dark & Light Mode | Deep dusk indigo & violet on obsidian cards            |
+| **Nebula**    | Cosmic Pink  | Dark & Light Mode | Cosmic magenta & fuchsia neon for AI interfaces        |
+| **Eclipse**   | Solar Flare  | Dark & Light Mode | High-contrast obsidian black with golden accents      |
+| **Starlight** | Star Amber   | Dark & Light Mode | Charcoal dark with radiant starlight amber accents     |
 
 ---
 

@@ -11,11 +11,13 @@ import {
   type MouseEvent,
 } from "react";
 import { Portal, useFocusTrap, useEscapeKey } from "@soraui/hooks";
+import { useScopedTheme } from "../../theme/theme-scope";
 import type {
   AlertDialogProps,
   AlertDialogTriggerProps,
   AlertDialogContentProps,
   AlertDialogHeaderProps,
+  AlertDialogMediaProps,
   AlertDialogTitleProps,
   AlertDialogDescriptionProps,
   AlertDialogFooterProps,
@@ -105,10 +107,11 @@ AlertDialogTrigger.displayName = "AlertDialogTrigger";
 export const AlertDialogContent = forwardRef<
   HTMLDivElement,
   AlertDialogContentProps
->(({ className, children, ...props }, ref) => {
+>(({ className, size = "default", children, ...props }, ref) => {
   const ctx = useContext(AlertContext);
   if (!ctx) throw new Error("AlertDialogContent must be inside AlertDialog");
 
+  const scopedTheme = useScopedTheme();
   const contentRef = useFocusTrap(ctx.open, { initialFocusRef: ctx.cancelRef });
   useEscapeKey(() => ctx.setOpen(false), ctx.open);
 
@@ -126,7 +129,10 @@ export const AlertDialogContent = forwardRef<
 
   return (
     <Portal>
-      <div className="sora-alert-dialog__backdrop">
+      <div
+        className="sora-alert-dialog__backdrop"
+        data-theme={scopedTheme || undefined}
+      >
         <div
           ref={(el) => {
             contentRef.current = el;
@@ -137,7 +143,12 @@ export const AlertDialogContent = forwardRef<
           aria-modal="true"
           aria-labelledby={ctx.titleId}
           aria-describedby={ctx.descId}
-          className={cx("sora-alert-dialog__content", className)}
+          data-size={size}
+          className={cx(
+            "sora-alert-dialog__content",
+            size === "sm" && "sora-alert-dialog__content--sm",
+            className,
+          )}
           {...props}
         >
           {children}
@@ -159,6 +170,18 @@ export const AlertDialogHeader = forwardRef<
   />
 ));
 AlertDialogHeader.displayName = "AlertDialogHeader";
+
+export const AlertDialogMedia = forwardRef<
+  HTMLDivElement,
+  AlertDialogMediaProps
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cx("sora-alert-dialog__media", className)}
+    {...props}
+  />
+));
+AlertDialogMedia.displayName = "AlertDialogMedia";
 
 export const AlertDialogTitle = forwardRef<
   HTMLHeadingElement,

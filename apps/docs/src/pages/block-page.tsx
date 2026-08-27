@@ -57,6 +57,20 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
         <div className="sora-doc-title-row">
           <h1 className="sora-doc-title">{doc.name}</h1>
           <div className="docs-intro-actions">
+            {/* Source Link */}
+            <a
+              href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/blocks/${doc.category}/${doc.id}.tsx`}
+              target="_blank"
+              rel="noreferrer"
+              className="docs-intro-copy-btn"
+              title="View source on GitHub"
+              aria-label="View source on GitHub"
+            >
+              <GitHubIcon size={13} />
+              <span>Source</span>
+              <ExternalLink size={11} style={{ opacity: 0.6 }} />
+            </a>
+
             <button
               type="button"
               className="docs-intro-copy-btn"
@@ -121,28 +135,12 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
         </div>
 
         <p className="sora-doc-lead">{doc.description}</p>
-
-        <div className="sora-doc-chips">
-          <a
-            href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/blocks/${doc.category}/${doc.id}.tsx`}
-            target="_blank"
-            rel="noreferrer"
-            className="sora-doc-link-chip"
-          >
-            <GitHubIcon size={13} />
-            <span>Source Code</span>
-            <ExternalLink size={11} style={{ opacity: 0.6 }} />
-          </a>
-        </div>
       </div>
 
       {/* Live Interactive Canvas */}
       <section className="sora-doc-section">
         <h2 id="live-preview" className="sora-doc-h2">
           <span>Live Interactive Preview</span>
-          <a href="#live-preview" className="sora-doc-anchor">
-            #
-          </a>
         </h2>
         <ComponentPreview code={doc.code}>{doc.render()}</ComponentPreview>
       </section>
@@ -151,9 +149,6 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
       <section className="sora-doc-section">
         <h2 id="boundary-matrix" className="sora-doc-h2">
           <span>Architecture &amp; Boundary Matrix</span>
-          <a href="#boundary-matrix" className="sora-doc-anchor">
-            #
-          </a>
         </h2>
         <p className="sora-subtext">
           Clear separation between UI primitives and your business logic:
@@ -163,70 +158,86 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "1rem",
+            marginTop: "0.75rem",
           }}
         >
           <div
             style={{
               padding: "1.25rem",
-              borderRadius: "var(--docs-radius)",
+              borderRadius: "0.75rem",
               border: "1px solid var(--docs-border)",
-              borderLeft: "4px solid #22c55e",
-              background: "var(--docs-bg-subtle)",
+              background: "var(--docs-bg-card)",
             }}
           >
             <div
               style={{
-                fontSize: "0.875rem",
-                fontWeight: 700,
-                color: "#22c55e",
-                marginBottom: "0.625rem",
+                fontWeight: 600,
+                fontSize: "0.9375rem",
+                marginBottom: "0.5rem",
+                color: "var(--docs-fg)",
               }}
             >
-              ✓ SoraUI Handles (UI Layer)
+              UI Primitives (SoraUI)
             </div>
-            <ul
+            <p
               style={{
-                margin: 0,
-                paddingLeft: "1.25rem",
                 fontSize: "0.8125rem",
                 color: "var(--docs-fg-muted)",
-                lineHeight: 1.7,
+                marginBottom: "0.75rem",
+                lineHeight: 1.5,
               }}
             >
-              {doc.boundaryExplanation.soraHandles.map((h, i) => (
-                <li key={i}>{h}</li>
+              Visual design, keyboard navigation, focus management, and
+              accessibility:
+            </p>
+            <div style={{ display: "flex", gap: "0.375rem", flexWrap: "wrap" }}>
+              {(doc.boundaryExplanation?.soraHandles || []).map((p) => (
+                <Badge key={p} variant="secondary">
+                  {p}
+                </Badge>
               ))}
-            </ul>
+            </div>
           </div>
+
           <div
             style={{
               padding: "1.25rem",
-              borderRadius: "var(--docs-radius)",
+              borderRadius: "0.75rem",
               border: "1px solid var(--docs-border)",
-              borderLeft: "4px solid var(--docs-accent)",
-              background: "var(--docs-bg-subtle)",
+              background: "var(--docs-bg-card)",
             }}
           >
             <div
               style={{
-                fontSize: "0.875rem",
-                fontWeight: 700,
-                color: "var(--docs-accent)",
-                marginBottom: "0.625rem",
+                fontWeight: 600,
+                fontSize: "0.9375rem",
+                marginBottom: "0.5rem",
+                color: "var(--docs-fg)",
               }}
             >
-              → Your App Handles (Consumer Domain)
+              Customizable Handlers
             </div>
+            <p
+              style={{
+                fontSize: "0.8125rem",
+                color: "var(--docs-fg-muted)",
+                marginBottom: "0.75rem",
+                lineHeight: 1.5,
+              }}
+            >
+              Hooks and functions ready to be connected with your backend or
+              state management:
+            </p>
             <ul
               style={{
                 margin: 0,
                 paddingLeft: "1.25rem",
                 fontSize: "0.8125rem",
                 color: "var(--docs-fg-muted)",
-                lineHeight: 1.7,
+                lineHeight: 1.8,
               }}
             >
-              {doc.boundaryExplanation.consumerHandles.map((h, i) => (
+              {(doc.boundaryExplanation?.consumerHandles || []).map((h, i) => (
                 <li key={i}>{h}</li>
               ))}
             </ul>
@@ -238,9 +249,6 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
       <section className="sora-doc-section">
         <h2 id="installation" className="sora-doc-h2">
           <span>Installation</span>
-          <a href="#installation" className="sora-doc-anchor">
-            #
-          </a>
         </h2>
         <p className="sora-subtext">
           Add this block directly into your project via CLI:
@@ -260,9 +268,6 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
       <section className="sora-doc-section">
         <h2 id="props-reference" className="sora-doc-h2">
           <span>Props Reference</span>
-          <a href="#props-reference" className="sora-doc-anchor">
-            #
-          </a>
         </h2>
         <PropTable props={doc.props} />
       </section>
@@ -271,9 +276,6 @@ export const BlockPage: React.FC<BlockPageProps> = ({ doc, onNavigate }) => {
       <section className="sora-doc-section">
         <h2 id="dependencies" className="sora-doc-h2">
           <span>Required Dependencies</span>
-          <a href="#dependencies" className="sora-doc-anchor">
-            #
-          </a>
         </h2>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           {doc.dependencies.map((dep) => (

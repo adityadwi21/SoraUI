@@ -48,8 +48,11 @@ export interface ComponentDoc {
   status: "stable" | "experimental";
   examples: DocExample[];
   props: PropDefinition[];
+  composition?: string;
   accessibility?: AccessibilityInfo;
   themingTokens?: string[];
+  about?: string;
+  relatedLinks?: Array<{ title: string; href: string; description?: string }>;
 }
 
 export interface BlockDoc {

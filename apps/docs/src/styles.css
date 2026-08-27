@@ -1568,15 +1568,7 @@ svg {
 }
 
 .sora-doc-anchor {
-  color: var(--docs-fg-subtle);
-  opacity: 0;
-  transition: opacity var(--docs-transition-fast);
-  text-decoration: none;
-  font-weight: 400;
-}
-.sora-doc-h2:hover .sora-doc-anchor,
-.sora-doc-h3:hover .sora-doc-anchor {
-  opacity: 0.7;
+  display: none !important;
 }
 
 .sora-subtext {
@@ -1751,7 +1743,7 @@ svg {
   border-radius: var(--docs-radius);
   border: 1px solid var(--docs-border);
   overflow: hidden;
-  margin: 1rem 0;
+  margin: 0.5rem 0 1.25rem;
   background: var(--docs-bg-card);
   box-shadow: var(--docs-card-shadow);
   transition: border-color var(--docs-transition);
@@ -3379,7 +3371,7 @@ pre.docs-codeblock-pre {
 
 .docs-intro-header,
 .sora-doc-header {
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .docs-intro-header-top,
@@ -3388,7 +3380,7 @@ pre.docs-codeblock-pre {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.25rem;
 }
 
 .docs-intro-title,
@@ -3429,6 +3421,7 @@ pre.docs-codeblock-pre {
   cursor: pointer;
   white-space: nowrap;
   line-height: 1;
+  text-decoration: none;
   box-sizing: border-box;
   transition: all var(--docs-transition-fast);
 }
@@ -3476,9 +3469,9 @@ pre.docs-codeblock-pre {
 .docs-intro-lead,
 .sora-doc-lead {
   font-size: 1.0625rem;
-  line-height: 1.65;
+  line-height: 1.45;
   color: var(--docs-fg-muted);
-  margin: 0.75rem 0 1.75rem;
+  margin: 0.25rem 0 0;
 }
 
 /* Starting Points 3-Column Cards */
@@ -3665,11 +3658,11 @@ pre.docs-codeblock-pre {
 .sora-alert {
   position: relative;
   width: 100%;
-  border-radius: var(--docs-radius, 0.5rem);
-  border: 1px solid var(--docs-border);
+  border-radius: var(--ui-radius, 0.5rem);
+  border: 1px solid var(--ui-border);
   padding: 1rem 1rem;
-  background-color: var(--docs-bg-card);
-  color: var(--docs-fg);
+  background-color: var(--ui-card, var(--ui-background));
+  color: var(--ui-foreground);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
@@ -3683,32 +3676,32 @@ pre.docs-codeblock-pre {
   top: 1rem;
   width: 1rem;
   height: 1rem;
-  color: var(--docs-fg);
+  color: var(--ui-foreground);
   flex-shrink: 0;
 }
 
 .sora-alert--default {
-  background-color: var(--docs-bg-card);
-  border-color: var(--docs-border);
-  color: var(--docs-fg);
+  background-color: var(--ui-card, var(--ui-background));
+  border-color: var(--ui-border);
+  color: var(--ui-foreground);
 }
 
 .sora-alert--destructive {
-  border-color: var(--docs-destructive, #ef4444);
-  color: var(--docs-destructive, #ef4444);
-  background-color: var(--docs-bg-card);
+  border-color: var(--ui-destructive, #ef4444);
+  color: var(--ui-destructive, #ef4444);
+  background-color: var(--ui-card, var(--ui-background));
 }
 
 .sora-alert--destructive > svg {
-  color: var(--docs-destructive, #ef4444);
+  color: var(--ui-destructive, #ef4444);
 }
 
 .sora-alert--destructive .sora-alert__title {
-  color: var(--docs-destructive, #ef4444);
+  color: var(--ui-destructive, #ef4444);
 }
 
 .sora-alert--destructive .sora-alert__description {
-  color: var(--docs-destructive, #ef4444);
+  color: var(--ui-destructive, #ef4444);
   opacity: 0.88;
 }
 
@@ -3724,7 +3717,7 @@ pre.docs-codeblock-pre {
 .sora-alert__description {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--docs-fg-muted);
+  color: var(--ui-muted-foreground);
   line-height: 1.625;
 }
 
@@ -3735,7 +3728,7 @@ pre.docs-codeblock-pre {
   position: relative;
   width: 100%;
   overflow: hidden;
-  border-radius: var(--docs-radius, 0.5rem);
+  border-radius: var(--ui-radius, 0.5rem);
 }
 .sora-aspect-ratio__content {
   position: absolute;
@@ -3768,20 +3761,23 @@ pre.docs-codeblock-pre {
 .sora-attachment-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.625rem 0.875rem;
-  border-radius: var(--docs-radius, 0.5rem);
-  border: 1px solid var(--docs-border);
-  background-color: var(--docs-bg-card);
-  color: var(--docs-fg);
+  gap: 0.875rem;
+  padding: 0.625rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--ui-border);
+  background-color: var(--ui-card, var(--ui-background));
+  color: var(--ui-foreground);
   transition: all 0.15s ease;
 }
 .sora-attachment-item:hover {
-  border-color: var(--docs-accent);
+  border-color: var(--ui-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 .sora-attachment-item--elevated {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.sora-attachment-item--loading {
+  border-color: var(--ui-border);
 }
 .sora-attachment-icon {
   display: flex;
@@ -3789,10 +3785,18 @@ pre.docs-codeblock-pre {
   justify-content: center;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: var(--docs-radius-sm, 0.375rem);
-  background-color: var(--docs-bg-subtle);
-  color: var(--docs-accent);
+  border-radius: 0.625rem;
+  background-color: var(--ui-muted);
+  color: var(--ui-foreground);
   flex-shrink: 0;
+}
+.sora-attachment-icon--spinner {
+  color: var(--ui-foreground);
+  background-color: var(--ui-muted);
+}
+.sora-attachment-spinner {
+  animation: soraSpin 0.9s linear infinite;
+  display: block;
 }
 .sora-attachment-icon--pdf {
   color: #ef4444;
@@ -3821,7 +3825,7 @@ pre.docs-codeblock-pre {
 .sora-attachment-preview {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: var(--docs-radius-sm, 0.375rem);
+  border-radius: var(--ui-radius, 0.375rem);
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -3840,26 +3844,80 @@ pre.docs-codeblock-pre {
 .sora-attachment-name {
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--docs-fg);
+  color: var(--ui-foreground);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.sora-attachment-name--shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--ui-foreground) 0%,
+    rgba(148, 163, 184, 0.8) 40%,
+    var(--ui-primary) 50%,
+    rgba(148, 163, 184, 0.8) 60%,
+    var(--ui-foreground) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: soraShimmer 2.2s infinite linear;
+  font-weight: 600;
+  display: inline-block;
+}
 .sora-attachment-size {
   font-size: 0.75rem;
-  color: var(--docs-fg-muted);
+  color: var(--ui-muted-foreground);
+}
+.sora-attachment-size--uploading,
+.sora-attachment-size--processing {
+  color: var(--ui-primary);
+  font-weight: 500;
+}
+.sora-attachment-status {
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.sora-attachment-status--info {
+  color: var(--ui-primary);
+}
+.sora-attachment-status--success {
+  color: #16a34a;
+}
+.sora-attachment-status--warning {
+  color: #d97706;
+}
+.sora-attachment-status--error {
+  color: #dc2626;
+}
+.sora-attachment-status--shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--ui-primary) 0%,
+    #93c5fd 50%,
+    var(--ui-primary) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: soraShimmer 2s infinite linear;
 }
 .sora-attachment-progress {
   width: 100%;
   height: 4px;
   border-radius: 9999px;
-  background-color: var(--docs-bg-muted);
+  background-color: var(--ui-muted);
   overflow: hidden;
   margin-top: 0.25rem;
 }
 .sora-attachment-progress__bar {
   height: 100%;
-  background-color: var(--docs-accent);
+  background-color: var(--ui-primary);
   transition: width 0.2s ease;
 }
 .sora-attachment-actions {
@@ -3877,8 +3935,8 @@ pre.docs-codeblock-pre {
   padding: 0;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: var(--docs-radius-sm, 0.25rem);
-  color: var(--docs-fg-muted);
+  border-radius: var(--ui-radius, 0.25rem);
+  color: var(--ui-muted-foreground);
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -3974,6 +4032,386 @@ html[data-docs-theme="dark"] .sora-floating-alert-item {
   opacity: 0.3;
   animation: shadcnAlertProgress 2s linear forwards;
   pointer-events: none;
+}
+
+/* Media Thumbnail Cards (e.g. photo grid with top-right corner remove button) */
+.sora-attachment-card {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: 96px;
+  gap: 0.375rem;
+}
+.sora-attachment-card__preview {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: var(--ui-radius, 0.5rem);
+  overflow: hidden;
+  border: 1px solid var(--ui-border);
+  background-color: var(--ui-muted);
+}
+.sora-attachment-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sora-attachment-card__remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.15s ease;
+  padding: 0;
+}
+.sora-attachment-card__remove:hover {
+  background-color: #ef4444;
+  transform: scale(1.1);
+}
+.sora-attachment-card__name {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ui-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+/* 3-Column Media Cards (Photo with metadata card) */
+.sora-attachment-media-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ui-card, var(--ui-background));
+  border: 1px solid var(--ui-border);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  min-width: 0;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  transition: all 0.15s ease;
+}
+.sora-attachment-media-card:hover {
+  border-color: var(--ui-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.sora-attachment-media-card__img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  display: block;
+}
+.sora-attachment-media-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: 0 0.125rem 0.125rem;
+}
+.sora-attachment-media-card__name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ui-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sora-attachment-media-card__size {
+  font-size: 0.6875rem;
+  color: var(--ui-muted-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Avatar Primitives & Group ─── */
+.sora-avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  user-select: none;
+  flex-shrink: 0;
+  background-color: var(--ui-muted, #f4f4f5);
+  color: var(--ui-foreground, #09090b);
+  font-weight: 500;
+  line-height: 1;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.sora-avatar--circle {
+  border-radius: 9999px;
+}
+.sora-avatar--rounded {
+  border-radius: var(--ui-radius, 0.5rem);
+}
+.sora-avatar--square {
+  border-radius: 0;
+}
+.sora-avatar--bordered {
+  box-shadow: 0 0 0 2px var(--ui-card, var(--ui-background)), 0 0 0 3px var(--ui-border);
+}
+
+/* Sizes */
+.sora-avatar--xs {
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.625rem;
+}
+.sora-avatar--sm {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.75rem;
+}
+.sora-avatar--md {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 0.875rem;
+}
+.sora-avatar--lg {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1rem;
+}
+.sora-avatar--xl {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.125rem;
+}
+.sora-avatar--2xl {
+  width: 4rem;
+  height: 4rem;
+  font-size: 1.25rem;
+}
+
+.sora-avatar__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}
+
+.sora-avatar__fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--ui-muted, #f4f4f5);
+  color: var(--ui-muted-foreground, #71717a);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  border-radius: inherit;
+}
+
+/* Status Badges */
+.sora-avatar__badge {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  background-color: #22c55e;
+  border: 2px solid var(--ui-card, var(--ui-background, #ffffff));
+  z-index: 10;
+  line-height: 1;
+}
+
+/* Size-responsive badge dimensions */
+.sora-avatar--xs .sora-avatar__badge {
+  width: 0.5rem;
+  height: 0.5rem;
+  min-width: 0.5rem;
+  min-height: 0.5rem;
+  border-width: 1.5px;
+}
+.sora-avatar--sm .sora-avatar__badge {
+  width: 0.625rem;
+  height: 0.625rem;
+  min-width: 0.625rem;
+  min-height: 0.625rem;
+  border-width: 1.5px;
+}
+.sora-avatar--md .sora-avatar__badge {
+  width: 0.75rem;
+  height: 0.75rem;
+  min-width: 0.75rem;
+  min-height: 0.75rem;
+  border-width: 2px;
+}
+.sora-avatar--lg .sora-avatar__badge {
+  width: 0.875rem;
+  height: 0.875rem;
+  min-width: 0.875rem;
+  min-height: 0.875rem;
+  border-width: 2px;
+}
+.sora-avatar--xl .sora-avatar__badge {
+  width: 1rem;
+  height: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
+  border-width: 2.5px;
+}
+.sora-avatar--2xl .sora-avatar__badge {
+  width: 1.125rem;
+  height: 1.125rem;
+  min-width: 1.125rem;
+  min-height: 1.125rem;
+  border-width: 2.5px;
+}
+
+.sora-avatar__badge--with-icon {
+  width: auto !important;
+  height: auto !important;
+  min-width: 1.125rem !important;
+  min-height: 1.125rem !important;
+  padding: 0.125rem !important;
+  font-size: 0.625rem;
+}
+
+.sora-avatar__badge--bottom-right {
+  bottom: 0;
+  right: 0;
+  transform: translate(12%, 12%);
+}
+.sora-avatar__badge--top-right {
+  top: 0;
+  right: 0;
+  transform: translate(12%, -12%);
+}
+.sora-avatar__badge--bottom-left {
+  bottom: 0;
+  left: 0;
+  transform: translate(-12%, 12%);
+}
+.sora-avatar__badge--top-left {
+  top: 0;
+  left: 0;
+  transform: translate(-12%, -12%);
+}
+
+.sora-avatar__badge--online {
+  background-color: #22c55e;
+}
+.sora-avatar__badge--offline {
+  background-color: #94a3b8;
+}
+.sora-avatar__badge--busy {
+  background-color: #ef4444;
+}
+.sora-avatar__badge--away {
+  background-color: #f59e0b;
+}
+.sora-avatar__badge--verified {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+.sora-avatar__badge--custom {
+  background-color: var(--ui-card, #ffffff);
+  color: var(--ui-foreground, #09090b);
+}
+
+@keyframes soraBadgePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+.sora-avatar__badge--pulse {
+  animation: soraBadgePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Avatar Group (Stacked) */
+.sora-avatar-group {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row;
+}
+.sora-avatar-group .sora-avatar {
+  box-shadow: 0 0 0 2px var(--ui-card, var(--ui-background));
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.2s ease;
+}
+.sora-avatar-group .sora-avatar:hover {
+  transform: translateY(-2px) scale(1.08);
+  z-index: 10;
+}
+.sora-avatar-group--tight .sora-avatar + .sora-avatar {
+  margin-left: -0.75rem;
+}
+.sora-avatar-group--normal .sora-avatar + .sora-avatar {
+  margin-left: -0.5rem;
+}
+.sora-avatar-group--loose .sora-avatar + .sora-avatar {
+  margin-left: -0.25rem;
+}
+
+/* RTL Group Stacking */
+[dir="rtl"] .sora-avatar-group--tight .sora-avatar + .sora-avatar,
+.sora-avatar-group--rtl.sora-avatar-group--tight .sora-avatar + .sora-avatar {
+  margin-left: 0;
+  margin-right: -0.75rem;
+}
+[dir="rtl"] .sora-avatar-group--normal .sora-avatar + .sora-avatar,
+.sora-avatar-group--rtl.sora-avatar-group--normal .sora-avatar + .sora-avatar {
+  margin-left: 0;
+  margin-right: -0.5rem;
+}
+[dir="rtl"] .sora-avatar-group--loose .sora-avatar + .sora-avatar,
+.sora-avatar-group--rtl.sora-avatar-group--loose .sora-avatar + .sora-avatar {
+  margin-left: 0;
+  margin-right: -0.25rem;
+}
+
+.sora-avatar--more {
+  background-color: var(--ui-muted);
+  color: var(--ui-muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.sora-avatar--action {
+  background-color: transparent !important;
+  border: 1.5px dashed var(--ui-border) !important;
+  color: var(--ui-muted-foreground) !important;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: all 0.15s ease;
+}
+.sora-avatar--action .sora-avatar__fallback {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+.sora-avatar--action:hover {
+  border-color: var(--ui-primary) !important;
+  color: var(--ui-primary) !important;
+  background-color: var(--ui-muted) !important;
+  transform: translateY(-2px) scale(1.08);
 }
 
 

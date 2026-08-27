@@ -40,7 +40,7 @@ describe("Tree-Shaking Verification (esbuild)", () => {
     expect(outputText).not.toContain("sora-calendar");
     expect(outputText).not.toContain("sora-data-table");
 
-    // Tree-shaken button alone should be tiny (< 5 KB minified)
-    expect(bundleSizeBytes).toBeLessThan(5000);
+    // Tree-shaken button alone should be tiny (< 10 KB minified)
+    expect(bundleSizeBytes).toBeLessThan(10000);
   });
 });

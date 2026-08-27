@@ -412,33 +412,91 @@ Badge.displayName = "Badge";
       return `"use client";
 
 import * as React from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, MoreHorizontal } from "lucide-react";
 
-export function Breadcrumb({ className = "", children, ...props }: any) {
+export const Breadcrumb = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
+  ({ className = "", ...props }, ref) => (
+    <nav ref={ref} aria-label="breadcrumb" className={\`sora-breadcrumb \${className}\`.trim()} {...props} />
+  )
+);
+Breadcrumb.displayName = "Breadcrumb";
+
+export const BreadcrumbList = React.forwardRef<HTMLOListElement, React.OlHTMLAttributes<HTMLOListElement>>(
+  ({ className = "", ...props }, ref) => (
+    <ol ref={ref} className={\`sora-breadcrumb__list \${className}\`.trim()} {...props} />
+  )
+);
+BreadcrumbList.displayName = "BreadcrumbList";
+
+export const BreadcrumbItem = React.forwardRef<HTMLLIElement, React.LiHTMLAttributes<HTMLLIElement>>(
+  ({ className = "", ...props }, ref) => (
+    <li ref={ref} className={\`sora-breadcrumb__item \${className}\`.trim()} {...props} />
+  )
+);
+BreadcrumbItem.displayName = "BreadcrumbItem";
+
+export const BreadcrumbLink = React.forwardRef<
+  HTMLAnchorElement,
+  React.AnchorHTMLAttributes<HTMLAnchorElement> & { asChild?: boolean }
+>(({ asChild = false, className = "", children, ...props }, ref) => {
+  const linkClass = \`sora-breadcrumb__link \${className}\`.trim();
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children as React.ReactElement, {
+      ref,
+      className: \`\${linkClass} \${(children.props as any)?.className || ""}\`.trim(),
+      ...props,
+    });
+  }
   return (
-    <nav aria-label="breadcrumb" className={\`sora-breadcrumb \${className}\`.trim()} {...props}>
-      <ol className="sora-breadcrumb__list">{children}</ol>
-    </nav>
+    <a ref={ref} className={linkClass} {...props}>
+      {children}
+    </a>
   );
-}
+});
+BreadcrumbLink.displayName = "BreadcrumbLink";
 
-export const BreadcrumbItem = ({ className = "", children, ...props }: any) => (
-  <li className={\`sora-breadcrumb__item \${className}\`.trim()} {...props}>{children}</li>
+export const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.HTMLAttributes<HTMLSpanElement>>(
+  ({ className = "", ...props }, ref) => (
+    <span
+      ref={ref}
+      role="link"
+      aria-disabled="true"
+      aria-current="page"
+      className={\`sora-breadcrumb__page \${className}\`.trim()}
+      {...props}
+    />
+  )
 );
+BreadcrumbPage.displayName = "BreadcrumbPage";
 
-export const BreadcrumbLink = ({ href, className = "", children, ...props }: any) => (
-  <a href={href} className={\`sora-breadcrumb__link \${className}\`.trim()} {...props}>{children}</a>
-);
-
-export const BreadcrumbPage = ({ className = "", children, ...props }: any) => (
-  <span aria-current="page" className={\`sora-breadcrumb__page \${className}\`.trim()} {...props}>{children}</span>
-);
-
-export const BreadcrumbSeparator = ({ children, className = "" }: any) => (
-  <li role="presentation" aria-hidden="true" className={\`sora-breadcrumb__separator \${className}\`.trim()}>
-    {children ?? <ChevronRight size={14} />}
+export const BreadcrumbSeparator = ({ children, className = "", ...props }: any) => (
+  <li
+    role="presentation"
+    aria-hidden="true"
+    className={\`sora-breadcrumb__separator \${className}\`.trim()}
+    {...props}
+  >
+    {children ?? <ChevronRight size={14} aria-hidden="true" />}
   </li>
 );
+BreadcrumbSeparator.displayName = "BreadcrumbSeparator";
+
+export const BreadcrumbEllipsis = ({ children, className = "", ...props }: any) => (
+  <span
+    role="presentation"
+    aria-hidden="true"
+    className={\`sora-breadcrumb__ellipsis \${className}\`.trim()}
+    {...props}
+  >
+    {children ?? (
+      <>
+        <MoreHorizontal size={16} aria-hidden="true" />
+        <span className="sora-sr-only">More</span>
+      </>
+    )}
+  </span>
+);
+BreadcrumbEllipsis.displayName = "BreadcrumbEllipsis";
 `;
 
     case "button":
@@ -449,18 +507,32 @@ import * as React from "react";
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive" | "link";
   size?: "sm" | "md" | "lg" | "icon";
+  rounded?: boolean;
   loading?: boolean;
+  asChild?: boolean;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = "primary", size = "md", loading = false, disabled, className = "", children, ...props }, ref) => {
+  ({ variant = "primary", size = "md", rounded = false, loading = false, disabled, asChild = false, className = "", children, ...props }, ref) => {
     const isDisabled = disabled ?? loading;
+    const btnClass = \`sora-button sora-button--\${variant} sora-button--\${size} \${rounded ? "sora-button--rounded" : ""} \${className}\`.trim();
+
+    if (asChild && React.isValidElement(children)) {
+      return React.cloneElement(children as React.ReactElement, {
+        ref,
+        className: \`\${btnClass} \${(children.props as any)?.className || ""}\`.trim(),
+        "aria-disabled": isDisabled || undefined,
+        "data-loading": loading ? "true" : undefined,
+        ...props,
+      });
+    }
+
     return (
       <button
         ref={ref}
         disabled={isDisabled}
         aria-disabled={isDisabled || undefined}
-        className={\`sora-button sora-button--\${variant} sora-button--\${size} \${className}\`.trim()}
+        className={btnClass}
         {...props}
       >
         {loading && <span className="sora-button__spinner" aria-hidden="true" />}
@@ -470,6 +542,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 Button.displayName = "Button";
+
+export interface ButtonGroupProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+export const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
+  ({ className = "", children, ...props }, ref) => (
+    <div ref={ref} role="group" className={\`sora-button-group \${className}\`.trim()} {...props}>
+      {children}
+    </div>
+  )
+);
+ButtonGroup.displayName = "ButtonGroup";
 `;
 
     case "calendar":
@@ -478,55 +561,231 @@ Button.displayName = "Button";
 import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-export function Calendar({ value, onChange, className = "" }: any) {
-  const [currentDate, setCurrentDate] = React.useState(value || new Date());
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const firstDayIndex = new Date(year, month, 1).getDay();
-
-  const prevMonth = () => setCurrentDate(new Date(year, month - 1, 1));
-  const nextMonth = () => setCurrentDate(new Date(year, month + 1, 1));
-
-  return (
-    <div className={\`sora-calendar \${className}\`.trim()}>
-      <div className="sora-calendar__header">
-        <button type="button" onClick={prevMonth} className="sora-calendar__nav-btn">
-          <ChevronLeft size={16} />
-        </button>
-        <div className="sora-calendar__title">
-          {currentDate.toLocaleString("default", { month: "long", year: "numeric" })}
-        </div>
-        <button type="button" onClick={nextMonth} className="sora-calendar__nav-btn">
-          <ChevronRight size={16} />
-        </button>
-      </div>
-      <div className="sora-calendar__grid">
-        {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((d) => (
-          <div key={d} className="sora-calendar__day-label">{d}</div>
-        ))}
-        {Array.from({ length: firstDayIndex }).map((_, i) => (
-          <div key={\`empty-\${i}\`} className="sora-calendar__cell sora-calendar__cell--empty" />
-        ))}
-        {Array.from({ length: daysInMonth }).map((_, i) => {
-          const day = i + 1;
-          const isSelected = value && value.getDate() === day && value.getMonth() === month && value.getFullYear() === year;
-          return (
-            <button
-              key={day}
-              type="button"
-              onClick={() => onChange?.(new Date(year, month, day))}
-              className={\`sora-calendar__cell \${isSelected ? "sora-calendar__cell--selected" : ""}\`.trim()}
-            >
-              {day}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
+export interface DateRange {
+  from?: Date | undefined;
+  to?: Date | undefined;
 }
+
+export type CalendarMode = "single" | "range" | "multiple";
+export type CaptionLayout = "label" | "dropdown" | "dropdown-buttons";
+
+export interface CalendarProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue" | "onChange" | "onSelect"> {
+  mode?: CalendarMode;
+  selected?: Date | Date[] | DateRange | null;
+  defaultSelected?: Date | Date[] | DateRange | null;
+  onSelect?: (val: any) => void;
+  value?: Date | null;
+  defaultValue?: Date | null;
+  onValueChange?: (date: Date) => void;
+  locale?: string | { code?: string };
+  calendarSystem?: "gregory" | "persian" | "islamic" | "islamic-umalqura" | "hebrew" | "buddhist";
+  formatters?: {
+    formatMonthTitle?: (date: Date, locale?: string) => string;
+    formatWeekdayName?: (dayIndex: number, date: Date, locale?: string) => string;
+    formatDay?: (date: Date, locale?: string) => string;
+    formatMonthDropdown?: (monthIndex: number, date: Date, locale?: string) => string;
+  };
+  timeZone?: string;
+  showWeekNumber?: boolean;
+  minDate?: Date;
+  maxDate?: Date;
+  isDateDisabled?: (date: Date) => boolean;
+  numberOfMonths?: number;
+  showOutsideDays?: boolean;
+  fixedWeeks?: boolean;
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  captionLayout?: CaptionLayout;
+  fromYear?: number;
+  toYear?: number;
+}
+
+export const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
+  (
+    {
+      mode = "single",
+      selected,
+      defaultSelected,
+      onSelect,
+      value: legacyValue,
+      defaultValue: legacyDefaultValue,
+      onValueChange: legacyOnValueChange,
+      locale,
+      calendarSystem,
+      formatters,
+      timeZone,
+      showWeekNumber = false,
+      minDate,
+      maxDate,
+      isDateDisabled,
+      numberOfMonths = 1,
+      showOutsideDays = true,
+      fixedWeeks = false,
+      weekStartsOn = 0,
+      captionLayout = "label",
+      fromYear = 1950,
+      toYear = 2050,
+      className = "",
+      ...props
+    },
+    ref
+  ) => {
+    const controlledVal = selected !== undefined ? selected : legacyValue;
+    const isControlled = controlledVal !== undefined;
+    const [uncontrolledVal, setUncontrolledVal] = React.useState(defaultSelected ?? legacyDefaultValue ?? null);
+    const currentSelected = isControlled ? controlledVal : uncontrolledVal;
+
+    const initialDate = currentSelected instanceof Date ? currentSelected : new Date();
+    const [viewDate, setViewDate] = React.useState(initialDate);
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const weekdayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+
+    const isSameDay = (a?: Date | null, b?: Date | null) =>
+      !!a && !!b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+    const isSameMonth = (a?: Date | null, b?: Date | null) =>
+      !!a && !!b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth();
+
+    const handleSelect = (targetDate: Date) => {
+      if (mode === "single") {
+        const next = isSameDay(currentSelected as Date, targetDate) ? undefined : targetDate;
+        if (!isControlled) setUncontrolledVal(next);
+        onSelect?.(next);
+        if (next) legacyOnValueChange?.(next);
+      } else if (mode === "range") {
+        const prev = (currentSelected || {}) as DateRange;
+        let next: DateRange;
+        if (!prev.from || (prev.from && prev.to)) {
+          next = { from: targetDate, to: undefined };
+        } else {
+          next = targetDate < prev.from ? { from: targetDate, to: prev.from } : { from: prev.from, to: targetDate };
+        }
+        if (!isControlled) setUncontrolledVal(next);
+        onSelect?.(next);
+      } else if (mode === "multiple") {
+        const prev = Array.isArray(currentSelected) ? currentSelected : [];
+        const exists = prev.some((d) => isSameDay(d, targetDate));
+        const next = exists ? prev.filter((d) => !isSameDay(d, targetDate)) : [...prev, targetDate];
+        if (!isControlled) setUncontrolledVal(next);
+        onSelect?.(next);
+      }
+    };
+
+    return (
+      <div ref={ref} className={\`sora-calendar \${numberOfMonths > 1 ? "sora-calendar--multiple-months" : ""} \${className}\`.trim()} {...props}>
+        <div className="sora-calendar__months">
+          {Array.from({ length: numberOfMonths }).map((_, mIdx) => {
+            const mDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + mIdx, 1);
+            const mYear = mDate.getFullYear();
+            const mMonth = mDate.getMonth();
+            const daysInMonth = new Date(mYear, mMonth + 1, 0).getDate();
+            const startWeekday = (new Date(mYear, mMonth, 1).getDay() - weekStartsOn + 7) % 7;
+            const daysInPrevMonth = new Date(mYear, mMonth, 0).getDate();
+
+            const cells: { date: Date; isOutside: boolean; dayNumber: number }[] = [];
+            for (let i = startWeekday - 1; i >= 0; i--) {
+              cells.push({
+                date: new Date(mYear, mMonth - 1, daysInPrevMonth - i),
+                isOutside: true,
+                dayNumber: daysInPrevMonth - i,
+              });
+            }
+            for (let d = 1; d <= daysInMonth; d++) {
+              cells.push({
+                date: new Date(mYear, mMonth, d),
+                isOutside: false,
+                dayNumber: d,
+              });
+            }
+            const totalRows = Math.ceil(cells.length / 7);
+            const remaining = totalRows * 7 - cells.length;
+            for (let d = 1; d <= remaining; d++) {
+              cells.push({
+                date: new Date(mYear, mMonth + 1, d),
+                isOutside: true,
+                dayNumber: d,
+              });
+            }
+
+            const weeks: (typeof cells)[] = [];
+            for (let i = 0; i < cells.length; i += 7) {
+              weeks.push(cells.slice(i, i + 7));
+            }
+
+            return (
+              <div key={mIdx} className="sora-calendar__month">
+                <div className="sora-calendar__header">
+                  {mIdx === 0 ? (
+                    <button type="button" onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))} aria-label="Previous month" className="sora-calendar__nav-btn">
+                      <ChevronLeft size={16} aria-hidden="true" />
+                    </button>
+                  ) : <span className="sora-calendar__nav-placeholder" />}
+
+                  <div className="sora-calendar__title">{monthNames[mMonth]} {mYear}</div>
+
+                  {mIdx === numberOfMonths - 1 ? (
+                    <button type="button" onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))} aria-label="Next month" className="sora-calendar__nav-btn">
+                      <ChevronRight size={16} aria-hidden="true" />
+                    </button>
+                  ) : <span className="sora-calendar__nav-placeholder" />}
+                </div>
+
+                <div role="grid" className="sora-calendar__grid">
+                  <div role="row" className="sora-calendar__weekdays">
+                    {weekdayNames.map((wd) => (
+                      <span key={wd} role="columnheader" className="sora-calendar__weekday">{wd}</span>
+                    ))}
+                  </div>
+                  <div className="sora-calendar__days">
+                    {weeks.map((week, wIdx) => (
+                      <div key={wIdx} role="row" className="sora-calendar__week-row">
+                        {week.map((cell, cIdx) => {
+                          const today = new Date();
+                          const isToday = isSameDay(today, cell.date);
+                          let isSelected = false;
+
+                          if (mode === "single") {
+                            isSelected = currentSelected instanceof Date && isSameDay(currentSelected, cell.date);
+                          } else if (mode === "multiple") {
+                            isSelected = Array.isArray(currentSelected) && currentSelected.some((d) => isSameDay(d, cell.date));
+                          }
+
+                          let isStart = false;
+                          let isEnd = false;
+                          let inRange = false;
+                          if (mode === "range" && currentSelected && typeof currentSelected === "object") {
+                            const { from, to } = currentSelected as DateRange;
+                            if (from && isSameDay(from, cell.date)) isStart = true;
+                            if (to && isSameDay(to, cell.date)) isEnd = true;
+                            if (from && to && cell.date > from && cell.date < to) inRange = true;
+                          }
+
+                          return (
+                            <button
+                              key={cIdx}
+                              type="button"
+                              role="gridcell"
+                              aria-selected={isSelected || isStart || isEnd || inRange}
+                              onClick={() => handleSelect(cell.date)}
+                              className={\`sora-calendar__day \${(isSelected || isStart || isEnd) ? "sora-calendar__day--selected" : ""} \${isStart ? "sora-calendar__day--range-start" : ""} \${isEnd ? "sora-calendar__day--range-end" : ""} \${inRange ? "sora-calendar__day--range-middle" : ""} \${isToday ? "sora-calendar__day--today" : ""} \${cell.isOutside ? "sora-calendar__day--outside" : ""}\`.trim()}
+                            >
+                              {cell.dayNumber}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+);
+Calendar.displayName = "Calendar";
 `;
 
     case "card":
@@ -534,42 +793,59 @@ export function Calendar({ value, onChange, className = "" }: any) {
 
 import * as React from "react";
 
-export const Card = React.forwardRef<HTMLDivElement, any>(
-  ({ elevated, className = "", ...props }, ref) => (
-    <div ref={ref} className={\`sora-card \${elevated ? "sora-card--elevated" : ""} \${className}\`.trim()} {...props} />
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  size?: "default" | "sm";
+  elevated?: boolean;
+}
+
+export const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ size = "default", elevated, className = "", ...props }, ref) => (
+    <div
+      ref={ref}
+      data-size={size}
+      className={\`sora-card \${size === "sm" ? "sora-card--sm" : ""} \${elevated ? "sora-card--elevated" : ""} \${className}\`.trim()}
+      {...props}
+    />
   )
 );
 Card.displayName = "Card";
 
-export const CardHeader = React.forwardRef<HTMLDivElement, any>(
+export const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className = "", ...props }, ref) => (
     <div ref={ref} className={\`sora-card__header \${className}\`.trim()} {...props} />
   )
 );
 CardHeader.displayName = "CardHeader";
 
-export const CardTitle = React.forwardRef<HTMLHeadingElement, any>(
+export const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
   ({ className = "", ...props }, ref) => (
     <h3 ref={ref} className={\`sora-card__title \${className}\`.trim()} {...props} />
   )
 );
 CardTitle.displayName = "CardTitle";
 
-export const CardDescription = React.forwardRef<HTMLParagraphElement, any>(
+export const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({ className = "", ...props }, ref) => (
     <p ref={ref} className={\`sora-card__description \${className}\`.trim()} {...props} />
   )
 );
 CardDescription.displayName = "CardDescription";
 
-export const CardContent = React.forwardRef<HTMLDivElement, any>(
+export const CardAction = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className = "", ...props }, ref) => (
+    <div ref={ref} className={\`sora-card__action \${className}\`.trim()} {...props} />
+  )
+);
+CardAction.displayName = "CardAction";
+
+export const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className = "", ...props }, ref) => (
     <div ref={ref} className={\`sora-card__content \${className}\`.trim()} {...props} />
   )
 );
 CardContent.displayName = "CardContent";
 
-export const CardFooter = React.forwardRef<HTMLDivElement, any>(
+export const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className = "", ...props }, ref) => (
     <div ref={ref} className={\`sora-card__footer \${className}\`.trim()} {...props} />
   )
@@ -581,39 +857,58 @@ CardFooter.displayName = "CardFooter";
       return `"use client";
 
 import * as React from "react";
-import { Check } from "lucide-react";
+import { Check, Minus } from "lucide-react";
 
-export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange"> {
-  checked?: boolean;
-  defaultChecked?: boolean;
-  onCheckedChange?: (checked: boolean) => void;
+export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "onChange" | "checked" | "defaultChecked"> {
+  checked?: boolean | "indeterminate";
+  defaultChecked?: boolean | "indeterminate";
+  onCheckedChange?: (checked: boolean | "indeterminate") => void;
 }
 
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ checked, defaultChecked, onCheckedChange, disabled, className = "", id, ...props }, ref) => {
-    const [isChecked, setIsChecked] = React.useState(defaultChecked ?? false);
-    const actualChecked = checked !== undefined ? checked : isChecked;
+  ({ checked: controlledChecked, defaultChecked = false, onCheckedChange, disabled, className = "", id, ...props }, ref) => {
+    const [uncontrolledChecked, setUncontrolledChecked] = React.useState<boolean | "indeterminate">(defaultChecked);
+    const isControlled = controlledChecked !== undefined;
+    const isChecked = isControlled ? controlledChecked : uncontrolledChecked;
+
+    const innerRef = React.useRef<HTMLInputElement | null>(null);
+
+    React.useEffect(() => {
+      if (innerRef.current) {
+        innerRef.current.indeterminate = isChecked === "indeterminate";
+      }
+    }, [isChecked]);
+
+    const isTrueChecked = isChecked === true;
+    const isIndeterminate = isChecked === "indeterminate";
 
     return (
       <label className={\`sora-checkbox \${disabled ? "sora-checkbox--disabled" : ""} \${className}\`.trim()}>
         <input
-          ref={ref}
+          ref={(node) => {
+            innerRef.current = node;
+            if (typeof ref === "function") ref(node);
+            else if (ref) (ref as any).current = node;
+          }}
           id={id}
           type="checkbox"
-          checked={actualChecked}
+          checked={isTrueChecked}
           disabled={disabled}
           onChange={(e) => {
             if (disabled) return;
-            if (checked === undefined) setIsChecked(e.target.checked);
-            onCheckedChange?.(e.target.checked);
+            const next = isChecked === "indeterminate" ? true : e.target.checked;
+            if (!isControlled) setUncontrolledChecked(next);
+            onCheckedChange?.(next);
           }}
           className="sora-checkbox__input"
           {...props}
         />
-        <span className="sora-checkbox__box" aria-hidden="true">
-          {actualChecked && (
-            <Check size={12} strokeWidth={3} className="sora-checkbox__icon" />
-          )}
+        <span
+          className={\`sora-checkbox__box \${isTrueChecked || isIndeterminate ? "sora-checkbox__box--checked" : ""} \${isIndeterminate ? "sora-checkbox__box--indeterminate" : ""}\`.trim()}
+          aria-hidden="true"
+        >
+          {isTrueChecked && <Check size={12} strokeWidth={3} className="sora-checkbox__icon" />}
+          {isIndeterminate && <Minus size={12} strokeWidth={3} className="sora-checkbox__icon" />}
         </span>
       </label>
     );
@@ -622,111 +917,310 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 Checkbox.displayName = "Checkbox";
 `;
 
-    case "collapsible":
+case "collapsible":
       return `"use client";
 
 import * as React from "react";
 
-interface CollapsibleContextValue {
+export interface CollapsibleContextValue {
   open: boolean;
   toggle: () => void;
+  disabled: boolean;
 }
+
 const CollapsibleContext = React.createContext<CollapsibleContextValue | null>(null);
 
-export function Collapsible({ open: controlledOpen, defaultOpen = false, onOpenChange, children, className = "" }: any) {
-  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen);
-  const open = controlledOpen !== undefined ? controlledOpen : uncontrolledOpen;
-
-  const toggle = () => {
-    const next = !open;
-    if (controlledOpen === undefined) setUncontrolledOpen(next);
-    onOpenChange?.(next);
-  };
-
-  return (
-    <CollapsibleContext.Provider value={{ open, toggle }}>
-      <div className={\`sora-collapsible \${className}\`.trim()}>{children}</div>
-    </CollapsibleContext.Provider>
-  );
+export interface CollapsibleProps extends React.HTMLAttributes<HTMLDivElement> {
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  disabled?: boolean;
 }
 
-export const CollapsibleTrigger = ({ children, ...props }: any) => {
-  const ctx = React.useContext(CollapsibleContext);
-  return (
-    <button type="button" aria-expanded={ctx?.open} onClick={() => ctx?.toggle()} {...props}>
-      {children}
-    </button>
-  );
-};
+export interface CollapsibleTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean;
+}
 
-export const CollapsibleContent = ({ children, className = "" }: any) => {
-  const ctx = React.useContext(CollapsibleContext);
-  if (!ctx?.open) return null;
-  return <div className={\`sora-collapsible__content \${className}\`.trim()}>{children}</div>;
-};
+export const Collapsible = React.forwardRef<HTMLDivElement, CollapsibleProps>(
+  ({ open: controlledOpen, defaultOpen = false, onOpenChange, disabled = false, children, className = "", ...props }, ref) => {
+    const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen);
+    const isControlled = controlledOpen !== undefined;
+    const open = isControlled ? controlledOpen : uncontrolledOpen;
+
+    const toggle = () => {
+      if (disabled) return;
+      const next = !open;
+      if (!isControlled) setUncontrolledOpen(next);
+      onOpenChange?.(next);
+    };
+
+    return (
+      <CollapsibleContext.Provider value={{ open, toggle, disabled }}>
+        <div
+          ref={ref}
+          data-state={open ? "open" : "closed"}
+          data-disabled={disabled ? "" : undefined}
+          className={\`sora-collapsible \${disabled ? "sora-collapsible--disabled" : ""} \${className}\`.trim()}
+          {...props}
+        >
+          {children}
+        </div>
+      </CollapsibleContext.Provider>
+    );
+  }
+);
+Collapsible.displayName = "Collapsible";
+
+export const CollapsibleTrigger = React.forwardRef<HTMLButtonElement, CollapsibleTriggerProps>(
+  ({ asChild = false, onClick, disabled, children, className = "", ...props }, ref) => {
+    const ctx = React.useContext(CollapsibleContext);
+    const isDisabled = disabled || (ctx?.disabled ?? false);
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (isDisabled) return;
+      onClick?.(e);
+      ctx?.toggle();
+    };
+
+    if (asChild && React.isValidElement(children)) {
+      return React.cloneElement(children as React.ReactElement, {
+        ...props,
+        ref,
+        disabled: isDisabled || (children.props as any)?.disabled,
+        "aria-expanded": ctx?.open,
+        "data-state": ctx?.open ? "open" : "closed",
+        "data-disabled": isDisabled ? "" : undefined,
+        className: \`\${(children.props as any)?.className || ""} \${className}\`.trim(),
+        onClick: (e: any) => {
+          (children.props as any)?.onClick?.(e);
+          handleClick(e);
+        },
+      });
+    }
+
+    return (
+      <button
+        ref={ref}
+        type="button"
+        disabled={isDisabled}
+        aria-expanded={ctx?.open}
+        data-state={ctx?.open ? "open" : "closed"}
+        data-disabled={isDisabled ? "" : undefined}
+        onClick={handleClick}
+        className={\`sora-collapsible__trigger \${className}\`.trim()}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+CollapsibleTrigger.displayName = "CollapsibleTrigger";
+
+export const CollapsibleContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className = "", children, ...props }, ref) => {
+    const ctx = React.useContext(CollapsibleContext);
+    if (!ctx?.open) return null;
+    return (
+      <div ref={ref} data-state="open" className={\`sora-collapsible__content \${className}\`.trim()} {...props}>
+        {children}
+      </div>
+    );
+  }
+);
+CollapsibleContent.displayName = "CollapsibleContent";
 `;
 
     case "combobox":
       return `"use client";
 
 import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, X, Loader2 } from "lucide-react";
 
-export function Combobox({ items = [], value, onValueChange, placeholder = "Select item..." }: any) {
-  const [open, setOpen] = React.useState(false);
-  const [query, setQuery] = React.useState("");
+export interface ComboboxOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+  icon?: React.ReactNode;
+  description?: string;
+}
 
-  const filtered = query === "" ? items : items.filter((i: any) =>
-    i.label.toLowerCase().includes(query.toLowerCase())
-  );
+export interface ComboboxProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue" | "onChange"> {
+  options: ComboboxOption[];
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  placeholder?: string;
+  emptyText?: React.ReactNode;
+  disabled?: boolean;
+  clearable?: boolean;
+  loading?: boolean;
+  dir?: "ltr" | "rtl" | "auto";
+}
 
-  const selected = items.find((i: any) => i.value === value);
+export const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(
+  (
+    {
+      options = [],
+      value: controlledValue,
+      defaultValue = "",
+      onValueChange,
+      placeholder = "Search...",
+      emptyText = "No options found.",
+      disabled = false,
+      clearable = false,
+      loading = false,
+      dir,
+      className = "",
+      ...props
+    },
+    ref
+  ) => {
+    const [uncontrolledValue, setUncontrolledValue] = React.useState(defaultValue);
+    const isControlled = controlledValue !== undefined;
+    const value = isControlled ? controlledValue : uncontrolledValue;
 
-  return (
-    <div className="sora-combobox">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="sora-combobox__trigger"
-      >
-        <span>{selected ? selected.label : placeholder}</span>
-        <ChevronsUpDown size={14} className="sora-combobox__icon" />
-      </button>
+    const [open, setOpen] = React.useState(false);
+    const [searchQuery, setSearchQuery] = React.useState("");
+    const [highlightedIndex, setHighlightedIndex] = React.useState(0);
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
+    const listboxId = React.useId();
 
-      {open && (
-        <div className="sora-combobox__popover">
+    const selectedOption = options.find((opt) => opt.value === value);
+    const filteredOptions = options.filter(
+      (opt) =>
+        opt.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        opt.value.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const handleSelect = (option: ComboboxOption) => {
+      if (option.disabled) return;
+      if (!isControlled) setUncontrolledValue(option.value);
+      onValueChange?.(option.value);
+      setSearchQuery("");
+      setOpen(false);
+      inputRef.current?.focus();
+    };
+
+    const handleClear = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (disabled) return;
+      if (!isControlled) setUncontrolledValue("");
+      onValueChange?.("");
+      setSearchQuery("");
+      inputRef.current?.focus();
+    };
+
+    return (
+      <div ref={ref} dir={dir} className={\`sora-combobox \${className}\`.trim()} {...props}>
+        <div
+          onClick={() => {
+            if (!disabled) {
+              setOpen((prev) => !prev);
+              inputRef.current?.focus();
+            }
+          }}
+          className={\`sora-combobox__trigger \${open ? "sora-combobox__trigger--open" : ""} \${disabled ? "sora-combobox__trigger--disabled" : ""}\`.trim()}
+        >
           <input
+            ref={inputRef}
             type="text"
-            placeholder="Search..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="sora-combobox__search"
-            autoFocus
+            role="combobox"
+            aria-expanded={open}
+            aria-busy={loading ? "true" : undefined}
+            disabled={disabled}
+            placeholder={selectedOption ? selectedOption.label : placeholder}
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              if (!open) setOpen(true);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowDown") {
+                e.preventDefault();
+                if (!open) setOpen(true);
+                else setHighlightedIndex((prev) => (prev + 1) % (filteredOptions.length || 1));
+              } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                if (!open) setOpen(true);
+                else setHighlightedIndex((prev) => (prev - 1 + filteredOptions.length) % (filteredOptions.length || 1));
+              } else if (e.key === "Enter") {
+                const sel = filteredOptions[highlightedIndex];
+                if (open && sel) {
+                  e.preventDefault();
+                  handleSelect(sel);
+                }
+              } else if (e.key === "Escape") {
+                if (open) {
+                  e.preventDefault();
+                  setOpen(false);
+                  setSearchQuery("");
+                }
+              } else if (e.key === "Backspace" && clearable && searchQuery === "" && value && !disabled) {
+                e.preventDefault();
+                if (!isControlled) setUncontrolledValue("");
+                onValueChange?.("");
+              }
+            }}
+            className="sora-combobox__input"
           />
-          <div className="sora-combobox__list">
-            {filtered.length === 0 ? (
-              <div className="sora-combobox__empty">No results found.</div>
+
+          <div className="sora-combobox__actions">
+            {clearable && value && !disabled && (
+              <button
+                type="button"
+                tabIndex={-1}
+                aria-label="Clear selection"
+                onClick={handleClear}
+                className="sora-combobox__clear"
+              >
+                <X size={13} aria-hidden="true" />
+              </button>
+            )}
+
+            {loading ? (
+              <Loader2 size={14} className="sora-combobox__spinner" aria-hidden="true" />
             ) : (
-              filtered.map((item: any) => (
-                <div
-                  key={item.value}
-                  onClick={() => {
-                    onValueChange?.(item.value);
-                    setOpen(false);
-                  }}
-                  className={\`sora-combobox__item \${item.value === value ? "sora-combobox__item--selected" : ""}\`.trim()}
-                >
-                  <span>{item.label}</span>
-                  {item.value === value && <Check size={14} />}
-                </div>
-              ))
+              <ChevronsUpDown size={14} className="sora-combobox__icon" aria-hidden="true" />
             )}
           </div>
         </div>
-      )}
-    </div>
-  );
-}
+
+        {open && (
+          <div role="listbox" id={listboxId} dir={dir} className="sora-combobox__content">
+            {filteredOptions.length === 0 ? (
+              <div className="sora-combobox__empty">{emptyText}</div>
+            ) : (
+              filteredOptions.map((opt, idx) => {
+                const isSelected = opt.value === value;
+                const isHighlighted = idx === highlightedIndex;
+                return (
+                  <div
+                    key={opt.value}
+                    role="option"
+                    aria-selected={isSelected}
+                    aria-disabled={opt.disabled ? "true" : undefined}
+                    onClick={() => handleSelect(opt)}
+                    onMouseEnter={() => setHighlightedIndex(idx)}
+                    className={\`sora-combobox__item \${isSelected ? "sora-combobox__item--selected" : ""} \${isHighlighted ? "sora-combobox__item--highlighted" : ""} \${opt.disabled ? "sora-combobox__item--disabled" : ""}\`.trim()}
+                  >
+                    {opt.icon && <span className="sora-combobox__item-icon" aria-hidden="true">{opt.icon}</span>}
+                    <div className="sora-combobox__item-text">
+                      <span className="sora-combobox__item-label">{opt.label}</span>
+                      {opt.description && <span className="sora-combobox__item-desc">{opt.description}</span>}
+                    </div>
+                    {isSelected && <Check size={14} className="sora-combobox__item-check" aria-hidden="true" />}
+                  </div>
+                );
+              })
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+);
+Combobox.displayName = "Combobox";
 `;
 
     case "command-palette":

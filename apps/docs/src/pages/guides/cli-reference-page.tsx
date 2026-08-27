@@ -71,8 +71,8 @@ export const CLIReferencePage: React.FC<CLIReferencePageProps> = ({
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => go("/guides/mcp-guide")}
-                title="Next: Skills & MCP"
+                onClick={() => go("/guides/skills")}
+                title="Next: Skills"
                 aria-label="Next page"
               >
                 <ChevronRight size={14} />

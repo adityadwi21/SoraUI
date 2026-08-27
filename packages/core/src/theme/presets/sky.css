@@ -1,11 +1,14 @@
 /**
  * SoraUI Theme — Sky
- * Mode: adaptive (light default, dark on data-mode="dark" or data-docs-theme="dark")
+ * Mode: adaptive (light default, dark on data-mode="dark")
  * Description: Clean blue sky theme.
  * WCAG: All combinations verified >= 4.5:1 for text, >= 3:1 for UI elements.
  */
 :root,
-[data-theme="sky"] {
+[data-theme="sky"],
+[data-theme="sky"][data-mode="light"],
+[data-mode="light"] [data-theme="sky"]:not([data-mode="dark"]),
+[data-mode="light"][data-theme="sky"]:not([data-mode="dark"]) {
   --ui-background: #ffffff;
   --ui-foreground: #0c1a2b;
   --ui-card: #ffffff;
@@ -38,18 +41,15 @@
   /* Component layer defaults */
   --ui-button-radius: var(--ui-radius);
   --ui-input-radius: var(--ui-radius);
-  --ui-card-radius: var(--ui-radius);
+  --ui-card-radius: calc(var(--ui-radius) + 0.375rem);
 }
 
 /* ─── Sky Dark Mode ─── */
-html[data-mode="dark"] [data-theme="sky"],
-html[data-docs-theme="dark"] [data-theme="sky"],
-[data-mode="dark"] [data-theme="sky"],
-[data-docs-theme="dark"] [data-theme="sky"],
 [data-theme="sky"][data-mode="dark"],
-[data-theme="sky"][data-docs-theme="dark"],
-html[data-mode="dark"]:not([data-theme]),
-html[data-docs-theme="dark"]:not([data-theme]) {
+[data-mode="dark"] [data-theme="sky"]:not([data-mode="light"]),
+[data-mode="dark"][data-theme="sky"]:not([data-mode="light"]),
+:root[data-mode="dark"]:not([data-theme]),
+[data-docs-theme="dark"]:not([data-theme]) {
   --ui-background: #090d16;
   --ui-foreground: #f0f9ff;
   --ui-card: #0f172a;

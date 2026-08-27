@@ -21,7 +21,7 @@ describe("DatePicker Component & A11y", () => {
     await user.click(trigger);
 
     expect(screen.getByText("August 2026")).toBeInTheDocument();
-    const day10 = screen.getByRole("gridcell", { name: "10" });
+    const day10 = screen.getByRole("gridcell", { name: "August 10, 2026" });
     await user.click(day10);
 
     expect(handleSelect).toHaveBeenCalled();

@@ -53,16 +53,13 @@ function normalizeRoute(route: string): string {
     r === "/theming" ||
     r === "/themes" ||
     r === "/guides/themes" ||
-    r === "/guides/theming"
-  )
-    return "/guides/theming";
-  if (
+    r === "/guides/theming" ||
     r === "/theme-presets" ||
     r === "/presets" ||
     r === "/guides/presets" ||
     r === "/guides/theme-presets"
   )
-    return "/guides/theme-presets";
+    return "/guides/theming";
   if (
     r === "/cli" ||
     r === "/cli-reference" ||
@@ -206,11 +203,11 @@ export const App: React.FC = () => {
     if (currentPath === "/guides/changelog") {
       return <ChangelogPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/theming") {
-      return <ThemingPage onNavigate={navigate} />;
-    }
     if (currentPath === "/guides/theme-presets") {
       return <ThemePresetsPage onNavigate={navigate} />;
+    }
+    if (currentPath === "/guides/theming") {
+      return <ThemingPage onNavigate={navigate} />;
     }
     if (currentPath === "/guides/cli-reference") {
       return <CLIReferencePage onNavigate={navigate} />;

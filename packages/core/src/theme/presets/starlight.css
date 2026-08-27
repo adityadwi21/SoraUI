@@ -1,9 +1,12 @@
 /**
  * SoraUI Theme — Starlight
- * Mode: dark
+ * Mode: adaptive (dark default, light on data-mode="light")
  * Description: Deep charcoal dark with glowing starlight amber accents.
  */
-[data-theme="starlight"] {
+[data-theme="starlight"],
+[data-theme="starlight"][data-mode="dark"],
+[data-mode="dark"] [data-theme="starlight"]:not([data-mode="light"]),
+[data-mode="dark"][data-theme="starlight"]:not([data-mode="light"]) {
   --ui-background: #1c1917;
   --ui-foreground: #fafaf9;
   --ui-card: #292524;
@@ -12,12 +15,14 @@
   --ui-popover-foreground: #fafaf9;
   --ui-primary: #f59e0b;
   --ui-primary-foreground: #1c1917;
+
   --ui-secondary: #292524;
   --ui-secondary-foreground: #e7e5e4;
   --ui-muted: #292524;
   --ui-muted-foreground: #a8a29e;
   --ui-accent: #44403c;
   --ui-accent-foreground: #fafaf9;
+
   --ui-destructive: #dc2626;
   --ui-destructive-foreground: #ffffff;
 
@@ -25,13 +30,45 @@
   --ui-success-foreground: #ffffff;
   --ui-warning: #f59e0b;
   --ui-warning-foreground: #1c1917;
-  --ui-border: #78716c;
-  --ui-input: #78716c;
-
+  --ui-border: rgba(245, 158, 11, 0.25);
+  --ui-input: rgba(245, 158, 11, 0.25);
   --ui-ring: #f59e0b;
+
   --ui-radius: 0.5rem;
 
   --ui-button-radius: var(--ui-radius);
   --ui-input-radius: var(--ui-radius);
-  --ui-card-radius: var(--ui-radius);
+  --ui-card-radius: calc(var(--ui-radius) + 0.375rem);
+}
+
+/* ─── Starlight Light Mode ─── */
+[data-theme="starlight"][data-mode="light"],
+[data-mode="light"] [data-theme="starlight"]:not([data-mode="dark"]),
+[data-mode="light"][data-theme="starlight"]:not([data-mode="dark"]) {
+  --ui-background: #ffffff;
+  --ui-foreground: #1c1917;
+  --ui-card: #ffffff;
+  --ui-card-foreground: #1c1917;
+  --ui-popover: #ffffff;
+  --ui-popover-foreground: #1c1917;
+  --ui-primary: #b45309;
+  --ui-primary-foreground: #ffffff;
+
+  --ui-secondary: #fef3c7;
+  --ui-secondary-foreground: #92400e;
+  --ui-muted: #fffbeb;
+  --ui-muted-foreground: #b45309;
+  --ui-accent: #fef3c7;
+  --ui-accent-foreground: #92400e;
+
+  --ui-destructive: #dc2626;
+  --ui-destructive-foreground: #ffffff;
+
+  --ui-success: #10b981;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #ffffff;
+  --ui-border: rgba(180, 83, 9, 0.25);
+  --ui-input: rgba(180, 83, 9, 0.25);
+  --ui-ring: #b45309;
 }

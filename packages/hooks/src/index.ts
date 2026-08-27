@@ -14,3 +14,9 @@ export {
   type UsePositioningOptions,
   type PositionResult,
 } from "./use-positioning";
+export {
+  useDirection,
+  type Direction,
+  type UseDirectionReturn,
+} from "./use-direction";
+

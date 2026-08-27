@@ -60,6 +60,20 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({
         <div className="sora-doc-title-row">
           <h1 className="sora-doc-title">{doc.name}</h1>
           <div className="docs-intro-actions">
+            {/* Source Link */}
+            <a
+              href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/templates/${doc.id}-template.tsx`}
+              target="_blank"
+              rel="noreferrer"
+              className="docs-intro-copy-btn"
+              title="View source on GitHub"
+              aria-label="View source on GitHub"
+            >
+              <GitHubIcon size={13} />
+              <span>Source</span>
+              <ExternalLink size={11} style={{ opacity: 0.6 }} />
+            </a>
+
             <button
               type="button"
               className="docs-intro-copy-btn"
@@ -128,28 +142,12 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({
         </div>
 
         <p className="sora-doc-lead">{doc.description}</p>
-
-        <div className="sora-doc-chips">
-          <a
-            href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/templates/${doc.id}-template.tsx`}
-            target="_blank"
-            rel="noreferrer"
-            className="sora-doc-link-chip"
-          >
-            <GitHubIcon size={13} />
-            <span>Source Code</span>
-            <ExternalLink size={11} style={{ opacity: 0.6 }} />
-          </a>
-        </div>
       </div>
 
       {/* Live Interactive Preview */}
       <section className="sora-doc-section">
         <h2 id="live-preview" className="sora-doc-h2">
           <span>Live Interactive Preview</span>
-          <a href="#live-preview" className="sora-doc-anchor">
-            #
-          </a>
         </h2>
         <ComponentPreview code={doc.code}>{doc.render()}</ComponentPreview>
       </section>
@@ -158,9 +156,6 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({
       <section className="sora-doc-section">
         <h2 id="installation" className="sora-doc-h2">
           <span>Installation</span>
-          <a href="#installation" className="sora-doc-anchor">
-            #
-          </a>
         </h2>
         <p className="sora-subtext">
           Add this full template directly to your project:
@@ -180,9 +175,6 @@ export const TemplatePage: React.FC<TemplatePageProps> = ({
       <section className="sora-doc-section">
         <h2 id="composed-blocks" className="sora-doc-h2">
           <span>Composed Primitives &amp; Blocks</span>
-          <a href="#composed-blocks" className="sora-doc-anchor">
-            #
-          </a>
         </h2>
         <p className="sora-subtext">
           This template is composed of the following SoraUI primitives:
