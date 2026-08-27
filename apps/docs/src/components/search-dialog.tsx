@@ -83,7 +83,10 @@ export const SearchDialog: React.FC<SearchDialogProps> = ({
         title: g.title,
         category: "Guide",
         description: g.description,
-        href: g.customPath || `/guides/${g.id}`,
+        href: g.customPath || 
+              (g.id === "introduction" ? "/docs" : 
+               g.id === "cli-reference" ? "/docs/cli" : 
+               `/docs/${g.id}`),
       }),
     );
     [
@@ -91,51 +94,51 @@ export const SearchDialog: React.FC<SearchDialogProps> = ({
         id: "nextjs",
         title: "Next.js Integration",
         description: "Next.js App Router and Pages Router setup with SoraUI.",
-        href: "/guides/nextjs",
+        href: "/docs/nextjs",
       },
       {
         id: "vite",
         title: "Vite & SPA Integration",
         description: "Fast single-page application setup with Vite and React.",
-        href: "/guides/vite",
+        href: "/docs/vite",
       },
       {
         id: "laravel",
         title: "Laravel Integration",
         description: "Laravel 11+ Inertia.js React setup with design tokens.",
-        href: "/guides/laravel",
+        href: "/docs/laravel",
       },
       {
         id: "react-router",
         title: "React Router Integration",
         description: "React Router v7 / Remix setup with SSR support.",
-        href: "/guides/react-router",
+        href: "/docs/react-router",
       },
       {
         id: "astro",
         title: "Astro Integration",
         description:
           "Astro content-first setup with React Island architecture.",
-        href: "/guides/astro",
+        href: "/docs/astro",
       },
       {
         id: "manual",
         title: "Manual Installation",
         description: "Install SoraUI dependencies and tokens manually.",
-        href: "/guides/manual",
+        href: "/docs/manual",
       },
       {
         id: "migration",
         title: "Migration from Radix & shadcn",
         description: "Transition existing components and tokens to SoraUI.",
-        href: "/guides/migration",
+        href: "/docs/migration",
       },
       {
         id: "semver",
         title: "Semantic Versioning Policy",
         description:
           "Public API stability, release cadence, and deprecation lifecycle.",
-        href: "/guides/semver",
+        href: "/docs/semver",
       },
     ].forEach((f) =>
       r.push({
@@ -152,7 +155,7 @@ export const SearchDialog: React.FC<SearchDialogProps> = ({
         title: c.name,
         category: `Component · ${c.category}`,
         description: c.description,
-        href: `/components/${c.id}`,
+        href: `/docs/components/base/${c.id}`,
       }),
     );
     BLOCK_DOCS.forEach((b) =>

@@ -21,6 +21,8 @@ export interface CodeBlockProps {
   defaultExpanded?: boolean;
   /** Maximum height when collapsed */
   collapsedMaxHeight?: number | string;
+  /** Whether to hide top filename/copy header (e.g. inside ComponentPreview) */
+  hideHeader?: boolean;
 }
 
 function getLanguageIcon(language?: string, filename?: string) {
@@ -69,6 +71,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   expandable = false,
   defaultExpanded = false,
   collapsedMaxHeight = "240px",
+  hideHeader = false,
 }) => {
   const [copied, setCopied] = useState(false);
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
@@ -86,6 +89,8 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const lines = code.split("\n");
+  const isMultiLine = lines.length > 1;
   const isCollapsed = expandable && !isExpanded;
 
   return (
@@ -93,43 +98,56 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       className={`docs-codeblock${expandable ? " docs-codeblock--expandable" : ""}`}
       style={style}
     >
-      <div className="docs-codeblock-head">
-        <div className="docs-codeblock-head-left">
-          {getLanguageIcon(language, filename || title)}
-          <span className="docs-codeblock-filename">{displayName}</span>
-        </div>
+      {!hideHeader && (
+        <div className="docs-codeblock-head">
+          <div className="docs-codeblock-head-left">
+            {getLanguageIcon(language, filename || title)}
+            <span className="docs-codeblock-filename">{displayName}</span>
+          </div>
 
-        <div className="docs-codeblock-head-right">
-          {expandable && (
+          <div className="docs-codeblock-head-right">
+            {expandable && (
+              <button
+                type="button"
+                className="docs-codeblock-expand-toggle"
+                onClick={() => setIsExpanded((v) => !v)}
+                aria-label={isExpanded ? "Collapse code" : "Expand code"}
+              >
+                <span>{isExpanded ? "Collapse" : "Expand"}</span>
+              </button>
+            )}
+
             <button
               type="button"
-              className="docs-codeblock-expand-toggle"
-              onClick={() => setIsExpanded((v) => !v)}
-              aria-label={isExpanded ? "Collapse code" : "Expand code"}
+              className={`docs-codeblock-copy${copied ? " ok" : ""}`}
+              onClick={copy}
+              title={copied ? "Copied!" : "Copy code"}
+              aria-label={copied ? "Copied" : "Copy"}
             >
-              <span>{isExpanded ? "Collapse" : "Expand"}</span>
+              {copied ? <Check size={13} /> : <Copy size={13} />}
+              <span>{copied ? "Copied" : "Copy"}</span>
             </button>
-          )}
-
-          <button
-            type="button"
-            className={`docs-codeblock-copy${copied ? " ok" : ""}`}
-            onClick={copy}
-            title={copied ? "Copied!" : "Copy code"}
-            aria-label={copied ? "Copied" : "Copy"}
-          >
-            {copied ? <Check size={13} /> : <Copy size={13} />}
-            <span>{copied ? "Copied" : "Copy"}</span>
-          </button>
+          </div>
         </div>
-      </div>
+      )}
 
       <div
         className={`docs-codeblock-body${isCollapsed ? " is-collapsed" : ""}`}
         style={isCollapsed ? { maxHeight: collapsedMaxHeight } : undefined}
       >
         <pre className="docs-codeblock-pre">
-          <code>{code}</code>
+          <code className="docs-codeblock-code-lines">
+            {isMultiLine
+              ? lines.map((line, idx) => (
+                  <div key={idx} className="docs-codeblock-line">
+                    <span className="docs-codeblock-linenum" aria-hidden="true">
+                      {idx + 1}
+                    </span>
+                    <span className="docs-codeblock-linecode">{line || " "}</span>
+                  </div>
+                ))
+              : <code>{code}</code>}
+          </code>
         </pre>
 
         {isCollapsed && (
@@ -139,7 +157,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
               className="docs-codeblock-expand-pill"
               onClick={() => setIsExpanded(true)}
             >
-              <span>Expand</span>
+              <span>Expand Code</span>
             </button>
           </div>
         )}

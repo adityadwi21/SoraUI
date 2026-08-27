@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
 import { ThemeProvider } from "@soraui/react";
+import { DocsThemeProvider } from "./registry/docs-theme-context";
 
 // SoraUI Core Themes & Styles
 import "@soraui/core/theme/primitives.css";
@@ -19,8 +20,10 @@ import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider defaultTheme="sky" defaultMode="light">
-      <App />
-    </ThemeProvider>
+    <DocsThemeProvider>
+      <ThemeProvider defaultTheme="sky" defaultMode="light">
+        <App />
+      </ThemeProvider>
+    </DocsThemeProvider>
   </React.StrictMode>,
 );

@@ -108,9 +108,51 @@ export function Accordion(props: AccordionProps) {
   delete (domProps as Record<string, unknown>).onValueChange;
   delete (domProps as Record<string, unknown>).defaultValue;
 
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (!target.classList.contains("sora-accordion__trigger")) return;
+
+    const triggers = Array.from(
+      e.currentTarget.querySelectorAll<HTMLButtonElement>(".sora-accordion__trigger")
+    ).filter((t) => !t.disabled);
+
+    const index = triggers.indexOf(target as HTMLButtonElement);
+    if (index === -1) return;
+
+    let nextIndex = index;
+    switch (e.key) {
+      case "ArrowDown":
+      case "ArrowRight":
+        nextIndex = (index + 1) % triggers.length;
+        e.preventDefault();
+        break;
+      case "ArrowUp":
+      case "ArrowLeft":
+        nextIndex = (index - 1 + triggers.length) % triggers.length;
+        e.preventDefault();
+        break;
+      case "Home":
+        nextIndex = 0;
+        e.preventDefault();
+        break;
+      case "End":
+        nextIndex = triggers.length - 1;
+        e.preventDefault();
+        break;
+    }
+
+    if (nextIndex !== index) {
+      triggers[nextIndex]?.focus();
+    }
+  }, []);
+
   return (
     <AccordionContext.Provider value={{ isItemOpen, toggleItem }}>
-      <div className={cx("sora-accordion", className)} {...domProps}>
+      <div 
+        className={cx("sora-accordion", className)} 
+        onKeyDown={handleKeyDown}
+        {...domProps}
+      >
         {children}
       </div>
     </AccordionContext.Provider>
@@ -119,9 +161,11 @@ export function Accordion(props: AccordionProps) {
 
 export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
   ({ value, disabled, className, children, ...props }, ref) => {
+    const { isItemOpen } = useAccordionContext();
     const baseId = useId();
     const triggerId = `${baseId}-trigger-${value}`;
     const contentId = `${baseId}-content-${value}`;
+    const isOpen = isItemOpen(value);
 
     return (
       <AccordionItemContext.Provider
@@ -131,10 +175,10 @@ export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
           ref={ref}
           className={cx(
             "sora-accordion__item",
-            disabled && "sora-accordion__item--disabled",
             className,
           )}
-          data-disabled={disabled ? "true" : undefined}
+          data-disabled={disabled ? "" : undefined}
+          data-state={isOpen ? "open" : "closed"}
           {...props}
         >
           {children}
@@ -162,10 +206,10 @@ export const AccordionTrigger = forwardRef<
         aria-expanded={isOpen}
         aria-controls={contentId}
         disabled={disabled}
+        data-state={isOpen ? "open" : "closed"}
         onClick={() => toggleItem(value)}
         className={cx(
           "sora-accordion__trigger",
-          isOpen && "sora-accordion__trigger--open",
           className,
         )}
         {...props}
@@ -190,18 +234,21 @@ export const AccordionContent = forwardRef<
   const { value, triggerId, contentId } = useAccordionItemContext();
   const isOpen = isItemOpen(value);
 
-  if (!isOpen) return null;
-
   return (
     <div
       ref={ref}
       id={contentId}
       role="region"
       aria-labelledby={triggerId}
+      aria-hidden={!isOpen}
+      data-state={isOpen ? "open" : "closed"}
+      {...(!isOpen ? { inert: "" } : {})}
       className={cx("sora-accordion__content", className)}
       {...props}
     >
-      <div className="sora-accordion__body">{children}</div>
+      <div className="sora-accordion__content-inner">
+        <div className="sora-accordion__body">{children}</div>
+      </div>
     </div>
   );
 });

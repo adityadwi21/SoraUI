@@ -60,8 +60,8 @@ export const ChangelogPage: React.FC<ChangelogPageProps> = ({ onNavigate }) => {
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => go("/guides/semver")}
-                title="Previous: Semantic Versioning & Policy"
+                onClick={() => go("/docs/mcp-guide")}
+                title="Previous: MCP Server"
                 aria-label="Previous page"
               >
                 <ChevronLeft size={14} />
@@ -69,8 +69,8 @@ export const ChangelogPage: React.FC<ChangelogPageProps> = ({ onNavigate }) => {
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => go("/guides/introduction")}
-                title="Next: Introduction"
+                onClick={() => go("/docs/components")}
+                title="Next: Components"
                 aria-label="Next page"
               >
                 <ChevronRight size={14} />

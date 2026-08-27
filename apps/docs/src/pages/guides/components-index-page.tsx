@@ -65,7 +65,7 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => onNavigate("/guides/introduction")}
+                onClick={() => onNavigate("/docs")}
                 title="Previous: Introduction"
                 aria-label="Previous page"
               >
@@ -74,7 +74,7 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({
               <button
                 type="button"
                 className="docs-intro-nav-arrow-btn"
-                onClick={() => onNavigate("/components/accordion")}
+                onClick={() => onNavigate("/docs/components/base/accordion")}
                 title="Next: Accordion"
                 aria-label="Next component"
               >
@@ -105,7 +105,7 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({
               key={c.id}
               type="button"
               className="docs-comp-item-btn new-item"
-              onClick={() => onNavigate(`/components/${c.id}`)}
+              onClick={() => onNavigate(`/docs/components/base/${c.id}`)}
             >
               <span className="docs-comp-item-name">{c.name}</span>
               <span className="docs-comp-item-dot" title="Recently added" />
@@ -129,7 +129,7 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({
               key={c.id}
               type="button"
               className="docs-comp-item-btn"
-              onClick={() => onNavigate(`/components/${c.id}`)}
+              onClick={() => onNavigate(`/docs/components/base/${c.id}`)}
             >
               <span className="docs-comp-item-name">{c.name}</span>
             </button>
@@ -164,7 +164,7 @@ export const ComponentsIndexPage: React.FC<ComponentsIndexPageProps> = ({
         <button
           type="button"
           className="docs-intro-pagination-btn next"
-          onClick={() => onNavigate("/components/accordion")}
+          onClick={() => onNavigate("/docs/components/base/accordion")}
         >
           <div
             className="docs-intro-pagination-text"

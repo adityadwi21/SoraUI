@@ -21,7 +21,6 @@ import { ManualPage } from "./pages/guides/manual-page";
 import { MigrationPage } from "./pages/guides/migration-page";
 import { SkillsPage } from "./pages/guides/skills-page";
 import { McpGuidePage } from "./pages/guides/mcp-guide-page";
-import { SemverPage } from "./pages/guides/semver-page";
 
 import { getComponentDoc, getBlockDoc, getTemplateDoc } from "./registry";
 
@@ -33,72 +32,84 @@ function normalizeRoute(route: string): string {
     r === "/intro" ||
     r === "/introduction" ||
     r === "/guides/intro" ||
-    r === "/guides/introduction"
+    r === "/guides/introduction" ||
+    r === "/docs"
   )
-    return "/guides/introduction";
+    return "/docs";
   if (
     r === "/components" ||
+    r === "/docs/components" ||
+    r === "/docs/components/base" ||
     r === "/guide/components" ||
     r === "/guides/components"
   )
-    return "/components";
+    return "/docs/components";
   if (
     r === "/install" ||
     r === "/installation" ||
     r === "/guides/install" ||
-    r === "/guides/installation"
+    r === "/guides/installation" ||
+    r === "/docs/installation"
   )
-    return "/guides/installation";
+    return "/docs/installation";
   if (
     r === "/theming" ||
     r === "/themes" ||
     r === "/guides/themes" ||
     r === "/guides/theming" ||
+    r === "/docs/theming" ||
     r === "/theme-presets" ||
     r === "/presets" ||
     r === "/guides/presets" ||
-    r === "/guides/theme-presets"
+    r === "/guides/theme-presets" ||
+    r === "/docs/theme-presets"
   )
-    return "/guides/theming";
+    return "/docs/theming";
   if (
     r === "/cli" ||
     r === "/cli-reference" ||
     r === "/guides/cli" ||
-    r === "/guides/cli-reference"
+    r === "/guides/cli-reference" ||
+    r === "/docs/cli" ||
+    r === "/docs/cli-reference"
   )
-    return "/guides/cli-reference";
-  if (r === "/skills" || r === "/guides/skills") return "/guides/skills";
+    return "/docs/cli";
+  if (r === "/skills" || r === "/guides/skills" || r === "/docs/skills") return "/docs/skills";
   if (
     r === "/mcp" ||
     r === "/mcp-guide" ||
     r === "/guides/mcp" ||
-    r === "/guides/mcp-guide"
+    r === "/guides/mcp-guide" ||
+    r === "/docs/mcp" ||
+    r === "/docs/mcp-guide"
   )
-    return "/guides/mcp-guide";
-  if (r === "/changelog" || r === "/guides/changelog")
-    return "/guides/changelog";
+    return "/docs/mcp-guide";
+  if (r === "/changelog" || r === "/guides/changelog" || r === "/docs/changelog")
+    return "/docs/changelog";
   if (
     r === "/next" ||
     r === "/nextjs" ||
     r === "/guides/next" ||
-    r === "/guides/nextjs"
+    r === "/guides/nextjs" ||
+    r === "/docs/next" ||
+    r === "/docs/nextjs"
   )
-    return "/guides/nextjs";
-  if (r === "/vite" || r === "/guides/vite") return "/guides/vite";
-  if (r === "/laravel" || r === "/guides/laravel") return "/guides/laravel";
+    return "/docs/nextjs";
+  if (r === "/vite" || r === "/guides/vite" || r === "/docs/vite") return "/docs/vite";
+  if (r === "/laravel" || r === "/guides/laravel" || r === "/docs/laravel") return "/docs/laravel";
   if (
     r === "/react-router" ||
     r === "/remix" ||
     r === "/guides/remix" ||
-    r === "/guides/react-router"
+    r === "/guides/react-router" ||
+    r === "/docs/remix" ||
+    r === "/docs/react-router"
   )
-    return "/guides/react-router";
-  if (r === "/astro" || r === "/guides/astro") return "/guides/astro";
-  if (r === "/manual" || r === "/guides/manual") return "/guides/manual";
-  if (r === "/migration" || r === "/migrate" || r === "/guides/migration")
-    return "/guides/migration";
-  if (r === "/semver" || r === "/versioning" || r === "/guides/semver")
-    return "/guides/semver";
+    return "/docs/react-router";
+  if (r === "/astro" || r === "/guides/astro" || r === "/docs/astro") return "/docs/astro";
+  if (r === "/manual" || r === "/guides/manual" || r === "/docs/manual") return "/docs/manual";
+  if (r === "/migration" || r === "/migrate" || r === "/guides/migration" || r === "/docs/migration")
+    return "/docs/migration";
   if (r === "/playground" || r === "/theme-builder") return "/playground";
   if (r === "/blocks") return "/blocks/login-form";
   if (r === "/templates") return "/templates/dashboard-page";
@@ -106,13 +117,9 @@ function normalizeRoute(route: string): string {
   return r;
 }
 
-function parseHash(hashString: string): { route: string; anchor?: string } {
-  let raw = hashString
-    ? hashString.startsWith("#")
-      ? hashString.slice(1)
-      : hashString
-    : "/";
-  if (!raw || raw === "" || raw === "/") return { route: "/" };
+function parsePath(pathString: string, hashString: string): { route: string; anchor?: string } {
+  let raw = pathString || "/";
+  if (!raw || raw === "") return { route: "/" };
 
   // Remove query string if any
   const queryIdx = raw.indexOf("?");
@@ -120,21 +127,13 @@ function parseHash(hashString: string): { route: string; anchor?: string } {
     raw = raw.substring(0, queryIdx);
   }
 
-  // Check if there is an in-page anchor e.g. /guides/nextjs#cli-init or /#cli-init
-  let routePart = raw;
+  const normalized = normalizeRoute(raw);
+
   let anchorPart: string | undefined = undefined;
-
-  const hashIdx = raw.indexOf("#");
-  if (hashIdx !== -1) {
-    routePart = raw.substring(0, hashIdx);
-    anchorPart = raw.substring(hashIdx + 1);
+  if (hashString && hashString.startsWith("#")) {
+    anchorPart = hashString.slice(1);
   }
 
-  if (routePart && !routePart.startsWith("/")) {
-    routePart = "/" + routePart;
-  }
-
-  const normalized = normalizeRoute(routePart);
   return anchorPart
     ? { route: normalized, anchor: anchorPart }
     : { route: normalized };
@@ -142,13 +141,13 @@ function parseHash(hashString: string): { route: string; anchor?: string } {
 
 export const App: React.FC = () => {
   const [currentPath, setCurrentPath] = useState(() => {
-    const parsed = parseHash(window.location.hash);
+    const parsed = parsePath(window.location.pathname, window.location.hash);
     return parsed.route || "/";
   });
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const parsed = parseHash(window.location.hash);
+    const handlePopState = () => {
+      const parsed = parsePath(window.location.pathname, window.location.hash);
       if (parsed.route) {
         setCurrentPath(parsed.route);
         if (parsed.anchor) {
@@ -174,78 +173,106 @@ export const App: React.FC = () => {
       }
     };
 
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
   const navigate = (path: string) => {
-    window.location.hash = path;
-    const parsed = parseHash(path);
+    if (path.startsWith("#")) {
+      window.history.pushState(null, "", window.location.pathname + path);
+      const anchor = path.slice(1);
+      const el = document.getElementById(anchor);
+      if (el) {
+        const yOffset = -80;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+      return;
+    }
+
+    const hashIdx = path.indexOf("#");
+    let pathname = path;
+    let hash = "";
+    if (hashIdx !== -1) {
+      pathname = path.substring(0, hashIdx);
+      hash = path.substring(hashIdx);
+    }
+
+    window.history.pushState(null, "", path);
+    const parsed = parsePath(pathname, hash);
     if (parsed.route) {
       setCurrentPath(parsed.route);
-      window.scrollTo(0, 0);
+      if (parsed.anchor) {
+        setTimeout(() => {
+          const el = document.getElementById(parsed.anchor!);
+          if (el) {
+            const yOffset = -80;
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        }, 50);
+      } else {
+        window.scrollTo(0, 0);
+      }
     }
   };
 
   const renderContent = () => {
-    if (currentPath === "/guides/introduction") {
+    if (currentPath === "/docs") {
       return <IntroductionPage onNavigate={navigate} />;
     }
-    if (currentPath === "/components") {
+    if (currentPath === "/docs/components") {
       return <ComponentsIndexPage onNavigate={navigate} />;
     }
     if (currentPath === "/playground") {
       return <PlaygroundPage />;
     }
-    if (currentPath === "/guides/installation") {
+    if (currentPath === "/docs/installation") {
       return <InstallationPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/changelog") {
+    if (currentPath === "/docs/changelog") {
       return <ChangelogPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/theme-presets") {
+    if (currentPath === "/docs/theme-presets") {
       return <ThemePresetsPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/theming") {
+    if (currentPath === "/docs/theming") {
       return <ThemingPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/cli-reference") {
+    if (currentPath === "/docs/cli") {
       return <CLIReferencePage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/nextjs") {
+    if (currentPath === "/docs/nextjs") {
       return <NextjsPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/vite") {
+    if (currentPath === "/docs/vite") {
       return <VitePage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/laravel") {
+    if (currentPath === "/docs/laravel") {
       return <LaravelPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/react-router") {
+    if (currentPath === "/docs/react-router") {
       return <ReactRouterPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/astro") {
+    if (currentPath === "/docs/astro") {
       return <AstroPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/manual") {
+    if (currentPath === "/docs/manual") {
       return <ManualPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/migration") {
+    if (currentPath === "/docs/migration") {
       return <MigrationPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/skills") {
+    if (currentPath === "/docs/skills") {
       return <SkillsPage onNavigate={navigate} />;
     }
-    if (currentPath === "/guides/mcp-guide") {
+    if (currentPath === "/docs/mcp-guide") {
       return <McpGuidePage onNavigate={navigate} />;
-    }
-    if (currentPath === "/guides/semver") {
-      return <SemverPage onNavigate={navigate} />;
     }
 
     // Dynamic Component route
-    if (currentPath.startsWith("/components/")) {
-      const compId = currentPath.replace("/components/", "");
+    if (currentPath.startsWith("/docs/components/base/")) {
+      const compId = currentPath.replace("/docs/components/base/", "");
       const doc = getComponentDoc(compId);
       if (doc) {
         return <ComponentPage doc={doc} onNavigate={navigate} />;

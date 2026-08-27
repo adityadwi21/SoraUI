@@ -642,14 +642,14 @@ svg {
 .docs-main {
   flex: 1;
   min-width: 0;
-  padding: 2.25rem 4rem 5rem 4rem;
+  padding: 2rem 2.5rem 5rem 2.5rem;
   display: flex;
   flex-direction: column;
 }
 
 .docs-main-container {
   width: 100%;
-  max-width: 860px;
+  max-width: 780px;
   margin: 0 auto;
 }
 
@@ -657,19 +657,19 @@ svg {
    RIGHT TABLE OF CONTENTS (ON THIS PAGE)
    ======================================================================= */
 .docs-toc {
-  display: block;
+  display: none;
   width: var(--docs-toc-w);
   flex-shrink: 0;
   position: sticky;
   top: var(--docs-header-h);
   height: calc(100vh - var(--docs-header-h));
   overflow-y: auto;
-  padding: 2.5rem 1.5rem 2.5rem 0.5rem;
+  padding: 2rem 1.5rem 2.5rem 0.5rem;
   overscroll-behavior: contain;
 }
-@media (max-width: 1200px) {
+@media (min-width: 1280px) {
   .docs-toc {
-    display: none !important;
+    display: block;
   }
 }
 
@@ -1737,73 +1737,55 @@ svg {
 }
 
 /* =======================================================================
-   COMPONENT PREVIEW CANVAS & TOOLBAR
+   2026 WORLD-CLASS COMPONENT PREVIEW & CODE EXPERIENCE
    ======================================================================= */
+.sora-preview-card,
 .docs-preview-root {
-  border-radius: var(--docs-radius);
+  border-radius: var(--docs-radius, 10px);
   border: 1px solid var(--docs-border);
   overflow: hidden;
-  margin: 0.5rem 0 1.25rem;
+  margin: 0.75rem 0 1.75rem;
   background: var(--docs-bg-card);
-  box-shadow: var(--docs-card-shadow);
-  transition: border-color var(--docs-transition);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  transition: border-color var(--docs-transition), box-shadow var(--docs-transition);
+}
+.sora-preview-card:hover {
+  border-color: var(--docs-border-strong, var(--docs-border));
 }
 
+.sora-preview-toolbar,
 .docs-preview-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 0.875rem;
-  background: var(--docs-bg-subtle);
+  padding: 0.4rem 0.65rem;
+  background: var(--docs-bg-subtle, var(--docs-bg));
   border-bottom: 1px solid var(--docs-border);
-  gap: 0.75rem;
+  gap: 0.5rem;
+  min-height: 44px;
+  box-sizing: border-box;
 }
 
-.docs-preview-toolbar-left {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  min-width: 0;
-}
-
-.docs-preview-toolbar-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-
-.docs-preview-toolbar-right {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 1;
-  min-width: 0;
-}
-
-@media (max-width: 640px) {
-  .docs-preview-toolbar {
-    flex-wrap: wrap;
-  }
-  .docs-preview-toolbar-left,
-  .docs-preview-toolbar-center,
-  .docs-preview-toolbar-right {
-    flex: auto;
-  }
-}
-
+.sora-preview-tabs-group,
 .docs-preview-tabs {
   display: inline-flex;
-  gap: 0.125rem;
+  align-items: center;
+  gap: 0.15rem;
   background: var(--docs-bg-muted);
-  border-radius: var(--docs-radius-sm);
-  padding: 0.2rem;
+  border-radius: 6px;
+  padding: 0.15rem;
   border: 1px solid var(--docs-border);
 }
 
+.sora-preview-tab-btn,
 .docs-preview-tab {
-  padding: 0.25rem 0.75rem;
-  font-size: 0.8125rem;
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.65rem;
+  font-size: 0.775rem;
   font-family: var(--docs-font-sans);
   font-weight: 500;
   border: none;
@@ -1811,46 +1793,220 @@ svg {
   background: transparent;
   color: var(--docs-fg-muted);
   cursor: pointer;
-  transition: all var(--docs-transition-fast);
+  line-height: 1.2;
+  min-height: 28px;
+  transition:
+    color 0.16s ease,
+    background-color 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.18s ease;
 }
+.sora-preview-tab-btn:hover,
+.docs-preview-tab:hover {
+  color: var(--docs-fg);
+}
+.sora-preview-tab-btn.active,
 .docs-preview-tab.active {
   background: var(--docs-bg);
   color: var(--docs-fg);
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
+.sora-preview-toolbar-center,
+.docs-preview-toolbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.sora-preview-toolbar-right,
+.docs-preview-toolbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.sora-preview-dir-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border-radius: 5px;
+  border: 1px solid var(--docs-border);
+  background: var(--docs-bg);
+  color: var(--docs-fg-muted);
+  cursor: pointer;
+  transition: all var(--docs-transition-fast);
+}
+.sora-preview-dir-btn:hover {
+  color: var(--docs-fg);
+  border-color: var(--docs-border-strong);
+}
+.sora-preview-dir-btn.is-rtl {
+  background: var(--ui-primary, #0ea5e9);
+  color: var(--ui-primary-foreground, #ffffff);
+  border-color: var(--ui-primary, #0ea5e9);
+}
+
+.sora-preview-theme-wrap select,
+.sora-preview-theme-wrap .docs-theme-select {
+  height: 28px;
+  font-size: 0.775rem;
+  font-weight: 500;
+  padding: 0 1.5rem 0 0.55rem;
+  min-width: 82px;
+  border-radius: 5px;
+}
+
+.sora-preview-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 28px;
+  padding: 0 0.65rem;
+  font-size: 0.775rem;
+  font-weight: 500;
+  font-family: var(--docs-font-sans);
+  border-radius: 5px;
+  border: 1px solid var(--docs-border);
+  background: var(--docs-bg);
+  color: var(--docs-fg);
+  cursor: pointer;
+  transition: all var(--docs-transition-fast);
+}
+.sora-preview-copy-btn:hover {
+  background: var(--docs-bg-muted);
+  border-color: var(--docs-border-strong);
+}
+.sora-preview-copy-btn.copied {
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, 0.35);
+  background: rgba(34, 197, 94, 0.05);
+}
+
+/* ─── CANVAS AREA & SMOOTH TAB TRANSITIONS ─── */
+@keyframes soraTabFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sora-preview-canvas-wrapper,
 .docs-preview-canvas {
-  min-height: 200px;
-  padding: 1rem;
+  min-height: 220px;
+  padding: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--docs-canvas-bg);
+  background-color: var(--docs-canvas-bg, #fafafa);
   background-image: radial-gradient(
-    var(--docs-canvas-dot) 1px,
-    transparent 1px
+    var(--docs-canvas-dot, rgba(0, 0, 0, 0.07)) 1.25px,
+    transparent 1.25px
   );
   background-size: 20px 20px;
   overflow: auto;
   transition: background-color var(--docs-transition-slow);
+  animation: soraTabFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
 }
 
-/* Inner theme-aware wrapper: picks up background & foreground from active theme tokens */
+.sora-preview-viewport-box {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.sora-preview-canvas-inner,
 .docs-preview-theme-canvas {
-  background-color: var(--ui-background);
-  color: var(--ui-foreground);
+  background-color: var(--ui-background, #ffffff);
+  color: var(--ui-foreground, #09090b);
   border-radius: var(--ui-radius, 0.5rem);
   width: 100%;
-  min-height: 80px;
+  min-height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1.5rem;
-  transition:
-    background-color 0.25s ease,
-    color 0.25s ease;
-  box-shadow: 0 0 0 1px var(--ui-border, rgba(0, 0, 0, 0.08));
+  padding: 2.25rem 1.75rem;
+  box-shadow: 0 0 0 1px var(--ui-border, rgba(0, 0, 0, 0.08)), 0 2px 8px -2px rgba(0, 0, 0, 0.05);
+  position: relative;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.sora-preview-rendered-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.sora-preview-code-pane {
+  padding: 0;
+  background: var(--docs-code-bg);
+  animation: soraTabFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+.sora-preview-code-pane .docs-codeblock {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* RTL Floating Disclaimer */
+.sora-rtl-disclaimer-badge {
+  position: absolute;
+  top: 0.5rem;
+  inset-inline-end: 0.5rem;
+  z-index: 30;
+}
+.sora-rtl-info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(234, 179, 8, 0.5);
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.sora-rtl-disclaimer-popup {
+  position: absolute;
+  top: 100%;
+  inset-inline-end: 0;
+  margin-top: 0.35rem;
+  width: 260px;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--docs-radius-sm, 6px);
+  background: var(--docs-bg);
+  border: 1px solid var(--docs-border);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+  z-index: 50;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--docs-fg);
+}
+.sora-rtl-popup-title {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: #eab308;
+  margin-bottom: 0.25rem;
 }
 
 /* =======================================================================
@@ -2018,12 +2174,50 @@ svg {
 
 pre.docs-codeblock-pre {
   margin: 0;
-  padding: 1rem 1.25rem;
-  font-size: 0.84rem;
+  padding: 0.875rem 0;
+  font-size: 0.8125rem;
   line-height: 1.7;
   color: var(--docs-code-fg);
   background: var(--docs-code-bg);
   overflow-x: auto;
+  font-family: var(--docs-font-mono, ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace);
+}
+
+.docs-codeblock-code-lines {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.docs-codeblock-line {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  padding: 0 1rem;
+  transition: background-color 0.1s ease;
+}
+.docs-codeblock-line:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.docs-codeblock-linenum {
+  display: inline-block;
+  width: 2.25rem;
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 1.15rem;
+  color: var(--docs-fg-subtle, #71717a);
+  opacity: 0.4;
+  user-select: none;
+  font-size: 0.75rem;
+  font-family: var(--docs-font-mono, monospace);
+}
+
+.docs-codeblock-linecode {
+  flex: 1;
+  white-space: pre;
+  color: var(--docs-code-fg);
+  font-family: var(--docs-font-mono, ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace);
 }
 
 /* =======================================================================

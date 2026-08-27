@@ -26,6 +26,8 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { GitHubIcon } from "../components/brand-icons";
+import { SearchDialog } from "../components/search-dialog";
+import { useDocsTheme } from "../registry/docs-theme-context";
 import {
   Button,
   Badge,
@@ -52,27 +54,20 @@ interface HomePageProps {
 
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const heroRef = useRef<HTMLElement>(null);
+  const { mode, toggle } = useDocsTheme();
+  const [searchOpen, setSearchOpen] = useState(false);
 
-  const [docsTheme, setDocsTheme] = useState<"light" | "dark">(() => {
-    try {
-      return (
-        (localStorage.getItem("docs-theme") as "light" | "dark") || "light"
-      );
-    } catch {
-      return "light";
-    }
-  });
-
-  const toggleTheme = () => {
-    const next = docsTheme === "dark" ? "light" : "dark";
-    setDocsTheme(next);
-    document.documentElement.setAttribute("data-docs-theme", next);
-    try {
-      localStorage.setItem("docs-theme", next);
-    } catch {
-      /* noop */
-    }
-  };
+  // Keyboard: Cmd+K
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    document.addEventListener("keydown", h);
+    return () => document.removeEventListener("keydown", h);
+  }, []);
 
   /* Parallax shimmer on mouse move */
   useEffect(() => {
@@ -89,11 +84,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
     };
     hero.addEventListener("mousemove", handler);
     return () => hero.removeEventListener("mousemove", handler);
-  }, []);
-
-  // Sync docs-theme attribute on mount
-  useEffect(() => {
-    document.documentElement.setAttribute("data-docs-theme", docsTheme);
   }, []);
 
   // Interactive local states for widgets
@@ -129,7 +119,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="home-root" data-docs-theme={docsTheme}>
+    <div className="home-root" data-docs-theme={mode}>
+      <SearchDialog
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onNavigate={onNavigate}
+      />
+
       {/* ─── HEADER ─── */}
       <header className="docs-header">
         <div className="docs-header-inner">
@@ -142,7 +138,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             >
               <img
                 src={
-                  docsTheme === "dark"
+                  mode === "dark"
                     ? "/Logo-full-removebg.png"
                     : "/Logo-full-removebg-light.png"
                 }
@@ -154,7 +150,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                   display: "block",
                 }}
               />
-              <span className="docs-logo-chip">v0.1.0</span>
+              <span className="docs-logo-chip">v0.1.1</span>
             </button>
           </div>
 
@@ -166,8 +162,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             {(
               [
                 { label: "Home", path: "/" },
-                { label: "Docs", path: "/guides/introduction" },
-                { label: "Components", path: "/components/button" },
+                { label: "Docs", path: "/docs" },
+                { label: "Components", path: "/docs/components" },
                 { label: "Blocks", path: "/blocks/login-form" },
                 { label: "Templates", path: "/templates/dashboard-page" },
                 { label: "Playground", path: "/playground" },
@@ -189,7 +185,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             <button
               type="button"
               className="docs-search-btn"
-              onClick={() => onNavigate("/guides/introduction")}
+              onClick={() => setSearchOpen(true)}
               aria-label="Search"
             >
               <Search size={14} style={{ flexShrink: 0 }} />
@@ -201,10 +197,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             <button
               type="button"
               className="docs-icon-btn"
-              onClick={toggleTheme}
+              onClick={toggle}
               aria-label="Toggle theme"
             >
-              {docsTheme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+              {mode === "dark" ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             <a
               href="https://github.com/adityadwi21/SoraUI"

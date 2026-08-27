@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ThemeScope } from "@soraui/react";
 import { ViewportSwitcher, ViewportMode } from "./viewport-switcher";
 import { ThemeSwitcher } from "./theme-switcher";
 import { CodeBlock } from "./code-block";
+import { Eye, Code2, Copy, Check, Sparkles } from "lucide-react";
 
 export interface ComponentPreviewProps {
   children?: React.ReactNode;
@@ -10,134 +11,198 @@ export interface ComponentPreviewProps {
   defaultTheme?: string;
   align?: "center" | "start";
   style?: React.CSSProperties;
+  /** Optional title or filename for code view */
+  filename?: string;
+  /** Whether to show theme switcher */
+  showThemeSwitcher?: boolean;
+  /** Whether to show RTL toggle button (default: false) */
+  showRtlToggle?: boolean;
+  /** Default RTL state */
+  defaultRtl?: boolean;
+}
+
+/** Helper to observe the docs layout dark/light mode */
+function useDocsMode(): "light" | "dark" {
+  const [mode, setMode] = useState<"light" | "dark">(() => {
+    if (typeof document !== "undefined") {
+      const attr = document.documentElement.getAttribute("data-docs-theme");
+      if (attr === "dark" || attr === "light") return attr;
+    }
+    return "light";
+  });
+
+  useEffect(() => {
+    const update = () => {
+      const attr = document.documentElement.getAttribute("data-docs-theme");
+      if (attr === "dark" || attr === "light") setMode(attr);
+    };
+
+    update();
+
+    const observer = new MutationObserver(update);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-docs-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return mode;
 }
 
 export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
   children,
   code,
-  defaultTheme = "sky",
+  defaultTheme,
   align = "center",
   style,
+  showThemeSwitcher = true,
+  showRtlToggle = false,
+  defaultRtl = false,
 }) => {
-  const [previewTheme, setPreviewTheme] = useState(defaultTheme);
+  const docsMode = useDocsMode();
+  // Automatically choose dark default theme (midnight) in dark mode, light (sky) in light mode
+  const resolvedDefault = defaultTheme || (docsMode === "dark" ? "midnight" : "sky");
+  
+  const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
   const [viewport, setViewport] = useState<ViewportMode>("desktop");
   const [tab, setTab] = useState<"preview" | "code">("preview");
-  const [isRtl, setIsRtl] = useState(false);
+  const [isRtl, setIsRtl] = useState(defaultRtl);
+  const [copied, setCopied] = useState(false);
   const [showAiNotice, setShowAiNotice] = useState(false);
+
+  // Active theme is user selection if chosen, or resolved default from docs mode
+  const activeTheme = selectedTheme || resolvedDefault;
 
   const vpWidth = viewport === "mobile" ? "375px" : "100%";
 
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* noop */
+    }
+  };
+
   return (
-    <div className="docs-preview-root" style={style}>
-      {/* Toolbar */}
-      <div className="docs-preview-toolbar">
-        <div className="docs-preview-toolbar-left">
-          <div className="docs-preview-tabs" role="tablist">
-            {(["preview", "code"] as const).map((t) => (
-              <button
-                key={t}
-                type="button"
-                role="tab"
-                aria-selected={tab === t}
-                className={`docs-preview-tab${tab === t ? " active" : ""}`}
-                onClick={() => setTab(t)}
-              >
-                {t === "preview" ? "Preview" : "Code"}
-              </button>
-            ))}
-          </div>
+    <div className="sora-preview-card" style={style}>
+      {/* ─── PREVIEW TOOLBAR ─── */}
+      <div className="sora-preview-toolbar">
+        {/* Left: View Mode Tabs */}
+        <div className="sora-preview-tabs-group" role="tablist">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === "preview"}
+            className={`sora-preview-tab-btn${tab === "preview" ? " active" : ""}`}
+            onClick={() => setTab("preview")}
+            title="Interactive Preview"
+          >
+            <Eye size={13} />
+            <span>Preview</span>
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={tab === "code"}
+            className={`sora-preview-tab-btn${tab === "code" ? " active" : ""}`}
+            onClick={() => setTab("code")}
+            title="View Source Code"
+          >
+            <Code2 size={13} />
+            <span>Code</span>
+          </button>
         </div>
 
-        <div className="docs-preview-toolbar-center">
+        {/* Center: Viewport Switcher */}
+        <div className="sora-preview-toolbar-center">
           {tab === "preview" && (
             <ViewportSwitcher value={viewport} onChange={setViewport} />
           )}
         </div>
 
-        <div className="docs-preview-toolbar-right" style={{ gap: "0.5rem" }}>
-          {tab === "preview" && (
+        {/* Right: Controls & Copy */}
+        <div className="sora-preview-toolbar-right">
+          {/* LTR / RTL Direction Toggle (Only shown when showRtlToggle is true) */}
+          {showRtlToggle && (
             <button
               type="button"
-              className={`docs-preview-tab${isRtl ? " active" : ""}`}
+              className={`sora-preview-dir-btn${isRtl ? " is-rtl" : ""}`}
               onClick={() => setIsRtl((prev) => !prev)}
-              style={{
-                fontSize: "0.75rem",
-                padding: "0.2rem 0.55rem",
-                fontWeight: 600,
-                border: "1px solid var(--docs-border)",
-                borderRadius: "var(--docs-radius-sm)",
-                background: isRtl ? "var(--ui-primary, #0ea5e9)" : "transparent",
-                color: isRtl ? "var(--ui-primary-foreground, #ffffff)" : "var(--docs-fg-muted)",
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.25rem",
-                lineHeight: 1.2,
-                transition: "all 150ms ease",
-              }}
               title={isRtl ? "Switch to Left-to-Right (LTR)" : "Switch to Right-to-Left (RTL)"}
               aria-label="Toggle Direction LTR / RTL"
             >
-              {isRtl ? "RTL" : "LTR"}
+              <span>{isRtl ? "RTL" : "LTR"}</span>
             </button>
           )}
-          <ThemeSwitcher value={previewTheme} onChange={setPreviewTheme} />
+
+          {/* Theme Scope Selector */}
+          {showThemeSwitcher && (
+            <div className="sora-preview-theme-wrap">
+              <ThemeSwitcher
+                value={activeTheme}
+                onChange={(th) => setSelectedTheme(th)}
+              />
+            </div>
+          )}
+
+          {/* Quick Copy Code Button */}
+          <button
+            type="button"
+            className={`sora-preview-copy-btn${copied ? " copied" : ""}`}
+            onClick={handleCopy}
+            title={copied ? "Copied to clipboard!" : "Copy code snippet"}
+            aria-label="Copy Code"
+          >
+            {copied ? (
+              <>
+                <Check size={13} style={{ color: "#22c55e" }} />
+                <span>Copied</span>
+              </>
+            ) : (
+              <>
+                <Copy size={13} />
+                <span>Copy</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
 
-      {/* Content */}
+      {/* ─── PREVIEW CANVAS OR CODE BLOCK ─── */}
       {tab === "preview" ? (
-        <div className="docs-preview-canvas">
+        <div className="sora-preview-canvas-wrapper">
           <div
+            className="sora-preview-viewport-box"
             style={{
               width: vpWidth,
-              transition: "width 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+              transition: "width 0.28s cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
             <ThemeScope
-              theme={previewTheme as Parameters<typeof ThemeScope>[0]["theme"]}
+              theme={activeTheme as Parameters<typeof ThemeScope>[0]["theme"]}
             >
               <div
                 dir={isRtl ? "rtl" : "ltr"}
-                className="docs-preview-theme-canvas"
+                className="sora-preview-canvas-inner"
                 style={{
-                  position: "relative",
                   justifyContent: align === "center" ? "center" : "flex-start",
                   alignItems: align === "center" ? "center" : "flex-start",
-                  direction: isRtl ? "rtl" : "ltr",
-                  width: "100%",
                 }}
               >
-                {/* Floating AI Translation Disclaimer in Top-Right Corner */}
+                {/* Floating RTL Disclaimer */}
                 {isRtl && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "0.5rem",
-                      insetInlineEnd: "0.5rem",
-                      zIndex: 30,
-                    }}
-                  >
+                  <div className="sora-rtl-disclaimer-badge">
                     <button
                       type="button"
                       onClick={() => setShowAiNotice((v) => !v)}
                       onMouseEnter={() => setShowAiNotice(true)}
                       aria-label="AI Translation Disclaimer"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "22px",
-                        height: "22px",
-                        borderRadius: "50%",
-                        border: "1px solid rgba(234, 179, 8, 0.5)",
-                        background: "rgba(234, 179, 8, 0.15)",
-                        color: "#eab308",
-                        fontSize: "0.75rem",
-                        fontWeight: 700,
-                        cursor: "pointer",
-                        boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-                      }}
+                      className="sora-rtl-info-icon"
                       title="AI Translation Disclaimer"
                     >
                       !
@@ -145,61 +210,36 @@ export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
                     {showAiNotice && (
                       <div
                         onMouseLeave={() => setShowAiNotice(false)}
-                        style={{
-                          position: "absolute",
-                          top: "100%",
-                          insetInlineEnd: 0,
-                          marginTop: "0.4rem",
-                          width: "310px",
-                          maxWidth: "calc(100vw - 2rem)",
-                          padding: "0.75rem",
-                          borderRadius: "var(--docs-radius, 8px)",
-                          background: "var(--docs-bg, #ffffff)",
-                          border: "1px solid var(--docs-border)",
-                          boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-                          zIndex: 50,
-                          fontSize: "0.75rem",
-                          lineHeight: 1.45,
-                          color: "var(--docs-fg)",
-                          textAlign: "left",
-                        }}
+                        className="sora-rtl-disclaimer-popup"
                       >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.35rem",
-                            marginBottom: "0.4rem",
-                            fontWeight: 600,
-                            color: "#eab308",
-                          }}
-                        >
-                          <span>!</span>
-                          <span>AI Translation Disclaimer</span>
+                        <div className="sora-rtl-popup-title">
+                          <Sparkles size={12} />
+                          <span>AI Translation Preview</span>
                         </div>
-                        <p style={{ margin: 0, color: "var(--docs-fg-muted)" }}>
-                          I used AI to translate the text for demonstration purposes. It's not perfect and may contain errors.
-                        </p>
-                        <div style={{ borderTop: "1px solid var(--docs-border)", margin: "0.4rem 0" }} />
-                        <p style={{ margin: 0, direction: "rtl", textAlign: "right", color: "var(--docs-fg-muted)" }}>
-                          لقد استخدمت الذكاء الاصطناعي لترجمة النص للأغراض التجريبية فقط. قد لا تكون الترجمة دقيقة وقد تحتوي على أخطاء.
-                        </p>
-                        <div style={{ borderTop: "1px solid var(--docs-border)", margin: "0.4rem 0" }} />
-                        <p style={{ margin: 0, direction: "rtl", textAlign: "right", color: "var(--docs-fg-muted)" }}>
-                          השתמשתי בבינה מלאכותית כדי לתרגם את הטקסט למטרות הדגמה. זה לא מושלם ויכול להכיל שגיאות.
+                        <p>
+                          Auto-translated sample strings for testing bidirectional alignment (RTL).
                         </p>
                       </div>
                     )}
                   </div>
                 )}
 
-                {children}
+                {/* Render Component Content */}
+                <div className="sora-preview-rendered-content">
+                  {children}
+                </div>
               </div>
             </ThemeScope>
           </div>
         </div>
       ) : (
-        <CodeBlock code={code} />
+        <div className="sora-preview-code-pane">
+          <CodeBlock
+            code={code}
+            language="tsx"
+            hideHeader={true}
+          />
+        </div>
       )}
     </div>
   );

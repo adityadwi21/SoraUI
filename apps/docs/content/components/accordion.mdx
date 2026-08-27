@@ -5,31 +5,248 @@ description: A vertically stacked set of interactive headings that each reveal a
 
 # Accordion
 
-Collapsible content panels.
+> Kumpulan heading interaktif yang disusun vertikal, masing-masing menampilkan bagian konten yang bisa dibuka/tutup secara bergantian.
+
+**Status:** stable
+**Package:** `@soraui/react`
+**Path sumber:** `packages/react/src/components/accordion/accordion.tsx`
+**Path style:** `packages/react/src/styles.css` (section `.sora-accordion__*`)
+**Bundle impact:** < 1 KB gzip, zero runtime dependency
+
+---
+
+## Philosophy Note (khusus SoraUI, tidak ada di shadcn)
+
+> Komponen ini **bukan** port dari Radix/Base UI. Referensi ke shadcn (jika ada) hanya dipakai sebagai tolok ukur UX/aksesibilitas, bukan arsitektur. SoraUI tetap:
+>
+> - CSS-first — logika visual (animasi, state) sebisa mungkin di CSS, bukan JS.
+> - BEM — semua class mengikuti `.sora-[komponen]__[elemen]--[modifier]`.
+> - Zero/minimal dependency — tidak ada Radix, tidak ada Tailwind.
+> - State exposed via `data-*` attribute (`data-state`, `data-disabled`, dst), bukan className string manipulation.
+
+---
 
 ## Installation
 
-```bash
-npx soraui add accordion
+```tsx
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@soraui/react";
 ```
 
-## Usage
+---
+
+## Anatomy (Composition)
+
+Struktur tree komponen — WAJIB sinkron dengan implementasi `.tsx` aktual, bukan aspirasi desain.
+
+```text
+Accordion
+├── AccordionItem
+│   ├── AccordionTrigger
+│   └── AccordionContent
+│       └── .sora-accordion__content-inner   <!-- wrapper CSS Grid animation -->
+```
+
+---
+
+## Usage (Basic)
 
 ```tsx
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@soraui/react';
+<Accordion type="single" collapsible defaultValue="item-1">
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Is it accessible?</AccordionTrigger>
+    <AccordionContent>
+      Yes. It provides full keyboard navigation and WAI-ARIA support.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
 
-export default function Example() {
-  return (
+---
+
+## Variants / Examples
+
+> Hanya dokumentasikan varian yang **benar-benar diimplementasikan** di kode. Jangan tulis varian aspirasional (mis. "Card wrapper" ala shadcn) kalau belum ada — itu bikin AI agent halusinasi API yang tidak ada.
+
+### Single
+
+Tipe default. Memungkinkan hanya satu item yang terbuka dalam satu waktu. Tambahkan `collapsible={true}` untuk mengizinkan penutupan satu-satunya item yang sedang aktif.
+
+```tsx
+<Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Satu</AccordionTrigger>
+    <AccordionContent>Konten satu</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+### Multiple
+
+Memungkinkan beberapa item dibuka secara bersamaan tanpa batasan.
+
+```tsx
+<Accordion type="multiple">
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Satu</AccordionTrigger>
+    <AccordionContent>Konten satu</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+### Disabled
+
+Gunakan prop \`disabled\` pada \`AccordionItem\` untuk menonaktifkan item tertentu.
+
+```tsx
+<Accordion type="single" collapsible>
+  <AccordionItem value="item-1" disabled>
+    <AccordionTrigger>Satu</AccordionTrigger>
+    <AccordionContent>Konten satu</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+### Borders
+
+Tambahkan border secara eksplisit menggunakan inline styles atau custom CSS classes.
+
+```tsx
+<Accordion
+  type="single"
+  collapsible
+  defaultValue="item-1"
+  style={{
+    border: '1px solid var(--ui-border)',
+    borderRadius: 'var(--ui-radius, 8px)',
+    padding: '0 1rem'
+  }}
+>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>How does billing work?</AccordionTrigger>
+    <AccordionContent>
+      We offer monthly and annual subscription plans.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2" style={{ borderBottom: 'none' }}>
+    <AccordionTrigger>Is my data secure?</AccordionTrigger>
+    <AccordionContent>
+      Yes, all data is encrypted at rest using AES-256.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+### Card Wrapper
+
+Bungkus komponen Accordion di dalam komponen Card untuk memberikan latar belakang dan bayangan. Pastikan untuk menyesuaikan padding pada \`CardContent\`.
+
+```tsx
+<Card elevated>
+  <CardHeader>
+    <CardTitle>Subscription & Billing</CardTitle>
+    <CardDescription>
+      Common questions about your account, plans, payments and cancellations.
+    </CardDescription>
+  </CardHeader>
+  <CardContent style={{ padding: '0 1.25rem 0.5rem' }}>
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
-        <AccordionTrigger>Is it accessible?</AccordionTrigger>
-        <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
+        <AccordionTrigger>What happens when my trial ends?</AccordionTrigger>
+        <AccordionContent>
+          At the end of your 14-day trial, you will be automatically switched to the free plan.
+        </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="item-2">
-        <AccordionTrigger>Is it styled?</AccordionTrigger>
-        <AccordionContent>Yes. It comes with default styles powered by CSS variables.</AccordionContent>
+      <AccordionItem value="item-2" style={{ borderBottom: 'none' }}>
+        <AccordionTrigger>Can I get a refund?</AccordionTrigger>
+        <AccordionContent>
+          We offer a 30-day money-back guarantee for all annual subscription purchases.
+        </AccordionContent>
       </AccordionItem>
     </Accordion>
-  );
+  </CardContent>
+</Card>
+```
+
+---
+
+## Props / API Reference
+
+| Prop                      | Tipe                     | Default    | Deskripsi                                                 |
+| ------------------------- | ------------------------ | ---------- | --------------------------------------------------------- |
+| `type`                    | `"single" \| "multiple"` | `"single"` | Mode komponen accordion.                                  |
+| `value` (single)          | `string`                 | —          | Nilai item yang dikontrol saat mode `single`.             |
+| `defaultValue` (single)   | `string`                 | —          | Nilai awal yang aktif secara default.                     |
+| `value` (multiple)        | `string[]`               | —          | Nilai item array yang dikontrol saat mode `multiple`.     |
+| `defaultValue` (multiple) | `string[]`               | —          | Nilai awal array yang aktif secara default.               |
+| `onValueChange`           | `function`               | —          | Callback ketika trigger diklik/mengalami perubahan state. |
+| `collapsible`             | `boolean`                | `false`    | Memungkinkan penutupan item saat mode `single`.           |
+| `value` (Item)            | `string`                 | —          | Nilai unik identifikasi spesifik untuk item.              |
+| `disabled` (Item)         | `boolean`                | `false`    | Jika diaktifkan, memblokir klik dan tab order.            |
+
+---
+
+## Data Attributes & CSS Hooks
+
+State komponen di-expose lewat `data-*`, dikonsumsi oleh CSS — ini pengganti "variant classes" ala Tailwind.
+
+| Attribute       | Nilai                | Elemen                                                  |
+| --------------- | -------------------- | ------------------------------------------------------- |
+| `data-state`    | `"open" \| "closed"` | `AccordionItem`, `AccordionTrigger`, `AccordionContent` |
+| `data-disabled` | `"" \| undefined`    | `AccordionItem`, `AccordionTrigger`                     |
+
+```css
+/* Mengontrol transisi tinggi konten secara mulus tanpa JS */
+.sora-accordion__content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 200ms ease-out;
+}
+.sora-accordion__content[data-state="open"] {
+  grid-template-rows: 1fr;
+}
+
+/* Memutar ikon panah (chevron) */
+.sora-accordion__trigger[data-state="open"] > svg {
+  transform: rotate(180deg);
 }
 ```
+
+---
+
+## Accessibility
+
+- Transisi animasi dilakukan pada wrapper `.sora-accordion__content-inner` menggunakan trik CSS Grid `1fr`/`0fr` tanpa `conditional rendering` dari React.
+- Menggunakan `aria-hidden` untuk menyembunyikan konten dari _screen reader_ saat ditutup.
+- Menggunakan `inert` untuk menyembunyikan konten secara fungsional di DOM dari pengguna keyboard/tab navigation saat ditutup.
+
+| Key                          | Action                                                                                |
+| ---------------------------- | ------------------------------------------------------------------------------------- |
+| `Tab`                        | Pindah ke item fokusabel berikutnya. Melompati item tertutup (inert).                 |
+| `Enter` / `Space`            | Melakukan toggle pada status _Trigger_ aktif saat itu.                                |
+| `Arrow Down` / `Arrow Right` | Berpindah ke _Trigger_ berikutnya. Melingkar ke yang pertama jika sudah di ujung.     |
+| `Arrow Up` / `Arrow Left`    | Berpindah ke _Trigger_ sebelumnya. Melingkar ke yang terakhir jika berada di pangkal. |
+| `Home`                       | Langsung memindahkan fokus ke _Trigger_ paling awal.                                  |
+| `End`                        | Langsung memindahkan fokus ke _Trigger_ paling akhir.                                 |
+
+---
+
+## Known Gaps / Not Implemented
+
+- [ ] Prop khusus `orientation="horizontal"` belum didukung; ini dirancang murni secara visual sebagai list vertikal.
+- [ ] Varian kustom (misal "card wrapper" atau variasi borderless) belum disiapkan secara bawaan di CSS/React.
+
+---
+
+## Test Coverage
+
+File test: `accordion.test.tsx`
+Command: `vitest run accordion`
+
+---
+
+_Terakhir diverifikasi terhadap kode: 2026-08-27 — dokumen ini basi kalau tidak diupdate saat komponen berubah._

@@ -22,10 +22,11 @@ export const ViewportSwitcher: React.FC<ViewportSwitcherProps> = ({
   <div
     style={{
       display: "inline-flex",
-      gap: "0.125rem",
+      alignItems: "center",
+      gap: "0.15rem",
       background: "var(--docs-bg-muted)",
-      borderRadius: "var(--docs-radius-sm)",
-      padding: "0.2rem",
+      borderRadius: "6px",
+      padding: "0.15rem",
       border: "1px solid var(--docs-border)",
       ...style,
     }}
@@ -42,17 +43,18 @@ export const ViewportSwitcher: React.FC<ViewportSwitcherProps> = ({
         style={{
           display: "inline-flex",
           alignItems: "center",
-          gap: "0.35rem",
-          padding: "0.25rem 0.625rem",
-          fontSize: "0.75rem",
+          gap: "0.3rem",
+          padding: "0.22rem 0.6rem",
+          fontSize: "0.775rem",
           fontFamily: "var(--docs-font-sans)",
           borderRadius: "4px",
           border: "none",
           background: value === m ? "var(--docs-bg)" : "transparent",
           color: value === m ? "var(--docs-fg)" : "var(--docs-fg-muted)",
           cursor: "pointer",
-          fontWeight: value === m ? 600 : 400,
-          boxShadow: value === m ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
+          fontWeight: value === m ? 600 : 500,
+          minHeight: "28px",
+          boxShadow: value === m ? "0 1px 2px rgba(0,0,0,0.08)" : "none",
           transition: "all 150ms ease",
         }}
       >

@@ -1359,22 +1359,62 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         name: "collapsible",
         type: "boolean",
-        default: "true",
-        description: "Whether active item can be collapsed",
+        default: "false",
+        description: "Whether active item can be collapsed (only in single mode)",
+      },
+      {
+        name: "value",
+        type: "string | string[]",
+        description: "Controlled value of the active item(s)",
+      },
+      {
+        name: "defaultValue",
+        type: "string | string[]",
+        description: "Default active item(s) on initial render",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        description: "Disables interaction (used on AccordionItem)",
       },
     ],
+    accessibility: {
+      role: "region",
+      keyboard: [
+        { key: "Tab", action: "Moves focus to the next focusable element (skips closed items)" },
+        { key: "Enter / Space", action: "Toggles the focused accordion trigger" },
+        { key: "Arrow Down", action: "Moves focus to the next trigger" },
+        { key: "Arrow Up", action: "Moves focus to the previous trigger" },
+        { key: "Home / End", action: "Moves focus to the first or last trigger" },
+      ]
+    },
     examples: [
       {
         id: "basic",
-        title: "Accordion FAQ",
-        code: `<Accordion type="single" collapsible defaultValue="item-1" style={{ maxWidth: '440px' }}>
+        title: "Basic",
+        description:
+          "A basic accordion that shows one item at a time. The first item is open by default.",
+        code: `<Accordion type="single" collapsible defaultValue="item-1" style={{ maxWidth: '480px', width: '100%' }}>
   <AccordionItem value="item-1">
-    <AccordionTrigger>Is SoraUI tree-shakeable?</AccordionTrigger>
-    <AccordionContent>Yes! Every component is compiled into independent sub-modules.</AccordionContent>
+    <AccordionTrigger>How do I reset my password?</AccordionTrigger>
+    <AccordionContent>
+      Click on 'Forgot Password' on the login page, enter your email address,
+      and we'll send you a link to reset your password. The link will expire in 24 hours.
+    </AccordionContent>
   </AccordionItem>
   <AccordionItem value="item-2">
-    <AccordionTrigger>Does it have CSS runtime cost?</AccordionTrigger>
-    <AccordionContent>Zero runtime styling overhead. All styles are compiled CSS variables.</AccordionContent>
+    <AccordionTrigger>Can I change my subscription plan?</AccordionTrigger>
+    <AccordionContent>
+      Yes, you can upgrade or downgrade your plan at any time from your account settings.
+      Changes take effect immediately.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-3">
+    <AccordionTrigger>What payment methods do you accept?</AccordionTrigger>
+    <AccordionContent>
+      We accept all major credit cards, PayPal, and bank transfers for enterprise accounts.
+    </AccordionContent>
   </AccordionItem>
 </Accordion>`,
         render: () => (
@@ -1382,24 +1422,277 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
             type="single"
             collapsible
             defaultValue="item-1"
-            style={{ maxWidth: "440px" }}
+            style={{ maxWidth: "480px", width: "100%" }}
           >
             <AccordionItem value="item-1">
-              <AccordionTrigger>Is SoraUI tree-shakeable?</AccordionTrigger>
+              <AccordionTrigger>How do I reset my password?</AccordionTrigger>
               <AccordionContent>
-                Yes! Every component is compiled into independent sub-modules.
+                Click on 'Forgot Password' on the login page, enter your email address,
+                and we'll send you a link to reset your password. The link will expire in 24 hours.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger>
-                Does it have CSS runtime cost?
-              </AccordionTrigger>
+              <AccordionTrigger>Can I change my subscription plan?</AccordionTrigger>
               <AccordionContent>
-                Zero runtime styling overhead. All styles are compiled CSS
-                variables.
+                Yes, you can upgrade or downgrade your plan at any time from your account settings.
+                Changes take effect immediately.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>What payment methods do you accept?</AccordionTrigger>
+              <AccordionContent>
+                We accept all major credit cards, PayPal, and bank transfers for enterprise accounts.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+        ),
+      },
+      {
+        id: "multiple",
+        title: "Multiple",
+        description:
+          "Use the multiple prop to allow multiple items to be open at the same time.",
+        code: `<Accordion type="multiple" defaultValue={["item-1"]} style={{ maxWidth: '480px', width: '100%' }}>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Notification Settings</AccordionTrigger>
+    <AccordionContent>
+      Manage how you receive notifications. You can enable email alerts for updates
+      or push notifications for mobile devices.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>Privacy & Security</AccordionTrigger>
+    <AccordionContent>
+      Control your profile visibility, manage two-factor authentication, and
+      review recent account activity.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-3">
+    <AccordionTrigger>Billing & Subscription</AccordionTrigger>
+    <AccordionContent>
+      View your invoices, update payment methods, and manage your current subscription plan.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>`,
+        render: () => (
+          <Accordion
+            type="multiple"
+            defaultValue={["item-1"]}
+            style={{ maxWidth: "480px", width: "100%" }}
+          >
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Notification Settings</AccordionTrigger>
+              <AccordionContent>
+                Manage how you receive notifications. You can enable email alerts for updates
+                or push notifications for mobile devices.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>Privacy & Security</AccordionTrigger>
+              <AccordionContent>
+                Control your profile visibility, manage two-factor authentication, and
+                review recent account activity.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Billing & Subscription</AccordionTrigger>
+              <AccordionContent>
+                View your invoices, update payment methods, and manage your current subscription plan.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        ),
+      },
+      {
+        id: "disabled",
+        title: "Disabled",
+        description:
+          "Use the disabled prop on AccordionItem to disable individual items.",
+        code: `<Accordion type="single" collapsible defaultValue="item-1" style={{ maxWidth: '480px', width: '100%' }}>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Can I access my account history?</AccordionTrigger>
+    <AccordionContent>
+      Yes, your complete transaction and activity history is stored permanently
+      and can be exported at any time.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2" disabled>
+    <AccordionTrigger>Can I transfer my account ownership?</AccordionTrigger>
+    <AccordionContent>
+      Account ownership transfer is currently restricted. Please contact our support team for assistance.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-3">
+    <AccordionTrigger>How do I delete my account?</AccordionTrigger>
+    <AccordionContent>
+      You can request account deletion from your security settings. All personal
+      data will be permanently removed after 30 days.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>`,
+        render: () => (
+          <Accordion
+            type="single"
+            collapsible
+            defaultValue="item-1"
+            style={{ maxWidth: "480px", width: "100%" }}
+          >
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Can I access my account history?</AccordionTrigger>
+              <AccordionContent>
+                Yes, your complete transaction and activity history is stored permanently
+                and can be exported at any time.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2" disabled>
+              <AccordionTrigger>Can I transfer my account ownership?</AccordionTrigger>
+              <AccordionContent>
+                Account ownership transfer is currently restricted. Please contact our support team for assistance.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>How do I delete my account?</AccordionTrigger>
+              <AccordionContent>
+                You can request account deletion from your security settings. All personal
+                data will be permanently removed after 30 days.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        ),
+      },
+      {
+        id: "borders",
+        title: "Borders",
+        description:
+          "Add border to the Accordion and border-b last:border-b-0 to the AccordionItem to add borders to the items.",
+        code: `<Accordion
+  type="single"
+  collapsible
+  defaultValue="item-1"
+  style={{
+    maxWidth: '480px',
+    width: '100%',
+    border: '1px solid var(--ui-border)',
+    borderRadius: 'var(--ui-radius, 8px)',
+    padding: '0 1rem'
+  }}
+>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>How does billing work?</AccordionTrigger>
+    <AccordionContent>
+      We offer monthly and annual subscription plans. Billing is charged at the beginning
+      of each cycle, and you can cancel anytime. All plans include automatic backups,
+      24/7 support, and unlimited team members.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>Is my data secure?</AccordionTrigger>
+    <AccordionContent>
+      Yes, all data is encrypted at rest using AES-256 and in transit using TLS 1.3.
+      We perform regular security audits and maintain SOC 2 compliance.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-3" style={{ borderBottom: 'none' }}>
+    <AccordionTrigger>What integrations do you support?</AccordionTrigger>
+    <AccordionContent>
+      We integrate with Slack, GitHub, Jira, Discord, and over 50 other developer
+      and productivity tools via webhooks.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>`,
+        render: () => (
+          <Accordion
+            type="single"
+            collapsible
+            defaultValue="item-1"
+            style={{
+              maxWidth: "480px",
+              width: "100%",
+              border: "1px solid var(--ui-border)",
+              borderRadius: "var(--ui-radius, 8px)",
+              padding: "0 1rem",
+            }}
+          >
+            <AccordionItem value="item-1">
+              <AccordionTrigger>How does billing work?</AccordionTrigger>
+              <AccordionContent>
+                We offer monthly and annual subscription plans. Billing is charged at the beginning
+                of each cycle, and you can cancel anytime. All plans include automatic backups,
+                24/7 support, and unlimited team members.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>Is my data secure?</AccordionTrigger>
+              <AccordionContent>
+                Yes, all data is encrypted at rest using AES-256 and in transit using TLS 1.3.
+                We perform regular security audits and maintain SOC 2 compliance.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3" style={{ borderBottom: "none" }}>
+              <AccordionTrigger>What integrations do you support?</AccordionTrigger>
+              <AccordionContent>
+                We integrate with Slack, GitHub, Jira, Discord, and over 50 other developer
+                and productivity tools via webhooks.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        ),
+      },
+      {
+        id: "card",
+        title: "Card",
+        description: "Wrap the Accordion in a Card component.",
+        code: `<Card elevated style={{ maxWidth: '480px', width: '100%' }}>
+  <CardHeader>
+    <CardTitle>Subscription & Billing</CardTitle>
+    <CardDescription>
+      Common questions about your account, plans, payments and cancellations.
+    </CardDescription>
+  </CardHeader>
+  <CardContent style={{ padding: '0 1.25rem 0.5rem' }}>
+    <Accordion type="single" collapsible defaultValue="item-1">
+      <AccordionItem value="item-1">
+        <AccordionTrigger>What happens when my trial ends?</AccordionTrigger>
+        <AccordionContent>
+          At the end of your 14-day trial, you will be automatically switched to the free plan
+          unless you choose to upgrade to Pro.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-2" style={{ borderBottom: 'none' }}>
+        <AccordionTrigger>Can I get a refund?</AccordionTrigger>
+        <AccordionContent>
+          We offer a 30-day money-back guarantee for all annual subscription purchases.
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  </CardContent>
+</Card>`,
+        render: () => (
+          <Card elevated style={{ maxWidth: "480px", width: "100%" }}>
+            <CardHeader>
+              <CardTitle>Subscription & Billing</CardTitle>
+              <CardDescription>
+                Common questions about your account, plans, payments and cancellations.
+              </CardDescription>
+            </CardHeader>
+            <CardContent style={{ padding: "0 1.25rem 0.5rem" }}>
+              <Accordion type="single" collapsible defaultValue="item-1">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>What happens when my trial ends?</AccordionTrigger>
+                  <AccordionContent>
+                    At the end of your 14-day trial, you will be automatically switched to the free plan
+                    unless you choose to upgrade to Pro.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2" style={{ borderBottom: "none" }}>
+                  <AccordionTrigger>Can I get a refund?</AccordionTrigger>
+                  <AccordionContent>
+                    We offer a 30-day money-back guarantee for all annual subscription purchases.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </CardContent>
+          </Card>
         ),
       },
     ],

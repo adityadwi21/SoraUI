@@ -7,51 +7,8 @@ import { TEMPLATE_DOCS } from "../registry/templates";
 import { GUIDE_DOCS } from "../registry/guides";
 import { SearchDialog } from "./search-dialog";
 import { TableOfContents } from "./table-of-contents";
+import { useDocsTheme } from "../registry/docs-theme-context";
 
-/* ─────────────────────────────────────────────────────
-   Docs-level dark mode hook
-   Completely independent of SoraUI ThemeProvider
-───────────────────────────────────────────────────── */
-function useDocsTheme() {
-  const [mode, setMode] = useState<"light" | "dark">(() => {
-    try {
-      const s = localStorage.getItem("docs-theme") as "light" | "dark" | null;
-      if (s === "light" || s === "dark") return s;
-    } catch {
-      /* noop */
-    }
-    return typeof window !== "undefined" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  });
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-docs-theme", mode);
-    try {
-      localStorage.setItem("docs-theme", mode);
-    } catch {
-      /* noop */
-    }
-  }, [mode]);
-
-  const toggle = useCallback(() => {
-    setMode((p) => {
-      const next = p === "dark" ? "light" : "dark";
-      if (typeof document !== "undefined") {
-        document.documentElement.setAttribute("data-docs-theme", next);
-      }
-      try {
-        localStorage.setItem("docs-theme", next);
-      } catch {
-        /* noop */
-      }
-      return next;
-    });
-  }, []);
-
-  return { mode, toggle };
-}
 
 /* ─────────────────────────────────────────────────────
    SVG Icons
@@ -93,7 +50,10 @@ const SidebarContent: React.FC<{
           {GUIDE_DOCS.map((g) => {
             const href =
               g.customPath ||
-              (g.id === "components" ? "/components" : `/guides/${g.id}`);
+              (g.id === "introduction" ? "/docs" : 
+               g.id === "cli-reference" ? "/docs/cli" : 
+               g.id === "components" ? "/docs/components" : 
+               `/docs/${g.id}`);
             const active =
               currentPath === href || (g.id === "introduction" && isIntro);
             return (
@@ -120,16 +80,16 @@ const SidebarContent: React.FC<{
         <div className="docs-sb-label">Frameworks</div>
         <div className="docs-sb-group">
           {[
-            { id: "nextjs", title: "Next.js", href: "/guides/nextjs" },
-            { id: "vite", title: "Vite", href: "/guides/vite" },
-            { id: "laravel", title: "Laravel", href: "/guides/laravel" },
+            { id: "nextjs", title: "Next.js", href: "/docs/nextjs" },
+            { id: "vite", title: "Vite", href: "/docs/vite" },
+            { id: "laravel", title: "Laravel", href: "/docs/laravel" },
             {
               id: "react-router",
               title: "React Router",
-              href: "/guides/react-router",
+              href: "/docs/react-router",
             },
-            { id: "astro", title: "Astro", href: "/guides/astro" },
-            { id: "manual", title: "Manual", href: "/guides/manual" },
+            { id: "astro", title: "Astro", href: "/docs/astro" },
+            { id: "manual", title: "Manual", href: "/docs/manual" },
           ].map((f) => {
             const active = currentPath === f.href;
             return (
@@ -157,7 +117,7 @@ const SidebarContent: React.FC<{
           {[...COMPONENT_DOCS]
             .sort((a, b) => a.name.localeCompare(b.name))
             .map((c) => {
-              const href = `/components/${c.id}`;
+              const href = `/docs/components/base/${c.id}`;
               const active = currentPath === href;
               return (
                 <button
@@ -277,11 +237,13 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({
   }, []);
 
   const isHome = currentPath === "/" || currentPath === "";
-  const isGuide = currentPath.startsWith("/guides");
-  const isComp = currentPath.startsWith("/components");
+  const isComp =
+    currentPath.startsWith("/docs/components") ||
+    currentPath.startsWith("/components");
   const isBlock = currentPath.startsWith("/blocks");
   const isTemplate = currentPath.startsWith("/templates");
   const isPlay = currentPath === "/playground";
+  const isGuide = !isHome && !isComp && !isBlock && !isTemplate && !isPlay;
 
   return (
     <div className="docs-root" data-docs-theme={mode}>
@@ -339,9 +301,9 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({
                 {
                   label: "Docs",
                   active: isGuide,
-                  path: "/guides/introduction",
+                  path: "/docs",
                 },
-                { label: "Components", active: isComp, path: "/components" },
+                { label: "Components", active: isComp, path: "/docs/components" },
                 {
                   label: "Blocks",
                   active: isBlock,

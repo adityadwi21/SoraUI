@@ -84,8 +84,8 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
 
   // Derive github edit link
   const getGithubLink = () => {
-    if (currentPath.startsWith("/components/")) {
-      const id = currentPath.replace("/components/", "");
+    if (currentPath.startsWith("/docs/components/base/")) {
+      const id = currentPath.replace("/docs/components/base/", "");
       return `https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/components/${id}`;
     }
     if (currentPath.startsWith("/blocks/")) {

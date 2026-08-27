@@ -6,7 +6,6 @@ import { PropTable } from "../components/prop-table";
 import { CodeBlock } from "../components/code-block";
 import { PackageManagerBlock } from "../components/package-manager-block";
 import { getManualComponentCode } from "../registry/manual-source";
-import { Badge } from "@soraui/react";
 import { Terminal, FileCode2 } from "lucide-react";
 
 export interface ComponentPageProps {
@@ -63,6 +62,25 @@ function getMinimalUsageSnippet(doc: ComponentDoc): string {
       return `<Card>\n  <CardHeader>\n    <CardTitle>Card Title</CardTitle>\n    <CardDescription>Card Description</CardDescription>\n  </CardHeader>\n  <CardContent>\n    <p>Card Content</p>\n  </CardContent>\n  <CardFooter>\n    <p>Card Footer</p>\n  </CardFooter>\n</Card>`;
     default:
       return `<${doc.name} />`;
+  }
+}
+
+function getCompositionSnippet(docId: string): string | null {
+  switch (docId) {
+    case "accordion":
+      return `Accordion\n├── AccordionItem\n│   ├── AccordionTrigger\n│   └── AccordionContent\n└── AccordionItem\n    ├── AccordionTrigger\n    └── AccordionContent`;
+    case "alert":
+      return `Alert\n├── AlertTitle\n└── AlertDescription`;
+    case "card":
+      return `Card\n├── CardHeader\n│   ├── CardTitle\n│   └── CardDescription\n├── CardContent\n└── CardFooter`;
+    case "dialog":
+      return `Dialog\n├── DialogTrigger\n└── DialogContent\n    ├── DialogHeader\n    │   ├── DialogTitle\n    │   └── DialogDescription\n    └── DialogFooter`;
+    case "tabs":
+      return `Tabs\n├── TabsList\n│   ├── TabsTrigger\n│   └── TabsTrigger\n├── TabsContent\n└── TabsContent`;
+    case "select":
+      return `Select\n├── SelectTrigger\n│   └── SelectValue\n└── SelectContent\n    ├── SelectGroup\n    │   ├── SelectLabel\n    │   └── SelectItem\n    └── SelectSeparator`;
+    default:
+      return null;
   }
 }
 
@@ -164,6 +182,19 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || "-"}\` | 
 
           {/* Quick Header Actions */}
           <div className="docs-intro-actions">
+            {/* Source Link */}
+            <a
+              href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/components/${doc.id}`}
+              target="_blank"
+              rel="noreferrer"
+              className="docs-intro-copy-btn"
+              title="View component source on GitHub"
+            >
+              <GitHubIcon size={13} />
+              <span>Source</span>
+              <ExternalLink size={11} style={{ opacity: 0.6 }} />
+            </a>
+
             {/* Copy Page Button */}
             <button
               type="button"
@@ -191,7 +222,7 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || "-"}\` | 
                 type="button"
                 className="docs-intro-nav-arrow-btn"
                 onClick={() =>
-                  prevComp && handleNav(`/components/${prevComp.id}`)
+                  prevComp && handleNav(`/docs/components/base/${prevComp.id}`)
                 }
                 disabled={!prevComp}
                 title={
@@ -212,7 +243,7 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || "-"}\` | 
                 type="button"
                 className="docs-intro-nav-arrow-btn"
                 onClick={() =>
-                  nextComp && handleNav(`/components/${nextComp.id}`)
+                  nextComp && handleNav(`/docs/components/base/${nextComp.id}`)
                 }
                 disabled={!nextComp}
                 title={
@@ -233,20 +264,6 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || "-"}\` | 
 
         {/* Description */}
         <p className="sora-doc-lead">{doc.description}</p>
-
-        {/* Links bar */}
-        <div className="sora-doc-chips">
-          <a
-            href={`https://github.com/adityadwi21/SoraUI/tree/main/packages/react/src/components/${doc.id}`}
-            target="_blank"
-            rel="noreferrer"
-            className="sora-doc-link-chip"
-          >
-            <GitHubIcon size={13} />
-            <span>Source</span>
-            <ExternalLink size={11} style={{ opacity: 0.6 }} />
-          </a>
-        </div>
       </div>
 
       {/* ─── 2. MAIN HERO PREVIEW ─── */}
@@ -407,10 +424,35 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || "-"}\` | 
         </div>
       </section>
 
+      {/* ─── 4.5. COMPOSITION ─── */}
+      {getCompositionSnippet(doc.id) && (
+        <section className="sora-doc-section">
+          <h2 id="composition" className="sora-doc-h2">
+            <span>Composition</span>
+            <a
+              href="#composition"
+              className="sora-doc-anchor"
+              aria-label="Link to Composition section"
+            >
+              #
+            </a>
+          </h2>
+          <p className="sora-subtext">
+            Use the following composition to build a {doc.name}:
+          </p>
+          <div style={{ marginTop: "0.75rem" }}>
+            <CodeBlock
+              code={getCompositionSnippet(doc.id)!}
+              language="text"
+            />
+          </div>
+        </section>
+      )}
+
       {/* ─── 5. EXAMPLES & VARIATIONS ─── */}
       {doc.examples.length > 0 && (
         <section className="sora-doc-section">
-          <div style={{ display: "grid", gap: "3rem" }}>
+          <div style={{ display: "grid", gap: "2.5rem" }}>
             {doc.examples.map((ex, index) => {
               const exampleSlug = ex.id || `example-${index}`;
               return (

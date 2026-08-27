@@ -401,7 +401,7 @@ export const IntroductionPage: React.FC<IntroductionPageProps> = ({
         <button
           type="button"
           className="docs-intro-pagination-btn prev"
-          onClick={() => onNavigate("/components/typography")}
+          onClick={() => onNavigate("/docs/components/base/typography")}
         >
           <ChevronLeft size={16} />
           <div className="docs-intro-pagination-text">

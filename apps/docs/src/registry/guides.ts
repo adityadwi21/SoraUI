@@ -25,21 +25,28 @@ export const GUIDE_DOCS: GuideDoc[] = [
   {
     id: "cli-reference",
     title: "CLI",
-    category: "CLI & Tooling",
+    category: "Getting Started",
     description:
       "Comprehensive guide to soraui init, add, list, and search commands.",
   },
   {
+    id: "migration",
+    title: "Migration Guide",
+    category: "Getting Started",
+    description:
+      "Step-by-step migration guide from Tailwind CSS, Radix UI, and Shadcn UI.",
+  },
+  {
     id: "skills",
     title: "Skills",
-    category: "AI & Tooling",
+    category: "Getting Started",
     description:
       "Give your AI assistant deep knowledge of SoraUI components, patterns, and best practices.",
   },
   {
     id: "mcp-guide",
     title: "MCP Server",
-    category: "AI & Tooling",
+    category: "Getting Started",
     description:
       "Connect Cursor, Claude Desktop, and Gemini CLI to SoraUI via Model Context Protocol.",
   },
