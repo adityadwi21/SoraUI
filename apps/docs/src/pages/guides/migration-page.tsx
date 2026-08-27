@@ -7,12 +7,7 @@ import {
   Copy,
   ChevronLeft,
   ChevronRight,
-  ArrowRight,
-  Sparkles,
   Zap,
-  Layers,
-  ShieldCheck,
-  Terminal,
 } from "lucide-react";
 
 export interface MigrationPageProps {
@@ -98,8 +93,8 @@ https://github.com/adityadwi21/SoraUI`;
 
         <p className="sora-doc-lead">
           Step-by-step instructions for migrating your codebase from Tailwind CSS,
-          Radix UI, shadcn/ui, or CSS-in-JS to SoraUI with zero runtime overhead
-          and zero styling regressions.
+          Radix UI, shadcn/ui, or CSS-in-JS to SoraUI with zero external primitive
+          dependencies and predictable CSS custom properties.
         </p>
 
         <div className="sora-doc-chips">
@@ -107,7 +102,7 @@ https://github.com/adityadwi21/SoraUI`;
             Guides
           </Badge>
           <Badge variant="outline" style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}>
-            Zero-Runtime
+            Zero-Runtime CSS
           </Badge>
           <Badge variant="outline" style={{ fontSize: "0.75rem", padding: "0.2rem 0.6rem" }}>
             v0.1.1
@@ -122,10 +117,9 @@ https://github.com/adityadwi21/SoraUI`;
           <a href="#why-migrate" className="sora-doc-anchor">#</a>
         </h2>
         <p className="sora-subtext">
-          Modern web applications are increasingly burdened by heavy CSS-in-JS runtimes,
-          bloated Tailwind configuration files, and fragile npm dependency trees.
-          SoraUI is built from the ground up on modern CSS standards (Custom Properties,
-          CSS Logical Properties, BEM naming) to give you total ownership and maximum performance.
+          SoraUI is built around three core architectural tenets:
+          <strong> CSS-first design tokens</strong>, <strong>clean BEM class naming</strong> (<code>.sora-[component]</code>),
+          and <strong>zero external primitive dependencies</strong>.
         </p>
 
         {/* Feature Comparison Table */}
@@ -134,41 +128,41 @@ https://github.com/adityadwi21/SoraUI`;
             <thead>
               <tr>
                 <th>Feature / Architecture</th>
-                <th>Tailwind + shadcn/ui</th>
+                <th>shadcn/ui (Tailwind + Radix)</th>
                 <th>Chakra / Material UI</th>
                 <th>SoraUI</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style={{ fontWeight: 600 }}>Runtime JavaScript Overhead</td>
-                <td>Low (Tailwind build) + Radix (~40KB)</td>
-                <td>High (Emotion / styled-engine ~80KB+)</td>
-                <td style={{ color: "#22c55e", fontWeight: 600 }}>0 KB (Pure CSS Variables)</td>
+                <td style={{ fontWeight: 600 }}>CSS Runtime Overhead</td>
+                <td>Zero (Generated static CSS)</td>
+                <td>Runtime JS style injection (Emotion)</td>
+                <td style={{ color: "#22c55e", fontWeight: 600 }}>Zero (Standard CSS Custom Properties)</td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 600 }}>Primitive Dependencies</td>
+                <td>Multiple <code>@radix-ui/react-*</code> packages</td>
+                <td>Coupled to styling engine packages</td>
+                <td style={{ color: "#22c55e", fontWeight: 600 }}>0 external primitive packages</td>
               </tr>
               <tr>
                 <td style={{ fontWeight: 600 }}>Build Tooling Dependency</td>
-                <td>PostCSS / Tailwind Compiler / plugins</td>
-                <td>Babel / SWC styling plugins</td>
-                <td style={{ color: "#22c55e", fontWeight: 600 }}>Zero (Standard CSS imports)</td>
+                <td>Tailwind compiler + PostCSS</td>
+                <td>Babel / SWC CSS-in-JS plugins</td>
+                <td style={{ color: "#22c55e", fontWeight: 600 }}>None (Works with any bundler or vanilla CSS)</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: 600 }}>RTL Multi-Language Support</td>
-                <td>Requires manual <code>rtl:</code> utility classes</td>
-                <td>Requires complex RTL theme provider</td>
-                <td style={{ color: "#22c55e", fontWeight: 600 }}>Native CSS Logical Properties</td>
+                <td style={{ fontWeight: 600 }}>Theme Customization</td>
+                <td>Tailwind HSL color variables</td>
+                <td>JavaScript theme objects</td>
+                <td style={{ color: "#22c55e", fontWeight: 600 }}>3-Layer CSS Tokens (<code>--ui-*</code>)</td>
               </tr>
               <tr>
-                <td style={{ fontWeight: 600 }}>AI Agent & MCP Tooling</td>
-                <td>Generic text prompt parsing</td>
-                <td>Generic text prompt parsing</td>
-                <td style={{ color: "#22c55e", fontWeight: 600 }}>1st-Class MCP Server & Token AST</td>
-              </tr>
-              <tr>
-                <td style={{ fontWeight: 600 }}>Code Ownership Model</td>
-                <td>Copy-Paste only</td>
-                <td>NPM package only (black box)</td>
-                <td style={{ color: "#22c55e", fontWeight: 600 }}>Both: NPM package OR CLI registry</td>
+                <td style={{ fontWeight: 600 }}>Distribution Model</td>
+                <td>Copy-Paste into codebase</td>
+                <td>NPM package only</td>
+                <td style={{ color: "#22c55e", fontWeight: 600 }}>Both (NPM package OR CLI registry)</td>
               </tr>
             </tbody>
           </table>
@@ -182,8 +176,8 @@ https://github.com/adityadwi21/SoraUI`;
           <a href="#migrating-from-shadcn" className="sora-doc-anchor">#</a>
         </h2>
         <p className="sora-subtext">
-          SoraUI was designed with the exact same component composition patterns and prop ergonomics as shadcn/ui.
-          If your project already uses shadcn/ui, migrating requires minimal JSX changes:
+          SoraUI components share the exact same slot and composition ergonomics as shadcn/ui.
+          You do not need to re-architect your component tree when migrating:
         </p>
 
         <div className="sora-callout" style={{ margin: "1rem 0" }}>
@@ -192,7 +186,7 @@ https://github.com/adityadwi21/SoraUI`;
             <span>Drop-in JSX Compatibility</span>
           </div>
           <p style={{ margin: "0.25rem 0 0", fontSize: "0.8125rem", color: "var(--docs-fg-muted)" }}>
-            Components like <code>Accordion</code>, <code>Dialog</code>, <code>Card</code>, <code>Button</code>, and <code>Select</code> maintain identical sub-component hierarchies.
+            Components like <code>Accordion</code>, <code>Dialog</code>, <code>Card</code>, <code>Button</code>, and <code>Select</code> share identical sub-component APIs and prop conventions.
           </p>
         </div>
 
@@ -204,7 +198,7 @@ https://github.com/adityadwi21/SoraUI`;
         <CodeBlock
           language="tsx"
           filename="Accordion Migration"
-          code={`// ❌ BEFORE (shadcn/ui + Radix UI)
+          code={`// ❌ BEFORE (shadcn/ui)
 import {
   Accordion,
   AccordionItem,
@@ -212,18 +206,20 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 
-// ✅ AFTER (SoraUI)
+// ✅ AFTER (SoraUI Package)
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "@soraui/react";
-// OR copy directly into your project: npx @soraui/cli add accordion`}
+
+// OR copy directly into your project via CLI:
+// npx @soraui/cli add accordion`}
         />
 
         <p className="sora-subtext" style={{ marginTop: "1rem" }}>
-          The JSX usage remains 100% identical:
+          The JSX usage remains identical:
         </p>
 
         <CodeBlock
@@ -232,7 +228,7 @@ import {
   <AccordionItem value="item-1">
     <AccordionTrigger>Is it accessible?</AccordionTrigger>
     <AccordionContent>
-      Yes. It adheres to the WAI-ARIA design pattern with zero runtime JS.
+      Yes. It adheres to the WAI-ARIA design pattern with full keyboard navigation.
     </AccordionContent>
   </AccordionItem>
 </Accordion>`}
@@ -246,8 +242,8 @@ import {
           <a href="#migrating-from-tailwind" className="sora-doc-anchor">#</a>
         </h2>
         <p className="sora-subtext">
-          SoraUI eliminates the need for complex Tailwind configuration files and compiler plugins.
-          Follow these 3 steps to migrate your global stylesheet:
+          SoraUI replaces utility class compilation with standardized CSS Custom Properties.
+          Here is how to update your global styles:
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem", margin: "1rem 0" }}>
@@ -261,23 +257,18 @@ import {
             }}
           >
             <h4 style={{ margin: "0 0 0.5rem", fontSize: "0.875rem", fontWeight: 600 }}>
-              1. Replace Tailwind Directives in globals.css
+              1. Replace Global Stylesheet Imports
             </h4>
             <p style={{ margin: "0 0 0.75rem", fontSize: "0.8125rem", color: "var(--docs-fg-muted)" }}>
-              Remove <code>@tailwind base; @tailwind components; @tailwind utilities;</code> and import SoraUI core themes:
+              Import SoraUI core primitives and your chosen theme preset in your main entry file (e.g. <code>main.tsx</code> or <code>globals.css</code>):
             </p>
             <CodeBlock
               language="css"
-              filename="globals.css"
-              code={`/* ❌ Remove Tailwind Directives */
-/* @tailwind base; */
-/* @tailwind components; */
-/* @tailwind utilities; */
-
-/* ✅ Import SoraUI Core & Presets */
-@import "@soraui/core/theme/primitives.css";
-@import "@soraui/core/theme/presets/sky.css";
-@import "@soraui/react/styles";`}
+              filename="globals.css / main.tsx"
+              code={`/* Import SoraUI Core Theme Primitives & Presets */
+import "@soraui/core/theme/primitives.css";
+import "@soraui/core/theme/presets/sky.css";
+import "@soraui/react/styles";`}
             />
           </div>
 
@@ -294,7 +285,7 @@ import {
               2. Design Token Translation Map
             </h4>
             <p style={{ margin: "0 0 0.75rem", fontSize: "0.8125rem", color: "var(--docs-fg-muted)" }}>
-              SoraUI standardizes on semantic hex CSS variables instead of HSL string concatenations:
+              SoraUI standardizes on semantic hex CSS variables instead of HSL string manipulations:
             </p>
 
             <div className="docs-prop-wrap">
@@ -337,6 +328,11 @@ import {
                     <td><code>var(--radius)</code></td>
                     <td><code>var(--ui-radius)</code></td>
                   </tr>
+                  <tr>
+                    <td><code>ring-ring</code></td>
+                    <td><code>hsl(var(--ring))</code></td>
+                    <td><code>var(--ui-ring)</code></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -351,14 +347,13 @@ import {
           <a href="#migrating-from-radix" className="sora-doc-anchor">#</a>
         </h2>
         <p className="sora-subtext">
-          Radix UI divides each UI element into individual npm packages (<code>@radix-ui/react-dialog</code>, <code>@radix-ui/react-accordion</code>, <code>@radix-ui/react-select</code>), which rapidly inflates your <code>node_modules</code>.
-          With SoraUI, all accessible primitives are unified in <code>@soraui/react</code> with zero external dependencies:
+          Instead of installing dozen separate <code>@radix-ui/react-*</code> packages, SoraUI bundles all accessible keyboard behaviors, ARIA attributes, and focus traps directly into <code>@soraui/react</code>:
         </p>
 
         <CodeBlock
           language="bash"
-          filename="Terminal (Uninstall Radix)"
-          code={`# Clean up individual Radix packages
+          filename="Terminal (Dependency Cleanup)"
+          code={`# Remove individual Radix packages
 pnpm remove @radix-ui/react-accordion @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-select @radix-ui/react-slot @radix-ui/react-tabs
 
 # Install SoraUI
@@ -373,7 +368,7 @@ pnpm add @soraui/react @soraui/core`}
           <a href="#automated-cli" className="sora-doc-anchor">#</a>
         </h2>
         <p className="sora-subtext">
-          Use the SoraUI CLI to initialize your project configuration and automatically scaffolding your component library:
+          Use the SoraUI CLI to initialize your project and add components on demand:
         </p>
 
         <PackageManagerBlock
@@ -386,7 +381,7 @@ pnpm add @soraui/react @soraui/core`}
         />
 
         <p className="sora-subtext" style={{ marginTop: "1rem" }}>
-          Add all desired components into your codebase with one command:
+          Add components to your codebase with one command:
         </p>
 
         <PackageManagerBlock
@@ -419,7 +414,7 @@ pnpm add @soraui/react @soraui/core`}
               Can I use SoraUI alongside Tailwind CSS during a gradual migration?
             </h4>
             <p style={{ margin: 0, fontSize: "0.8125rem", color: "var(--docs-fg-muted)", lineHeight: 1.6 }}>
-              <strong>Yes, absolutely.</strong> SoraUI uses namespaced classes (<code>.sora-[component]</code>) and scoped CSS custom properties (<code>--ui-*</code>). It has zero namespace collisions with Tailwind utility classes.
+              <strong>Yes, absolutely.</strong> SoraUI uses namespaced classes (<code>.sora-[component]</code>) and scoped CSS custom properties (<code>--ui-*</code>). It can safely coexist with Tailwind utility classes without conflicts.
             </p>
           </div>
 
@@ -435,7 +430,7 @@ pnpm add @soraui/react @soraui/core`}
               Do I need to rewrite my animations and transitions?
             </h4>
             <p style={{ margin: 0, fontSize: "0.8125rem", color: "var(--docs-fg-muted)", lineHeight: 1.6 }}>
-              <strong>No.</strong> SoraUI components include GPU-accelerated keyframe animations and smooth transitions natively built into their CSS stylesheets.
+              <strong>No.</strong> SoraUI components include GPU-accelerated CSS keyframe animations and smooth transitions natively built into their stylesheets.
             </p>
           </div>
 
@@ -451,7 +446,7 @@ pnpm add @soraui/react @soraui/core`}
               How does SoraUI handle Right-to-Left (RTL) languages?
             </h4>
             <p style={{ margin: 0, fontSize: "0.8125rem", color: "var(--docs-fg-muted)", lineHeight: 1.6 }}>
-              Unlike libraries that require manual conditional styling or Tailwind <code>rtl:</code> prefixes, SoraUI uses modern <strong>CSS Logical Properties</strong> (<code>padding-inline</code>, <code>margin-inline</code>, <code>inset-inline</code>). Simply setting <code>dir="rtl"</code> on your container handles 100% of the layout flip automatically.
+              SoraUI supports bidirectional layouts natively with standard HTML <code>dir="rtl"</code> attributes and CSS flexbox mirroring, requiring zero JavaScript layout recalculations.
             </p>
           </div>
         </div>
