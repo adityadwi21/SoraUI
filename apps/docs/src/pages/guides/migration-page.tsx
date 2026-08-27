@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { CodeBlock } from "../../components/code-block";
 import { PackageManagerBlock } from "../../components/package-manager-block";
-import { Badge } from "@soraui/react";
+import {
+  Badge,
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@soraui/react";
 import {
   Check,
   Copy,
@@ -400,55 +406,48 @@ pnpm add @soraui/react @soraui/core`}
           <span>Migration FAQ</span>
           <a href="#faq" className="sora-doc-anchor">#</a>
         </h2>
+        <p className="sora-subtext">
+          Answers to common questions about migrating existing projects to SoraUI:
+        </p>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", margin: "1rem 0" }}>
-          <div
-            style={{
-              padding: "1rem 1.25rem",
-              borderRadius: "var(--docs-radius)",
-              border: "1px solid var(--docs-border)",
-              background: "var(--docs-bg-card)",
-            }}
-          >
-            <h4 style={{ margin: "0 0 0.35rem", fontSize: "0.875rem", fontWeight: 600 }}>
-              Can I use SoraUI alongside Tailwind CSS during a gradual migration?
-            </h4>
-            <p style={{ margin: 0, fontSize: "0.8125rem", color: "var(--docs-fg-muted)", lineHeight: 1.6 }}>
-              <strong>Yes, absolutely.</strong> SoraUI uses namespaced classes (<code>.sora-[component]</code>) and scoped CSS custom properties (<code>--ui-*</code>). It can safely coexist with Tailwind utility classes without conflicts.
-            </p>
-          </div>
+        <div style={{ margin: "1.25rem 0" }}>
+          <Accordion type="single" collapsible defaultValue="faq-1">
+            <AccordionItem value="faq-1">
+              <AccordionTrigger>
+                Can I use SoraUI alongside Tailwind CSS during a gradual migration?
+              </AccordionTrigger>
+              <AccordionContent>
+                <strong>Yes, absolutely.</strong> SoraUI uses namespaced BEM classes (<code>.sora-[component]</code>) and scoped CSS custom properties (<code>--ui-*</code>). It can safely coexist with Tailwind utility classes in the same application without any naming or specificity conflicts.
+              </AccordionContent>
+            </AccordionItem>
 
-          <div
-            style={{
-              padding: "1rem 1.25rem",
-              borderRadius: "var(--docs-radius)",
-              border: "1px solid var(--docs-border)",
-              background: "var(--docs-bg-card)",
-            }}
-          >
-            <h4 style={{ margin: "0 0 0.35rem", fontSize: "0.875rem", fontWeight: 600 }}>
-              Do I need to rewrite my animations and transitions?
-            </h4>
-            <p style={{ margin: 0, fontSize: "0.8125rem", color: "var(--docs-fg-muted)", lineHeight: 1.6 }}>
-              <strong>No.</strong> SoraUI components include GPU-accelerated CSS keyframe animations and smooth transitions natively built into their stylesheets.
-            </p>
-          </div>
+            <AccordionItem value="faq-2">
+              <AccordionTrigger>
+                Do I need to rewrite my animations and transitions?
+              </AccordionTrigger>
+              <AccordionContent>
+                <strong>No.</strong> SoraUI components include GPU-accelerated CSS keyframe animations and smooth transitions natively built into their stylesheets. You don't need any external animation libraries.
+              </AccordionContent>
+            </AccordionItem>
 
-          <div
-            style={{
-              padding: "1rem 1.25rem",
-              borderRadius: "var(--docs-radius)",
-              border: "1px solid var(--docs-border)",
-              background: "var(--docs-bg-card)",
-            }}
-          >
-            <h4 style={{ margin: "0 0 0.35rem", fontSize: "0.875rem", fontWeight: 600 }}>
-              How does SoraUI handle Right-to-Left (RTL) languages?
-            </h4>
-            <p style={{ margin: 0, fontSize: "0.8125rem", color: "var(--docs-fg-muted)", lineHeight: 1.6 }}>
-              SoraUI supports bidirectional layouts natively with standard HTML <code>dir="rtl"</code> attributes and CSS flexbox mirroring, requiring zero JavaScript layout recalculations.
-            </p>
-          </div>
+            <AccordionItem value="faq-3">
+              <AccordionTrigger>
+                How does SoraUI handle Right-to-Left (RTL) languages?
+              </AccordionTrigger>
+              <AccordionContent>
+                SoraUI supports bidirectional layouts natively with standard HTML <code>dir="rtl"</code> attributes and CSS flexbox mirroring, requiring zero JavaScript layout recalculations.
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="faq-4">
+              <AccordionTrigger>
+                Can I choose between NPM package or copy-pasting component source?
+              </AccordionTrigger>
+              <AccordionContent>
+                <strong>Yes.</strong> You can install <code>@soraui/react</code> directly for instant setup, or use <code>npx @soraui/cli add [component]</code> to copy full TypeScript source code directly into your repository so you own 100% of the UI.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </section>
     </div>
