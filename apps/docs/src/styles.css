@@ -1902,8 +1902,14 @@ svg {
   }
 }
 
+/* ─── BODY: positioning context for preview & code overlay ─── */
+.sora-preview-body {
+  position: relative;
+}
+
 .sora-preview-canvas-wrapper,
 .docs-preview-canvas {
+
   min-height: 220px;
   padding: 1.5rem;
   display: flex;
@@ -1950,17 +1956,22 @@ svg {
 }
 
 .sora-preview-code-pane {
+  position: absolute;
+  inset: 0;
   padding: 0;
   background: var(--docs-code-bg);
   animation: soraTabFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   will-change: opacity, transform;
+  overflow: auto;
 }
 .sora-preview-code-pane .docs-codeblock {
   margin: 0;
   border: none;
   border-radius: 0;
   box-shadow: none;
+  min-height: 100%;
 }
+
 
 /* RTL Floating Disclaimer */
 .sora-rtl-disclaimer-badge {
@@ -4140,93 +4151,7 @@ pre.docs-codeblock-pre {
   border-color: rgba(239, 68, 68, 0.2);
 }
 
-/* ─── Shadcn-Style Floating Top-Right Alert Stack ─── */
-@keyframes shadcnAlertEnter {
-  0% {
-    transform: translate3d(100%, 0, 0) scale(0.95);
-    opacity: 0;
-  }
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 1;
-  }
-}
 
-@keyframes shadcnAlertExit {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate3d(100%, 0, 0) scale(0.95);
-    opacity: 0;
-  }
-}
-
-@keyframes shadcnAlertProgress {
-  from {
-    width: 100%;
-  }
-  to {
-    width: 0%;
-  }
-}
-
-.sora-floating-alert-stack {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 99999;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 360px;
-  max-width: calc(100vw - 2rem);
-  pointer-events: none;
-}
-
-.sora-floating-alert-item {
-  position: relative;
-  overflow: hidden;
-  pointer-events: auto;
-  animation: shadcnAlertEnter 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(0, 0, 0, 0.05);
-  border-radius: var(--ui-radius, 8px);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    opacity 0.2s ease;
-}
-
-html[data-docs-theme="dark"] .sora-floating-alert-item {
-  box-shadow:
-    0 10px 25px -5px rgba(0, 0, 0, 0.5),
-    0 8px 10px -6px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-.sora-floating-alert-item:hover {
-  transform: translateY(-1px);
-}
-
-.sora-floating-alert-item.is-exiting {
-  animation: shadcnAlertExit 0.2s cubic-bezier(0.4, 0, 1, 1) forwards;
-}
-
-.sora-alert-timer-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  background: currentColor;
-  opacity: 0.3;
-  animation: shadcnAlertProgress 2s linear forwards;
-  pointer-events: none;
-}
 
 /* Media Thumbnail Cards (e.g. photo grid with top-right corner remove button) */
 .sora-attachment-card {

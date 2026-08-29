@@ -173,9 +173,14 @@ export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
         </div>
       </div>
 
-      {/* ─── PREVIEW CANVAS OR CODE BLOCK ─── */}
-      {tab === "preview" ? (
-        <div className="sora-preview-canvas-wrapper">
+      {/* ─── PREVIEW CANVAS & CODE BLOCK (always rendered, toggled via CSS) ─── */}
+      <div className="sora-preview-body">
+        {/* Preview canvas — always in DOM to hold the card height */}
+        <div
+          className="sora-preview-canvas-wrapper"
+          aria-hidden={tab !== "preview"}
+          style={{ visibility: tab === "preview" ? "visible" : "hidden" }}
+        >
           <div
             className="sora-preview-viewport-box"
             style={{
@@ -232,15 +237,19 @@ export const ComponentPreview: React.FC<ComponentPreviewProps> = ({
             </ThemeScope>
           </div>
         </div>
-      ) : (
-        <div className="sora-preview-code-pane">
-          <CodeBlock
-            code={code}
-            language="tsx"
-            hideHeader={true}
-          />
-        </div>
-      )}
+
+        {/* Code pane — absolutely overlaid on top of the preview area */}
+        {tab === "code" && (
+          <div className="sora-preview-code-pane">
+            <CodeBlock
+              code={code}
+              language="tsx"
+              hideHeader={true}
+            />
+          </div>
+        )}
+      </div>
     </div>
+
   );
 };

@@ -1,5 +1,4 @@
 import React from "react";
-import { createPortal } from "react-dom";
 import type { ComponentDoc } from "./types";
 
 // SoraUI Primitives
@@ -137,293 +136,13 @@ import {
   AlertCircle,
   CheckCircle2,
   AlertTriangle,
+  Info,
   FileText,
   Archive,
   Code,
-  X,
 } from "lucide-react";
 
-const AlertInteractiveDemo: React.FC = () => {
-  const [alerts, setAlerts] = React.useState<
-    Array<{
-      id: number;
-      type: "default" | "destructive" | "warning" | "success";
-      title: string;
-      description: string;
-      isExiting?: boolean;
-    }>
-  >([]);
 
-  // Dismiss an alert with smooth exit animation
-  const removeAlert = (id: number) => {
-    setAlerts((prev) =>
-      prev.map((a) => (a.id === id ? { ...a, isExiting: true } : a)),
-    );
-    setTimeout(() => {
-      setAlerts((prev) => prev.filter((a) => a.id !== id));
-    }, 200);
-  };
-
-  // Add alert and auto-dismiss after 2 seconds (FIFO sequence)
-  const addAlert = (
-    type: "default" | "destructive" | "warning" | "success",
-  ) => {
-    const newId = Date.now() + Math.random();
-    let title = "Notification";
-    let description = "Informational update received.";
-
-    if (type === "destructive") {
-      title = "Critical Error";
-      description =
-        "Unable to establish connection to the remote database cluster.";
-    } else if (type === "warning") {
-      title = "Storage Limit Warning";
-      description = "Cloud database storage has reached 88% capacity.";
-    } else if (type === "success") {
-      title = "Deployment Succeeded";
-      description = "Production build v0.1.1 was successfully deployed.";
-    } else {
-      title = "Heads up!";
-      description =
-        "Floating alert notification triggered in the top-right corner.";
-    }
-
-    setAlerts((prev) => [
-      ...prev,
-      { id: newId, type, title, description, isExiting: false },
-    ]);
-
-    // Auto dismiss after 2 seconds (2000ms) for sequential disappearance
-    setTimeout(() => {
-      removeAlert(newId);
-    }, 2000);
-  };
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
-        width: "100%",
-        maxWidth: "580px",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "0.5rem",
-          alignItems: "center",
-        }}
-      >
-        <Button size="sm" variant="outline" onClick={() => addAlert("default")}>
-          <Terminal size={14} style={{ marginRight: "0.35rem" }} /> Add Default
-        </Button>
-        <Button
-          size="sm"
-          variant="destructive"
-          onClick={() => addAlert("destructive")}
-        >
-          <AlertCircle size={14} style={{ marginRight: "0.35rem" }} /> Add
-          Destructive
-        </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          onClick={() => addAlert("warning")}
-          style={{ borderColor: "rgba(234, 179, 8, 0.4)" }}
-        >
-          <AlertTriangle
-            size={14}
-            style={{ marginRight: "0.35rem", color: "#eab308" }}
-          />{" "}
-          Add Warning
-        </Button>
-        <Button
-          size="sm"
-          variant="secondary"
-          onClick={() => addAlert("success")}
-          style={{ borderColor: "rgba(34, 197, 94, 0.4)" }}
-        >
-          <CheckCircle2
-            size={14}
-            style={{ marginRight: "0.35rem", color: "#22c55e" }}
-          />{" "}
-          Add Success
-        </Button>
-        {alerts.length > 0 && (
-          <Button size="sm" variant="ghost" onClick={() => setAlerts([])}>
-            Clear All ({alerts.length})
-          </Button>
-        )}
-      </div>
-
-      <div
-        style={{
-          padding: "1.25rem",
-          borderRadius: "var(--ui-radius, 8px)",
-          border: "1px dashed var(--docs-border, #e2e8f0)",
-          background: "var(--docs-bg-card, rgba(0, 0, 0, 0.02))",
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.5rem",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            fontSize: "0.8125rem",
-            color: "var(--docs-fg)",
-            fontWeight: 600,
-          }}
-        >
-          <span>Floating Top-Right Alert Monitor</span>
-          <Badge
-            variant={alerts.length > 0 ? "default" : "outline"}
-            style={{ fontSize: "0.7rem" }}
-          >
-            {alerts.length} Active {alerts.length === 1 ? "Alert" : "Alerts"}
-          </Badge>
-        </div>
-        <p
-          style={{
-            margin: 0,
-            fontSize: "0.8125rem",
-            color: "var(--docs-fg-muted, #64748b)",
-            lineHeight: 1.5,
-          }}
-        >
-          Click any action button above to trigger a floating alert in the{" "}
-          <strong>top-right corner of the screen</strong>. The oldest active
-          alert will automatically dismiss in sequential order after 2 seconds
-          (or click the <strong>×</strong> button to dismiss immediately).
-        </p>
-      </div>
-
-      {/* Floating Top-Right Notification Container Portal */}
-      {typeof document !== "undefined" &&
-        createPortal(
-          <div
-            className="sora-floating-alert-stack"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            {alerts.map((item) => (
-              <div
-                key={item.id}
-                className={`sora-floating-alert-item${item.isExiting ? " is-exiting" : ""}`}
-              >
-                <Alert
-                  variant={
-                    item.type === "destructive" ? "destructive" : "default"
-                  }
-                  style={{
-                    margin: 0,
-                    ...(item.type === "warning"
-                      ? {
-                          borderColor: "rgba(234, 179, 8, 0.4)",
-                          backgroundColor: "var(--ui-card, #18181b)",
-                        }
-                      : item.type === "success"
-                        ? {
-                            borderColor: "rgba(34, 197, 94, 0.4)",
-                            backgroundColor: "var(--ui-card, #18181b)",
-                          }
-                        : {
-                            backgroundColor: "var(--ui-card, #18181b)",
-                          }),
-                  }}
-                >
-                  {item.type === "default" && <Terminal size={16} />}
-                  {item.type === "destructive" && <AlertCircle size={16} />}
-                  {item.type === "warning" && (
-                    <AlertTriangle size={16} style={{ color: "#eab308" }} />
-                  )}
-                  {item.type === "success" && (
-                    <CheckCircle2 size={16} style={{ color: "#22c55e" }} />
-                  )}
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      gap: "0.75rem",
-                      width: "100%",
-                    }}
-                  >
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <AlertTitle
-                        style={
-                          item.type === "warning"
-                            ? { color: "#eab308" }
-                            : item.type === "success"
-                              ? { color: "#22c55e" }
-                              : undefined
-                        }
-                      >
-                        {item.title}
-                      </AlertTitle>
-                      <AlertDescription style={{ wordBreak: "break-word" }}>
-                        {item.description}
-                      </AlertDescription>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => removeAlert(item.id)}
-                      title="Dismiss alert"
-                      aria-label="Close"
-                      style={{
-                        background: "transparent",
-                        border: "none",
-                        padding: "0.2rem",
-                        cursor: "pointer",
-                        color: "inherit",
-                        opacity: 0.7,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: "4px",
-                        lineHeight: 1,
-                        transition: "opacity 0.15s ease",
-                      }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.opacity = "1")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.opacity = "0.7")
-                      }
-                    >
-                      <X size={14} />
-                    </button>
-                  </div>
-
-                  {/* 2026 Smooth Depleting Progress Line */}
-                  <div
-                    className="sora-alert-timer-bar"
-                    style={{
-                      color:
-                        item.type === "destructive"
-                          ? "var(--ui-destructive, #ef4444)"
-                          : item.type === "warning"
-                            ? "#eab308"
-                            : item.type === "success"
-                              ? "#22c55e"
-                              : "var(--ui-primary, #0ea5e9)",
-                    }}
-                  />
-                </Alert>
-              </div>
-            ))}
-          </div>,
-          document.body,
-        )}
-    </div>
-  );
-};
 
 export const COMPONENT_DOCS: ComponentDoc[] = [
   {
@@ -3211,7 +2930,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     category: "Feedback",
     level: 1,
     description:
-      "Displays a callout for user attention with semantic variants, icons, titles, and dismiss actions.",
+      "A static inline callout component that displays contextual feedback messages. Use for informational notices, warnings, errors, and success confirmations embedded within page content.",
     dependencies: [],
     tags: [
       "alert",
@@ -3242,49 +2961,6 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       "--ui-destructive",
     ],
     examples: [
-      {
-        id: "interactive",
-        title: "Interactive Trigger & Dismiss",
-        description:
-          "Click the action buttons to trigger floating alerts in the top-right corner with 2-second FIFO auto-dismiss.",
-        code: `function FloatingAlerts() {
-  const [alerts, setAlerts] = React.useState([]);
-
-  const addAlert = (type) => {
-    const id = Date.now();
-    setAlerts((prev) => [
-      ...prev,
-      { id, type, title: 'Notification', desc: 'Floating alert triggered in top-right corner.' },
-    ]);
-
-    // Auto dismiss after 2 seconds (oldest disappears first)
-    setTimeout(() => {
-      setAlerts((prev) => prev.filter((a) => a.id !== id));
-    }, 2000);
-  };
-
-  return (
-    <div>
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <Button onClick={() => addAlert('default')}>Add Default</Button>
-        <Button variant="destructive" onClick={() => addAlert('destructive')}>Add Destructive</Button>
-      </div>
-
-      {/* Floating Top-Right Stack */}
-      <div style={{ position: 'fixed', top: '1.25rem', right: '1.25rem', zIndex: 9999, display: 'flex', flexDirection: 'column', gap: '0.5rem', width: 360 }}>
-        {alerts.map((a) => (
-          <Alert key={a.id} variant={a.type}>
-            <Terminal className="h-4 w-4" />
-            <AlertTitle>{a.title}</AlertTitle>
-            <AlertDescription>{a.desc}</AlertDescription>
-          </Alert>
-        ))}
-      </div>
-    </div>
-  );
-}`,
-        render: () => <AlertInteractiveDemo />,
-      },
       {
         id: "default",
         title: "Default Alert",
@@ -3430,6 +3106,125 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
               Your project has been successfully deployed to production.
             </AlertDescription>
           </Alert>
+        ),
+      },
+      {
+        id: "custom-colors",
+        title: "Custom Colors",
+        description:
+          "Override border, background, and text colors using inline styles to create any semantic color tone — info, warning, success, or error.",
+        code: `<div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '540px' }}>
+  {/* Info — Blue */}
+  <Alert style={{ borderColor: 'rgba(59, 130, 246, 0.4)', backgroundColor: 'rgba(59, 130, 246, 0.06)' }}>
+    <Info className="h-4 w-4" style={{ color: '#3b82f6' }} />
+    <AlertTitle style={{ color: '#3b82f6' }}>New feature available</AlertTitle>
+    <AlertDescription>
+      Dashboard v2 is live. Explore new analytics and reporting tools.
+    </AlertDescription>
+  </Alert>
+
+  {/* Warning — Amber */}
+  <Alert style={{ borderColor: 'rgba(234, 179, 8, 0.4)', backgroundColor: 'rgba(234, 179, 8, 0.06)' }}>
+    <AlertTriangle className="h-4 w-4" style={{ color: '#eab308' }} />
+    <AlertTitle style={{ color: '#eab308' }}>Your subscription will expire in 3 days.</AlertTitle>
+    <AlertDescription>
+      Renew now to avoid service interruption or upgrade to a paid plan.
+    </AlertDescription>
+  </Alert>
+
+  {/* Success — Green */}
+  <Alert style={{ borderColor: 'rgba(34, 197, 94, 0.4)', backgroundColor: 'rgba(34, 197, 94, 0.06)' }}>
+    <CheckCircle2 className="h-4 w-4" style={{ color: '#22c55e' }} />
+    <AlertTitle style={{ color: '#22c55e' }}>Payment confirmed</AlertTitle>
+    <AlertDescription>
+      Your invoice #1042 has been paid. A receipt has been sent to your email.
+    </AlertDescription>
+  </Alert>
+
+  {/* Error — Red (custom, not destructive variant) */}
+  <Alert style={{ borderColor: 'rgba(239, 68, 68, 0.4)', backgroundColor: 'rgba(239, 68, 68, 0.06)' }}>
+    <AlertCircle className="h-4 w-4" style={{ color: '#ef4444' }} />
+    <AlertTitle style={{ color: '#ef4444' }}>Build failed</AlertTitle>
+    <AlertDescription>
+      3 errors found in production bundle. Check the build logs for details.
+    </AlertDescription>
+  </Alert>
+</div>`,
+        render: () => (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.75rem",
+              maxWidth: "540px",
+              width: "100%",
+            }}
+          >
+            {/* Info — Blue */}
+            <Alert
+              style={{
+                borderColor: "rgba(59, 130, 246, 0.4)",
+                backgroundColor: "rgba(59, 130, 246, 0.06)",
+              }}
+            >
+              <Info size={16} style={{ color: "#3b82f6" }} />
+              <AlertTitle style={{ color: "#3b82f6" }}>
+                New feature available
+              </AlertTitle>
+              <AlertDescription>
+                Dashboard v2 is live. Explore new analytics and reporting tools.
+              </AlertDescription>
+            </Alert>
+
+            {/* Warning — Amber */}
+            <Alert
+              style={{
+                borderColor: "rgba(234, 179, 8, 0.4)",
+                backgroundColor: "rgba(234, 179, 8, 0.06)",
+              }}
+            >
+              <AlertTriangle size={16} style={{ color: "#eab308" }} />
+              <AlertTitle style={{ color: "#eab308" }}>
+                Your subscription will expire in 3 days.
+              </AlertTitle>
+              <AlertDescription>
+                Renew now to avoid service interruption or upgrade to a paid
+                plan.
+              </AlertDescription>
+            </Alert>
+
+            {/* Success — Green */}
+            <Alert
+              style={{
+                borderColor: "rgba(34, 197, 94, 0.4)",
+                backgroundColor: "rgba(34, 197, 94, 0.06)",
+              }}
+            >
+              <CheckCircle2 size={16} style={{ color: "#22c55e" }} />
+              <AlertTitle style={{ color: "#22c55e" }}>
+                Payment confirmed
+              </AlertTitle>
+              <AlertDescription>
+                Your invoice #1042 has been paid. A receipt has been sent to
+                your email.
+              </AlertDescription>
+            </Alert>
+
+            {/* Error — Red */}
+            <Alert
+              style={{
+                borderColor: "rgba(239, 68, 68, 0.4)",
+                backgroundColor: "rgba(239, 68, 68, 0.06)",
+              }}
+            >
+              <AlertCircle size={16} style={{ color: "#ef4444" }} />
+              <AlertTitle style={{ color: "#ef4444" }}>Build failed</AlertTitle>
+              <AlertDescription>
+                3 errors found in production bundle. Check the build logs for
+                details.
+              </AlertDescription>
+            </Alert>
+          </div>
         ),
       },
     ],

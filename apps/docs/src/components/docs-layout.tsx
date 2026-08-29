@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Sun, Moon, Menu, X, Search } from "lucide-react";
 import { GitHubIcon } from "./brand-icons";
 import { COMPONENT_DOCS } from "../registry/components";
@@ -8,7 +8,6 @@ import { GUIDE_DOCS } from "../registry/guides";
 import { SearchDialog } from "./search-dialog";
 import { TableOfContents } from "./table-of-contents";
 import { useDocsTheme } from "../registry/docs-theme-context";
-
 
 /* ─────────────────────────────────────────────────────
    SVG Icons
@@ -50,10 +49,13 @@ const SidebarContent: React.FC<{
           {GUIDE_DOCS.map((g) => {
             const href =
               g.customPath ||
-              (g.id === "introduction" ? "/docs" : 
-               g.id === "cli-reference" ? "/docs/cli" : 
-               g.id === "components" ? "/docs/components" : 
-               `/docs/${g.id}`);
+              (g.id === "introduction"
+                ? "/docs"
+                : g.id === "cli-reference"
+                  ? "/docs/cli"
+                  : g.id === "components"
+                    ? "/docs/components"
+                    : `/docs/${g.id}`);
             const active =
               currentPath === href || (g.id === "introduction" && isIntro);
             return (
@@ -208,32 +210,44 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({
 }) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [prevPath, setPrevPath] = useState(currentPath);
   const { mode, toggle } = useDocsTheme();
 
-  // Close drawer on route change
-  useEffect(() => {
+  // Adjust state during render when prop changes (React recommended pattern over useEffect)
+  if (prevPath !== currentPath) {
+    setPrevPath(currentPath);
     setDrawerOpen(false);
-  }, [currentPath]);
+  }
 
-  // Close drawer on resize
-  useEffect(() => {
-    const h = () => {
-      if (window.innerWidth > 768) setDrawerOpen(false);
-    };
-    window.addEventListener("resize", h);
-    return () => window.removeEventListener("resize", h);
-  }, []);
+  // Handle navigation wrapper
+  const handleNavigate = (path: string) => {
+    setDrawerOpen(false);
+    onNavigate(path);
+  };
 
-  // Keyboard: Cmd+K
+  // Close drawer on window resize above mobile breakpoint
   useEffect(() => {
-    const h = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        setSearchOpen(true);
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setDrawerOpen(false);
       }
     };
-    document.addEventListener("keydown", h);
-    return () => document.removeEventListener("keydown", h);
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Keyboard shortcut: Cmd+K / Ctrl+K for search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const isHome = currentPath === "/" || currentPath === "";
@@ -250,7 +264,7 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({
       <SearchDialog
         open={searchOpen}
         onClose={() => setSearchOpen(false)}
-        onNavigate={onNavigate}
+        onNavigate={handleNavigate}
       />
 
       {/* ─── HEADER ─── */}
@@ -272,7 +286,7 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({
             <button
               type="button"
               className="docs-logo"
-              onClick={() => onNavigate("/")}
+              onClick={() => handleNavigate("/")}
               aria-label="SoraUI home"
             >
               <img
@@ -303,7 +317,11 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({
                   active: isGuide,
                   path: "/docs",
                 },
-                { label: "Components", active: isComp, path: "/docs/components" },
+                {
+                  label: "Components",
+                  active: isComp,
+                  path: "/docs/components",
+                },
                 {
                   label: "Blocks",
                   active: isBlock,
@@ -321,7 +339,7 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({
                 key={n.label}
                 type="button"
                 className={`docs-nav-link${n.active ? " active" : ""}`}
-                onClick={() => onNavigate(n.path)}
+                onClick={() => handleNavigate(n.path)}
               >
                 {n.label}
               </button>
@@ -391,7 +409,7 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({
         <div className="docs-body">
           {/* Desktop sidebar */}
           <aside className="docs-sidebar" aria-label="Sidebar">
-            <SidebarContent currentPath={currentPath} onNav={onNavigate} />
+            <SidebarContent currentPath={currentPath} onNav={handleNavigate} />
           </aside>
 
           {/* Mobile overlay */}
@@ -411,7 +429,7 @@ export const DocsLayout: React.FC<DocsLayoutProps> = ({
           >
             <SidebarContent
               currentPath={currentPath}
-              onNav={onNavigate}
+              onNav={handleNavigate}
               onClose={() => setDrawerOpen(false)}
             />
           </aside>
