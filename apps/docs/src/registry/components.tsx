@@ -2515,9 +2515,16 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     category: "Feedback",
     level: 2,
     description:
-      "A modal dialog that interrupts the user with important content and expects a response. Blocks interaction until dismissed — ideal for destructive or irreversible actions.",
+      "A modal dialog that interrupts the user with important content and expects a response. Blocks interaction until dismissed ideal for destructive or irreversible actions.",
     dependencies: ["@soraui/hooks"],
-    tags: ["alert-dialog", "confirm", "modal", "destructive", "overlay", "dialog"],
+    tags: [
+      "alert-dialog",
+      "confirm",
+      "modal",
+      "destructive",
+      "overlay",
+      "dialog",
+    ],
     status: "stable",
     props: [
       {
@@ -2540,7 +2547,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         name: "asChild",
         type: "boolean",
         default: "false",
-        description: "Merges trigger behavior onto immediate child element (AlertDialogTrigger)",
+        description:
+          "Merges trigger behavior onto immediate child element (AlertDialogTrigger)",
       },
       {
         name: "size",
@@ -2553,14 +2561,34 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       role: "alertdialog",
       keyboard: [
         { key: "Escape", action: "Closes the alert dialog" },
-        { key: "Tab / Shift+Tab", action: "Cycles focus strictly within the dialog" },
-        { key: "Enter / Space", action: "Activates the focused action or cancel button" },
+        {
+          key: "Tab / Shift+Tab",
+          action: "Cycles focus strictly within the dialog",
+        },
+        {
+          key: "Enter / Space",
+          action: "Activates the focused action or cancel button",
+        },
       ],
       aria: [
-        { attribute: "role=\"alertdialog\"", usage: "Announces dialog as an alert modal to screen readers" },
-        { attribute: "aria-modal=\"true\"", usage: "Traps virtual cursor and prevents interaction with background" },
-        { attribute: "aria-labelledby", usage: "Automatically links to AlertDialogTitle for accessible name" },
-        { attribute: "aria-describedby", usage: "Automatically links to AlertDialogDescription for accessible description" },
+        {
+          attribute: 'role="alertdialog"',
+          usage: "Announces dialog as an alert modal to screen readers",
+        },
+        {
+          attribute: 'aria-modal="true"',
+          usage:
+            "Traps virtual cursor and prevents interaction with background",
+        },
+        {
+          attribute: "aria-labelledby",
+          usage: "Automatically links to AlertDialogTitle for accessible name",
+        },
+        {
+          attribute: "aria-describedby",
+          usage:
+            "Automatically links to AlertDialogDescription for accessible description",
+        },
       ],
     },
     themingTokens: [
@@ -2606,8 +2634,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
               <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete your
-                  account and remove your data from our servers.
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -2621,7 +2649,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         id: "small",
         title: "Small",
-        description: "Use the size=\"sm\" prop to make the alert dialog smaller.",
+        description: 'Use the size="sm" prop to make the alert dialog smaller.',
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
     <Button variant="outline">Show Dialog</Button>
@@ -2648,15 +2676,16 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
             </AlertDialogTrigger>
             <AlertDialogContent size="sm">
               <AlertDialogHeader>
-                <AlertDialogTitle>
-                  Allow accessory to connect?
-                </AlertDialogTitle>
+                <AlertDialogTitle>Allow accessory to connect?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Do you want to allow the USB accessory to connect to this device?
+                  Do you want to allow the USB accessory to connect to this
+                  device?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel variant="outline">Don't allow</AlertDialogCancel>
+                <AlertDialogCancel variant="outline">
+                  Don't allow
+                </AlertDialogCancel>
                 <AlertDialogAction>Allow</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -2666,7 +2695,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         id: "media",
         title: "Media",
-        description: "Use the AlertDialogMedia component to add a media element such as an icon or image to the alert dialog.",
+        description:
+          "Use the AlertDialogMedia component to add a media element such as an icon or image to the alert dialog.",
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
     <Button variant="outline">Show Dialog</Button>
@@ -2699,7 +2729,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
                 </AlertDialogMedia>
                 <AlertDialogTitle>Share this project?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Anyone with the link will be able to view and edit this project.
+                  Anyone with the link will be able to view and edit this
+                  project.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -2713,7 +2744,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         id: "small-with-media",
         title: "Small with Media",
-        description: "Use the size=\"sm\" prop to make the alert dialog smaller and the AlertDialogMedia component to add a media element such as an icon or image to the alert dialog.",
+        description:
+          'Use the size="sm" prop to make the alert dialog smaller and the AlertDialogMedia component to add a media element such as an icon or image to the alert dialog.',
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
     <Button variant="outline">Show Dialog</Button>
@@ -2746,15 +2778,16 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
                 <AlertDialogMedia>
                   <Bluetooth size={20} />
                 </AlertDialogMedia>
-                <AlertDialogTitle>
-                  Allow accessory to connect?
-                </AlertDialogTitle>
+                <AlertDialogTitle>Allow accessory to connect?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Do you want to allow the USB accessory to connect to this device?
+                  Do you want to allow the USB accessory to connect to this
+                  device?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel variant="outline">Don't allow</AlertDialogCancel>
+                <AlertDialogCancel variant="outline">
+                  Don't allow
+                </AlertDialogCancel>
                 <AlertDialogAction>Allow</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -2764,7 +2797,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         id: "destructive",
         title: "Destructive",
-        description: "Use the AlertDialogAction component to add a destructive action button to the alert dialog.",
+        description:
+          "Use the AlertDialogAction component to add a destructive action button to the alert dialog.",
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
     <Button variant="outline">Delete Chat</Button>
@@ -2810,13 +2844,19 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
                 <AlertDialogTitle>Delete chat?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This will permanently delete this chat conversation. View{" "}
-                  <span style={{ textDecoration: "underline", cursor: "pointer" }}>Settings</span>{" "}
+                  <span
+                    style={{ textDecoration: "underline", cursor: "pointer" }}
+                  >
+                    Settings
+                  </span>{" "}
                   delete any memories saved during this chat.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
-                <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
+                <AlertDialogAction variant="destructive">
+                  Delete
+                </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -2825,7 +2865,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         id: "rtl",
         title: "RTL",
-        description: "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+        description:
+          "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
         code: `<div dir="rtl">
   <AlertDialog>
     <AlertDialogTrigger asChild>
@@ -2855,7 +2896,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
                 <AlertDialogHeader>
                   <AlertDialogTitle>هل أنت متأكد تمامًا؟</AlertDialogTitle>
                   <AlertDialogDescription>
-                    لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك نهائيًا وإزالة بياناتك من خوادمنا.
+                    لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك
+                    نهائيًا وإزالة بياناتك من خوادمنا.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -3571,11 +3613,10 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
   },
   {
     id: "aspect-ratio",
-    name: "AspectRatio",
+    name: "Aspect Ratio",
     category: "Layout",
     level: 1,
-    description:
-      "Displays content within a desired aspect ratio with zero cumulative layout shift.",
+    description: "Displays content within a desired ratio.",
     dependencies: [],
     tags: ["aspect-ratio", "ratio", "image", "video", "embed", "layout"],
     status: "stable",
@@ -3585,15 +3626,22 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         type: "number",
         default: "16 / 9",
         description:
-          "Desired aspect ratio width / height (e.g. 16/9, 4/3, 1/1, 21/9)",
+          "Desired aspect ratio width / height (e.g. 16/9, 4/3, 1/1, 9/16, 21/9)",
+      },
+      {
+        name: "className",
+        type: "string",
+        default: "undefined",
+        description: "Additional CSS classes to apply",
       },
     ],
-    themingTokens: ["--ui-radius"],
+    themingTokens: ["--ui-radius", "--ui-border"],
     examples: [
       {
-        id: "ratios",
-        title: "16:9 Image Container",
-        code: `<div style={{ width: '100%', maxWidth: '480px', borderRadius: '0.75rem', overflow: 'hidden', border: '1px solid var(--docs-border)' }}>
+        id: "basic",
+        title: "Demo",
+        description: "Default aspect ratio 16:9 for displaying media and banners.",
+        code: `<div style={{ width: '100%', maxWidth: '480px', borderRadius: '0.5rem', overflow: 'hidden', border: '1px solid var(--ui-border)' }}>
   <AspectRatio ratio={16 / 9}>
     <img
       src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
@@ -3607,9 +3655,9 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
             style={{
               width: "100%",
               maxWidth: "480px",
-              borderRadius: "0.75rem",
+              borderRadius: "0.5rem",
               overflow: "hidden",
-              border: "1px solid var(--docs-border)",
+              border: "1px solid var(--ui-border)",
             }}
           >
             <AspectRatio ratio={16 / 9}>
@@ -3624,12 +3672,14 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       },
       {
         id: "square",
-        title: "1:1 Square Ratio",
-        code: `<div style={{ width: '220px', borderRadius: '0.75rem', overflow: 'hidden', border: '1px solid var(--docs-border)' }}>
+        title: "Square",
+        description:
+          "A square aspect ratio component using the ratio={1 / 1} prop. This is useful for displaying images in a square format.",
+        code: `<div style={{ width: '220px', borderRadius: '0.5rem', overflow: 'hidden', border: '1px solid var(--ui-border)' }}>
   <AspectRatio ratio={1 / 1}>
     <img
-      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800&dpr=2&q=80"
-      alt="Avatar"
+      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+      alt="Photo by Drew Beamer"
       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
     />
   </AspectRatio>
@@ -3638,18 +3688,92 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
           <div
             style={{
               width: "220px",
-              borderRadius: "0.75rem",
+              borderRadius: "0.5rem",
               overflow: "hidden",
-              border: "1px solid var(--docs-border)",
+              border: "1px solid var(--ui-border)",
             }}
           >
             <AspectRatio ratio={1 / 1}>
               <img
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800&dpr=2&q=80"
-                alt="Avatar"
+                src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+                alt="Photo by Drew Beamer"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             </AspectRatio>
+          </div>
+        ),
+      },
+      {
+        id: "portrait",
+        title: "Portrait",
+        description:
+          "A portrait aspect ratio component using the ratio={9 / 16} prop. This is useful for displaying images in a portrait format.",
+        code: `<div style={{ width: '220px', borderRadius: '0.5rem', overflow: 'hidden', border: '1px solid var(--ui-border)' }}>
+  <AspectRatio ratio={9 / 16}>
+    <img
+      src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+      alt="Photo by Drew Beamer"
+      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+    />
+  </AspectRatio>
+</div>`,
+        render: () => (
+          <div
+            style={{
+              width: "220px",
+              borderRadius: "0.5rem",
+              overflow: "hidden",
+              border: "1px solid var(--ui-border)",
+            }}
+          >
+            <AspectRatio ratio={9 / 16}>
+              <img
+                src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+                alt="Photo by Drew Beamer"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </AspectRatio>
+          </div>
+        ),
+      },
+      {
+        id: "rtl",
+        title: "RTL",
+        description:
+          "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+        code: `<div dir="rtl">
+  <div style={{ width: '220px', borderRadius: '0.5rem', overflow: 'hidden', border: '1px solid var(--ui-border)' }}>
+    <AspectRatio ratio={9 / 16}>
+      <img
+        src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+        alt="Photo by Drew Beamer"
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      />
+    </AspectRatio>
+  </div>
+</div>`,
+        render: () => (
+          <div dir="rtl">
+            <div
+              style={{
+                width: "220px",
+                borderRadius: "0.5rem",
+                overflow: "hidden",
+                border: "1px solid var(--ui-border)",
+              }}
+            >
+              <AspectRatio ratio={9 / 16}>
+                <img
+                  src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+                  alt="Photo by Drew Beamer"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              </AspectRatio>
+            </div>
           </div>
         ),
       },

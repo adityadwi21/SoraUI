@@ -1,61 +1,102 @@
 ---
 title: Aspect Ratio
-description: Displays content within a fixed desired aspect ratio without cumulative layout shifts.
-featured: true
+description: Displays content within a desired ratio.
 base: base
 component: true
 ---
 
-# Aspect Ratio
-
-> Displays content within a fixed desired aspect ratio without cumulative layout shifts.
-
-**Status:** stable
-**Package:** `@soraui/react`
-**Path:** `packages/react/src/components/aspect-ratio/aspect-ratio.tsx`
-**Styles:** `packages/react/src/styles.css` (`.sora-aspect-ratio`)
-
----
+<ComponentPreview name="aspect-ratio-demo" styleName="base-nova" />
 
 ## Installation
 
-```bash
-# Via CLI
-npx @soraui/cli add aspect-ratio
+<CodeTabs>
 
-# Via NPM
-npm install @soraui/react
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add aspect-ratio
 ```
 
----
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  name="aspect-ratio"
+  title="components/ui/aspect-ratio.tsx"
+  styleName="base-nova"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
 
 ## Usage
 
 ```tsx showLineNumbers
-import { AspectRatio } from "@soraui/react";
-
-export function AspectRatioDemo() {
-  return (
-    <div style={{ width: "300px" }}>
-      <AspectRatio ratio={16 / 9}>
-        <img
-          src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-          alt="Photo by Drew Beamer"
-          style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "0.5rem" }}
-        />
-      </AspectRatio>
-    </div>
-  );
-}
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 ```
 
----
+```tsx showLineNumbers
+<AspectRatio ratio={16 / 9}>
+  <Image src="..." alt="Image" className="rounded-md object-cover" />
+</AspectRatio>
+```
+
+## Square
+
+A square aspect ratio component using the `ratio={1 / 1}` prop. This is useful for displaying images in a square format.
+
+<ComponentPreview name="aspect-ratio-square" styleName="base-nova" />
+
+## Portrait
+
+A portrait aspect ratio component using the `ratio={9 / 16}` prop. This is useful for displaying images in a portrait format.
+
+<ComponentPreview
+  styleName="base-nova"
+  name="aspect-ratio-portrait"
+  previewClassName="h-96"
+/>
+
+## RTL
+
+To enable RTL support in shadcn/ui, see the [RTL configuration guide](/docs/rtl).
+
+<ComponentPreview
+  styleName="base-nova"
+  name="aspect-ratio-rtl"
+  direction="rtl"
+  previewClassName="h-96"
+/>
 
 ## API Reference
 
 ### AspectRatio
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ratio` | `number` | `16 / 9` | The desired aspect ratio (width / height) |
-| `className` | `string` | `undefined` | Optional additional CSS classes |
+The `AspectRatio` component displays content within a desired ratio.
+
+| Prop        | Type     | Default | Required |
+| ----------- | -------- | ------- | -------- |
+| `ratio`     | `number` | -       | Yes      |
+| `className` | `string` | -       | No       |
+
+For more information, see the [Base UI documentation](https://base-ui.com/react/components/aspect-ratio#api-reference).
