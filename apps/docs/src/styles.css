@@ -2017,6 +2017,9 @@ svg {
   gap: 0.35rem;
   font-weight: 600;
   color: #eab308;
+  margin-bottom: 0.25rem;
+}
+
 /* Usage Steps */
 .sora-usage-steps {
   display: flex;

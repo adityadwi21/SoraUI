@@ -1,4 +1,3 @@
-import React from "react";
 import type { ComponentDoc } from "./types";
 
 // SoraUI Primitives
