@@ -70,38 +70,54 @@ export function AlertDialog({
 export const AlertDialogTrigger = forwardRef<
   HTMLButtonElement,
   AlertDialogTriggerProps
->(({ asChild = false, className, onClick, children, ...props }, ref) => {
-  const ctx = useContext(AlertContext);
-  if (!ctx) throw new Error("AlertDialogTrigger must be inside AlertDialog");
+>(
+  (
+    { asChild = false, render, className, onClick, children, ...props },
+    ref,
+  ) => {
+    const ctx = useContext(AlertContext);
+    if (!ctx) throw new Error("AlertDialogTrigger must be inside AlertDialog");
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    onClick?.(e);
-    ctx.setOpen(true);
-  };
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+      onClick?.(e);
+      ctx.setOpen(true);
+    };
 
-  if (asChild && isValidElement(children)) {
-    return cloneElement(children as any, {
-      ref,
-      onClick: (e: MouseEvent<HTMLButtonElement>) => {
-        (children.props as any)?.onClick?.(e);
-        ctx.setOpen(true);
-      },
-      ...props,
-    });
-  }
+    if (render && isValidElement(render)) {
+      return cloneElement(render as any, {
+        ref,
+        onClick: (e: MouseEvent<HTMLButtonElement>) => {
+          (render.props as any)?.onClick?.(e);
+          ctx.setOpen(true);
+        },
+        ...props,
+      });
+    }
 
-  return (
-    <button
-      ref={ref}
-      type="button"
-      className={cx("sora-alert-dialog__trigger", className)}
-      onClick={handleClick}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-});
+    if (asChild && isValidElement(children)) {
+      return cloneElement(children as any, {
+        ref,
+        onClick: (e: MouseEvent<HTMLButtonElement>) => {
+          (children.props as any)?.onClick?.(e);
+          ctx.setOpen(true);
+        },
+        ...props,
+      });
+    }
+
+    return (
+      <button
+        ref={ref}
+        type="button"
+        className={cx("sora-alert-dialog__trigger", className)}
+        onClick={handleClick}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  },
+);
 AlertDialogTrigger.displayName = "AlertDialogTrigger";
 
 export const AlertDialogContent = forwardRef<
@@ -230,13 +246,20 @@ AlertDialogFooter.displayName = "AlertDialogFooter";
 export const AlertDialogAction = forwardRef<
   HTMLButtonElement,
   AlertDialogActionProps
->(({ className, onClick, ...props }, ref) => {
+>(({ className, variant = "default", onClick, ...props }, ref) => {
   const ctx = useContext(AlertContext);
   return (
     <button
       ref={ref}
       type="button"
-      className={cx("sora-alert-dialog__action", className)}
+      className={cx(
+        "sora-alert-dialog__action",
+        variant === "destructive" && "sora-alert-dialog__action--destructive",
+        variant === "soft-destructive" &&
+          "sora-alert-dialog__action--soft-destructive",
+        variant === "outline" && "sora-alert-dialog__cancel",
+        className,
+      )}
       onClick={(e) => {
         onClick?.(e);
         ctx?.setOpen(false);
@@ -250,7 +273,7 @@ AlertDialogAction.displayName = "AlertDialogAction";
 export const AlertDialogCancel = forwardRef<
   HTMLButtonElement,
   AlertDialogCancelProps
->(({ className, onClick, ...props }, ref) => {
+>(({ className, variant = "outline", onClick, ...props }, ref) => {
   const ctx = useContext(AlertContext);
   return (
     <button
@@ -260,7 +283,11 @@ export const AlertDialogCancel = forwardRef<
         else if (ref) (ref as any).current = el;
       }}
       type="button"
-      className={cx("sora-alert-dialog__cancel", className)}
+      className={cx(
+        "sora-alert-dialog__cancel",
+        variant === "destructive" && "sora-alert-dialog__action--destructive",
+        className,
+      )}
       onClick={(e) => {
         onClick?.(e);
         ctx?.setOpen(false);

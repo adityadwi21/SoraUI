@@ -1,0 +1,61 @@
+---
+title: Aspect Ratio
+description: Displays content within a fixed desired aspect ratio without cumulative layout shifts.
+featured: true
+base: base
+component: true
+---
+
+# Aspect Ratio
+
+> Displays content within a fixed desired aspect ratio without cumulative layout shifts.
+
+**Status:** stable
+**Package:** `@soraui/react`
+**Path:** `packages/react/src/components/aspect-ratio/aspect-ratio.tsx`
+**Styles:** `packages/react/src/styles.css` (`.sora-aspect-ratio`)
+
+---
+
+## Installation
+
+```bash
+# Via CLI
+npx @soraui/cli add aspect-ratio
+
+# Via NPM
+npm install @soraui/react
+```
+
+---
+
+## Usage
+
+```tsx showLineNumbers
+import { AspectRatio } from "@soraui/react";
+
+export function AspectRatioDemo() {
+  return (
+    <div style={{ width: "300px" }}>
+      <AspectRatio ratio={16 / 9}>
+        <img
+          src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+          alt="Photo by Drew Beamer"
+          style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "0.5rem" }}
+        />
+      </AspectRatio>
+    </div>
+  );
+}
+```
+
+---
+
+## API Reference
+
+### AspectRatio
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ratio` | `number` | `16 / 9` | The desired aspect ratio (width / height) |
+| `className` | `string` | `undefined` | Optional additional CSS classes |

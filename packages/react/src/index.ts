@@ -379,6 +379,7 @@ export type {
   AlertDialogFooterProps,
   AlertDialogActionProps,
   AlertDialogCancelProps,
+  AlertDialogActionVariant,
   AlertDialogSize,
 } from "./components/alert-dialog/alert-dialog.types";
 

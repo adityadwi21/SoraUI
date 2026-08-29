@@ -226,7 +226,16 @@ function getCompositionSnippet(docId: string): string | null {
     case "alert":
       return `Alert\n├── AlertTitle\n└── AlertDescription`;
     case "alert-dialog":
-      return `AlertDialog\n├── AlertDialogTrigger\n└── AlertDialogContent\n    ├── AlertDialogHeader\n    │   ├── AlertDialogTitle\n    │   └── AlertDialogDescription\n    └── AlertDialogFooter\n        ├── AlertDialogCancel\n        └── AlertDialogAction`;
+      return `AlertDialog
+├── AlertDialogTrigger
+└── AlertDialogContent
+    ├── AlertDialogHeader
+    │   ├── AlertDialogMedia
+    │   ├── AlertDialogTitle
+    │   └── AlertDialogDescription
+    └── AlertDialogFooter
+        ├── AlertDialogCancel
+        └── AlertDialogAction`;
     case "attachment":
       return `Attachment\n└── AttachmentItem\n    ├── AttachmentIcon\n    ├── AttachmentInfo\n    │   ├── AttachmentName\n    │   └── AttachmentSize\n    └── AttachmentActions\n        └── AttachmentRemove`;
     case "avatar":
@@ -291,13 +300,15 @@ export const ComponentPage: React.FC<ComponentPageProps> = ({
   const [installTab, setInstallTab] = useState<"cli" | "manual">("cli");
   const [pageCopied, setPageCopied] = useState(false);
 
-  // Find previous and next components in registry
+  // Find previous and next components in registry (sorted alphabetically to match sidebar)
   const { prevComp, nextComp } = useMemo(() => {
-    const idx = COMPONENT_DOCS.findIndex((c) => c.id === doc.id);
+    const sorted = [...COMPONENT_DOCS].sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
+    const idx = sorted.findIndex((c) => c.id === doc.id);
     return {
-      prevComp: idx > 0 ? COMPONENT_DOCS[idx - 1] : null,
-      nextComp:
-        idx < COMPONENT_DOCS.length - 1 ? COMPONENT_DOCS[idx + 1] : null,
+      prevComp: idx > 0 ? sorted[idx - 1] : null,
+      nextComp: idx < sorted.length - 1 ? sorted[idx + 1] : null,
     };
   }, [doc.id]);
 
@@ -724,6 +735,44 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || "-"}\` | 
           </div>
         )}
       </section>
+
+      {/* ─── 7. DOCS PAGINATION ─── */}
+      <nav className="docs-intro-pagination" aria-label="Component Pagination">
+        {prevComp ? (
+          <button
+            type="button"
+            className="docs-intro-pagination-btn prev"
+            onClick={() => handleNav(`/docs/components/base/${prevComp.id}`)}
+          >
+            <ChevronLeft size={16} />
+            <div className="docs-intro-pagination-text">
+              <span className="docs-intro-pagination-label">Previous</span>
+              <span className="docs-intro-pagination-title">{prevComp.name}</span>
+            </div>
+          </button>
+        ) : (
+          <div style={{ flex: 1 }} />
+        )}
+
+        {nextComp ? (
+          <button
+            type="button"
+            className="docs-intro-pagination-btn next"
+            onClick={() => handleNav(`/docs/components/base/${nextComp.id}`)}
+          >
+            <div
+              className="docs-intro-pagination-text"
+              style={{ textAlign: "right" }}
+            >
+              <span className="docs-intro-pagination-label">Next</span>
+              <span className="docs-intro-pagination-title">{nextComp.name}</span>
+            </div>
+            <ChevronRight size={16} />
+          </button>
+        ) : (
+          <div style={{ flex: 1 }} />
+        )}
+      </nav>
     </div>
   );
 };

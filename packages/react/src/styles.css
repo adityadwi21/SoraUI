@@ -1962,123 +1962,277 @@ font-size: 0.875rem; color: var(--ui-muted-foreground);
 }
 /* Alert Dialog */
 .sora-alert-dialog__backdrop {
-position: fixed;
-inset: 0; background-color: rgba(0, 0, 0, 0.55);
-backdrop-filter: blur(8px);
--webkit-backdrop-filter: blur(8px);
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 1rem;
-z-index: 9999;
-animation: sora-fade-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 9999;
+  animation: sora-fade-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .sora-alert-dialog__content {
-position: relative; background-color: var(--ui-card, var(--ui-background)); color: var(--ui-card-foreground, var(--ui-foreground));
-border: 1px solid var(--ui-border);
-border-radius: var(--ui-radius, 0.75rem); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
-padding: 1.5rem;
-width: 100%;
-max-width: 480px;
-outline: none;
-animation: sora-scale-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  background-color: var(--ui-card, var(--ui-background, #ffffff));
+  color: var(--ui-card-foreground, var(--ui-foreground, #09090b));
+  border: 1px solid var(--ui-border, #e4e4e7);
+  border-radius: 0.625rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  padding: 0 !important;
+  width: 100%;
+  max-width: 480px;
+  outline: none;
+  overflow: hidden;
+  animation: sora-scale-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
-.sora-alert-dialog__content--sm {
-max-width: 380px;
-padding: 1.25rem;
+
+.sora-alert-dialog__content--sm,
+.sora-alert-dialog__content[data-size="sm"] {
+  max-width: 330px;
+  border-radius: 0.625rem;
 }
+
 .sora-alert-dialog__header {
-display: flex;
-flex-direction: column;
-gap: 0.35rem;
-margin-bottom: 1.25rem;
+  padding: 1.5rem 1.5rem 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin: 0;
+  box-sizing: border-box;
 }
-.sora-alert-dialog__header:has(.sora-alert-dialog__media) {
-display: grid;
-grid-template-columns: auto 1fr;
-column-gap: 0.875rem;
-row-gap: 0.25rem;
-align-items: start;
-text-align: start;
+
+/* Default Media (Horizontal 2-column layout when not sm) */
+.sora-alert-dialog__content:not([data-size="sm"]):not(.sora-alert-dialog__content--sm) .sora-alert-dialog__header:has(.sora-alert-dialog__media) {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.875rem;
+  row-gap: 0.25rem;
+  align-items: start;
+  text-align: start;
 }
-.sora-alert-dialog__header:has(.sora-alert-dialog__media) .sora-alert-dialog__media {
-grid-row: 1 / span 2;
-margin-bottom: 0;
+.sora-alert-dialog__content:not([data-size="sm"]):not(.sora-alert-dialog__content--sm) .sora-alert-dialog__header:has(.sora-alert-dialog__media) .sora-alert-dialog__media {
+  grid-row: 1 / span 2;
+  margin-bottom: 0;
 }
-.sora-alert-dialog__header:has(.sora-alert-dialog__media) .sora-alert-dialog__title {
-grid-column: 2;
-margin-bottom: 0;
+.sora-alert-dialog__content:not([data-size="sm"]):not(.sora-alert-dialog__content--sm) .sora-alert-dialog__header:has(.sora-alert-dialog__media) .sora-alert-dialog__title {
+  grid-column: 2;
+  margin-bottom: 0;
 }
-.sora-alert-dialog__header:has(.sora-alert-dialog__media) .sora-alert-dialog__description {
-grid-column: 2;
-margin-bottom: 0;
+.sora-alert-dialog__content:not([data-size="sm"]):not(.sora-alert-dialog__content--sm) .sora-alert-dialog__header:has(.sora-alert-dialog__media) .sora-alert-dialog__description {
+  grid-column: 2;
+  margin-bottom: 0;
 }
+
+/* Small & Centered Dialog Layout (Destructive / Centered SM) */
+.sora-alert-dialog__content--sm .sora-alert-dialog__header,
+.sora-alert-dialog__content[data-size="sm"] .sora-alert-dialog__header {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  gap: 0.35rem !important;
+  padding: 1.5rem 1.25rem 1.25rem 1.25rem !important;
+  margin: 0 !important;
+}
+
+.sora-alert-dialog__content--sm .sora-alert-dialog__media,
+.sora-alert-dialog__content[data-size="sm"] .sora-alert-dialog__media {
+  grid-row: auto !important;
+  grid-column: auto !important;
+  margin: 0 auto 0.75rem auto !important;
+  width: 2.75rem !important;
+  height: 2.75rem !important;
+  border-radius: 0.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.sora-alert-dialog__content--sm .sora-alert-dialog__title,
+.sora-alert-dialog__content[data-size="sm"] .sora-alert-dialog__title {
+  grid-column: auto !important;
+  text-align: center !important;
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+  color: var(--ui-foreground) !important;
+  margin: 0 !important;
+  line-height: 1.35 !important;
+}
+
+.sora-alert-dialog__content--sm .sora-alert-dialog__description,
+.sora-alert-dialog__content[data-size="sm"] .sora-alert-dialog__description {
+  grid-column: auto !important;
+  text-align: center !important;
+  font-size: 0.8125rem !important;
+  color: var(--ui-muted-foreground, #71717a) !important;
+  line-height: 1.45 !important;
+  margin: 0.25rem 0 0 0 !important;
+}
+
+.sora-alert-dialog__description a,
+.sora-alert-dialog__description span {
+  color: var(--ui-muted-foreground, #71717a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .sora-alert-dialog__media {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-width: 2.5rem;
-height: 2.5rem;
-border-radius: var(--ui-radius, 0.5rem); background-color: var(--ui-muted); color: var(--ui-foreground);
-flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--ui-muted, #f4f4f5);
+  color: var(--ui-foreground);
+  flex-shrink: 0;
 }
 .sora-alert-dialog__media svg {
-width: 1.25rem;
-height: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
+
 .sora-alert-dialog__title {
-font-size: 1.125rem;
-font-weight: 600;
-margin-bottom: 0.35rem; color: var(--ui-foreground);
-line-height: 1.35;
-text-align: start;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--ui-foreground);
+  line-height: 1.35;
+  text-align: start;
 }
+
 .sora-alert-dialog__description {
-font-size: 0.875rem; color: var(--ui-muted-foreground);
-line-height: 1.5;
-margin: 0;
-text-align: start;
+  font-size: 0.875rem;
+  color: var(--ui-muted-foreground, #71717a);
+  line-height: 1.5;
+  margin: 0;
+  text-align: start;
 }
+
+/* Base Footer with Edge-to-Edge Divider for ALL Dialogs */
 .sora-alert-dialog__footer {
-display: flex;
-align-items: center;
-justify-content: flex-end;
-gap: 0.625rem;
+  padding: 0.875rem 1.5rem 1rem 1.5rem;
+  border-top: 1px solid var(--ui-border, #e4e4e7);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.625rem;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: transparent;
 }
+
+/* Small dialog footer with 50/50 full-width grid buttons */
+.sora-alert-dialog__content--sm .sora-alert-dialog__footer,
+.sora-alert-dialog__content[data-size="sm"] .sora-alert-dialog__footer {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 0.625rem !important;
+  width: 100% !important;
+  padding: 0.875rem 1.25rem 1rem 1.25rem !important;
+  margin: 0 !important;
+  border-top: 1px solid var(--ui-border, #e4e4e7) !important;
+  box-sizing: border-box !important;
+}
+
+.sora-alert-dialog__content--sm .sora-alert-dialog__footer > *,
+.sora-alert-dialog__content[data-size="sm"] .sora-alert-dialog__footer > * {
+  width: 100% !important;
+  height: 2.25rem !important;
+}
+
 .sora-alert-dialog__action,
 .sora-alert-dialog__cancel {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-padding: 0.5rem 1rem;
-border-radius: var(--ui-radius, 0.375rem);
-font-size: 0.875rem;
-font-weight: 500;
-cursor: pointer;
-transition: all 150ms ease;
-line-height: 1.25;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  padding: 0 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+  line-height: 1.25;
+  box-sizing: border-box;
+  text-decoration: none;
 }
-.sora-alert-dialog__cancel { background-color: transparent;
-border: 1px solid var(--ui-border); color: var(--ui-foreground);
+
+.sora-alert-dialog__cancel {
+  background-color: var(--ui-card, #ffffff);
+  border: 1px solid var(--ui-border, #e4e4e7);
+  color: var(--ui-foreground, #09090b);
 }
-.sora-alert-dialog__cancel:hover { background-color: var(--ui-muted);
+.sora-alert-dialog__cancel:hover {
+  background-color: var(--ui-muted, #f4f4f5);
 }
-.sora-alert-dialog__action { background-color: var(--ui-primary, #09090b);
-border: 1px solid var(--ui-primary, #09090b); color: var(--ui-primary-foreground, #ffffff);
+
+.sora-alert-dialog__action {
+  background-color: var(--ui-primary, #09090b);
+  border: 1px solid var(--ui-primary, #09090b);
+  color: var(--ui-primary-foreground, #ffffff);
 }
-.sora-alert-dialog__action:hover { opacity: 0.9;
+.sora-alert-dialog__action:hover {
+  opacity: 0.9;
 }
-.sora-alert-dialog__action--destructive { background-color: var(--ui-destructive, #ef4444); border-color: var(--ui-destructive, #ef4444); color: var(--ui-destructive-foreground, #ffffff);
+
+.sora-alert-dialog__action--destructive {
+  background-color: #fee2e2 !important;
+  border: 1px solid #fee2e2 !important;
+  color: #dc2626 !important;
 }
-.sora-alert-dialog__action--destructive:hover { opacity: 0.9;
+.sora-alert-dialog__action--destructive:hover {
+  background-color: #fecaca !important;
+  color: #b91c1c !important;
 }
+
 .sora-alert-dialog__action--soft-destructive {
-  background-color: rgba(239, 68, 68, 0.12);
-  border-color: rgba(239, 68, 68, 0.2);
-  color: var(--ui-destructive, #ef4444);
+  background-color: #fee2e2 !important;
+  border: 1px solid #fecaca !important;
+  color: #ef4444 !important;
 }
 .sora-alert-dialog__action--soft-destructive:hover {
-  background-color: rgba(239, 68, 68, 0.2);
+  background-color: #fecaca !important;
+  color: #dc2626 !important;
+}
+
+[data-theme*="dark"] .sora-alert-dialog__cancel,
+[data-mode="dark"] .sora-alert-dialog__cancel,
+.dark .sora-alert-dialog__cancel {
+  background-color: var(--ui-card, #18181b);
+  border-color: var(--ui-border, #27272a);
+  color: var(--ui-foreground, #fafafa);
+}
+[data-theme*="dark"] .sora-alert-dialog__cancel:hover,
+[data-mode="dark"] .sora-alert-dialog__cancel:hover,
+.dark .sora-alert-dialog__cancel:hover {
+  background-color: var(--ui-muted, #27272a);
+}
+
+[data-theme*="dark"] .sora-alert-dialog__action--destructive,
+[data-mode="dark"] .sora-alert-dialog__action--destructive,
+.dark .sora-alert-dialog__action--destructive,
+[data-theme*="dark"] .sora-alert-dialog__action--soft-destructive,
+[data-mode="dark"] .sora-alert-dialog__action--soft-destructive,
+.dark .sora-alert-dialog__action--soft-destructive {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.25) !important;
+  color: #f87171 !important;
+}
+[data-theme*="dark"] .sora-alert-dialog__action--destructive:hover,
+[data-mode="dark"] .sora-alert-dialog__action--destructive:hover,
+.dark .sora-alert-dialog__action--destructive:hover,
+[data-theme*="dark"] .sora-alert-dialog__action--soft-destructive:hover,
+[data-mode="dark"] .sora-alert-dialog__action--soft-destructive:hover,
+.dark .sora-alert-dialog__action--soft-destructive:hover {
+  background-color: rgba(239, 68, 68, 0.25) !important;
+  color: #fca5a5 !important;
 }
 /* Drawer / Sheet */
 .sora-drawer__backdrop {

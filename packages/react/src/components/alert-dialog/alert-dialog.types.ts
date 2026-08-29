@@ -12,6 +12,7 @@ export interface AlertDialogProps {
 export interface AlertDialogTriggerProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean | undefined;
+  render?: ReactNode | undefined;
 }
 
 export interface AlertDialogContentProps extends HTMLAttributes<HTMLDivElement> {
@@ -30,8 +31,21 @@ export interface AlertDialogDescriptionProps
 
 export interface AlertDialogFooterProps extends HTMLAttributes<HTMLDivElement> {}
 
+export type AlertDialogActionVariant =
+  | "default"
+  | "destructive"
+  | "soft-destructive"
+  | "outline"
+  | "secondary"
+  | "ghost";
+
 export interface AlertDialogActionProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {}
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: AlertDialogActionVariant | undefined;
+}
 
 export interface AlertDialogCancelProps
-  extends ButtonHTMLAttributes<HTMLButtonElement> {}
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: AlertDialogActionVariant | undefined;
+}
+

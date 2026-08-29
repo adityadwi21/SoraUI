@@ -1,0 +1,102 @@
+---
+title: Attachment
+description: File attachment chip displaying file name, formatted size, progress indicator, and action buttons.
+featured: true
+base: base
+component: true
+---
+
+# Attachment
+
+> File attachment chip displaying file name, formatted size, progress indicator, and action buttons.
+
+**Status:** stable
+**Package:** `@soraui/react`
+**Path:** `packages/react/src/components/attachment/attachment.tsx`
+**Styles:** `packages/react/src/styles.css` (`.sora-attachment*`)
+
+---
+
+## Installation
+
+```bash
+# Via CLI
+npx @soraui/cli add attachment
+
+# Via NPM
+npm install @soraui/react lucide-react
+```
+
+---
+
+## Usage
+
+```tsx showLineNumbers
+import {
+  Attachment,
+  AttachmentItem,
+  AttachmentIcon,
+  AttachmentInfo,
+  AttachmentName,
+  AttachmentSize,
+  AttachmentActions,
+  AttachmentRemove,
+} from "@soraui/react";
+import { FileText } from "lucide-react";
+
+export function AttachmentDemo() {
+  return (
+    <Attachment>
+      <AttachmentItem>
+        <AttachmentIcon>
+          <FileText size={18} />
+        </AttachmentIcon>
+        <AttachmentInfo>
+          <AttachmentName>annual_financial_report_2026.pdf</AttachmentName>
+          <AttachmentSize sizeInBytes={2450000} />
+        </AttachmentInfo>
+        <AttachmentActions>
+          <AttachmentRemove onRemove={() => console.log("Removed")} />
+        </AttachmentActions>
+      </AttachmentItem>
+    </Attachment>
+  );
+}
+```
+
+---
+
+## Composition
+
+```text
+Attachment
+└── AttachmentItem
+    ├── AttachmentIcon
+    ├── AttachmentInfo
+    │   ├── AttachmentName
+    │   └── AttachmentSize
+    └── AttachmentActions
+        └── AttachmentRemove
+```
+
+---
+
+## API Reference
+
+### Attachment
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `className` | `string` | `undefined` | Optional additional CSS classes |
+
+### AttachmentSize
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `sizeInBytes` | `number` | `undefined` | Raw byte count formatted automatically to KB/MB |
+
+### AttachmentRemove
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `onRemove` | `() => void` | `undefined` | Callback fired when the remove button is clicked |

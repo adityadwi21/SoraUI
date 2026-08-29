@@ -2592,7 +2592,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
       <AlertDialogAction>Continue</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
@@ -2611,7 +2611,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
                 <AlertDialogAction>Continue</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -2621,22 +2621,22 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         id: "small",
         title: "Small",
-        description: "A compact alert dialog with centered header text.",
+        description: "Use the size=\"sm\" prop to make the alert dialog smaller.",
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
     <Button variant="outline">Show Dialog</Button>
   </AlertDialogTrigger>
   <AlertDialogContent size="sm">
-    <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
-      <AlertDialogTitle style={{ textAlign: "center" }}>
+    <AlertDialogHeader>
+      <AlertDialogTitle>
         Allow accessory to connect?
       </AlertDialogTitle>
-      <AlertDialogDescription style={{ textAlign: "center" }}>
+      <AlertDialogDescription>
         Do you want to allow the USB accessory to connect to this device?
       </AlertDialogDescription>
     </AlertDialogHeader>
-    <AlertDialogFooter style={{ justifyContent: "center" }}>
-      <AlertDialogCancel>Don't allow</AlertDialogCancel>
+    <AlertDialogFooter>
+      <AlertDialogCancel variant="outline">Don't allow</AlertDialogCancel>
       <AlertDialogAction>Allow</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
@@ -2647,16 +2647,16 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
               <Button variant="outline">Show Dialog</Button>
             </AlertDialogTrigger>
             <AlertDialogContent size="sm">
-              <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
-                <AlertDialogTitle style={{ textAlign: "center" }}>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
                   Allow accessory to connect?
                 </AlertDialogTitle>
-                <AlertDialogDescription style={{ textAlign: "center" }}>
+                <AlertDialogDescription>
                   Do you want to allow the USB accessory to connect to this device?
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter style={{ justifyContent: "center" }}>
-                <AlertDialogCancel>Don't allow</AlertDialogCancel>
+              <AlertDialogFooter>
+                <AlertDialogCancel variant="outline">Don't allow</AlertDialogCancel>
                 <AlertDialogAction>Allow</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -2666,7 +2666,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         id: "media",
         title: "Media",
-        description: "An alert dialog with an icon media element in the header.",
+        description: "Use the AlertDialogMedia component to add a media element such as an icon or image to the alert dialog.",
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
     <Button variant="outline">Show Dialog</Button>
@@ -2682,7 +2682,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
       <AlertDialogAction>Share</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
@@ -2703,7 +2703,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
                 <AlertDialogAction>Share</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -2711,27 +2711,27 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         ),
       },
       {
-        id: "media-small",
-        title: "Media and Small",
-        description: "A compact alert dialog with a centered icon media element.",
+        id: "small-with-media",
+        title: "Small with Media",
+        description: "Use the size=\"sm\" prop to make the alert dialog smaller and the AlertDialogMedia component to add a media element such as an icon or image to the alert dialog.",
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
     <Button variant="outline">Show Dialog</Button>
   </AlertDialogTrigger>
   <AlertDialogContent size="sm">
-    <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
-      <AlertDialogMedia style={{ margin: "0 auto 0.5rem" }}>
+    <AlertDialogHeader>
+      <AlertDialogMedia>
         <Bluetooth size={20} />
       </AlertDialogMedia>
-      <AlertDialogTitle style={{ textAlign: "center" }}>
+      <AlertDialogTitle>
         Allow accessory to connect?
       </AlertDialogTitle>
-      <AlertDialogDescription style={{ textAlign: "center" }}>
+      <AlertDialogDescription>
         Do you want to allow the USB accessory to connect to this device?
       </AlertDialogDescription>
     </AlertDialogHeader>
-    <AlertDialogFooter style={{ justifyContent: "center" }}>
-      <AlertDialogCancel>Don't allow</AlertDialogCancel>
+    <AlertDialogFooter>
+      <AlertDialogCancel variant="outline">Don't allow</AlertDialogCancel>
       <AlertDialogAction>Allow</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
@@ -2742,19 +2742,19 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
               <Button variant="outline">Show Dialog</Button>
             </AlertDialogTrigger>
             <AlertDialogContent size="sm">
-              <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
-                <AlertDialogMedia style={{ margin: "0 auto 0.5rem" }}>
+              <AlertDialogHeader>
+                <AlertDialogMedia>
                   <Bluetooth size={20} />
                 </AlertDialogMedia>
-                <AlertDialogTitle style={{ textAlign: "center" }}>
+                <AlertDialogTitle>
                   Allow accessory to connect?
                 </AlertDialogTitle>
-                <AlertDialogDescription style={{ textAlign: "center" }}>
+                <AlertDialogDescription>
                   Do you want to allow the USB accessory to connect to this device?
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter style={{ justifyContent: "center" }}>
-                <AlertDialogCancel>Don't allow</AlertDialogCancel>
+              <AlertDialogFooter>
+                <AlertDialogCancel variant="outline">Don't allow</AlertDialogCancel>
                 <AlertDialogAction>Allow</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -2764,36 +2764,31 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
       {
         id: "destructive",
         title: "Destructive",
-        description: "An alert dialog with a destructive call-to-action button.",
+        description: "Use the AlertDialogAction component to add a destructive action button to the alert dialog.",
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
     <Button variant="outline">Delete Chat</Button>
   </AlertDialogTrigger>
   <AlertDialogContent size="sm">
-    <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+    <AlertDialogHeader>
       <AlertDialogMedia
         style={{
-          margin: "0 auto 0.5rem",
           backgroundColor: "rgba(239, 68, 68, 0.1)",
           color: "#ef4444",
         }}
       >
         <Trash2 size={20} />
       </AlertDialogMedia>
-      <AlertDialogTitle style={{ textAlign: "center" }}>
-        Delete chat?
-      </AlertDialogTitle>
-      <AlertDialogDescription style={{ textAlign: "center" }}>
+      <AlertDialogTitle>Delete chat?</AlertDialogTitle>
+      <AlertDialogDescription>
         This will permanently delete this chat conversation. View{" "}
         <span style={{ textDecoration: "underline", cursor: "pointer" }}>Settings</span>{" "}
         delete any memories saved during this chat.
       </AlertDialogDescription>
     </AlertDialogHeader>
-    <AlertDialogFooter style={{ justifyContent: "center" }}>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction className="sora-alert-dialog__action--soft-destructive">
-        Delete
-      </AlertDialogAction>
+    <AlertDialogFooter>
+      <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
+      <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>`,
@@ -2803,33 +2798,73 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
               <Button variant="outline">Delete Chat</Button>
             </AlertDialogTrigger>
             <AlertDialogContent size="sm">
-              <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+              <AlertDialogHeader>
                 <AlertDialogMedia
                   style={{
-                    margin: "0 auto 0.5rem",
                     backgroundColor: "rgba(239, 68, 68, 0.1)",
                     color: "#ef4444",
                   }}
                 >
                   <Trash2 size={20} />
                 </AlertDialogMedia>
-                <AlertDialogTitle style={{ textAlign: "center" }}>
-                  Delete chat?
-                </AlertDialogTitle>
-                <AlertDialogDescription style={{ textAlign: "center" }}>
+                <AlertDialogTitle>Delete chat?</AlertDialogTitle>
+                <AlertDialogDescription>
                   This will permanently delete this chat conversation. View{" "}
                   <span style={{ textDecoration: "underline", cursor: "pointer" }}>Settings</span>{" "}
                   delete any memories saved during this chat.
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter style={{ justifyContent: "center" }}>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction className="sora-alert-dialog__action--soft-destructive">
-                  Delete
-                </AlertDialogAction>
+              <AlertDialogFooter>
+                <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
+                <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
+        ),
+      },
+      {
+        id: "rtl",
+        title: "RTL",
+        description: "To enable RTL support in shadcn/ui, see the RTL configuration guide.",
+        code: `<div dir="rtl">
+  <AlertDialog>
+    <AlertDialogTrigger asChild>
+      <Button variant="outline">عرض مربع الحوار</Button>
+    </AlertDialogTrigger>
+    <AlertDialogContent size="sm">
+      <AlertDialogHeader>
+        <AlertDialogTitle>هل أنت متأكد تمامًا؟</AlertDialogTitle>
+        <AlertDialogDescription>
+          لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك نهائيًا وإزالة بياناتك من خوادمنا.
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel variant="outline">إلغاء</AlertDialogCancel>
+        <AlertDialogAction>متابعة</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+</div>`,
+        render: () => (
+          <div dir="rtl">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="outline">عرض مربع الحوار</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent size="sm">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>هل أنت متأكد تمامًا؟</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك نهائيًا وإزالة بياناتك من خوادمنا.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel variant="outline">إلغاء</AlertDialogCancel>
+                  <AlertDialogAction>متابعة</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         ),
       },
     ],

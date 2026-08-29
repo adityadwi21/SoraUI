@@ -273,26 +273,53 @@ export function AlertDialog({ open: controlledOpen, defaultOpen = false, onOpenC
   );
 }
 
-export const AlertDialogTrigger = ({ children, ...props }: any) => {
+export const AlertDialogTrigger = ({ render, asChild, children, onClick, ...props }: any) => {
   const ctx = React.useContext(AlertContext);
+  const handleClick = (e: any) => {
+    onClick?.(e);
+    ctx?.setOpen(true);
+  };
+
+  if (render && React.isValidElement(render)) {
+    return React.cloneElement(render as any, {
+      onClick: (e: any) => {
+        (render.props as any)?.onClick?.(e);
+        ctx?.setOpen(true);
+      },
+      ...props,
+    });
+  }
+
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children as any, {
+      onClick: (e: any) => {
+        (children.props as any)?.onClick?.(e);
+        ctx?.setOpen(true);
+      },
+      ...props,
+    });
+  }
+
   return (
-    <button type="button" onClick={() => ctx?.setOpen(true)} {...props}>
+    <button type="button" className="sora-alert-dialog__trigger" onClick={handleClick} {...props}>
       {children}
     </button>
   );
 };
 
-export const AlertDialogContent = ({ children, className = "" }: any) => {
+export const AlertDialogContent = ({ size = "default", children, className = "", ...props }: any) => {
   const ctx = React.useContext(AlertContext);
   if (!ctx?.open) return null;
 
   return (
-    <div className="sora-alert-dialog__overlay" onClick={() => ctx.setOpen(false)}>
+    <div className="sora-alert-dialog__backdrop" onClick={() => ctx.setOpen(false)}>
       <div
         role="alertdialog"
         aria-modal="true"
-        className={\`sora-alert-dialog__content \${className}\`.trim()}
+        data-size={size}
+        className={\`sora-alert-dialog__content \${size === "sm" ? "sora-alert-dialog__content--sm" : ""} \${className}\`.trim()}
         onClick={(e) => e.stopPropagation()}
+        {...props}
       >
         {children}
       </div>
@@ -302,6 +329,10 @@ export const AlertDialogContent = ({ children, className = "" }: any) => {
 
 export const AlertDialogHeader = ({ className = "", ...props }: any) => (
   <div className={\`sora-alert-dialog__header \${className}\`.trim()} {...props} />
+);
+
+export const AlertDialogMedia = ({ className = "", ...props }: any) => (
+  <div className={\`sora-alert-dialog__media \${className}\`.trim()} {...props} />
 );
 
 export const AlertDialogTitle = ({ className = "", ...props }: any) => (
@@ -316,12 +347,21 @@ export const AlertDialogFooter = ({ className = "", ...props }: any) => (
   <div className={\`sora-alert-dialog__footer \${className}\`.trim()} {...props} />
 );
 
-export const AlertDialogAction = ({ children, onClick, ...props }: any) => {
+export const AlertDialogAction = ({ variant = "default", className = "", children, onClick, ...props }: any) => {
   const ctx = React.useContext(AlertContext);
+  const variantClass =
+    variant === "destructive"
+      ? "sora-alert-dialog__action--destructive"
+      : variant === "soft-destructive"
+        ? "sora-alert-dialog__action--soft-destructive"
+        : variant === "outline"
+          ? "sora-alert-dialog__cancel"
+          : "";
+
   return (
     <button
       type="button"
-      className="sora-button sora-button--destructive sora-button--md"
+      className={\`sora-alert-dialog__action \${variantClass} \${className}\`.trim()}
       onClick={(e) => {
         onClick?.(e);
         ctx?.setOpen(false);
@@ -333,12 +373,14 @@ export const AlertDialogAction = ({ children, onClick, ...props }: any) => {
   );
 };
 
-export const AlertDialogCancel = ({ children = "Cancel", onClick, ...props }: any) => {
+export const AlertDialogCancel = ({ variant = "outline", className = "", children = "Cancel", onClick, ...props }: any) => {
   const ctx = React.useContext(AlertContext);
+  const variantClass = variant === "destructive" ? "sora-alert-dialog__action--destructive" : "";
+
   return (
     <button
       type="button"
-      className="sora-button sora-button--outline sora-button--md"
+      className={\`sora-alert-dialog__cancel \${variantClass} \${className}\`.trim()}
       onClick={(e) => {
         onClick?.(e);
         ctx?.setOpen(false);

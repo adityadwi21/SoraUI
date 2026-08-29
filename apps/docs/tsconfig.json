@@ -15,7 +15,16 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@soraui/react": ["../../packages/react/src/index.ts"],
+      "@soraui/react/*": ["../../packages/react/src/*"],
+      "@soraui/core": ["../../packages/core/src/index.ts"],
+      "@soraui/core/*": ["../../packages/core/src/*"],
+      "@soraui/hooks": ["../../packages/hooks/src/index.ts"],
+      "@soraui/hooks/*": ["../../packages/hooks/src/*"]
+    }
   },
   "include": ["src", "tests"]
 }
