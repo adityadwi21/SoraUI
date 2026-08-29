@@ -29,8 +29,12 @@ function getImportSnippet(doc: ComponentDoc): string {
       return `import { AspectRatio } from '@soraui/react';`;
     case "attachment":
       return `import { Attachment, AttachmentItem, AttachmentIcon, AttachmentPreview, AttachmentInfo, AttachmentName, AttachmentSize, AttachmentActions, AttachmentRemove } from '@soraui/react';`;
-    default:
-      return `import { ${doc.name} } from '@soraui/react';`;
+    case "alert-dialog":
+      return `import {\n  AlertDialog,\n  AlertDialogAction,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n} from '@soraui/react';`;
+    default: {
+      const cleanName = doc.name.replace(/\s+/g, "");
+      return `import { ${cleanName} } from '@soraui/react';`;
+    }
   }
 }
 
@@ -60,8 +64,12 @@ function getMinimalUsageSnippet(doc: ComponentDoc): string {
       return `<Select>\n  <SelectTrigger>\n    <SelectValue placeholder="Select a fruit" />\n  </SelectTrigger>\n  <SelectContent>\n    <SelectItem value="apple">Apple</SelectItem>\n    <SelectItem value="banana">Banana</SelectItem>\n  </SelectContent>\n</Select>`;
     case "card":
       return `<Card>\n  <CardHeader>\n    <CardTitle>Card Title</CardTitle>\n    <CardDescription>Card Description</CardDescription>\n  </CardHeader>\n  <CardContent>\n    <p>Card Content</p>\n  </CardContent>\n  <CardFooter>\n    <p>Card Footer</p>\n  </CardFooter>\n</Card>`;
-    default:
-      return `<${doc.name} />`;
+    case "alert-dialog":
+      return `<AlertDialog>\n  <AlertDialogTrigger asChild>\n    <Button variant="outline">Open</Button>\n  </AlertDialogTrigger>\n  <AlertDialogContent>\n    <AlertDialogHeader>\n      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>\n      <AlertDialogDescription>\n        This action cannot be undone. This will permanently delete your account\n        and remove your data from our servers.\n      </AlertDialogDescription>\n    </AlertDialogHeader>\n    <AlertDialogFooter>\n      <AlertDialogCancel>Cancel</AlertDialogCancel>\n      <AlertDialogAction>Continue</AlertDialogAction>\n    </AlertDialogFooter>\n  </AlertDialogContent>\n</AlertDialog>`;
+    default: {
+      const cleanTag = doc.name.replace(/\s+/g, "");
+      return `<${cleanTag} />`;
+    }
   }
 }
 
@@ -79,6 +87,8 @@ function getCompositionSnippet(docId: string): string | null {
       return `Tabs\n├── TabsList\n│   ├── TabsTrigger\n│   └── TabsTrigger\n├── TabsContent\n└── TabsContent`;
     case "select":
       return `Select\n├── SelectTrigger\n│   └── SelectValue\n└── SelectContent\n    ├── SelectGroup\n    │   ├── SelectLabel\n    │   └── SelectItem\n    └── SelectSeparator`;
+    case "alert-dialog":
+      return `AlertDialog\n├── AlertDialogTrigger\n└── AlertDialogContent\n    ├── AlertDialogHeader\n    │   ├── AlertDialogTitle\n    │   └── AlertDialogDescription\n    └── AlertDialogFooter\n        ├── AlertDialogCancel\n        └── AlertDialogAction`;
     default:
       return null;
   }
@@ -418,7 +428,7 @@ ${doc.props.map((p) => `| ${p.name} | \`${p.type}\` | \`${p.default || "-"}\` | 
           </a>
         </h2>
 
-        <div style={{ display: "grid", gap: "0.75rem", marginTop: "0.75rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginTop: "1rem" }}>
           <CodeBlock code={getImportSnippet(doc)} language="typescript" />
           <CodeBlock code={minimalUsage} language="tsx" />
         </div>
