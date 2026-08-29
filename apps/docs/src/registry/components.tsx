@@ -3635,7 +3635,7 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         description: "Additional CSS classes to apply",
       },
     ],
-    themingTokens: ["--ui-radius", "--ui-border"],
+    themingTokens: [],
     examples: [
       {
         id: "basic",
