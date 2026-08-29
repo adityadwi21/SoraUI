@@ -2017,7 +2017,29 @@ svg {
   gap: 0.35rem;
   font-weight: 600;
   color: #eab308;
-  margin-bottom: 0.25rem;
+/* Usage Steps */
+.sora-usage-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+.sora-usage-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sora-usage-step-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--docs-fg);
+  margin: 0;
 }
 
 /* =======================================================================
