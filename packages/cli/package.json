@@ -48,10 +48,10 @@
     "prompts": "^2.4.2"
   },
   "devDependencies": {
-    "@types/node": "^20.17.24",
+    "@types/node": "^20.14.9",
     "@types/prompts": "^2.4.9",
-    "tsup": "^8.3.6",
-    "typescript": "^5.8.3",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
     "vitest": "^2.1.9"
   }
 }
