@@ -141,6 +141,9 @@ import {
   FileText,
   Archive,
   Code,
+  Plus,
+  Bluetooth,
+  Trash2,
 } from "lucide-react";
 
 export const COMPONENT_DOCS: ComponentDoc[] = [
@@ -2575,11 +2578,11 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     examples: [
       {
         id: "basic",
-        title: "Destructive Confirmation",
-        description: "Standard confirmation dialog before executing an irreversible or destructive action like deleting an account.",
+        title: "Basic",
+        description: "A standard confirmation dialog with a trigger button.",
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
-    <Button variant="destructive">Delete Account</Button>
+    <Button variant="outline">Show Dialog</Button>
   </AlertDialogTrigger>
   <AlertDialogContent>
     <AlertDialogHeader>
@@ -2591,16 +2594,14 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     </AlertDialogHeader>
     <AlertDialogFooter>
       <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction className="sora-alert-dialog__action--destructive">
-        Yes, delete account
-      </AlertDialogAction>
+      <AlertDialogAction>Continue</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>`,
         render: () => (
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="destructive">Delete Account</Button>
+              <Button variant="outline">Show Dialog</Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
@@ -2612,130 +2613,187 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction className="sora-alert-dialog__action--destructive">
-                  Yes, delete account
-                </AlertDialogAction>
+                <AlertDialogAction>Continue</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
         ),
       },
       {
-        id: "outline-trigger",
-        title: "Outline Trigger",
-        description: "Trigger with a softer secondary or outline button style for non-critical confirmations.",
+        id: "small",
+        title: "Small",
+        description: "A compact alert dialog with centered header text.",
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
-    <Button variant="outline">Discard Changes</Button>
-  </AlertDialogTrigger>
-  <AlertDialogContent>
-    <AlertDialogHeader>
-      <AlertDialogTitle>Discard unsaved changes?</AlertDialogTitle>
-      <AlertDialogDescription>
-        You have unsaved changes in this form. If you leave now, all your edits will be lost.
-      </AlertDialogDescription>
-    </AlertDialogHeader>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Keep Editing</AlertDialogCancel>
-      <AlertDialogAction>Discard</AlertDialogAction>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>`,
-        render: () => (
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="outline">Discard Changes</Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Discard unsaved changes?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  You have unsaved changes in this form. If you leave now, all
-                  your edits will be lost.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Keep Editing</AlertDialogCancel>
-                <AlertDialogAction>Discard</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        ),
-      },
-      {
-        id: "small-size",
-        title: "Small Size",
-        description: "Use size=\"sm\" on AlertDialogContent for a compact dialog suitable for short inline prompts.",
-        code: `<AlertDialog>
-  <AlertDialogTrigger asChild>
-    <Button variant="ghost" size="sm">Clear search history</Button>
+    <Button variant="outline">Show Dialog</Button>
   </AlertDialogTrigger>
   <AlertDialogContent size="sm">
-    <AlertDialogHeader>
-      <AlertDialogTitle>Clear search history?</AlertDialogTitle>
-      <AlertDialogDescription>
-        All recent search terms and filters will be cleared immediately.
+    <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+      <AlertDialogTitle style={{ textAlign: "center" }}>
+        Allow accessory to connect?
+      </AlertDialogTitle>
+      <AlertDialogDescription style={{ textAlign: "center" }}>
+        Do you want to allow the USB accessory to connect to this device?
       </AlertDialogDescription>
     </AlertDialogHeader>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction>Clear</AlertDialogAction>
+    <AlertDialogFooter style={{ justifyContent: "center" }}>
+      <AlertDialogCancel>Don't allow</AlertDialogCancel>
+      <AlertDialogAction>Allow</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>`,
         render: () => (
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="ghost" size="sm">Clear search history</Button>
+              <Button variant="outline">Show Dialog</Button>
             </AlertDialogTrigger>
             <AlertDialogContent size="sm">
-              <AlertDialogHeader>
-                <AlertDialogTitle>Clear search history?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  All recent search terms and filters will be cleared immediately.
+              <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+                <AlertDialogTitle style={{ textAlign: "center" }}>
+                  Allow accessory to connect?
+                </AlertDialogTitle>
+                <AlertDialogDescription style={{ textAlign: "center" }}>
+                  Do you want to allow the USB accessory to connect to this device?
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Clear</AlertDialogAction>
+              <AlertDialogFooter style={{ justifyContent: "center" }}>
+                <AlertDialogCancel>Don't allow</AlertDialogCancel>
+                <AlertDialogAction>Allow</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
         ),
       },
       {
-        id: "with-media",
-        title: "With Media / Icon",
-        description: "Include AlertDialogMedia inside AlertDialogHeader to render an icon or media avatar alongside the title.",
+        id: "media",
+        title: "Media",
+        description: "An alert dialog with an icon media element in the header.",
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
-    <Button variant="outline">Revoke API Key</Button>
+    <Button variant="outline">Show Dialog</Button>
   </AlertDialogTrigger>
   <AlertDialogContent>
     <AlertDialogHeader>
       <AlertDialogMedia>
-        <div style={{
-          width: 40,
-          height: 40,
-          borderRadius: "50%",
-          backgroundColor: "var(--ui-muted, #f1f5f9)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "var(--ui-destructive, #ef4444)"
-        }}>
-          <AlertTriangle size={20} />
-        </div>
+        <Plus size={20} />
       </AlertDialogMedia>
-      <AlertDialogTitle>Revoke Production Key?</AlertDialogTitle>
+      <AlertDialogTitle>Share this project?</AlertDialogTitle>
       <AlertDialogDescription>
-        Any application or automated workflow currently using this key will lose access immediately.
+        Anyone with the link will be able to view and edit this project.
       </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>
       <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction className="sora-alert-dialog__action--destructive">
-        Revoke Key
+      <AlertDialogAction>Share</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>`,
+        render: () => (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">Show Dialog</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogMedia>
+                  <Plus size={20} />
+                </AlertDialogMedia>
+                <AlertDialogTitle>Share this project?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Anyone with the link will be able to view and edit this project.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction>Share</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        ),
+      },
+      {
+        id: "media-small",
+        title: "Media and Small",
+        description: "A compact alert dialog with a centered icon media element.",
+        code: `<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Show Dialog</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent size="sm">
+    <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+      <AlertDialogMedia style={{ margin: "0 auto 0.5rem" }}>
+        <Bluetooth size={20} />
+      </AlertDialogMedia>
+      <AlertDialogTitle style={{ textAlign: "center" }}>
+        Allow accessory to connect?
+      </AlertDialogTitle>
+      <AlertDialogDescription style={{ textAlign: "center" }}>
+        Do you want to allow the USB accessory to connect to this device?
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter style={{ justifyContent: "center" }}>
+      <AlertDialogCancel>Don't allow</AlertDialogCancel>
+      <AlertDialogAction>Allow</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>`,
+        render: () => (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">Show Dialog</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent size="sm">
+              <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+                <AlertDialogMedia style={{ margin: "0 auto 0.5rem" }}>
+                  <Bluetooth size={20} />
+                </AlertDialogMedia>
+                <AlertDialogTitle style={{ textAlign: "center" }}>
+                  Allow accessory to connect?
+                </AlertDialogTitle>
+                <AlertDialogDescription style={{ textAlign: "center" }}>
+                  Do you want to allow the USB accessory to connect to this device?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter style={{ justifyContent: "center" }}>
+                <AlertDialogCancel>Don't allow</AlertDialogCancel>
+                <AlertDialogAction>Allow</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        ),
+      },
+      {
+        id: "destructive",
+        title: "Destructive",
+        description: "An alert dialog with a destructive call-to-action button.",
+        code: `<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Delete Chat</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent size="sm">
+    <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+      <AlertDialogMedia
+        style={{
+          margin: "0 auto 0.5rem",
+          backgroundColor: "rgba(239, 68, 68, 0.1)",
+          color: "#ef4444",
+        }}
+      >
+        <Trash2 size={20} />
+      </AlertDialogMedia>
+      <AlertDialogTitle style={{ textAlign: "center" }}>
+        Delete chat?
+      </AlertDialogTitle>
+      <AlertDialogDescription style={{ textAlign: "center" }}>
+        This will permanently delete this chat conversation. View{" "}
+        <span style={{ textDecoration: "underline", cursor: "pointer" }}>Settings</span>{" "}
+        delete any memories saved during this chat.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter style={{ justifyContent: "center" }}>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction className="sora-alert-dialog__action--soft-destructive">
+        Delete
       </AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
@@ -2743,93 +2801,37 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         render: () => (
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="outline">Revoke API Key</Button>
+              <Button variant="outline">Delete Chat</Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogMedia>
-                  <div style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: "50%",
-                    backgroundColor: "var(--ui-muted, #f1f5f9)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "var(--ui-destructive, #ef4444)"
-                  }}>
-                    <AlertTriangle size={20} />
-                  </div>
+            <AlertDialogContent size="sm">
+              <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+                <AlertDialogMedia
+                  style={{
+                    margin: "0 auto 0.5rem",
+                    backgroundColor: "rgba(239, 68, 68, 0.1)",
+                    color: "#ef4444",
+                  }}
+                >
+                  <Trash2 size={20} />
                 </AlertDialogMedia>
-                <AlertDialogTitle>Revoke Production Key?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Any application or automated workflow currently using this key
-                  will lose access immediately.
+                <AlertDialogTitle style={{ textAlign: "center" }}>
+                  Delete chat?
+                </AlertDialogTitle>
+                <AlertDialogDescription style={{ textAlign: "center" }}>
+                  This will permanently delete this chat conversation. View{" "}
+                  <span style={{ textDecoration: "underline", cursor: "pointer" }}>Settings</span>{" "}
+                  delete any memories saved during this chat.
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter>
+              <AlertDialogFooter style={{ justifyContent: "center" }}>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction className="sora-alert-dialog__action--destructive">
-                  Revoke Key
+                <AlertDialogAction className="sora-alert-dialog__action--soft-destructive">
+                  Delete
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
         ),
-      },
-      {
-        id: "controlled",
-        title: "Controlled State",
-        description: "Manage open state externally using open and onOpenChange props for programmatic control.",
-        code: `function ControlledAlertDialog() {
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open Programmatically</Button>
-      <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Controlled Alert Dialog</AlertDialogTitle>
-            <AlertDialogDescription>
-              This dialog's visibility is managed via React state hook.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={() => setOpen(false)}>
-              Confirm
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </>
-  );
-}`,
-        render: () => {
-          const [open, setOpen] = React.useState(false);
-          return (
-            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-              <Button onClick={() => setOpen(true)}>Open Programmatically</Button>
-              <AlertDialog open={open} onOpenChange={setOpen}>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Controlled Alert Dialog</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This dialog's visibility is managed via React state hook.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => setOpen(false)}>
-                      Confirm
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </div>
-          );
-        },
       },
     ],
   },

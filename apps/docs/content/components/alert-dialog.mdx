@@ -108,150 +108,150 @@ AlertDialog
 
 ## Variants & Examples
 
-### 1. Destructive Confirmation
+### 1. Basic (Are you absolutely sure?)
 
-Varian standar untuk aksi berbahaya (menghapus database, menghapus akun, menghapus resource).
+Contoh standar konfirmasi dengan tombol trigger.
 
 ```tsx
 <AlertDialog>
   <AlertDialogTrigger asChild>
-    <Button variant="destructive">Delete Project</Button>
+    <Button variant="outline">Show Dialog</Button>
   </AlertDialogTrigger>
   <AlertDialogContent>
     <AlertDialogHeader>
-      <AlertDialogTitle>Delete this project?</AlertDialogTitle>
+      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
       <AlertDialogDescription>
-        All deployments, domain bindings, and environment variables will be permanently destroyed.
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
       </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>
       <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction className="sora-alert-dialog__action--destructive">
-        Delete Project
-      </AlertDialogAction>
+      <AlertDialogAction>Continue</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>
 ```
 
-### 2. Outline Trigger (Soft Confirmation)
+### 2. Small (Allow accessory to connect?)
 
-Menggunakan tombol trigger sekunder atau outline untuk konfirmasi yang bersifat non-kritis (misalnya membuang perubahan form).
-
-```tsx
-<AlertDialog>
-  <AlertDialogTrigger asChild>
-    <Button variant="outline">Discard Changes</Button>
-  </AlertDialogTrigger>
-  <AlertDialogContent>
-    <AlertDialogHeader>
-      <AlertDialogTitle>Discard unsaved changes?</AlertDialogTitle>
-      <AlertDialogDescription>
-        You have unsaved changes in this form. If you leave now, all your edits will be lost.
-      </AlertDialogDescription>
-    </AlertDialogHeader>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Keep Editing</AlertDialogCancel>
-      <AlertDialogAction>Discard</AlertDialogAction>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>
-```
-
-### 3. Small Size (`size="sm"`)
-
-Gunakan prop `size="sm"` pada `AlertDialogContent` untuk dialog konfirmasi yang ringkas.
+Modal dialog berukuran lebih ringkas dengan teks header yang rata tengah (*center-aligned*).
 
 ```tsx
 <AlertDialog>
   <AlertDialogTrigger asChild>
-    <Button variant="ghost" size="sm">Clear History</Button>
+    <Button variant="outline">Show Dialog</Button>
   </AlertDialogTrigger>
   <AlertDialogContent size="sm">
-    <AlertDialogHeader>
-      <AlertDialogTitle>Clear search history?</AlertDialogTitle>
-      <AlertDialogDescription>
-        All recent search terms and filters will be cleared immediately.
+    <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+      <AlertDialogTitle style={{ textAlign: "center" }}>
+        Allow accessory to connect?
+      </AlertDialogTitle>
+      <AlertDialogDescription style={{ textAlign: "center" }}>
+        Do you want to allow the USB accessory to connect to this device?
       </AlertDialogDescription>
     </AlertDialogHeader>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction>Clear</AlertDialogAction>
+    <AlertDialogFooter style={{ justifyContent: "center" }}>
+      <AlertDialogCancel>Don't allow</AlertDialogCancel>
+      <AlertDialogAction>Allow</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>
 ```
 
-### 4. With Media Icon (`AlertDialogMedia`)
+### 3. Media (Share this project?)
 
-Gunakan `AlertDialogMedia` di dalam `AlertDialogHeader` untuk menyematkan ikon visual atau avatar peringatan di samping judul.
+Menyematkan elemen media atau ikon visual di samping judul.
 
 ```tsx
 <AlertDialog>
   <AlertDialogTrigger asChild>
-    <Button variant="outline">Revoke API Key</Button>
+    <Button variant="outline">Show Dialog</Button>
   </AlertDialogTrigger>
   <AlertDialogContent>
     <AlertDialogHeader>
       <AlertDialogMedia>
-        <div style={{
-          width: 40,
-          height: 40,
-          borderRadius: "50%",
-          backgroundColor: "var(--ui-muted, #f1f5f9)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "var(--ui-destructive, #ef4444)"
-        }}>
-          <AlertTriangle size={20} />
-        </div>
+        <Plus size={20} />
       </AlertDialogMedia>
-      <AlertDialogTitle>Revoke Production Key?</AlertDialogTitle>
+      <AlertDialogTitle>Share this project?</AlertDialogTitle>
       <AlertDialogDescription>
-        Any application or automated workflow currently using this key will lose access immediately.
+        Anyone with the link will be able to view and edit this project.
       </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>
       <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction className="sora-alert-dialog__action--destructive">
-        Revoke Key
-      </AlertDialogAction>
+      <AlertDialogAction>Share</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>
 ```
 
-### 5. Controlled State
+### 4. Media and Small (Bluetooth Prompt)
 
-Gunakan prop `open` dan `onOpenChange` untuk mengontrol visibilitas dialog secara programatik dari luar komponen.
+Dialog konfirmasi berukuran `sm` dengan ikon media di posisi atas tengah (*top-centered*).
 
 ```tsx
-function ControlledAlertDialog() {
-  const [open, setOpen] = React.useState(false);
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Show Dialog</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent size="sm">
+    <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+      <AlertDialogMedia style={{ margin: "0 auto 0.5rem" }}>
+        <Bluetooth size={20} />
+      </AlertDialogMedia>
+      <AlertDialogTitle style={{ textAlign: "center" }}>
+        Allow accessory to connect?
+      </AlertDialogTitle>
+      <AlertDialogDescription style={{ textAlign: "center" }}>
+        Do you want to allow the USB accessory to connect to this device?
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter style={{ justifyContent: "center" }}>
+      <AlertDialogCancel>Don't allow</AlertDialogCancel>
+      <AlertDialogAction>Allow</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
 
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open Programmatically</Button>
-      <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Controlled Alert Dialog</AlertDialogTitle>
-            <AlertDialogDescription>
-              This dialog's open state is managed via React state.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={() => setOpen(false)}>
-              Confirm
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </>
-  );
-}
+### 5. Destructive (Delete chat?)
+
+Dialog konfirmasi dengan badge ikon merah dan tombol aksi beraksen merah lembut (`.sora-alert-dialog__action--soft-destructive`).
+
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Delete Chat</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent size="sm">
+    <AlertDialogHeader style={{ textAlign: "center", alignItems: "center" }}>
+      <AlertDialogMedia
+        style={{
+          margin: "0 auto 0.5rem",
+          backgroundColor: "rgba(239, 68, 68, 0.1)",
+          color: "#ef4444",
+        }}
+      >
+        <Trash2 size={20} />
+      </AlertDialogMedia>
+      <AlertDialogTitle style={{ textAlign: "center" }}>
+        Delete chat?
+      </AlertDialogTitle>
+      <AlertDialogDescription style={{ textAlign: "center" }}>
+        This will permanently delete this chat conversation. View{" "}
+        <a href="#settings" style={{ textDecoration: "underline", color: "inherit" }}>Settings</a>{" "}
+        delete any memories saved during this chat.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter style={{ justifyContent: "center" }}>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction className="sora-alert-dialog__action--soft-destructive">
+        Delete
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
 ```
 
 ---

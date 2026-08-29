@@ -2036,7 +2036,7 @@ text-align: start;
 .sora-alert-dialog__description {
 font-size: 0.875rem; color: var(--ui-muted-foreground);
 line-height: 1.5;
-margin-bottom: 1.25rem;
+margin: 0;
 text-align: start;
 }
 .sora-alert-dialog__footer {
@@ -2071,6 +2071,14 @@ border: 1px solid var(--ui-primary, #09090b); color: var(--ui-primary-foreground
 .sora-alert-dialog__action--destructive { background-color: var(--ui-destructive, #ef4444); border-color: var(--ui-destructive, #ef4444); color: var(--ui-destructive-foreground, #ffffff);
 }
 .sora-alert-dialog__action--destructive:hover { opacity: 0.9;
+}
+.sora-alert-dialog__action--soft-destructive {
+  background-color: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: var(--ui-destructive, #ef4444);
+}
+.sora-alert-dialog__action--soft-destructive:hover {
+  background-color: rgba(239, 68, 68, 0.2);
 }
 /* Drawer / Sheet */
 .sora-drawer__backdrop {
