@@ -137,16 +137,20 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       >
         <pre className="docs-codeblock-pre">
           <code className="docs-codeblock-code-lines">
-            {isMultiLine
-              ? lines.map((line, idx) => (
-                  <div key={idx} className="docs-codeblock-line">
-                    <span className="docs-codeblock-linenum" aria-hidden="true">
-                      {idx + 1}
-                    </span>
-                    <span className="docs-codeblock-linecode">{line || " "}</span>
-                  </div>
-                ))
-              : <code>{code}</code>}
+            {isMultiLine ? (
+              lines.map((line, idx) => (
+                <div key={idx} className="docs-codeblock-line">
+                  <span className="docs-codeblock-linenum" aria-hidden="true">
+                    {idx + 1}
+                  </span>
+                  <span className="docs-codeblock-linecode">{line || " "}</span>
+                </div>
+              ))
+            ) : (
+              <div className="docs-codeblock-line docs-codeblock-line--single">
+                <span className="docs-codeblock-linecode">{code}</span>
+              </div>
+            )}
           </code>
         </pre>
 

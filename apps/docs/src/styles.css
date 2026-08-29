@@ -2230,10 +2230,15 @@ pre.docs-codeblock-pre {
   align-items: baseline;
   width: 100%;
   padding: 0 1rem;
+  box-sizing: border-box;
   transition: background-color 0.1s ease;
 }
 .docs-codeblock-line:hover {
   background-color: rgba(255, 255, 255, 0.04);
+}
+
+.docs-codeblock-line--single {
+  padding: 0.125rem 1.25rem;
 }
 
 .docs-codeblock-linenum {
