@@ -1,6 +1,315 @@
 ---
 title: Alert Dialog
-description: Accessible confirmation dialog.
+description: A modal dialog that interrupts the user with important content and expects a response.
 ---
+
 # Alert Dialog
-Critical action confirmation modal.
+
+> Modal dialog yang menginterupsi alur pengguna untuk menampilkan konten penting dan meminta konfirmasi eksplisit sebelum tindakan dijalankan. Ideal untuk tindakan destruktif atau tidak dapat dibatalkan.
+
+**Status:** stable  
+**Package:** `@soraui/react`  
+**Path sumber:** `packages/react/src/components/alert-dialog/alert-dialog.tsx`  
+**Path style:** `packages/react/src/styles.css` (seksi `.sora-alert-dialog__*`)  
+**Bundle impact:** ~1.2 KB gzip, dependensi internal `@soraui/hooks` (`useFocusTrap`, `useEscapeKey`, `Portal`)  
+
+---
+
+## Philosophy Note
+
+> Berbeda dari `Dialog` biasa yang dapat ditutup dengan mengklik area backdrop di luar modal, `AlertDialog` **sengaja tidak dapat ditutup dengan klik luar** untuk mencegah pembatalan yang tidak disengaja saat aksi kritis sedang berlangsung.
+> 
+> - **Zero-Runtime CSS** — Semua animasi transisi (fade-in, scale-in) berjalan di level CSS GPU.
+> - **Focus Safety** — Secara default fokus otomatis diarahkan ke tombol `AlertDialogCancel` untuk mencegah pengguna tidak sengaja menekan Enter pada tombol destruktif.
+> - **WAI-ARIA Compliant** — Menggunakan `role="alertdialog"`, `aria-modal="true"`, `aria-labelledby`, dan `aria-describedby`.
+
+---
+
+## Installation
+
+### CLI (Recommended)
+
+```bash
+# pnpm
+pnpm dlx @soraui/cli add alert-dialog
+
+# npm
+npx @soraui/cli add alert-dialog
+
+# yarn
+yarn dlx @soraui/cli add alert-dialog
+
+# bun
+bunx @soraui/cli add alert-dialog
+```
+
+### Manual Package Import
+
+```tsx
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from "@soraui/react";
+```
+
+---
+
+## Anatomy (Composition)
+
+```text
+AlertDialog
+├── AlertDialogTrigger (asChild support)
+└── AlertDialogContent (size="default" | "sm")
+    ├── AlertDialogHeader
+    │   ├── AlertDialogMedia (optional icon container)
+    │   ├── AlertDialogTitle
+    │   └── AlertDialogDescription
+    └── AlertDialogFooter
+        ├── AlertDialogCancel
+        └── AlertDialogAction
+```
+
+---
+
+## Usage (Basic)
+
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="destructive">Delete Account</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+      <AlertDialogDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction className="sora-alert-dialog__action--destructive">
+        Yes, delete account
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+---
+
+## Variants & Examples
+
+### 1. Destructive Confirmation
+
+Varian standar untuk aksi berbahaya (menghapus database, menghapus akun, menghapus resource).
+
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="destructive">Delete Project</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Delete this project?</AlertDialogTitle>
+      <AlertDialogDescription>
+        All deployments, domain bindings, and environment variables will be permanently destroyed.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction className="sora-alert-dialog__action--destructive">
+        Delete Project
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+### 2. Outline Trigger (Soft Confirmation)
+
+Menggunakan tombol trigger sekunder atau outline untuk konfirmasi yang bersifat non-kritis (misalnya membuang perubahan form).
+
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Discard Changes</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Discard unsaved changes?</AlertDialogTitle>
+      <AlertDialogDescription>
+        You have unsaved changes in this form. If you leave now, all your edits will be lost.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Keep Editing</AlertDialogCancel>
+      <AlertDialogAction>Discard</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+### 3. Small Size (`size="sm"`)
+
+Gunakan prop `size="sm"` pada `AlertDialogContent` untuk dialog konfirmasi yang ringkas.
+
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="ghost" size="sm">Clear History</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent size="sm">
+    <AlertDialogHeader>
+      <AlertDialogTitle>Clear search history?</AlertDialogTitle>
+      <AlertDialogDescription>
+        All recent search terms and filters will be cleared immediately.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Clear</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+### 4. With Media Icon (`AlertDialogMedia`)
+
+Gunakan `AlertDialogMedia` di dalam `AlertDialogHeader` untuk menyematkan ikon visual atau avatar peringatan di samping judul.
+
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Revoke API Key</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogMedia>
+        <div style={{
+          width: 40,
+          height: 40,
+          borderRadius: "50%",
+          backgroundColor: "var(--ui-muted, #f1f5f9)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "var(--ui-destructive, #ef4444)"
+        }}>
+          <AlertTriangle size={20} />
+        </div>
+      </AlertDialogMedia>
+      <AlertDialogTitle>Revoke Production Key?</AlertDialogTitle>
+      <AlertDialogDescription>
+        Any application or automated workflow currently using this key will lose access immediately.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction className="sora-alert-dialog__action--destructive">
+        Revoke Key
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+### 5. Controlled State
+
+Gunakan prop `open` dan `onOpenChange` untuk mengontrol visibilitas dialog secara programatik dari luar komponen.
+
+```tsx
+function ControlledAlertDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Programmatically</Button>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Controlled Alert Dialog</AlertDialogTitle>
+            <AlertDialogDescription>
+              This dialog's open state is managed via React state.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => setOpen(false)}>
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+}
+```
+
+---
+
+## API Reference
+
+### AlertDialog
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `open` | `boolean` | `undefined` | Controlled state pembukaan dialog. |
+| `defaultOpen` | `boolean` | `false` | Uncontrolled state awal pembukaan dialog. |
+| `onOpenChange` | `(open: boolean) => void` | `undefined` | Callback saat status pembukaan dialog berubah. |
+| `children` | `ReactNode` | — | Elemen `AlertDialogTrigger` dan `AlertDialogContent`. |
+
+### AlertDialogTrigger
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `asChild` | `boolean` | `false` | Jika `true`, meneruskan perilaku klik ke komponen anak langsung (misal `<Button />`). |
+
+### AlertDialogContent
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `size` | `'default' \| 'sm'` | `'default'` | Ukuran lebar maksimal modal dialog. |
+| `className` | `string` | — | Class CSS kustom tambahan. |
+
+### AlertDialogAction & AlertDialogCancel
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `onClick` | `(e: MouseEvent) => void` | — | Handler event klik. Secara default langsung menutup modal setelah dieksekusi. |
+| `className` | `string` | — | Class CSS tambahan (gunakan `.sora-alert-dialog__action--destructive` untuk tombol aksi merah). |
+
+---
+
+## Accessibility (a11y)
+
+- **Role:** `role="alertdialog"` memberitahu screen reader bahwa modal memerlukan interaksi konfirmasi langsung.
+- **Modal Lock:** `aria-modal="true"` mengisolasi fokus keyboard dan virtual cursor screen reader.
+- **Accessible Name & Description:** Secara otomatis mengaitkan `aria-labelledby` ke `AlertDialogTitle` dan `aria-describedby` ke `AlertDialogDescription`.
+- **Keyboard Navigation:**
+  - `Escape`: Menutup alert dialog.
+  - `Tab` / `Shift + Tab`: Menavigasikan fokus secara melingkar (*focus trap*) di dalam dialog.
+  - `Enter` / `Space`: Menjalankan aksi tombol yang sedang berfokus.
+- **Initial Focus Safety:** Fokus awal otomatis diarahkan ke `AlertDialogCancel` untuk mencegah kesalahan eksekusi pada tindakan destruktif.
+
+---
+
+## CSS Design Tokens
+
+| Token CSS | Penggunaan |
+| :--- | :--- |
+| `--ui-background` | Latar belakang kanvas & modal dialog |
+| `--ui-foreground` | Warna teks utama judul |
+| `--ui-card` | Latar belakang surface modal |
+| `--ui-primary` | Warna tombol aksi default |
+| `--ui-destructive` | Warna tombol aksi destruktif (`--destructive`) |
+| `--ui-border` | Garis batas modal dan pemisah tombol cancel |
+| `--ui-radius` | Border radius sudut dialog |

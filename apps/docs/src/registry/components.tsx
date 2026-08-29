@@ -89,6 +89,7 @@ import {
   AlertDialogTrigger,
   AlertDialogContent,
   AlertDialogHeader,
+  AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -141,8 +142,6 @@ import {
   Archive,
   Code,
 } from "lucide-react";
-
-
 
 export const COMPONENT_DOCS: ComponentDoc[] = [
   {
@@ -1079,7 +1078,8 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         name: "collapsible",
         type: "boolean",
         default: "false",
-        description: "Whether active item can be collapsed (only in single mode)",
+        description:
+          "Whether active item can be collapsed (only in single mode)",
       },
       {
         name: "value",
@@ -1101,12 +1101,22 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
     accessibility: {
       role: "region",
       keyboard: [
-        { key: "Tab", action: "Moves focus to the next focusable element (skips closed items)" },
-        { key: "Enter / Space", action: "Toggles the focused accordion trigger" },
+        {
+          key: "Tab",
+          action:
+            "Moves focus to the next focusable element (skips closed items)",
+        },
+        {
+          key: "Enter / Space",
+          action: "Toggles the focused accordion trigger",
+        },
         { key: "Arrow Down", action: "Moves focus to the next trigger" },
         { key: "Arrow Up", action: "Moves focus to the previous trigger" },
-        { key: "Home / End", action: "Moves focus to the first or last trigger" },
-      ]
+        {
+          key: "Home / End",
+          action: "Moves focus to the first or last trigger",
+        },
+      ],
     },
     examples: [
       {
@@ -1146,21 +1156,27 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
             <AccordionItem value="item-1">
               <AccordionTrigger>How do I reset my password?</AccordionTrigger>
               <AccordionContent>
-                Click on 'Forgot Password' on the login page, enter your email address,
-                and we'll send you a link to reset your password. The link will expire in 24 hours.
+                Click on 'Forgot Password' on the login page, enter your email
+                address, and we'll send you a link to reset your password. The
+                link will expire in 24 hours.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger>Can I change my subscription plan?</AccordionTrigger>
+              <AccordionTrigger>
+                Can I change my subscription plan?
+              </AccordionTrigger>
               <AccordionContent>
-                Yes, you can upgrade or downgrade your plan at any time from your account settings.
-                Changes take effect immediately.
+                Yes, you can upgrade or downgrade your plan at any time from
+                your account settings. Changes take effect immediately.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
-              <AccordionTrigger>What payment methods do you accept?</AccordionTrigger>
+              <AccordionTrigger>
+                What payment methods do you accept?
+              </AccordionTrigger>
               <AccordionContent>
-                We accept all major credit cards, PayPal, and bank transfers for enterprise accounts.
+                We accept all major credit cards, PayPal, and bank transfers for
+                enterprise accounts.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -1202,21 +1218,22 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
             <AccordionItem value="item-1">
               <AccordionTrigger>Notification Settings</AccordionTrigger>
               <AccordionContent>
-                Manage how you receive notifications. You can enable email alerts for updates
-                or push notifications for mobile devices.
+                Manage how you receive notifications. You can enable email
+                alerts for updates or push notifications for mobile devices.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger>Privacy & Security</AccordionTrigger>
               <AccordionContent>
-                Control your profile visibility, manage two-factor authentication, and
-                review recent account activity.
+                Control your profile visibility, manage two-factor
+                authentication, and review recent account activity.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
               <AccordionTrigger>Billing & Subscription</AccordionTrigger>
               <AccordionContent>
-                View your invoices, update payment methods, and manage your current subscription plan.
+                View your invoices, update payment methods, and manage your
+                current subscription plan.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -1257,23 +1274,28 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
             style={{ maxWidth: "480px", width: "100%" }}
           >
             <AccordionItem value="item-1">
-              <AccordionTrigger>Can I access my account history?</AccordionTrigger>
+              <AccordionTrigger>
+                Can I access my account history?
+              </AccordionTrigger>
               <AccordionContent>
-                Yes, your complete transaction and activity history is stored permanently
-                and can be exported at any time.
+                Yes, your complete transaction and activity history is stored
+                permanently and can be exported at any time.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2" disabled>
-              <AccordionTrigger>Can I transfer my account ownership?</AccordionTrigger>
+              <AccordionTrigger>
+                Can I transfer my account ownership?
+              </AccordionTrigger>
               <AccordionContent>
-                Account ownership transfer is currently restricted. Please contact our support team for assistance.
+                Account ownership transfer is currently restricted. Please
+                contact our support team for assistance.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
               <AccordionTrigger>How do I delete my account?</AccordionTrigger>
               <AccordionContent>
-                You can request account deletion from your security settings. All personal
-                data will be permanently removed after 30 days.
+                You can request account deletion from your security settings.
+                All personal data will be permanently removed after 30 days.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -1335,23 +1357,27 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
             <AccordionItem value="item-1">
               <AccordionTrigger>How does billing work?</AccordionTrigger>
               <AccordionContent>
-                We offer monthly and annual subscription plans. Billing is charged at the beginning
-                of each cycle, and you can cancel anytime. All plans include automatic backups,
-                24/7 support, and unlimited team members.
+                We offer monthly and annual subscription plans. Billing is
+                charged at the beginning of each cycle, and you can cancel
+                anytime. All plans include automatic backups, 24/7 support, and
+                unlimited team members.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger>Is my data secure?</AccordionTrigger>
               <AccordionContent>
-                Yes, all data is encrypted at rest using AES-256 and in transit using TLS 1.3.
-                We perform regular security audits and maintain SOC 2 compliance.
+                Yes, all data is encrypted at rest using AES-256 and in transit
+                using TLS 1.3. We perform regular security audits and maintain
+                SOC 2 compliance.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3" style={{ borderBottom: "none" }}>
-              <AccordionTrigger>What integrations do you support?</AccordionTrigger>
+              <AccordionTrigger>
+                What integrations do you support?
+              </AccordionTrigger>
               <AccordionContent>
-                We integrate with Slack, GitHub, Jira, Discord, and over 50 other developer
-                and productivity tools via webhooks.
+                We integrate with Slack, GitHub, Jira, Discord, and over 50
+                other developer and productivity tools via webhooks.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -1362,51 +1388,56 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
         title: "Card",
         description: "Wrap the Accordion in a Card component.",
         code: `<Card elevated style={{ maxWidth: '480px', width: '100%' }}>
-  <CardHeader>
-    <CardTitle>Subscription & Billing</CardTitle>
-    <CardDescription>
-      Common questions about your account, plans, payments and cancellations.
-    </CardDescription>
-  </CardHeader>
-  <CardContent style={{ padding: '0 1.25rem 0.5rem' }}>
-    <Accordion type="single" collapsible defaultValue="item-1">
-      <AccordionItem value="item-1">
-        <AccordionTrigger>What happens when my trial ends?</AccordionTrigger>
-        <AccordionContent>
-          At the end of your 14-day trial, you will be automatically switched to the free plan
-          unless you choose to upgrade to Pro.
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-2" style={{ borderBottom: 'none' }}>
-        <AccordionTrigger>Can I get a refund?</AccordionTrigger>
-        <AccordionContent>
-          We offer a 30-day money-back guarantee for all annual subscription purchases.
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
-  </CardContent>
-</Card>`,
+                <CardHeader>
+                  <CardTitle>Subscription & Billing</CardTitle>
+                  <CardDescription>
+                    Common questions about your account, plans, payments and cancellations.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent style={{ padding: '0 1.25rem 0.5rem' }}>
+                  <Accordion type="single" collapsible defaultValue="item-1">
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>What happens when my trial ends?</AccordionTrigger>
+                      <AccordionContent>
+                        At the end of your 14-day trial, you will be automatically switched to the free plan
+                        unless you choose to upgrade to Pro.
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2" style={{ borderBottom: 'none' }}>
+                      <AccordionTrigger>Can I get a refund?</AccordionTrigger>
+                      <AccordionContent>
+                        We offer a 30-day money-back guarantee for all annual subscription purchases.
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </CardContent>
+              </Card>`,
         render: () => (
           <Card elevated style={{ maxWidth: "480px", width: "100%" }}>
             <CardHeader>
               <CardTitle>Subscription & Billing</CardTitle>
               <CardDescription>
-                Common questions about your account, plans, payments and cancellations.
+                Common questions about your account, plans, payments and
+                cancellations.
               </CardDescription>
             </CardHeader>
             <CardContent style={{ padding: "0 1.25rem 0.5rem" }}>
               <Accordion type="single" collapsible defaultValue="item-1">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger>What happens when my trial ends?</AccordionTrigger>
+                  <AccordionTrigger>
+                    What happens when my trial ends?
+                  </AccordionTrigger>
                   <AccordionContent>
-                    At the end of your 14-day trial, you will be automatically switched to the free plan
-                    unless you choose to upgrade to Pro.
+                    At the end of your 14-day trial, you will be automatically
+                    switched to the free plan unless you choose to upgrade to
+                    Pro.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2" style={{ borderBottom: "none" }}>
                   <AccordionTrigger>Can I get a refund?</AccordionTrigger>
                   <AccordionContent>
-                    We offer a 30-day money-back guarantee for all annual subscription purchases.
+                    We offer a 30-day money-back guarantee for all annual
+                    subscription purchases.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -2478,19 +2509,74 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
   },
   {
     id: "alert-dialog",
-    name: "AlertDialog",
+    name: "Alert Dialog",
     category: "Feedback",
     level: 2,
     description:
-      "A modal dialog that interrupts the user with important content and expects confirmation.",
+      "A modal dialog that interrupts the user with important content and expects a response. Blocks interaction until dismissed — ideal for destructive or irreversible actions.",
     dependencies: ["@soraui/hooks"],
-    tags: ["alert-dialog", "confirm", "modal"],
+    tags: ["alert-dialog", "confirm", "modal", "destructive", "overlay", "dialog"],
     status: "stable",
-    props: [],
+    props: [
+      {
+        name: "open",
+        type: "boolean",
+        description: "Controlled open state of the alert dialog",
+      },
+      {
+        name: "defaultOpen",
+        type: "boolean",
+        default: "false",
+        description: "Initial open state when uncontrolled",
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description: "Callback fired when the open state changes",
+      },
+      {
+        name: "asChild",
+        type: "boolean",
+        default: "false",
+        description: "Merges trigger behavior onto immediate child element (AlertDialogTrigger)",
+      },
+      {
+        name: "size",
+        type: "'default' | 'sm'",
+        default: "'default'",
+        description: "Visual max-width size of AlertDialogContent",
+      },
+    ],
+    accessibility: {
+      role: "alertdialog",
+      keyboard: [
+        { key: "Escape", action: "Closes the alert dialog" },
+        { key: "Tab / Shift+Tab", action: "Cycles focus strictly within the dialog" },
+        { key: "Enter / Space", action: "Activates the focused action or cancel button" },
+      ],
+      aria: [
+        { attribute: "role=\"alertdialog\"", usage: "Announces dialog as an alert modal to screen readers" },
+        { attribute: "aria-modal=\"true\"", usage: "Traps virtual cursor and prevents interaction with background" },
+        { attribute: "aria-labelledby", usage: "Automatically links to AlertDialogTitle for accessible name" },
+        { attribute: "aria-describedby", usage: "Automatically links to AlertDialogDescription for accessible description" },
+      ],
+    },
+    themingTokens: [
+      "--ui-background",
+      "--ui-foreground",
+      "--ui-card",
+      "--ui-primary",
+      "--ui-primary-foreground",
+      "--ui-destructive",
+      "--ui-destructive-foreground",
+      "--ui-border",
+      "--ui-radius",
+    ],
     examples: [
       {
         id: "basic",
-        title: "Confirmation Dialog",
+        title: "Destructive Confirmation",
+        description: "Standard confirmation dialog before executing an irreversible or destructive action like deleting an account.",
         code: `<AlertDialog>
   <AlertDialogTrigger asChild>
     <Button variant="destructive">Delete Account</Button>
@@ -2498,11 +2584,16 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
   <AlertDialogContent>
     <AlertDialogHeader>
       <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-      <AlertDialogDescription>This action cannot be undone and will permanently erase your data.</AlertDialogDescription>
+      <AlertDialogDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>
       <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction>Yes, delete account</AlertDialogAction>
+      <AlertDialogAction className="sora-alert-dialog__action--destructive">
+        Yes, delete account
+      </AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>`,
@@ -2515,17 +2606,230 @@ export const COMPONENT_DOCS: ComponentDoc[] = [
               <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This action cannot be undone and will permanently erase your
-                  data.
+                  This action cannot be undone. This will permanently delete your
+                  account and remove your data from our servers.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Yes, delete account</AlertDialogAction>
+                <AlertDialogAction className="sora-alert-dialog__action--destructive">
+                  Yes, delete account
+                </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
         ),
+      },
+      {
+        id: "outline-trigger",
+        title: "Outline Trigger",
+        description: "Trigger with a softer secondary or outline button style for non-critical confirmations.",
+        code: `<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Discard Changes</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Discard unsaved changes?</AlertDialogTitle>
+      <AlertDialogDescription>
+        You have unsaved changes in this form. If you leave now, all your edits will be lost.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Keep Editing</AlertDialogCancel>
+      <AlertDialogAction>Discard</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>`,
+        render: () => (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">Discard Changes</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Discard unsaved changes?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  You have unsaved changes in this form. If you leave now, all
+                  your edits will be lost.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Keep Editing</AlertDialogCancel>
+                <AlertDialogAction>Discard</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        ),
+      },
+      {
+        id: "small-size",
+        title: "Small Size",
+        description: "Use size=\"sm\" on AlertDialogContent for a compact dialog suitable for short inline prompts.",
+        code: `<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="ghost" size="sm">Clear search history</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent size="sm">
+    <AlertDialogHeader>
+      <AlertDialogTitle>Clear search history?</AlertDialogTitle>
+      <AlertDialogDescription>
+        All recent search terms and filters will be cleared immediately.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Clear</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>`,
+        render: () => (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="ghost" size="sm">Clear search history</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent size="sm">
+              <AlertDialogHeader>
+                <AlertDialogTitle>Clear search history?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  All recent search terms and filters will be cleared immediately.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction>Clear</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        ),
+      },
+      {
+        id: "with-media",
+        title: "With Media / Icon",
+        description: "Include AlertDialogMedia inside AlertDialogHeader to render an icon or media avatar alongside the title.",
+        code: `<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Revoke API Key</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogMedia>
+        <div style={{
+          width: 40,
+          height: 40,
+          borderRadius: "50%",
+          backgroundColor: "var(--ui-muted, #f1f5f9)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "var(--ui-destructive, #ef4444)"
+        }}>
+          <AlertTriangle size={20} />
+        </div>
+      </AlertDialogMedia>
+      <AlertDialogTitle>Revoke Production Key?</AlertDialogTitle>
+      <AlertDialogDescription>
+        Any application or automated workflow currently using this key will lose access immediately.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction className="sora-alert-dialog__action--destructive">
+        Revoke Key
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>`,
+        render: () => (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">Revoke API Key</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogMedia>
+                  <div style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: "50%",
+                    backgroundColor: "var(--ui-muted, #f1f5f9)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "var(--ui-destructive, #ef4444)"
+                  }}>
+                    <AlertTriangle size={20} />
+                  </div>
+                </AlertDialogMedia>
+                <AlertDialogTitle>Revoke Production Key?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Any application or automated workflow currently using this key
+                  will lose access immediately.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction className="sora-alert-dialog__action--destructive">
+                  Revoke Key
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        ),
+      },
+      {
+        id: "controlled",
+        title: "Controlled State",
+        description: "Manage open state externally using open and onOpenChange props for programmatic control.",
+        code: `function ControlledAlertDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Programmatically</Button>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Controlled Alert Dialog</AlertDialogTitle>
+            <AlertDialogDescription>
+              This dialog's visibility is managed via React state hook.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => setOpen(false)}>
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+}`,
+        render: () => {
+          const [open, setOpen] = React.useState(false);
+          return (
+            <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+              <Button onClick={() => setOpen(true)}>Open Programmatically</Button>
+              <AlertDialog open={open} onOpenChange={setOpen}>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Controlled Alert Dialog</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This dialog's visibility is managed via React state hook.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => setOpen(false)}>
+                      Confirm
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          );
+        },
       },
     ],
   },
